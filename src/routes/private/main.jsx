@@ -1,0 +1,484 @@
+import React, { useEffect, useReducer, useRef, useState } from "react";
+import { Navigate, useNavigate, Route, Routes, useLocation } from "react-router-dom";
+import Backup from "./actions/backup";
+import paths from '../../app/paths.json'
+import dictionary from '../../app/dictionary.json'
+import menu from '../../app/menu.js'
+import Storages from "../../app/storages";
+import { TiThLarge, TiHome, TiPower } from "react-icons/ti"
+import Sidebar from "../../components/sidebar";
+import ChangeIP from "./settings/changeIP";
+import Settings from "./settings";
+import DashboardContext from '../../contexts/dashboardContext';
+import NavbarReducer from '../../reducers/navbarReducer';
+import { CgClose } from "react-icons/cg";
+
+import Cars from "./definitions/cars";
+import CarBrands from "./definitions/carBrands";
+import Persons from "./definitions/persons";
+import { FaDotCircle, FaArrowLeft } from 'react-icons/fa'
+import Dashboard from "./dashboard";
+import Reports from "./reports";
+import Reserve from "./actions/reserve";
+import Definitions from "./definitions";
+import Users from "./definitions/users";
+import UserGroup from "./definitions/userGroup";
+import E423 from '../error/e423';
+
+import E404 from '../error/e404';
+import answerModal from "../../modals/answerModal";
+import ReportTaximeter from "./reports/reportTaximeter";
+import endpoints from "../../app/endpoints";
+
+import { AxiosPrivate } from "../../app/axiosPrivate";
+import { RefreshToken } from "../../app/refreshToken";
+import { CheckAccess } from "../../app/checkAccess";
+import DriverSetting from "./settings/driverSetting";
+import TripManageSetting from "./settings/tripManageSetting";
+import TariffSetting from "./settings/tariffSetting";
+import SmsSetting from "./settings/smsSetting";
+import OperatorSetting from "./settings/operatorSetting";
+import PassengerSetting from "./settings/passengerSetting";
+import Actions from "./actions";
+import PhysicalActions from "./definitions/physicalActions";
+import TripsMonit from "./actions/TripsMonit";
+import TripHistory from "./reports/tripHistory";
+import Lines from "./definitions/lines";
+import CarClass from "./definitions/carClass";
+import CarTypes from "./definitions/carTypes";
+import Subscribers from "./definitions/subscribers";
+import Stations from "./definitions/stations";
+import ComplaintType from "./definitions/complaintsType";
+import News from "./actions/news";
+import Payment2Driver from "./actions/payment2Driver";
+import DriverPayment from "./actions/driverPayment";
+import Verify from "./reports/verify";
+import Companies from "./definitions/companies";
+import FrequentDests from "./definitions/frequentDests";
+import DuplicateAddress from "./definitions/duplicateAddress";
+import Weather from "./actions/weather";
+import DriverTripCount from "./reports/driverTripCount";
+import { findIndex } from "lodash";
+import QueIO from "./reports/queIO";
+import TripChartHourly from "./reports/tripChartHourly";
+import CountInQue from "./reports/countInQue";
+import TotalTripSendPerMonth from "./reports/totalTripSendPerMonth";
+import Messanger from "./actions/messanger";
+import SurveyOptions from "./definitions/surveyOptions";
+import DefaultMessages from "./definitions/DefualtMessages";
+import DriverTimeLine from "./reports/driverTimeLine";
+import Kiosk from "./actions/kiosk";
+import ControlPanelSetting from "./settings/controlPanelSetting";
+import TripCountReport from "./reports/tripCountReport";
+import TripChartDaily from "./reports/tripChartDaily";
+import TripChartMonthly from "./reports/tripChartMonthly";
+import Shifts from "./definitions/shifts";
+import ShiftGroups from "./definitions/shiftGroups";
+import ShiftPattern from "./definitions/shiftPattern";
+import RFIDLogs from "./reports/RFIDLogs";
+import Census from "./reports/census";
+import StationsTemp from "./definitions/stationsTemp";
+import { useSocket } from "contexts/socketContext";
+import RFIDChart from "./reports/RFIDChart";
+import ShiftReport from "./reports/shiftReport";
+
+function Main(props) {
+  var navigate = useNavigate()
+  var [isOpen, setOpen] = useState(false);
+  var navbarSize = '60px'
+
+
+  useLocation()
+  const [navState, navDispatch] = useReducer(NavbarReducer, { activePage: undefined })
+
+  const [activeMenu, setActiveMenu] = useState(undefined)
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+
+  // the required distance between touchStart and touchEnd to be detected as a swipe
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    if (isRightSwipe)
+      setOpen(false)
+    // if (isLeftSwipe)
+    //   setOpen(true)
+    // add your conditional logic here
+  }
+
+  var findPath = (menu, menuNumber, parent) => {
+    if (menuNumber) {
+      const parts = String(menuNumber).split("-");
+      let first = [...parent, parts.shift()]
+      var sub = menu?.filter((sub => sub.id == first.join('-')))[0]
+      if (parts?.length > 0) return [sub, ...findPath(sub?.sub, parts.join("-"), first)]
+      else return [sub]
+    }
+  }
+
+  var path2MenuId = (menu, path) => {
+    menu.forEach(element => {
+      if (element.sub) {
+        path2MenuId(element.sub, path)
+      } else {
+        if (element.path == path) {
+          setActiveMenu(element.id)
+        }
+      }
+    });
+  }
+
+  var [isLoading, setLoading] = useState(false)
+  var [userInfo, setUserInfo] = useState({})
+
+  var getBasicInfo = () => {
+    setLoading(true)
+
+    AxiosPrivate.get(endpoints.basicInfo).then((res) => {
+      console.log(res.data)
+      Storages.setUserInfo(res.data)
+      Storages.setAccessLevel(res.data.accessLevel)
+      Storages.setTileServer(res.data.tileServerUrl)
+      setUserInfo(res.data)
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    getBasicInfo()
+    path2MenuId(menu, window.location.pathname)
+    getCities()
+  }, [])
+  var divScrollRef = useRef();
+
+  var [showBack, setShowBack] = useState(false)
+
+  var location = useLocation()
+  var [pageHistory, setPageHistory] = useState([])
+  useEffect(() => {
+    if (location.pathname == paths.private.actions.dashboard) {
+      return
+    }
+    if (location.pathname == paths.private.dashboard) {
+      return
+    }
+    if (location.pathname == paths.private.definitions.dashboard) {
+      return
+    }
+    if (location.pathname == paths.private.settings.dashboard) {
+      return
+    }
+    if (location.pathname == paths.private.reports.dashboard) {
+      return
+    }
+    var find = pageHistory.find(page => page == location.pathname)
+    if (find) return
+    if (pageHistory.length > 4) {
+      setPageHistory(prevState => ([...prevState.slice(1), location.pathname]))
+    } else {
+      setPageHistory(prevState => ([...prevState, location.pathname]))
+    }
+  }, [location])
+
+  useEffect(() => {
+    if (location.pathname == paths.private.dashboard)
+      setShowBack(false)
+    else
+      setShowBack(true)
+  }, [location])
+
+  var [onKeyDown, setOnKeyDown] = useState()
+
+  var getCities = () => {
+
+    AxiosPrivate.get(endpoints.cities).then(res => {
+      Storages.setCities(res.data)
+    }).catch(e => {
+      Storages.setCities([
+        {
+          "cityName": "مشهد",
+          "centerLat": 35.741777991519456,
+          "centerLng": 51.396147723718286,
+          "rightLat": 36.321099,
+          "rightLng": 59.702532,
+          "leftLat": 36.33118,
+          "leftLng": 59.454691
+        }
+      ])
+    })
+  }
+  var socket = useSocket()
+  useEffect(() => {
+
+    // if (socket != null) {
+    console.log("sssssssssgvsdgv")
+
+    socket?.on("message", data => {
+      console.log("sssssssssss", data)
+      // setAlarmCount(data)
+    })
+
+    socket?.on("ringing", data => {
+      // setCallerIdData(data)+
+            console.log("sssssssssss", data)
+
+    })
+    return () => {
+      socket?.off("message");
+      socket?.off("ringing");
+    };
+    // }
+  }, [socket])
+
+
+
+  return (
+    <>
+      <DashboardContext.Provider value={{
+        activeMenu,
+        setActiveMenu,
+        divScrollRef,
+        onKeyDown
+      }}>
+
+        {isLoading ?
+          <div className=" vh-100 d-flex flex-column   justify-content-center align-items-center">
+            <h4 className="">در حال تنظیم صفحه برای شما</h4>
+            <div className="spinner-border" role="status">
+              <span className="sr-only"></span>
+            </div>
+          </div>
+          :
+          <div className="d-flex vh-100  position-relative  "
+            style={{ zIndex: 0 }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            dir="rtl">
+
+            {/* ساید بار */}
+            <div className="position-absolute end-0 
+             col-8 col-sm-6 col-md-4 col-lg-3 aScroll 
+             overflow-auto d-flex row vh-100 m-0 p-0"
+              style={{ zIndex: isOpen ? 1 : -1, backgroundColor: "#E8EAF6" }}>
+              <Sidebar
+                menu={menu}
+                onClose={() => {
+                  setOpen(false)
+                }} />
+            </div>
+
+            {/* صفحه اصلی */}
+            <div className=" position-absolute start-0 
+            col-12 d-flex row  m-0  vh-100"
+              tabIndex={0}
+              onKeyDown={setOnKeyDown}
+              style={{ backgroundColor: "#ECEFF1" }}
+              onTouchStart={() => { setOpen(false) }}
+              onMouseUp={() => { setOpen(false) }}  >
+              {/* نوار منو در بالا  */}
+              <div className="position-fixed   " style={{ height: navbarSize }}>
+                <div className="d-flex   col-12 py-2 align-items-center ">
+                  {/* <TiThLarge className="  text-hover" size={30} onClick={() => {
+                    setOpen(true)
+                  }} /> */}
+                  <div className="d-none d-lg-block">
+                    <div className=" row  g-1 ">
+                      {
+                        pageHistory.map((item, index) => {
+                          return <div className="w-auto" key={index}>
+                            <div className="card m-0 p-0 px-2 py-1  card-hover aPointer"
+                              onAuxClick={(e) => {
+                                e.preventDefault()
+                                var newArray = pageHistory.filter(page => page != item)
+                                setPageHistory(newArray)
+                              }}
+                              onClick={() => {
+                                navigate(item)
+                              }} >
+                              <div className="d-flex align-items-center align-content-center">
+                                <CgClose className="text-hover ms-2 " onClick={(e) => {
+                                  e.preventDefault()
+
+                                  e.stopPropagation();
+                                  var newArray = pageHistory.filter(page => page != item)
+                                  setPageHistory(newArray)
+                                }} />
+                                <p className=" p-0 m-0 noSelect">
+                                  {dictionary[item.split('/')[item.split('/').length - 1]]}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        })
+                      }
+
+                    </div>
+                  </div>
+
+                  <div className="me-auto">
+
+                    <label className=" px-2 text-center w-auto" dir="ltr">{
+                      location.pathname.split('/').map((item, index, total) => {
+                        return <label
+                          key={index}
+                          className={(index == total.length - 1 ?
+                            "ps-1 iranSansBold small" :
+                            " ps-1  small opacity-75")}
+                          onClick={
+                            () => {
+                              // var path = location.pathname.split('/')
+                              //   .slice(0, index + 1)
+                              //   .filter(find => (find != '' && dictionary[find]))
+
+                              // var path1 = location.pathname.split('/')
+                              //   .filter(find => (find != '' && dictionary[find]))
+
+                              // var a = path.length - path1.length
+                              // // console.log(path.length-path1.length)
+                              // if (a < 0)
+                              //   navigate(a)
+                            }
+                          }
+                        >
+                          {(item != '' && dictionary[item]) ? '\\\ ' + dictionary[item] : ''}
+                        </label>
+                      })}
+                    </label>
+
+                    {
+                      showBack ?
+                        <>
+                          <TiHome className="mx-2 text-hover aPointer  " size={25} onClick={() => {
+
+                            navigate(paths.private.dashboard)
+                          }} />
+
+                          <FaArrowLeft
+                            className="mx-2 text-hover aPointer  " size={25} onClick={() => {
+                              navigate(-1)
+                            }} />
+
+                        </>
+                        :
+                        <TiPower className=" mx-2  text-hover  aPointer fw-bold " size={35} onClick={() => {
+                          answerModal.show("آیا مایل به خروج از حساب کاربری هستید؟", () => {
+                            Storages.removeUserToken()
+                            navigate(paths.public.login)
+                          }, () => {
+
+                          })
+
+                        }} />
+
+                    }
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* بدنه اصلی */}
+              <div className="px-3 p-sm-0 p-0 m-0 d-flex 
+              justify-content-center align-items-top position-fixed overflow-hidden"
+                style={{ top: navbarSize, bottom: 25 }}
+                ref={divScrollRef}
+              >
+                <div className="container ">
+                  <Routes  >
+                    <Route path='/control-panel' element={<Navigate to={paths.private.dashboard} replace />} />
+                    <Route path={paths.private.dashboard} element={<Dashboard />} />
+                    <Route path={paths.private.actions.backup} element={<Backup />} />
+                    <Route path={paths.private.settings.dashboard} element={<Settings />} />
+                    <Route path={paths.private.settings.driver} element={<DriverSetting />} />
+                    <Route path={paths.private.settings.passenger} element={<PassengerSetting />} />
+                    <Route path={paths.private.settings.operator} element={<OperatorSetting />} />
+                    <Route path={paths.private.settings.sms} element={<SmsSetting />} />
+                    <Route path={paths.private.settings.tariff} element={<TariffSetting />} />
+                    <Route path={paths.private.settings.tripManage} element={<TripManageSetting />} />
+                    <Route path={paths.private.settings.controlPanel} element={<ControlPanelSetting />} />
+                    <Route path={paths.private.actions.changeIP} element={<ChangeIP />} />
+                    <Route path={paths.private.definitions.carBrand} element={<CarBrands />} />
+                    <Route path={paths.private.reports.dashboard} element={<Reports />} />
+                    <Route path={paths.private.reports.taximeter} element={<ReportTaximeter />} />
+                    <Route path={paths.private.reports.tripHistory} element={<TripHistory />} />
+                    <Route path={paths.private.reports.verify} element={<Verify />} />
+                    <Route path={paths.private.reports.driverTripCount} element={<DriverTripCount />} />
+                    <Route path={paths.private.reports.queIO} element={<QueIO />} />
+                    <Route path={paths.private.reports.tripChartHourly} element={<TripChartHourly />} />
+                    <Route path={paths.private.reports.tripChartDaily} element={<TripChartDaily />} />
+                    <Route path={paths.private.reports.tripChartMonthly} element={<TripChartMonthly />} />
+                    <Route path={paths.private.reports.totalTripMonth} element={<TotalTripSendPerMonth />} />
+                    <Route path={paths.private.reports.countInQue} element={<CountInQue />} />
+                    <Route path={paths.private.reports.driverTimeLine} element={<DriverTimeLine />} />
+                    <Route path={paths.private.reports.tripCountReport} element={<TripCountReport />} />
+                    <Route path={paths.private.reports.rfid} element={<RFIDLogs />} />
+                    <Route path={paths.private.reports.rfidChart} element={<RFIDChart />} />
+                    <Route path={paths.private.reports.census} element={<Census />} />
+                    <Route path={paths.private.reports.shifts} element={<ShiftReport />} />
+                    <Route path={paths.private.definitions.dashboard} element={<Definitions />} />
+                    <Route path={paths.private.definitions.users} element={<Users />} />
+                    <Route path={paths.private.definitions.lines} element={<Lines />} />
+                    <Route path={paths.private.definitions.userGroup} element={<UserGroup />} />
+                    <Route path={paths.private.definitions.persons} element={<Persons />} />
+                    <Route path={paths.private.definitions.carTypes} element={<CarTypes />} />
+                    <Route path={paths.private.definitions.cars} element={<Cars />} />
+                    <Route path={paths.private.definitions.carClass} element={<CarClass />} />
+                    <Route path={paths.private.definitions.complaints} element={<ComplaintType />} />
+                    <Route path={paths.private.definitions.companies} element={<Companies />} />
+                    <Route path={paths.private.definitions.frequentDests} element={<FrequentDests />} />
+                    <Route path={paths.private.definitions.duplicateAddress} element={<DuplicateAddress />} />
+                    <Route path={paths.private.definitions.subscribers} element={<Subscribers />} />
+                    <Route path={paths.private.definitions.stations} element={<Stations />} />
+                    <Route path={paths.private.definitions.stationsV2} element={<StationsTemp />} />
+                    <Route path={paths.private.definitions.physicalActions} element={<PhysicalActions />} />
+                    <Route path={paths.private.definitions.surveyOptions} element={<SurveyOptions />} />
+                    <Route path={paths.private.definitions.defMsg} element={<DefaultMessages />} />
+                    <Route path={paths.private.definitions.shifts} element={<Shifts />} />
+                    <Route path={paths.private.definitions.shiftGroups} element={<ShiftGroups />} />
+                    <Route path={paths.private.definitions.shiftPattern} element={<ShiftPattern />} />
+                    <Route path={paths.private.actions.dashboard} element={<Actions />} />
+                    <Route path={paths.private.actions.reserve} element={<Reserve />} />
+                    <Route path={paths.private.actions.tripsMonit} element={<TripsMonit />} />
+                    <Route path={paths.private.actions.news} element={<News />} />
+                    <Route path={paths.private.actions.driverPayment} element={<DriverPayment />} />
+                    <Route path={paths.private.actions.payment2Driver} element={<Payment2Driver />} />
+                    <Route path={paths.private.actions.messanger} element={<Messanger />} />
+                    <Route path={paths.private.actions.weather} element={<Weather />} />
+
+                    <Route path={paths.private.e423} element={<E423 />} />
+                    <Route path='/*' element={<E404 />} />
+                  </Routes>
+
+                </div>
+              </div>
+
+              <div className="  position-fixed bottom-0 justify-content-center align-items-center d-flex opacity-50" style={{ height: 25, backgroundColor: "#CFD8DC" }}>
+                <FaDotCircle className="text-primary" />
+                <label className="ms-auto px-3">{userInfo?.firstName} {userInfo?.lastName} </label>
+                <label className="me-auto">efspco.ir</label>
+              </div>
+
+            </div>
+
+          </div>}
+      </DashboardContext.Provider >
+
+    </>
+  );
+}
+
+export default Main;

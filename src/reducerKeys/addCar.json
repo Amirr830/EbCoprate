@@ -1,0 +1,14 @@
+{
+    "toggleClick": 1,
+    "addSidebar": 2,
+    "nextStep": 3,
+    "prevStep": 4,
+    "savePersonalInfo": 5,
+    "saveBankAccount": 6,
+    "submit": 7,
+    "goToStep": 8,
+    "saveCarBaseInfo": 9,
+    "saveCarInfo": 10,
+    "saveDriverLicense": 11,
+    "end": 1000
+}

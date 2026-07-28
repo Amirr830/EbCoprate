@@ -1,0 +1,277 @@
+@font-face {
+    font-family: iran-sans;
+    src: url('./assets/fonts/iran-sans.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: iran-sans-medium;
+    src: url('./assets/fonts/iran-sans-medium.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: iran-sans-bold;
+    src: url('./assets/fonts/iran-sans-bold.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: fredokaLight;
+    src: url('./assets/fonts/Fredoka-Light.ttf');
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: fredoka;
+    src: url('./assets/fonts/Fredoka-Medium.ttf');
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: fredokaBold;
+    src: url('./assets/fonts/Fredoka-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+@media print {
+    .print-style {
+        color: black;
+    }
+}
+
+
+* {
+    font-family: 'iran-sans';
+}
+
+.iranSansBold {
+    font-family: 'iran-sans-bold';
+}
+
+.iranSansMedium {
+    font-family: 'iran-sans-medium';
+}
+
+.fredoka {
+    font-family: 'fredoka';
+}
+
+.fredokaBold {
+    font-family: 'fredokaBold';
+}
+
+.fixScroll {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.aPointer:hover {
+    cursor: pointer;
+}
+
+.aPointerBg:hover {
+    cursor: pointer;
+    background: black;
+}
+
+.noSelect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.h8 {
+    font-size: 10px;
+}
+
+.h7 {
+    font-size: 12px;
+}
+
+.link {
+    font-style: italic;
+    color: blue;
+    cursor: pointer;
+
+}
+
+.note {
+    border: 1px solid rgba(255, 187, 0, 0.178);
+    border-right: 4px solid rgb(255, 187, 0);
+    background-color: rgba(255, 244, 146, 0.548);
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    color: black;
+    text-align: end;
+    padding-left: 10px;
+}
+
+.enFont {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
+
+.enFontBold {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+
+.fab {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 2rem;
+    margin: 1rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: rgb(255, 0, 128);
+    color: white;
+
+}
+
+.fab:hover {
+    background-color: rgb(0, 111, 175);
+
+}
+
+.text-black {
+    color: #000000
+}
+
+.text-hover {
+    color: #1A237E
+}
+
+
+.text-hover:hover {
+    color: #ff298d
+}
+
+.card-hover {
+    background-color: #ffffff
+}
+
+.card-hover:hover {
+    background-color: #E0E0E0
+}
+
+.card-hover.selected {
+    background-color: #d1d1d1
+}
+
+.card-success {
+    background-color: #C8E6C9;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+.card-success:hover {
+    background-color: #ffffff;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+.card-danger {
+    background-color: #F8BBD0;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+.card-danger:hover {
+    background-color: #ffffff;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+
+
+.verticaltext_content {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    white-space: nowrap;
+    -webkit-writing-mode: vertical-rl;
+    writing-mode: vertical-rl;
+}
+
+.rotating {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+
+/* برای مخفی کردن علامت‌های بالا و پایین در مرورگرهایی مثل Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* برای فایرفاکس */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+.table-striped>thead>tr:nth-child(2n+1)>td,
+.table-striped>thead>tr:nth-child(2n+1)>th {
+    background-color: #CFD8DC;
+}
+
+.hideScroll {
+    overflow: scroll;
+    scrollbar-width: none;
+    /* پنهان کردن اسکرول‌بار در فایرفاکس */
+}
+
+.hideScroll::-webkit-scrollbar {
+    display: none;
+    /* پنهان کردن اسکرول‌بار در کروم، سافاری و اج */
+}
+
+.box-1 {
+    flex: 1 1 0%;
+}
+
+.box-2 {
+    flex: 2 1 0%;
+}
+
+/* دسکتاپ */
+@media (min-width: 992px) {
+    .box-1 {
+        flex: 2 1 0%;
+    }
+
+    .box-2 {
+        flex: 1 1 0%;
+    }
+}

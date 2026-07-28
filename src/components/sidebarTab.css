@@ -1,0 +1,41 @@
+.back {
+    justify-content: start;
+    align-items: center;
+    height: 3rem;
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+    color: #000;
+}
+
+
+.level1 {
+    background-color: rgba(0, 0, 0, 0.030);
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.level2 {
+    background-color: rgba(0, 0, 0, 0.060);
+    padding-right: 2rem;
+    padding-left: 2rem;
+
+}
+.level3 {
+    background-color: rgba(0, 0, 0, 0.090);
+    padding-right: 3rem;
+    padding-left: 3rem;
+
+}
+
+.back:has(h5) {
+    /* border-left: 8px solid; */
+    /* border-color: #2962FF; */
+    box-shadow: #283593;
+    box-shadow: 0px 5px 10px  #88888841;
+
+}
+
+.back:hover {
+    background-color: #e0e2f1;
+}
