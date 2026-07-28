@@ -1,0 +1,81 @@
+.dir-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.current-request-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.section-title {
+  color: #00b050;
+}
+
+.request-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.request-card:hover {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+.small-text {
+  font-size: 0.85rem;
+}
+
+.leaflet-map-wrapper {
+  z-index: 1;
+}
+
+.courier-avatar {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.plate-box {
+  border: 1px solid #222;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 10px;
+  background: #fff;
+  line-height: 1.1;
+}
+
+.call-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: #00e676;
+  border: none;
+  color: #000;
+}
+
+.call-btn:hover {
+  background-color: #00c853;
+  color: #fff;
+}
+
+/* آدرس‌ها */
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot-blue {
+  background-color: #2962ff;
+}
+
+.dot-gray {
+  background-color: #b0bec5;
+}
+
+.vehicle-badge {
+  background-color: #00c853 !important;
+}

@@ -254,7 +254,6 @@ input[type=number] {
 
 .hideScroll::-webkit-scrollbar {
     display: none;
-    /* پنهان کردن اسکرول‌بار در کروم، سافاری و اج */
 }
 
 .box-1 {
@@ -265,7 +264,6 @@ input[type=number] {
     flex: 2 1 0%;
 }
 
-/* دسکتاپ */
 @media (min-width: 992px) {
     .box-1 {
         flex: 2 1 0%;

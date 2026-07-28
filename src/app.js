@@ -2,7 +2,7 @@ import './app.css';
 import { Link, Routes, Route, Navigate } from "react-router-dom";
 import Login from './routes/public/login';
 import Verify from './routes/public/verify';
-import Dashboard from './routes/private/dashboard';
+import Dashboard from './routes/private/Dashboard/dashboard';
 import PrivateRoute from './app/privateRoute'
 import PublicRoute from './app/publicRoute'
 import { ToastContainer, toast } from 'react-toastify';

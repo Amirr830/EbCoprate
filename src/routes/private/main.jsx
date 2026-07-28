@@ -17,7 +17,7 @@ import Cars from "./definitions/cars";
 import CarBrands from "./definitions/carBrands";
 import Persons from "./definitions/persons";
 import { FaDotCircle, FaArrowLeft } from 'react-icons/fa'
-import Dashboard from "./dashboard";
+import Dashboard from "./Dashboard/dashboard";
 import Reports from "./reports";
 import Reserve from "./actions/reserve";
 import Definitions from "./definitions";
@@ -85,7 +85,7 @@ import ShiftReport from "./reports/shiftReport";
 function Main(props) {
   var navigate = useNavigate()
   var [isOpen, setOpen] = useState(false);
-  var navbarSize = '60px'
+  var navbarSize = '10px'
 
 
   useLocation()
@@ -232,7 +232,7 @@ function Main(props) {
 
     socket?.on("ringing", data => {
       // setCallerIdData(data)+
-            console.log("sssssssssss", data)
+      console.log("sssssssssss", data)
 
     })
     return () => {
@@ -245,7 +245,7 @@ function Main(props) {
 
 
   return (
-    <>
+    < >
       <DashboardContext.Provider value={{
         activeMenu,
         setActiveMenu,
@@ -261,8 +261,8 @@ function Main(props) {
             </div>
           </div>
           :
-          <div className="d-flex vh-100  position-relative  "
-            style={{ zIndex: 0 }}
+          <div className="d-flex vh-100  position-relative"
+            style={{ zIndex: 0, width: "100%" }}
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
@@ -328,7 +328,14 @@ function Main(props) {
                     </div>
                   </div>
 
-                  <div className="me-auto">
+
+
+
+
+
+
+
+                   <div className="me-auto">
 
                     <label className=" px-2 text-center w-auto" dir="ltr">{
                       location.pathname.split('/').map((item, index, total) => {
@@ -387,17 +394,40 @@ function Main(props) {
 
                   </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
 
               </div>
 
               {/* بدنه اصلی */}
-              <div className="px-3 p-sm-0 p-0 m-0 d-flex 
+              <div className=" p-sm-0 p-0 m-0 d-flex 
               justify-content-center align-items-top position-fixed overflow-hidden"
                 style={{ top: navbarSize, bottom: 25 }}
                 ref={divScrollRef}
               >
-                <div className="container ">
+                <div className="container-fluid p-0 m-0">
                   <Routes  >
                     <Route path='/control-panel' element={<Navigate to={paths.private.dashboard} replace />} />
                     <Route path={paths.private.dashboard} element={<Dashboard />} />
