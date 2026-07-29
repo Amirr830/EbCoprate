@@ -81,6 +81,7 @@ import StationsTemp from "./definitions/stationsTemp";
 import { useSocket } from "contexts/socketContext";
 import RFIDChart from "./reports/RFIDChart";
 import ShiftReport from "./reports/shiftReport";
+import Wallet from "./Wallet/Wallet";
 
 function Main(props) {
   var navigate = useNavigate()
@@ -335,7 +336,7 @@ function Main(props) {
 
 
 
-                   <div className="me-auto">
+                  <div className="me-auto">
 
                     <label className=" px-2 text-center w-auto" dir="ltr">{
                       location.pathname.split('/').map((item, index, total) => {
@@ -393,29 +394,6 @@ function Main(props) {
                     }
 
                   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 </div>
 
@@ -480,6 +458,9 @@ function Main(props) {
                     <Route path={paths.private.definitions.shifts} element={<Shifts />} />
                     <Route path={paths.private.definitions.shiftGroups} element={<ShiftGroups />} />
                     <Route path={paths.private.definitions.shiftPattern} element={<ShiftPattern />} />
+
+                    <Route path="/control-panel/67/definitions/wallet" element={<Wallet />} />
+                    
                     <Route path={paths.private.actions.dashboard} element={<Actions />} />
                     <Route path={paths.private.actions.reserve} element={<Reserve />} />
                     <Route path={paths.private.actions.tripsMonit} element={<TripsMonit />} />
@@ -488,7 +469,6 @@ function Main(props) {
                     <Route path={paths.private.actions.payment2Driver} element={<Payment2Driver />} />
                     <Route path={paths.private.actions.messanger} element={<Messanger />} />
                     <Route path={paths.private.actions.weather} element={<Weather />} />
-
                     <Route path={paths.private.e423} element={<E423 />} />
                     <Route path='/*' element={<E404 />} />
                   </Routes>

@@ -14,7 +14,7 @@ import paths from '../../../../src/app/paths.json';
 import Storages from "../../../app/storages"
 import dictionary from "../../../../src/app/dictionary.json"
 import answerModal from "../../../modals/answerModal";
-
+import Wallet from "../Wallet/Wallet"
 
 function Header() {
     const navigate = useNavigate();
@@ -30,7 +30,13 @@ function Header() {
                     <div className="col-auto">
                         <div className="d-flex align-items-center gap-3">
 
-                            <button className="wallet-card">
+                            <button
+                                className="wallet-card"
+                                onClick={() => {
+                                    console.log("ssssssssssssssss");
+                                    navigate(paths.private.definitions.Wallet);
+                                }}
+                            >
                                 <FaPlus className="wallet-plus-icon" />
                                 <span className="wallet-price">25,000 تومان</span>
                                 <FaWallet className="wallet-icon" />

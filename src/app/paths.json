@@ -38,9 +38,11 @@
             "shifts": "/control-panel/58/definitions/shifts",
             "shiftGroups": "/control-panel/59/definitions/shift-groups",
             "shiftPattern": "/control-panel/63/definitions/shift-patterns",
-            "duplicateAddress": "/control-panel/66/definitions/duplicate-address"
+            "duplicateAddress": "/control-panel/66/definitions/duplicate-address",
+        
+            "Wallet": "/control-panel/67/definitions/wallet"
+        
         },
-
         "reports": {
             "dashboard": "/control-panel/10/reports",
             "taximeter": "/control-panel/11/reports/taximeter",
@@ -56,12 +58,12 @@
             "totalTripMonth": "/control-panel/19/reports/total-trip-month",
             "queIO": "/control-panel/20/reports/que-io",
             "driverTimeLine": "/control-panel/21/reports/driver-time-line",
-            "tripChartDaily":  "/control-panel/22/reports/trip-chart-daily",
-            "tripChartMonthly":  "/control-panel/23/reports/trip-chart-monthly",
-            "census":  "/control-panel/27/reports/census",
-            "rfid":  "/control-panel/64/reports/rfid",
-            "rfidChart":  "/control-panel/64/reports/rfid-chart",
-            "shifts":  "/control-panel/29/reports/shifts"
+            "tripChartDaily": "/control-panel/22/reports/trip-chart-daily",
+            "tripChartMonthly": "/control-panel/23/reports/trip-chart-monthly",
+            "census": "/control-panel/27/reports/census",
+            "rfid": "/control-panel/64/reports/rfid",
+            "rfidChart": "/control-panel/64/reports/rfid-chart",
+            "shifts": "/control-panel/29/reports/shifts"
         },
         "settings": {
             "dashboard": "/control-panel/50/settings",
@@ -88,7 +90,6 @@
             "reserveDetails": "/control-panel/40/actions/reserve/details",
             "driverAnnounceReceipt": "/control-panel/61/actions/driverAnnounceReceipt",
             "weather": "/control-panel/62/actions/weather"
-
         }
     }
 }
