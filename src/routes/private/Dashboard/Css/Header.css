@@ -23,6 +23,7 @@
 
 .dashboard-header {
     width: 100%;
+    height: 100px;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 18px;
@@ -148,9 +149,6 @@
     font-weight: 500;
 }
 
-/* ==========================================
-   Wallet Card
-========================================== */
 
 .wallet-card {
     min-width: 190px;

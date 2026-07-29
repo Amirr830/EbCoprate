@@ -1,0 +1,39 @@
+@media (max-width: 767.98px) {
+  .custom-sidebar {
+    position: fixed !important;
+    top: 0;
+    right: -100% !important; 
+    width: 280px !important;
+    height: 100vh !important;
+    z-index: 1050;
+    background-color: #ffffff;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    overflow-y: auto;
+    padding-top: 65px !important; 
+  }
+
+  .custom-sidebar.open-mobile {
+    right: 0 !important;
+  }
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.45);
+  z-index: 1040;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

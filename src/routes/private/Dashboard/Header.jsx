@@ -70,32 +70,6 @@ function Header() {
                                 <span>پشتیبانی و آموزش</span>
                             </button>
 
-
-                            {showBack && (
-                                <FaArrowLeft
-                                    size={20}
-                                    className="text-hover aPointer"
-                                    onClick={() => navigate(-1)}
-                                />
-                            )}
-
-                            <div
-                                className="d-flex align-items-center gap-2 text-white aPointer logout-btn "
-                                onClick={() => {
-                                    answerModal.show(
-                                        "آیا مایل به خروج از حساب کاربری هستید؟",
-                                        () => {
-                                            Storages.removeUserToken();
-                                            navigate(paths.public.login);
-                                        },
-                                        () => { }
-                                    );
-                                }}
-                            >
-                                <TiPower size={26} />
-                                {/* <span>خروج از پنل</span> */}
-                            </div>
-
                         </div>
                     </div>
 

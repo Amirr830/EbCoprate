@@ -79,3 +79,100 @@
 .vehicle-badge {
   background-color: #00c853 !important;
 }
+
+.addresses-row {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap !important;
+  gap: 15px;
+  width: 100%;
+}
+
+.address-box {
+  display: flex !important;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.address-box .dot {
+  margin-left: 8px;
+}
+
+.address-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.address-arrow {
+  flex-shrink: 0;
+  font-size: 24px;
+  color: #0d6efd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addresses-list-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+
+    background:#fff;
+    border:1px solid #e9ecef;
+    border-radius:12px;
+    padding:10px 12px;
+}
+
+.address-item{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-width:0;
+}
+
+.address-content{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.address-label{
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:2px;
+}
+
+.address-value{
+    font-size:12px;
+    color:#495057;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.address-divider{
+    width:1px;
+    align-self:stretch;
+    background:#dee2e6;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    flex-shrink:0;
+}
+
+.dot-danger{
+    background:#dc3545;
+}
+
+.dot-green{
+    background:#198754;
+}
