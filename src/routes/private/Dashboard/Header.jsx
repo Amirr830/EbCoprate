@@ -30,11 +30,6 @@ function Header() {
                     <div className="col-auto">
                         <div className="d-flex align-items-center gap-3">
 
-                            <div className="company-card">
-                                <span className="company-title">شرکت ابتکار</span>
-                                <FaUserCircle className="company-avatar" />
-                            </div>
-
                             <button className="wallet-card">
                                 <FaPlus className="wallet-plus-icon" />
                                 <span className="wallet-price">25,000 تومان</span>
