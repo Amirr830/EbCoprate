@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Css/RequestForm.css';
 import { Container, Row, Col, Offcanvas } from 'react-bootstrap';
 import { FaPencilAlt, FaChevronDown, FaTag, FaMotorcycle, FaPlus, FaTimes } from 'react-icons/fa';
@@ -39,8 +39,7 @@ function RequestForm() {
         </Offcanvas.Body>
       </Offcanvas>
 
-      <div className="modern-form-card w-100 bg-white rounded-3 p-5 mt-1 border shadow-sm">
-
+      <div className="modern-form-card w-100 bg-white rounded-3 p-4 pt-3 mt-1 border shadow-sm">
         <div className="d-flex d-md-none align-items-center justify-content-between pb-3 mb-3 border-bottom">
           <div className="d-flex align-items-center gap-2">
             <button
@@ -65,48 +64,44 @@ function RequestForm() {
           </div>
         </div>
 
-        <div className="form-header text-center mb-4 d-none d-md-block">
-          <h5 className="fw-bold m-0 text-dark">ثبت درخواست جدید</h5>
+        <div className="form-header text-center mb-2 d-none d-md-block">
+          <h6 className="fw-bold m-0 text-dark">ثبت درخواست جدید</h6>
           <span className="text-muted small-text">اطلاعات مسیر و کالا را وارد کنید</span>
         </div>
 
-<div className="route-card mb-3">
+        <div className="route-card mb-3">
 
-  <div className="route-item">
-    <div className="route-side">
-      <span className="route-dot origin-dot"></span>
-      <span className="route-label">مبدأ</span>
-    </div>
+          <div className="route-item">
+            <div className="route-side">
+              <span className="route-dot origin-dot"></span>
+              <span className="route-label">مبدأ</span>
+            </div>
 
-    <div className="route-address">
-      سیدرضی ۵۵، پلاک ۵۸
-    </div>
+            <div className="route-address">
+              سیدرضی ۵۵، پلاک ۵۸
+            </div>
 
-    <button className="route-edit">
-      <FaPencilAlt />
-    </button>
-  </div>
+            <button className="route-edit">
+              <FaPencilAlt />
+            </button>
+          </div>
 
-  <div className="route-separator">
-    <span>↓</span>
-  </div>
+          <div className="route-item">
+            <div className="route-side">
+              <span className="route-dot dest-dot"></span>
+              <span className="route-label">مقصد</span>
+            </div>
 
-  <div className="route-item">
-    <div className="route-side">
-      <span className="route-dot dest-dot"></span>
-      <span className="route-label">مقصد</span>
-    </div>
+            <div className="route-address">
+              سیدرضی ۵۵، پلاک ۵۸
+            </div>
 
-    <div className="route-address">
-      سیدرضی ۵۵، پلاک ۵۸
-    </div>
+            <button className="route-edit">
+              <FaPencilAlt />
+            </button>
+          </div>
 
-    <button className="route-edit">
-      <FaPencilAlt />
-    </button>
-  </div>
-
-</div>
+        </div>
 
         <Row className="mb-3">
           <Col xs={12}>
@@ -118,28 +113,47 @@ function RequestForm() {
 
         <Row className="mb-3">
           <Col xs={12}>
-            <div className="vehicle-banner">
+            <button
+              type="button"
+              className="vehicle-banner-btn w-100"
+              onClick={() => {
+              }}
+            >
               <div className="vehicle-text">
                 <span className="label">نوع وسیله</span>
-                <h6 className="title m-0">موتور <small className="subtitle">(همراه جعبه)</small></h6>
+                <h6 className="title m-0">
+                  موتور <small className="subtitle">(همراه جعبه)</small>
+                </h6>
               </div>
+
               <div className="vehicle-badge-icon">
                 <FaMotorcycle size={28} />
               </div>
-            </div>
+            </button>
           </Col>
         </Row>
 
         <Row className="gy-3 mb-3">
           <Col xs={6}>
             <div className="custom-floating-input">
-              <input type="text" id="stopTime" defaultValue="بدون توقف" placeholder=" " />
+              <select id="stopTime" defaultValue="بدون توقف">
+                <option value="بدون توقف">بدون توقف</option>
+                <option value="15">۱۵ دقیقه</option>
+                <option value="30">۳۰ دقیقه</option>
+              </select>
+
               <label htmlFor="stopTime">توقف (دقیقه)</label>
             </div>
           </Col>
           <Col xs={6}>
             <div className="custom-floating-input">
-              <input type="text" id="courierCode" defaultValue="کد راننده" placeholder=" " />
+              <input
+                type="text"
+                id="courierCode"
+                className="modern-input"
+                placeholder="کد یا نام قاصد را وارد کنید..."
+                autoComplete="off"
+              />
               <label htmlFor="courierCode">قاصد دلخواه</label>
             </div>
           </Col>
@@ -148,7 +162,13 @@ function RequestForm() {
         <Row className="mb-3">
           <Col xs={12}>
             <div className="custom-floating-input">
-              <input type="text" id="itemValue" defaultValue="زیر ۲۵ میلیون تومان" placeholder=" " />
+              <select id="itemValue" defaultValue="زیر ۲۵ میلیون تومان">
+                <option value="زیر ۲۵ میلیون تومان">زیر ۲۵ میلیون تومان</option>
+                <option value="۲۵ تا ۵۰ میلیون تومان">۲۵ تا ۵۰ میلیون تومان</option>
+                <option value="۵۰ تا ۱۰۰ میلیون تومان">۵۰ تا ۱۰۰ میلیون تومان</option>
+                <option value="بیش از ۱۰۰ میلیون تومان">بیش از ۱۰۰ میلیون تومان</option>
+              </select>
+
               <label htmlFor="itemValue">ارزش کالا</label>
             </div>
           </Col>
