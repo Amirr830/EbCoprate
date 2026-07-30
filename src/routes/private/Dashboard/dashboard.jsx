@@ -49,7 +49,7 @@ function Dashboard() {
                     <SideBar />
                 </div>
 
-                <div className="col-12 col-md-9 col-lg-9 col-xl-10 p-2 p-md-3">
+                <div className="col-12 col-md-9 col-lg-9 col-xl-10">
                     <div className="w-100 hideScroll" style={{
                         height: "100vh",
                         overflowY: "auto"

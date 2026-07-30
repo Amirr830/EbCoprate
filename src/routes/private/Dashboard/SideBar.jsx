@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Css/SideBar.css";
 import {
@@ -38,14 +39,14 @@ function SideBar() {
         Storages.removeUserToken();
         navigate(paths.public.login);
       },
-      () => {}
+      () => { }
     );
   };
 
   return (
     <aside className="sidebar-wrapper">
-<div className="sidebar-layout">        
-        <div className="sidebar-header-section">
+      <Row className="sidebar-layout g-0 h-100">
+        <Col xs="auto" className="sidebar-header-section">
           <div className="d-flex align-items-center gap-3 sidebar-top">
             <div className="profile-image">
               <BsPersonCircle size={32} />
@@ -56,9 +57,9 @@ function SideBar() {
             </div>
           </div>
           <div className="sidebar-divider"></div>
-        </div>
+        </Col>
 
-        <div className="sidebar-menu-container flex-grow-1 custom-scrollbar">
+        <Col className="sidebar-menu-container custom-scrollbar">
           {menus.map((item) => (
             <button
               key={item.id}
@@ -72,17 +73,17 @@ function SideBar() {
               </div>
             </button>
           ))}
-        </div>
+        </Col>
 
-        <div className="sidebar-footer-section">
-          <div className="sidebar-divider my-2"></div>
+        <Col xs="auto" className="sidebar-footer-section">
+          <div className="sidebar-divider "></div>
           <button className="logout-button" onClick={handleLogout}>
             <BsBoxArrowRight size={18} />
             <span>خروج از حساب کاربری</span>
           </button>
-        </div>
+        </Col>
 
-      </div>
+      </Row>
     </aside>
   );
 }

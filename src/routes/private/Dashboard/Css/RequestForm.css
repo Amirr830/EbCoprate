@@ -715,3 +715,47 @@
     white-space:nowrap;
     flex-shrink:0;
 }
+
+
+
+@media (max-width: 991.98px) {
+
+  .route-card{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .route-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    background: #fafbfc;
+    border: 1px solid #e8edf3;
+  }
+
+  .route-side{
+    min-width: 70px;
+  }
+
+  .route-address{
+    flex: 1;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.6;
+    font-size: 13px;
+  }
+
+  .route-edit{
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+}

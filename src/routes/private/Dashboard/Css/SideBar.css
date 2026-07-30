@@ -82,8 +82,8 @@
 
 .sidebar-menu-container{
     flex:none;
-    overflow-y:auto;
-    max-height:620px;
+    /* overflow-y:auto; */
+    max-height:500px;
     padding-left:4px;
     padding-right:2px;
 }
@@ -232,9 +232,9 @@
     box-shadow: 0 8px 18px rgba(239, 68, 68, .28);
 }
 .sidebar-layout{
-    display:flex;
-    flex-direction:column;
     height:100%;
+    flex-direction:column;
+    flex-wrap:nowrap;
 }
 
 @media (max-height:850px) {
