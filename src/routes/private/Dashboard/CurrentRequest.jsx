@@ -64,7 +64,7 @@ function CurrentRequest() {
                 <span className="badge bg-white text-dark border rounded-pill px-2 py-1 small-text">موتور هوندا</span>
               </div>
               <div className="d-flex justify-content-between align-items-center small-text text-muted">
-                <span>0915 123 4578</span>
+                <span>09151231231</span>
                 <span>کد قاصد: 999</span>
               </div>
             </div>

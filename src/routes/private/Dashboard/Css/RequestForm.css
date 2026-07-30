@@ -122,19 +122,16 @@
     box-shadow:0 8px 22px rgba(0,0,0,.18);
 }
 
-/* موتور همراه جعبه */
 .vehicle-option.box-bike{
     background:linear-gradient(135deg,#42a5f5,#1e88e5);
     color:#fff;
 }
 
-/* موتور بدون جعبه */
 .vehicle-option.bike{
     background:linear-gradient(135deg,#ffd54f,#fbc02d);
     color:#333;
 }
 
-/* ماشین */
 .vehicle-option.car{
     background:linear-gradient(135deg,#66bb6a,#2e7d32);
     color:#fff;
@@ -527,20 +524,15 @@
 }
 
 .service-box{
-
     min-height:58px;
     border:1px solid #d9e3ee;
     border-radius:16px;
     background:#fff;
-
     display:flex;
     justify-content:space-between;
     align-items:center;
-
     padding:10px 14px;
-
     cursor:pointer;
-
     transition:.3s;
 
 }
