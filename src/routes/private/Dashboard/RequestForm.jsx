@@ -5,18 +5,39 @@ import { FaPencilAlt, FaChevronDown, FaTag, FaMotorcycle, FaPlus, FaTimes } from
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoWalletOutline } from 'react-icons/io5';
 import SideBar from './SideBar';
+import { FaCar } from "react-icons/fa";
+
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
   const [cash, setCash] = useState(true);
-  const [selectedChips, setSelectedChips] = useState([false, false, false]);
   const [showMenu, setShowMenu] = useState(false);
   const handleCloseMenu = () => setShowMenu(false);
   const handleShowMenu = () => setShowMenu(true);
-  const toggleChip = (index) => {
-    const updated = [...selectedChips];
-    updated[index] = !updated[index];
-    setSelectedChips(updated);
+  const [vehicleType, setVehicleType] = useState("موتور (همراه جعبه)");
+  const dropdownRef = useRef(null);
+
+  const serviceOptions = [
+    "بار سنگین",
+    "صندوق",
+    "رفت و برگشت",
+    "حمل مرسوله شکستنی",
+    "بیمه بار",
+    "ارسال فوری",
+    "نیاز به تماس",
+  ];
+
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [serviceOpen, setServiceOpen] = useState(false);
+
+  const toggleService = (item) => {
+    if (selectedServices.includes(item)) {
+      setSelectedServices(
+        selectedServices.filter((x) => x !== item)
+      );
+    } else {
+      setSelectedServices([...selectedServices, item]);
+    }
   };
 
   return (
@@ -64,10 +85,13 @@ function RequestForm() {
           </div>
         </div>
 
-        <div className="form-header text-center mb-2 d-none d-md-block">
-          <h6 className="fw-bold m-0 text-dark">ثبت درخواست جدید</h6>
-          <span className="text-muted small-text">اطلاعات مسیر و کالا را وارد کنید</span>
-        </div>
+        <Row className="mb-3">
+          <Col xs={12}>
+            <button type="button" className="add-dest-btn w-100">
+              <span className="plus-icon">+</span> افزودن مقصد جدید
+            </button>
+          </Col>
+        </Row>
 
         <div className="route-card mb-3">
 
@@ -105,74 +129,138 @@ function RequestForm() {
 
         <Row className="mb-3">
           <Col xs={12}>
-            <button type="button" className="add-dest-btn w-100">
-              <span className="plus-icon">+</span> افزودن مقصد جدید
-            </button>
-          </Col>
-        </Row>
+            <div className="vehicle-dropdown">
+              <label className="vehicle-label">
+                نوع وسیله
+              </label>
+              <details ref={dropdownRef}>
+                <summary>
+                  <div className="selected-vehicle">
+                    <div>
+                      <div className="vehicle-name">
+                        {vehicleType}
+                      </div>
+                      <small>
+                        انتخاب وسیله نقلیه
+                      </small>
+                    </div>
+                    {
+                      vehicleType === "ماشین"
+                        ? <FaCar size={15} />
+                        : <FaMotorcycle size={15} />
+                    }
+                  </div>
+                </summary>
 
-        <Row className="mb-3">
-          <Col xs={12}>
-            <button
-              type="button"
-              className="vehicle-banner-btn w-100"
-              onClick={() => {
-              }}
-            >
-              <div className="vehicle-text">
-                <span className="label">نوع وسیله</span>
-                <h6 className="title m-0">
-                  موتور <small className="subtitle">(همراه جعبه)</small>
-                </h6>
-              </div>
+                <div
+                  className="vehicle-option box-bike"
+                  onClick={() => {
+                    setVehicleType("موتور (همراه جعبه)");
+                    dropdownRef.current.removeAttribute("open");
+                  }}
+                >
+                  <div>
+                    <div className="title">
+                      موتور همراه جعبه
+                    </div>
+                    <div className="subtitle">
+                      مناسب بسته و مرسوله
+                    </div>
+                  </div>
+                  <FaMotorcycle size={15} />
+                </div>
 
-              <div className="vehicle-badge-icon">
-                <FaMotorcycle size={28} />
-              </div>
-            </button>
+                <div
+                  className="vehicle-option bike"
+                  onClick={() => {
+                    setVehicleType("موتور (بدون جعبه)");
+                    dropdownRef.current.removeAttribute("open");
+                  }}
+                >
+
+                  <div>
+                    <div className="title">
+                      موتور بدون جعبه
+                    </div>
+                    <div className="subtitle">
+                      سریع‌ترین ارسال
+                    </div>
+                  </div>
+                  <FaMotorcycle size={15} />
+                </div>
+
+                <div
+                  className="vehicle-option car"
+                  onClick={() => {
+                    setVehicleType("ماشین");
+                    dropdownRef.current.removeAttribute("open");
+                  }}
+                >
+
+                  <div>
+                    <div className="title">
+                      ماشین
+                    </div>
+                    <div className="subtitle">
+                      مناسب بارهای حجیم
+                    </div>
+                  </div>
+                  <FaCar size={15} />
+                </div>
+              </details>
+            </div>
+
           </Col>
         </Row>
 
         <Row className="gy-3 mb-3">
-          <Col xs={6}>
-            <div className="custom-floating-input">
+
+          <Col xs={12} md={6} lg={4}>
+            <div className="custom-floating-input modern-field">
               <select id="stopTime" defaultValue="بدون توقف">
-                <option value="بدون توقف">بدون توقف</option>
-                <option value="15">۱۵ دقیقه</option>
-                <option value="30">۳۰ دقیقه</option>
+                <option>بدون توقف</option>
+                <option>۱۵ دقیقه</option>
+                <option>۳۰ دقیقه</option>
               </select>
 
-              <label htmlFor="stopTime">توقف (دقیقه)</label>
+              <label htmlFor="stopTime">
+                توقف (دقیقه)
+              </label>
             </div>
           </Col>
-          <Col xs={6}>
-            <div className="custom-floating-input">
+
+          <Col xs={12} md={6} lg={4}>
+            <div className="custom-floating-input modern-field">
               <input
-                type="text"
                 id="courierCode"
-                className="modern-input"
-                placeholder="کد یا نام قاصد را وارد کنید..."
+                type="text"
+                placeholder="کد یا نام قاصد..."
                 autoComplete="off"
               />
-              <label htmlFor="courierCode">قاصد دلخواه</label>
+
+              <label htmlFor="courierCode">
+                قاصد دلخواه
+              </label>
             </div>
           </Col>
-        </Row>
 
-        <Row className="mb-3">
-          <Col xs={12}>
-            <div className="custom-floating-input">
+          <Col xs={12} md={12} lg={4}>
+            <div className="custom-floating-input modern-field">
               <select id="itemValue" defaultValue="زیر ۲۵ میلیون تومان">
-                <option value="زیر ۲۵ میلیون تومان">زیر ۲۵ میلیون تومان</option>
-                <option value="۲۵ تا ۵۰ میلیون تومان">۲۵ تا ۵۰ میلیون تومان</option>
-                <option value="۵۰ تا ۱۰۰ میلیون تومان">۵۰ تا ۱۰۰ میلیون تومان</option>
-                <option value="بیش از ۱۰۰ میلیون تومان">بیش از ۱۰۰ میلیون تومان</option>
+                <option>زیر ۲۵ میلیون تومان</option>
+                <option>۲۵ تا ۵۰ میلیون تومان</option>
+                <option>۵۰ تا ۱۰۰ میلیون تومان</option>
+                <option>بیش از ۱۰۰ میلیون تومان</option>
               </select>
 
-              <label htmlFor="itemValue">ارزش کالا</label>
+              <label htmlFor="itemValue">
+                ارزش کالا
+              </label>
             </div>
           </Col>
+
         </Row>
+
 
         <Row className="mb-3">
           <Col xs={12}>
@@ -182,27 +270,83 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="mb-2">
+
+        <Row className="mb-3">
           <Col xs={12}>
-            <div className="modern-accordion">
-              <span>ویژگی‌های سرویس</span>
-              <FaChevronDown className="accordion-arrow" />
+            <div className="service-dropdown">
+
+              <label className="service-label">
+                ویژگی سرویس
+              </label>
+
+              <div
+                className={`service-box ${serviceOpen ? "active" : ""}`}
+                onClick={() => setServiceOpen(!serviceOpen)}
+              >
+
+                <div className="selected-tags">
+
+                  {selectedServices.length === 0 ? (
+
+                    <div>
+                    </div>
+
+                  ) : (
+                    selectedServices.map((item) => (
+                      <div
+                        className="service-tag"
+                        key={item}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {item}
+
+                        <button
+                          onClick={() =>
+                            setSelectedServices(
+                              selectedServices.filter(
+                                (x) => x !== item
+                              )
+                            )
+                          }
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
+                <FaChevronDown
+                  className={`dropdown-icon ${serviceOpen ? "rotate" : ""
+                    }`}
+                />
+              </div>
+
+              {serviceOpen && (
+                <div className="service-menu">
+                  {serviceOptions.map((item) => (
+                    <div
+                      key={item}
+                      className={`service-item ${selectedServices.includes(item)
+                        ? "selected"
+                        : ""
+                        }`}
+                      onClick={() => toggleService(item)}
+                    >
+                      <span>{item}</span>
+                      {selectedServices.includes(item) && (
+                        <span className="check">✓</span>
+                      )}
+
+                    </div>
+                  ))}
+                </div>
+              )}
+
             </div>
           </Col>
         </Row>
 
-        <Row className="gx-2 gy-2 mb-3">
-          {['بار سنگین', 'صندوق', 'رفت و برگشت'].map((tag, idx) => (
-            <Col xs={4} key={idx}>
-              <div
-                className={`modern-chip ${selectedChips[idx] ? 'active' : ''}`}
-                onClick={() => toggleChip(idx)}
-              >
-                {tag}
-              </div>
-            </Col>
-          ))}
-        </Row>
+
 
         <Row className="mb-2">
           <Col xs={12}>
@@ -241,10 +385,9 @@ function RequestForm() {
             </div>
           </Col>
         </Row>
-
         <Row className="mb-3 g-2 align-items-stretch">
 
-          <Col xs={12} md={5}>
+          <Col xs={4} md={5}>
             <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
               <span className="price-title">هزینه سرویس</span>
 
@@ -254,7 +397,7 @@ function RequestForm() {
             </div>
           </Col>
 
-          <Col xs={12} md={7}>
+          <Col xs={8} md={7}>
             <div className="modern-discount-bar h-100">
               <div className="d-flex align-items-center gap-2 flex-grow-1">
                 <FaTag className="discount-icon text-muted" />
@@ -276,6 +419,7 @@ function RequestForm() {
           </Col>
 
         </Row>
+
 
         <Row>
           <Col xs={12}>
