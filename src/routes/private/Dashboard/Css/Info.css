@@ -19,17 +19,16 @@
   box-sizing: border-box;
   width: 100%;
 }
-
 .history-card {
   min-height: 220px;
 }
 
 .quick-request-card {
-  min-height: 100px;
+  min-height: 220px;
 }
 
 .driver-performance-card {
-  min-height: 320px;
+  min-height: 285px;
 }
 
 .card-title {

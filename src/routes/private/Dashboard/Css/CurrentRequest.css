@@ -14,6 +14,7 @@
 }
 
 .request-card {
+  min-height: 250px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -143,14 +144,12 @@
 
 .address-label{
     font-size:11px;
-    font-weight:700;
     margin-bottom:2px;
 }
 
 .address-value{
     font-size:12px;
     color:#495057;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
