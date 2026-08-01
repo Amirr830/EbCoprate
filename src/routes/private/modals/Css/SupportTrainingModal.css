@@ -1,0 +1,147 @@
+.support-modal .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.support-modal-body {
+    padding: 24px;
+    background: #ffffff;
+    position: relative;
+    font-family: inherit;
+}
+
+.support-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: red;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+}
+
+.support-close-btn:hover {
+    background-color: #f3f4f6;
+    color: #ef4444;
+}
+
+.support-title {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #9ca3af;
+    margin-bottom: 12px;
+    padding-left: 5px;
+}
+
+.support-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 20px;
+    background: #ffffff;
+}
+
+.support-top-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.support-avatar-wrapper {
+    flex-shrink: 0;
+    width: 100px;
+    height: 90px;
+    background: #f0f4f8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+}
+
+.support-avatar-icon {
+    font-size: 48px;
+    color: #1e3a8a;
+    display: flex;
+}
+
+.support-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex-grow: 1;
+    align-items: flex-end;
+}
+
+.support-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.support-contact-item:hover {
+    transform: translateX(-3px);
+}
+
+.contact-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.contact-icon {
+    color: #22c55e;
+    font-size: 15px;
+}
+
+.support-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.support-action-btn {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #10b981;
+    border-radius: 8px;
+    background: #00eb5b;
+    color: #064e3b;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.support-action-btn:hover {
+    background: #00d653;
+    box-shadow: 0 4px 12px rgba(0, 235, 91, 0.3);
+    transform: translateY(-1px);
+}
+
+.support-action-btn:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 16px;
+    color: #064e3b;
+}

@@ -15,6 +15,8 @@ import Storages from "../../../app/storages"
 import dictionary from "../../../../src/app/dictionary.json"
 import answerModal from "../../../modals/answerModal";
 import Wallet from "../Wallet/Wallet"
+import SupportTrainingModal from "../modals/SupportTrainingModal"
+
 
 function Header() {
     const navigate = useNavigate();
@@ -66,10 +68,12 @@ function Header() {
                                 <span>دعوت از دوستان</span>
                             </button>
 
-                            <button className="header-btn support-btn">
-                                <FaHeadset />
-                                <span>پشتیبانی و آموزش</span>
-                            </button>
+                            <SupportTrainingModal>
+                                <button className="header-btn support-btn">
+                                    <FaHeadset />
+                                    <span>پشتیبانی و آموزش</span>
+                                </button>
+                            </SupportTrainingModal>
 
                         </div>
                     </div>
