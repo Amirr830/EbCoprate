@@ -16,7 +16,7 @@ import dictionary from "../../../../src/app/dictionary.json"
 import answerModal from "../../../modals/answerModal";
 import Wallet from "../Wallet/Wallet"
 import SupportTrainingModal from "../modals/SupportTrainingModal"
-
+import InviteFriendsModal from "../modals/InviteFriendsModal"
 
 function Header() {
     const navigate = useNavigate();
@@ -63,10 +63,12 @@ function Header() {
                     <div className="col-auto ms-auto">
                         <div className="d-flex align-items-center gap-2">
 
-                            <button className="header-btn invite-btn">
-                                <FaUserFriends />
-                                <span>دعوت از دوستان</span>
-                            </button>
+                            <InviteFriendsModal>
+                                <button className="header-btn invite-btn">
+                                    <FaUserFriends />
+                                    <span>دعوت از دوستان</span>
+                                </button>
+                            </InviteFriendsModal>
 
                             <SupportTrainingModal>
                                 <button className="header-btn support-btn">
