@@ -15,73 +15,58 @@ import RequestForm from "./RequestForm";
 import CurrentForm from "./CurrentRequest";
 import Info from "./Info";
 import SideBar from "./SideBar";
-import './Css/Dashboard.css';
+import "./Css/Dashboard.css";
 
 function Dashboard() {
-    const navigate = useNavigate();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen((prev) => !prev);
-    };
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
 
-    return (
+  return (
+    <div className="container-fluid dashboard-page p-0">
+      {isSidebarOpen && (
         <div
-            className="container-fluid p-0"
-            style={{
-                minHeight: "100vh",
-                background: "#f5f6fa",
-                direction: "rtl"
-            }}
-        >
-            {isSidebarOpen && (
-                <div
-                    className="sidebar-backdrop d-md-none"
-                    onClick={() => setIsSidebarOpen(false)}
-                />
-            )}
+          className="sidebar-backdrop d-md-none"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+      <div className="dashboard-layout desktop-top-space">
+        <main className="dashboard-main hideScroll">
+          <div className="dashboard-content">
+            <div className="dashboard-inner container-fluid">
+              <div className="row g-3">
 
-            <div className="row g-0">
-                <div
-                    className={`col-12 col-md-3 col-lg-3 col-xl-2 p-2 custom-sidebar ${isSidebarOpen ? "open-mobile" : ""
-                        }`}
-                >
-                    <SideBar />
+                <div className="col-12 col-lg-5 col-xxl-4">
+                  <div className="dashboard-card">
+                    <RequestForm
+                      toggleSidebar={toggleSidebar}
+                      isSidebarOpen={isSidebarOpen}
+                    />
+                  </div>
                 </div>
 
-                <div className="col-12 col-md-9 col-lg-9 col-xl-10">
-                    <div className="w-100 hideScroll" style={{
-                        height: "100vh",
-                        overflowY: "auto"
-                    }}>
-
-                        <div className="d-none d-md-block mb-3">
-                            <Header />
-                        </div>
-
-                        <div className="row g-3">
-
-                            <div className="col-12 col-lg-4">
-                                <RequestForm
-                                    toggleSidebar={toggleSidebar}
-                                    isSidebarOpen={isSidebarOpen}
-                                />
-                            </div>
-
-                            <div className="col-12 col-lg-4 d-none d-md-block">
-                                <CurrentForm />
-                            </div>
-
-                            <div className="col-12 col-lg-4 d-none d-md-block">
-                                <Info />
-                            </div>
-                        </div>
-                    </div>
+                <div className="col-lg-4 col-xxl-4 d-none d-md-block">
+                  <div className="dashboard-card">
+                    <CurrentForm />
+                  </div>
                 </div>
 
+                <div className="col-lg-4 col-xxl-4 d-none d-md-block">
+                  <div className="dashboard-card">
+                    <Info />
+                  </div>
+                </div>
+
+              </div>
             </div>
-        </div>
-    );
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 }
 
 export default Dashboard;

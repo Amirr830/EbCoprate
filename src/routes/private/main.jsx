@@ -12,7 +12,7 @@ import Settings from "./settings";
 import DashboardContext from '../../contexts/dashboardContext';
 import NavbarReducer from '../../reducers/navbarReducer';
 import { CgClose } from "react-icons/cg";
-
+import "./main.css"
 import Cars from "./definitions/cars";
 import CarBrands from "./definitions/carBrands";
 import Persons from "./definitions/persons";
@@ -82,6 +82,8 @@ import { useSocket } from "contexts/socketContext";
 import RFIDChart from "./reports/RFIDChart";
 import ShiftReport from "./reports/shiftReport";
 import Wallet from "./Wallet/Wallet";
+import Header from "./Dashboard/Header"
+import Sidebarr from "./Dashboard/SideBar"
 
 function Main(props) {
   var navigate = useNavigate()
@@ -223,16 +225,13 @@ function Main(props) {
   var socket = useSocket()
   useEffect(() => {
 
-    // if (socket != null) {
     console.log("sssssssssgvsdgv")
 
     socket?.on("message", data => {
       console.log("sssssssssss", data)
-      // setAlarmCount(data)
     })
 
     socket?.on("ringing", data => {
-      // setCallerIdData(data)+
       console.log("sssssssssss", data)
 
     })
@@ -240,7 +239,6 @@ function Main(props) {
       socket?.off("message");
       socket?.off("ringing");
     };
-    // }
   }, [socket])
 
 
@@ -289,120 +287,84 @@ function Main(props) {
               style={{ backgroundColor: "#ECEFF1" }}
               onTouchStart={() => { setOpen(false) }}
               onMouseUp={() => { setOpen(false) }}  >
-              {/* نوار منو در بالا  */}
-              <div className="position-fixed   " style={{ height: navbarSize }}>
-                <div className="d-flex   col-12 py-2 align-items-center ">
-                  {/* <TiThLarge className="  text-hover" size={30} onClick={() => {
-                    setOpen(true)
-                  }} /> */}
-                  <div className="d-none d-lg-block">
-                    <div className=" row  g-1 ">
-                      {
-                        pageHistory.map((item, index) => {
-                          return <div className="w-auto" key={index}>
-                            <div className="card m-0 p-0 px-2 py-1  card-hover aPointer"
-                              onAuxClick={(e) => {
-                                e.preventDefault()
-                                var newArray = pageHistory.filter(page => page != item)
-                                setPageHistory(newArray)
-                              }}
-                              onClick={() => {
-                                navigate(item)
-                              }} >
-                              <div className="d-flex align-items-center align-content-center">
-                                <CgClose className="text-hover ms-2 " onClick={(e) => {
-                                  e.preventDefault()
 
-                                  e.stopPropagation();
-                                  var newArray = pageHistory.filter(page => page != item)
-                                  setPageHistory(newArray)
-                                }} />
-                                <p className=" p-0 m-0 noSelect">
-                                  {dictionary[item.split('/')[item.split('/').length - 1]]}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        })
-                      }
 
+
+
+
+
+
+
+
+
+
+
+
+
+              <div
+                className="d-none d-md-block position-fixed"
+                style={{
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  height: "100px",
+                  background: "#fff",
+                  zIndex: 1000,
+                }}
+              >
+                <div className="container-fluid h-100">
+                  <div className="row h-100 g-0 align-items-center">
+
+                    <div className="col-md-4 col-lg-3 col-xl-3 col-xxl-2 h-100">
+                      <Sidebarr />
                     </div>
-                  </div>
 
-
-
-
-
-
-
-
-                  <div className="me-auto">
-
-                    <label className=" px-2 text-center w-auto" dir="ltr">{
-                      location.pathname.split('/').map((item, index, total) => {
-                        return <label
-                          key={index}
-                          className={(index == total.length - 1 ?
-                            "ps-1 iranSansBold small" :
-                            " ps-1  small opacity-75")}
-                          onClick={
-                            () => {
-                              // var path = location.pathname.split('/')
-                              //   .slice(0, index + 1)
-                              //   .filter(find => (find != '' && dictionary[find]))
-
-                              // var path1 = location.pathname.split('/')
-                              //   .filter(find => (find != '' && dictionary[find]))
-
-                              // var a = path.length - path1.length
-                              // // console.log(path.length-path1.length)
-                              // if (a < 0)
-                              //   navigate(a)
-                            }
-                          }
-                        >
-                          {(item != '' && dictionary[item]) ? '\\\ ' + dictionary[item] : ''}
-                        </label>
-                      })}
-                    </label>
-
-                    {
-                      showBack ?
-                        <>
-                          <TiHome className="mx-2 text-hover aPointer  " size={25} onClick={() => {
-
-                            navigate(paths.private.dashboard)
-                          }} />
-
-                          <FaArrowLeft
-                            className="mx-2 text-hover aPointer  " size={25} onClick={() => {
-                              navigate(-1)
-                            }} />
-
-                        </>
-                        :
-                        <TiPower className=" mx-2  text-hover  aPointer fw-bold " size={35} onClick={() => {
-                          answerModal.show("آیا مایل به خروج از حساب کاربری هستید؟", () => {
-                            Storages.removeUserToken()
-                            navigate(paths.public.login)
-                          }, () => {
-
-                          })
-
-                        }} />
-
-                    }
+                    <div className="col-md-8 col-lg-9 col-xl-9 col-xxl-10 h-100">
+                      <Header />
+                    </div>
 
                   </div>
-
                 </div>
-
               </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               {/* بدنه اصلی */}
-              <div className=" p-sm-0 p-0 m-0 d-flex 
-              justify-content-center align-items-top position-fixed overflow-hidden"
-                style={{ top: navbarSize, bottom: 25 }}
+              <div className="p-sm-0 p-0 m-0 d-flex justify-content-center align-items-top position-relative"
+                style={{
+  marginTop: navbarSize,
+  paddingBottom: 25,
+  width: "100%",
+  minHeight: "100vh",
+  overflowY: "auto"
+}}
                 ref={divScrollRef}
               >
                 <div className="container-fluid p-0 m-0">
@@ -459,8 +421,8 @@ function Main(props) {
                     <Route path={paths.private.definitions.shiftGroups} element={<ShiftGroups />} />
                     <Route path={paths.private.definitions.shiftPattern} element={<ShiftPattern />} />
 
-                    <Route path="/control-panel/67/definitions/wallet" element={<Wallet />} />
-                    
+                    <Route path={paths.private.definitions.Wallet} element={<Wallet />} />
+
                     <Route path={paths.private.actions.dashboard} element={<Actions />} />
                     <Route path={paths.private.actions.reserve} element={<Reserve />} />
                     <Route path={paths.private.actions.tripsMonit} element={<TripsMonit />} />
@@ -476,7 +438,7 @@ function Main(props) {
                 </div>
               </div>
 
-              <div className="  position-fixed bottom-0 justify-content-center align-items-center d-flex opacity-50" style={{ height: 25, backgroundColor: "#CFD8DC" }}>
+              <div className="  position-fixed bottom-0 justify-content-center align-items-center d-flex opacity-50" style={{ height: 25, backgroundColor: "#CFD8DC", zIndex: "1000" }}>
                 <FaDotCircle className="text-primary" />
                 <label className="ms-auto px-3">{userInfo?.firstName} {userInfo?.lastName} </label>
                 <label className="me-auto">efspco.ir</label>

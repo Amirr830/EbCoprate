@@ -32,17 +32,16 @@ function Header() {
                     <div className="col-auto">
                         <div className="d-flex align-items-center gap-3">
 
-                            <button
-                                className="wallet-card"
-                                onClick={() => {
-                                    console.log("ssssssssssssssss");
-                                    navigate(paths.private.definitions.Wallet);
-                                }}
-                            >
-                                <FaPlus className="wallet-plus-icon" />
-                                <span className="wallet-price">25,000 تومان</span>
-                                <FaWallet className="wallet-icon" />
-                            </button>
+                            {location.pathname === paths.private.dashboard && (
+                                <button
+                                    className="wallet-card"
+                                    onClick={() => navigate(paths.private.definitions.Wallet)}
+                                >
+                                    <FaPlus className="wallet-plus-icon" />
+                                    <span className="wallet-price">25,000 تومان</span>
+                                    <FaWallet className="wallet-icon" />
+                                </button>
+                            )}
 
                         </div>
                     </div>

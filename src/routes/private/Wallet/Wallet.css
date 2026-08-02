@@ -1,3 +1,12 @@
 .wallet {
-     background-color: aqua;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 180px;
+    padding-right: 420px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+    background: #f5f7fb;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
