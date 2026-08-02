@@ -323,6 +323,7 @@ function Main(props) {
                       <Header />
                     </div>
 
+
                   </div>
                 </div>
               </div>
@@ -359,12 +360,12 @@ function Main(props) {
               {/* بدنه اصلی */}
               <div className="p-sm-0 p-0 m-0 d-flex justify-content-center align-items-top position-relative"
                 style={{
-  marginTop: navbarSize,
-  paddingBottom: 25,
-  width: "100%",
-  minHeight: "100vh",
-  overflowY: "auto"
-}}
+                  marginTop: navbarSize,
+                  paddingBottom: 25,
+                  width: "100%",
+                  minHeight: "100vh",
+                  overflowY: "auto"
+                }}
                 ref={divScrollRef}
               >
                 <div className="container-fluid p-0 m-0">

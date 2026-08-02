@@ -1,88 +1,93 @@
 import React from "react";
 import "./Wallet.css";
-import { Container, Row, Col } from "react-bootstrap";
-import {
-  FaWallet,
-  FaCreditCard,
-  FaHistory,
-  FaArrowUp,
-  FaArrowDown,
-} from "react-icons/fa";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { FaWallet } from "react-icons/fa";
 
 function Wallet() {
   return (
-    <div className="wallet">
-      <Container fluid>
-        <Row className="g-4">
+    <div className="wallet-page-wrapper">
+      <Container fluid className="px-3">
+        
+        <Row className="mb-2 mb-lg-3 align-items-center">
+          <Col xs={12} className="d-flex justify-content-between align-items-center text-muted small">
 
-          <Col xs={12} lg={7}>
-            <div className="wallet-card transaction-card">
+          </Col>
+        </Row>
 
-              <div className="card-title">
-                <FaHistory />
-                <span>تاریخچه تراکنش ها</span>
+        <Row className="g-3 align-items-stretch">
+          
+          <Col xs={12} lg={3} className="d-none d-lg-block"></Col>
+
+          <Col xs={12} lg={4}>
+            <div className="wallet-card h-100 d-flex flex-column justify-content-between p-3 p-xl-4">
+              <div className="d-flex justify-content-end text-muted small fw-bold">
+                تاریخچه مالی
               </div>
 
-              <div className="empty-history">
-                <FaWallet className="empty-icon" />
-                <h5>هنوز تراکنشی ثبت نشده است</h5>
-                <p>پس از اولین شارژ یا پرداخت، اطلاعات اینجا نمایش داده می‌شود.</p>
+              <div className="text-center text-muted my-auto py-4">
+                <FaWallet size={40} className="mb-3 opacity-25" />
+                <h6 className="fw-bold mb-1 text-secondary">هنوز تراکنشی ثبت نشده است</h6>
+                <small className="text-muted">پس از اولین شارژ یا پرداخت، اطلاعات اینجا نمایش داده می‌شود.</small>
               </div>
-
             </div>
           </Col>
 
-          <Col xs={12} lg={5}>
-            <div className="wallet-card">
+          <Col xs={12} lg={4}>
+            <div className="wallet-card h-100 p-3 p-xl-4 d-flex flex-column justify-content-between">
+              
+              <Row className="align-items-center mb-3">
+                <Col xs={5} className="text-center">
+                  <div className="wallet-illustration mx-auto d-flex align-items-center justify-content-center">
+                    <FaWallet size={32} className="text-success" />
+                  </div>
+                </Col>
+                <Col xs={7} className="text-end">
+                  <div className="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-success bg-opacity-10 text-success fw-bold dir-rtl">
+                    <FaWallet />
+                    <span>موجودی: ۰ ریال</span>
+                  </div>
+                </Col>
+              </Row>
 
-              <div className="wallet-balance">
-
-                <div className="wallet-icon">
-                  <FaWallet />
-                </div>
-
-                <div>
-                  <small>موجودی کیف پول</small>
-                  <h2>۰ تومان</h2>
-                </div>
-
+              <div className="text-end mb-3">
+                <h6 className="fw-bold mb-1 text-dark">افزایش موجودی کیف پول سازمانی</h6>
+                <p className="text-muted small mb-0">
+                  مبلغ موردنظرتان برای افزایش موجودی کیف پول سازمان را وارد کنید.
+                </p>
               </div>
 
-              <div className="charge-box">
-                <label>مبلغ شارژ</label>
-                <div className="amount-buttons">
-                  <button>50,000</button>
-                  <button>100,000</button>
-                  <button>200,000</button>
-                </div>
+              <div className="mb-3">
+                <div className="text-end text-muted small mb-2">مبالغ پیشنهادی</div>
+                <Row className="g-2">
+                  <Col xs={4}>
+                    <Button variant="outline-secondary" className="w-100 rounded-pill py-1 text-nowrap">
+                      ۱,۰۰۰,۰۰۰ ریال
+                    </Button>
+                  </Col>
+                  <Col xs={4}>
+                    <Button variant="outline-secondary" className="w-100 rounded-pill py-1 text-nowrap">
+                      ۵,۰۰۰,۰۰۰ ریال
+                    </Button>
+                  </Col>
+                  <Col xs={4}>
+                    <Button variant="outline-secondary" className="w-100 rounded-pill py-1 text-nowrap">
+                      ۱۰,۰۰۰,۰۰۰ ریال
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
 
-                <input
+              <Form.Group className="mb-3">
+                <Form.Control
                   type="text"
                   placeholder="مبلغ دلخواه"
+                  className="text-center py-2 shadow-none border-secondary-subtle"
                 />
+              </Form.Group>
 
-                <button className="pay-btn">
-                  <FaCreditCard />
-                  پرداخت آنلاین
-                </button>
-
-              </div>
-
-              <div className="wallet-info">
-                <div>
-                  <FaArrowDown className="text-success" />
-                  <span>واریز امروز</span>
-                  <strong>۰ تومان</strong>
-                </div>
-
-                <div>
-                  <FaArrowUp className="text-danger" />
-                  <span>برداشت امروز</span>
-                  <strong>۰ تومان</strong>
-                </div>
-
-              </div>
-
+              <Button className="w-100 py-2 rounded-3 border-0 bg-emerald">
+                پرداخت آنلاین
+              </Button>
 
             </div>
           </Col>
