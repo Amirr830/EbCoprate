@@ -34,12 +34,12 @@ function Header() {
 
                             {location.pathname === paths.private.dashboard && (
                                 <button
-                                    className="wallet-card"
+                                    className="btn btn-warning"
+                                    style={{fontSize:"25px" , height:"40px" , borderRadius:"8px" , width:"150px"}}
                                     onClick={() => navigate(paths.private.definitions.Wallet)}
                                 >
-                                    <FaPlus className="wallet-plus-icon" />
+                                    <FaWallet className="wallet-icon" style={{marginLeft:"10px"}}/>
                                     <span className="wallet-price">25,000 تومان</span>
-                                    <FaWallet className="wallet-icon" />
                                 </button>
                             )}
 

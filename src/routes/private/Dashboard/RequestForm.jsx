@@ -70,7 +70,7 @@ function RequestForm() {
             >
               <RxHamburgerMenu size={24} />
             </button>
-            <span className="fw-bold fs-5 me-1">ثبت درخواست</span>
+            {/* <span className="fw-bold fs-5 me-1">ثبت درخواست</span> */}
           </div>
 
           <div
