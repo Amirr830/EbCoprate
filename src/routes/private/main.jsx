@@ -13,6 +13,7 @@ import DashboardContext from '../../contexts/dashboardContext';
 import NavbarReducer from '../../reducers/navbarReducer';
 import { CgClose } from "react-icons/cg";
 import "./main.css"
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import Cars from "./definitions/cars";
 import CarBrands from "./definitions/carBrands";
 import Persons from "./definitions/persons";
@@ -169,6 +170,9 @@ function Main(props) {
   var [showBack, setShowBack] = useState(false)
 
   var location = useLocation()
+
+  const isDashboard =
+    location.pathname === paths.private.dashboard;
   var [pageHistory, setPageHistory] = useState([])
   useEffect(() => {
     if (location.pathname == paths.private.actions.dashboard) {
@@ -267,17 +271,41 @@ function Main(props) {
             onTouchEnd={onTouchEnd}
             dir="rtl">
 
-            {/* ساید بار */}
-            <div className="position-absolute end-0 
-             col-8 col-sm-6 col-md-4 col-lg-3 aScroll 
-             overflow-auto d-flex row vh-100 m-0 p-0"
-              style={{ zIndex: isOpen ? 1 : -1, backgroundColor: "#E8EAF6" }}>
-              <Sidebar
-                menu={menu}
-                onClose={() => {
-                  setOpen(false)
-                }} />
-            </div>
+            {isOpen && (
+              <>
+                <div
+                  onClick={() => setOpen(false)}
+                  style={{
+                    position: "fixed",
+                    inset: 0,
+                    background: "rgba(0,0,0,.45)",
+                    zIndex: 1998
+                  }}
+                />
+
+                <div
+                  className="d-md-none"
+                  style={{
+                    position: "fixed",
+                    top: 0,
+                    right: 0,
+                    width: "280px",
+                    maxWidth: "85%",
+                    height: "100vh",
+                    background: "#fff",
+                    overflowY: "auto",
+                    boxShadow: "-5px 0 20px rgba(0,0,0,.25)",
+                    zIndex: 1999,
+                    transition: ".3s"
+                  }}
+                >
+                  <Sidebarr
+                    menu={menu}
+                    onClose={() => setOpen(false)}
+                  />
+                </div>
+              </>
+            )}
 
             {/* صفحه اصلی */}
             <div className=" position-absolute start-0 
@@ -302,7 +330,7 @@ function Main(props) {
 
 
               <div
-                className="d-none d-md-block position-fixed"
+                className={`position-fixed ${isDashboard ? "d-none d-md-block" : "d-none d-md-block"}`}
                 style={{
                   top: 0,
                   right: 0,
@@ -352,6 +380,43 @@ function Main(props) {
 
 
 
+{!isDashboard && (
+  <div
+    className="d-flex d-md-none align-items-center justify-content-between px-3"
+    style={{
+      position: "fixed",
+      top: 0,
+      right: 0,
+      left: 0,
+      height: "60px",
+      background: "#fff",
+      boxShadow: "0 2px 10px rgba(0,0,0,.1)",
+      zIndex: 1500
+    }}
+  >
+    <button
+      onClick={() => setOpen(true)}
+      style={{
+        border: "none",
+        background: "transparent",
+        fontSize: "30px"
+      }}
+    >
+      <HiOutlineMenuAlt3 />
+    </button>
+
+    <span
+      style={{
+        fontWeight: 700,
+        fontSize: "16px"
+      }}
+    >
+      {dictionary?.title || "پنل مدیریت"}
+    </span>
+
+    <div style={{ width: 35 }} />
+  </div>
+)}
 
 
 
@@ -360,7 +425,10 @@ function Main(props) {
               {/* بدنه اصلی */}
               <div className="p-sm-0 p-0 m-0 d-flex justify-content-center align-items-top position-relative"
                 style={{
-                  marginTop: navbarSize,
+                  marginTop:
+                    window.innerWidth < 768
+                      ? (isDashboard ? navbarSize : "60px")
+                      : navbarSize,
                   paddingBottom: 25,
                   width: "100%",
                   minHeight: "100vh",

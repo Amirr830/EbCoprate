@@ -60,17 +60,17 @@ function Wallet() {
                 <div className="text-end text-muted small mb-2">مبالغ پیشنهادی</div>
                 <Row className="g-2">
                   <Col xs={4}>
-                    <Button variant="outline-secondary" className="w-100 rounded-pill py-1 text-nowrap">
+                    <Button variant="outline-primary" className="w-100 rounded-pill py-1 text-nowrap">
                       ۱,۰۰۰,۰۰۰ ریال
                     </Button>
                   </Col>
                   <Col xs={4}>
-                    <Button variant="outline-secondary" className="w-100 rounded-pill py-1 text-nowrap">
+                    <Button variant="outline-primary" className="w-100 rounded-pill py-1 text-nowrap">
                       ۵,۰۰۰,۰۰۰ ریال
                     </Button>
                   </Col>
                   <Col xs={4}>
-                    <Button variant="outline-secondary" className="w-100 rounded-pill py-1 text-nowrap">
+                    <Button variant="outline-primary" className="w-100 rounded-pill py-1 text-nowrap">
                       ۱۰,۰۰۰,۰۰۰ ریال
                     </Button>
                   </Col>
