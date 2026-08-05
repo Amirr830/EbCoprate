@@ -380,43 +380,43 @@ function Main(props) {
 
 
 
-{!isDashboard && (
-  <div
-    className="d-flex d-md-none align-items-center justify-content-between px-3"
-    style={{
-      position: "fixed",
-      top: 0,
-      right: 0,
-      left: 0,
-      height: "60px",
-      background: "#fff",
-      boxShadow: "0 2px 10px rgba(0,0,0,.1)",
-      zIndex: 1500
-    }}
-  >
-    <button
-      onClick={() => setOpen(true)}
-      style={{
-        border: "none",
-        background: "transparent",
-        fontSize: "30px"
-      }}
-    >
-      <HiOutlineMenuAlt3 />
-    </button>
+              {!isDashboard && (
+                <div
+                  className="d-flex d-md-none align-items-center justify-content-between px-3"
+                  style={{
+                    position: "fixed",
+                    top: 0,
+                    right: 0,
+                    left: 0,
+                    height: "60px",
+                    background: "#fff",
+                    boxShadow: "0 2px 10px rgba(0,0,0,.1)",
+                    zIndex: 1500
+                  }}
+                >
+                  <button
+                    onClick={() => setOpen(true)}
+                    style={{
+                      border: "none",
+                      background: "transparent",
+                      fontSize: "30px"
+                    }}
+                  >
+                    <HiOutlineMenuAlt3 />
+                  </button>
 
-    <span
-      style={{
-        fontWeight: 700,
-        fontSize: "16px"
-      }}
-    >
-      {dictionary?.title || "پنل مدیریت"}
-    </span>
+                  <span
+                    style={{
+                      fontWeight: 700,
+                      fontSize: "16px"
+                    }}
+                  >
+                    {dictionary?.title || "پنل مدیریت"}
+                  </span>
 
-    <div style={{ width: 35 }} />
-  </div>
-)}
+                  <div style={{ width: 35 }} />
+                </div>
+              )}
 
 
 

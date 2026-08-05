@@ -6,7 +6,8 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoWalletOutline } from 'react-icons/io5';
 import SideBar from './SideBar';
 import { FaCar } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
+import paths from "../../../../src/app/paths.json";
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -16,7 +17,7 @@ function RequestForm() {
   const handleShowMenu = () => setShowMenu(true);
   const [vehicleType, setVehicleType] = useState("موتور (همراه جعبه)");
   const dropdownRef = useRef(null);
-
+  const navigate = useNavigate();
   const serviceOptions = [
     "بار سنگین",
     "صندوق",
@@ -76,11 +77,19 @@ function RequestForm() {
           <div
             className="d-flex align-items-center gap-1 bg-warning px-2 py-1 rounded-2 border border-dark"
             style={{ cursor: "pointer" }}
+            onClick={() => navigate(paths.private.definitions.Wallet)}
           >
-            <div className="bg-warning text-dark border border-dark rounded-circle p-1 d-flex align-items-center justify-content-center" style={{ width: 18, height: 18 }}>
+            <div
+              className="bg-warning text-dark border border-dark rounded-circle p-1 d-flex align-items-center justify-content-center"
+              style={{ width: 18, height: 18 }}
+            >
               <FaPlus size={8} />
             </div>
-            <span className="fw-bold px-1" style={{ fontSize: "12px" }}>۲۵,۰۰۰ تومان</span>
+
+            <span className="fw-bold px-1" style={{ fontSize: "12px" }}>
+              ۲۵,۰۰۰ تومان
+            </span>
+
             <IoWalletOutline size={20} className="text-dark" />
           </div>
         </div>
