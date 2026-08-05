@@ -90,7 +90,7 @@ function RequestForm() {
               ۲۵,۰۰۰ تومان
             </span>
     
-            <IoWalletOutline size={20} className="text-dark" />
+            {/* <IoWalletOutline size={20} className="text-dark" /> */}
           </div>
         </div>
 
