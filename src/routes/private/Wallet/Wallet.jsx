@@ -19,20 +19,6 @@ function Wallet() {
           <Col xs={12} lg={3} className="d-none d-lg-block"></Col>
 
           <Col xs={12} lg={4}>
-            <div className="wallet-card h-100 d-flex flex-column justify-content-between p-3 p-xl-4">
-              <div className="d-flex justify-content-end text-muted small fw-bold">
-                تاریخچه مالی
-              </div>
-
-              <div className="text-center text-muted my-auto py-4">
-                <FaWallet size={40} className="mb-3 opacity-25" />
-                <h6 className="fw-bold mb-1 text-secondary">هنوز تراکنشی ثبت نشده است</h6>
-                <small className="text-muted">پس از اولین شارژ یا پرداخت، اطلاعات اینجا نمایش داده می‌شود.</small>
-              </div>
-            </div>
-          </Col>
-
-          <Col xs={12} lg={4}>
             <div className="wallet-card h-100 p-3 p-xl-4 d-flex flex-column justify-content-between">
               
               <Row className="align-items-center mb-3">
@@ -89,6 +75,20 @@ function Wallet() {
                 پرداخت آنلاین
               </Button>
 
+            </div>
+          </Col>
+
+          <Col xs={12} lg={4}>
+            <div className="wallet-card h-100 d-flex flex-column justify-content-between p-3 p-xl-4">
+              <div className="d-flex justify-content-end text-muted small fw-bold">
+                تاریخچه مالی
+              </div>
+
+              <div className="text-center text-muted my-auto py-4">
+                <FaWallet size={40} className="mb-3 opacity-25" />
+                <h6 className="fw-bold mb-1 text-secondary">هنوز تراکنشی ثبت نشده است</h6>
+                <small className="text-muted">پس از اولین شارژ یا پرداخت، اطلاعات اینجا نمایش داده می‌شود.</small>
+              </div>
             </div>
           </Col>
 

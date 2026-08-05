@@ -89,7 +89,7 @@ function RequestForm() {
             <span className="fw-bold px-1" style={{ fontSize: "12px" }}>
               ۲۵,۰۰۰ تومان
             </span>
-
+    
             <IoWalletOutline size={20} className="text-dark" />
           </div>
         </div>
