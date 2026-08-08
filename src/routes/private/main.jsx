@@ -507,11 +507,11 @@ function Main(props) {
                 </div>
               </div>
 
-              <div className="  position-fixed bottom-0 justify-content-center align-items-center d-flex opacity-50" style={{ height: 25, backgroundColor: "#CFD8DC", zIndex: "1000" }}>
+              {/* <div className="  position-fixed bottom-0 justify-content-center align-items-center d-flex opacity-50" style={{ height: 25, backgroundColor: "#CFD8DC", zIndex: "1000" }}>
                 <FaDotCircle className="text-primary" />
                 <label className="ms-auto px-3">{userInfo?.firstName} {userInfo?.lastName} </label>
                 <label className="me-auto">efspco.ir</label>
-              </div>
+              </div> */}
 
             </div>
 

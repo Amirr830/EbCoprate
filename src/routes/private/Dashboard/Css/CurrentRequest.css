@@ -14,7 +14,7 @@
 }
 
 .request-card {
-  min-height: 257px;
+  min-height: 320px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
