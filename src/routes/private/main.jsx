@@ -334,9 +334,9 @@ function Main(props) {
                 style={{
                   top: 0,
                   right: 0,
-                  left: 0,
+                  left: 10,
                   height: "100px",
-                  background: "#fff",
+                  // background: "#fff",
                   zIndex: 1000,
                 }}
               >
