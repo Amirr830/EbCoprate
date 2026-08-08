@@ -10,7 +10,7 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Css/NewDestinationModal.css";
-
+import { FaTimes } from "react-icons/fa";
 
 const markerIcon = new L.Icon({
     iconUrl:
@@ -337,13 +337,19 @@ export default function AddDefMsgModal(props) {
                     dir="rtl"
                 >
                     <div className="address-modal-header">
+
+
                         <button
                             type="button"
                             className="address-close-btn btn btn-danger"
                             onClick={handleClose}
                         >
-                            ×
+                            <FaTimes/>
                         </button>
+
+
+
+
                         <div className="address-header-title">
                             <div>
                                 <h5>
@@ -582,7 +588,8 @@ export default function AddDefMsgModal(props) {
                                 className={`address-next-btn ${selectedPosition
                                     ? "enabled"
                                     : "disabled"
-                                    }`}
+                                    } `}
+
                                 disabled={
                                     !selectedPosition
                                 }
@@ -590,12 +597,8 @@ export default function AddDefMsgModal(props) {
                                     handleNextStep
                                 }
                             >
-                                <span>
+                                <span style={{ fontSize: "20px" }}>
                                     مرحله بعدی
-                                </span>
-
-                                <span className="next-arrow">
-                                    ←
                                 </span>
                             </button>
                         </div>
