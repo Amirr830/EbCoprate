@@ -8,6 +8,8 @@ import SideBar from './SideBar';
 import { FaCar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../src/app/paths.json";
+import NewDestinationModal from "./NewDestinationModal"
+
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -89,17 +91,19 @@ function RequestForm() {
             <span className="fw-bold px-1" style={{ fontSize: "12px" }}>
               ۲۵,۰۰۰ تومان
             </span>
-    
+
             {/* <IoWalletOutline size={20} className="text-dark" /> */}
           </div>
         </div>
 
         <Row className="mb-3">
-          <Col xs={12}>
-            <button type="button" className="btn btn-primary w-100">
-              <span className="plus-icon">+</span> افزودن مقصد جدید
-            </button>
-          </Col>
+          <NewDestinationModal>
+            <Col xs={12}>
+              <button type="button" className="btn btn-primary w-100">
+                <span className="plus-icon">+</span> افزودن مقصد جدید
+              </button>
+            </Col>
+          </NewDestinationModal>
         </Row>
 
         <div className="route-card mb-3">
