@@ -337,10 +337,14 @@ export default function AddDefMsgModal(props) {
                     dir="rtl"
                 >
                     <div className="address-modal-header">
+                        <button
+                            type="button"
+                            className="address-close-btn btn btn-danger"
+                            onClick={handleClose}
+                        >
+                            ×
+                        </button>
                         <div className="address-header-title">
-                            <div className="address-header-icon">
-                                <span>⌖</span>
-                            </div>
                             <div>
                                 <h5>
                                     {step === 1
@@ -356,22 +360,14 @@ export default function AddDefMsgModal(props) {
                             </div>
                         </div>
 
-                        <button
-                            type="button"
-                            className="address-close-btn"
-                            onClick={handleClose}
-                        >
-                            ×
-                        </button>
                     </div>
 
                     <div className="address-stepper">
                         <div
-                            className={`step-item ${
-                                step >= 1
-                                    ? "active"
-                                    : ""
-                            }`}
+                            className={`step-item ${step >= 1
+                                ? "active"
+                                : ""
+                                }`}
                         >
 
                             <div className="step-number">
@@ -385,19 +381,17 @@ export default function AddDefMsgModal(props) {
 
 
                         <div
-                            className={`step-line ${
-                                step >= 2
-                                    ? "active"
-                                    : ""
-                            }`}
+                            className={`step-line ${step >= 2
+                                ? "active"
+                                : ""
+                                }`}
                         />
 
                         <div
-                            className={`step-item ${
-                                step >= 2
-                                    ? "active"
-                                    : ""
-                            }`}
+                            className={`step-item ${step >= 2
+                                ? "active"
+                                : ""
+                                }`}
                         >
 
                             <div className="step-number">
@@ -439,7 +433,7 @@ export default function AddDefMsgModal(props) {
                                             }
 
                                         }}
-                                        placeholder="مثلاً سیدرضی ۲۰، مشهد"
+                                        placeholder="سیدرضی ۲۰، مشهد"
                                     />
 
                                     {searchLoading && (
@@ -557,9 +551,6 @@ export default function AddDefMsgModal(props) {
 
                                 {!selectedPosition && (
                                     <div className="map-center-hint">
-                                        <div className="map-hint-icon">
-                                            ⌖
-                                        </div>
                                         <span>
                                             روی نقشه کلیک کنید یا خیابان را جستجو کنید
                                         </span>
@@ -588,11 +579,10 @@ export default function AddDefMsgModal(props) {
 
                             <button
                                 type="button"
-                                className={`address-next-btn ${
-                                    selectedPosition
-                                        ? "enabled"
-                                        : "disabled"
-                                }`}
+                                className={`address-next-btn ${selectedPosition
+                                    ? "enabled"
+                                    : "disabled"
+                                    }`}
                                 disabled={
                                     !selectedPosition
                                 }
@@ -646,204 +636,182 @@ export default function AddDefMsgModal(props) {
                                 </button>
                             </div>
 
+
                             <div className="address-form">
-                                <div className="row g-3">
-                                    <div className="col-12 col-sm-6 col-md-5">
+                                <div className="address-form-grid">
+
+                                    <div className="address-field">
                                         <label>
                                             استان
                                         </label>
 
-                                        <input
-                                            type="text"
-                                            name="province"
-                                            value={
-                                                formData.province
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            className="form-control address-input"
-                                        />
+                                        <div className="address-input-wrapper">
+                                            <span className="address-field-icon">⌖</span>
+
+                                            <input
+                                                type="text"
+                                                name="province"
+                                                value={formData.province}
+                                                onChange={handleInputChange}
+                                                className="form-control address-input"
+                                                placeholder="نام استان"
+                                            />
+                                        </div>
                                     </div>
 
 
-                                    <div className="col-12 col-sm-6 col-md-5">
+                                    <div className="address-field">
                                         <label>
                                             شهر
                                         </label>
 
-                                        <input
-                                            type="text"
-                                            name="city"
-                                            value={
-                                                formData.city
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            className="form-control address-input"
-                                        />
+                                        <div className="address-input-wrapper">
+                                            <span className="address-field-icon">●</span>
+
+                                            <input
+                                                type="text"
+                                                name="city"
+                                                value={formData.city}
+                                                onChange={handleInputChange}
+                                                className="form-control address-input"
+                                                placeholder="نام شهر"
+                                            />
+                                        </div>
                                     </div>
 
 
-                                    <div className="col-12 col-sm-6 col-md-5">
+                                    <div className="address-field address-field-large">
                                         <label>
                                             خیابان
-                                            <span className="required">
-                                                *
-                                            </span>
+                                            <span className="required">*</span>
                                         </label>
 
-                                        <input
-                                            type="text"
-                                            name="street"
-                                            value={
-                                                formData.street
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            placeholder="مثلاً سیدرضی"
-                                            className="form-control address-input"
-                                            required
-                                        />
+                                        <div className="address-input-wrapper">
+                                            <span className="address-field-icon">⌁</span>
+
+                                            <input
+                                                type="text"
+                                                name="street"
+                                                value={formData.street}
+                                                onChange={handleInputChange}
+                                                placeholder="سیدرضی"
+                                                className="form-control address-input"
+                                                required
+                                            />
+                                        </div>
                                     </div>
 
 
-                                    <div className="col-12 col-sm-6 col-md-5">
-
+                                    <div className="address-field">
                                         <label>
                                             کوچه
                                         </label>
 
-                                        <input
-                                            type="text"
-                                            name="alley"
-                                            value={
-                                                formData.alley
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            placeholder="مثلاً کوچه ۲۰"
-                                            className="form-control address-input"
-                                        />
+                                        <div className="address-input-wrapper">
+                                            <span className="address-field-icon">⌂</span>
+
+                                            <input
+                                                type="text"
+                                                name="alley"
+                                                value={formData.alley}
+                                                onChange={handleInputChange}
+                                                placeholder="کوچه ۲۰"
+                                                className="form-control address-input"
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="col-6 col-sm-4 col-md-5">
+
+                                    <div className="address-field-small">
                                         <label>
                                             پلاک
                                         </label>
 
-                                        <input
-                                            type="text"
-                                            name="plaque"
-                                            value={
-                                                formData.plaque
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            placeholder="پلاک"
-                                            className="form-control address-input"
-                                        />
+                                        <div className="address-input-wrapper">
+                                            <span className="address-field-icon">#</span>
 
+                                            <input
+                                                type="text"
+                                                name="plaque"
+                                                value={formData.plaque}
+                                                onChange={handleInputChange}
+                                                placeholder="پلاک"
+                                                className="form-control address-input"
+                                            />
+                                        </div>
                                     </div>
 
 
-                                    <div className="col-6 col-sm-4 col-md-5">
+                                    <div className="address-field-small">
                                         <label>
                                             واحد
                                         </label>
 
-                                        <input
-                                            type="text"
-                                            name="unit"
-                                            value={
-                                                formData.unit
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            placeholder="واحد"
-                                            className="form-control address-input"
-                                        />
+                                        <div className="address-input-wrapper">
+                                            <span className="address-field-icon">▦</span>
 
+                                            <input
+                                                type="text"
+                                                name="unit"
+                                                value={formData.unit}
+                                                onChange={handleInputChange}
+                                                placeholder="واحد"
+                                                className="form-control address-input"
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="col-12 col-sm-6 col-md-5">
-
-                                        <label>
-                                            کد پستی
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            name="postalCode"
-                                            value={
-                                                formData.postalCode
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            placeholder="کد پستی ۱۰ رقمی"
-                                            maxLength={10}
-                                            className="form-control address-input"
-                                        />
-
-                                    </div>
-
-
-                                    <div className="col-12">
-
+                                    <div className="address-field address-description-field">
                                         <label>
                                             توضیحات آدرس
                                         </label>
 
-                                        <textarea
-                                            name="description"
-                                            value={
-                                                formData.description
-                                            }
-                                            onChange={
-                                                handleInputChange
-                                            }
-                                            placeholder="توضیحات تکمیلی آدرس..."
-                                            rows={4}
-                                            className="form-control address-textarea"
-                                        />
+                                        <div className="address-input-wrapper address-textarea-wrapper">
+                                            <span className="address-field-icon textarea-icon">
+                                                ✎
+                                            </span>
 
+                                            <textarea
+                                                name="description"
+                                                value={formData.description}
+                                                onChange={handleInputChange}
+                                                placeholder="توضیحات تکمیلی آدرس را وارد کنید..."
+                                                rows={4}
+                                                className="form-control address-textarea"
+                                            />
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
+
 
                             <div className="address-form-buttons">
                                 <div className="row w-100 g-2">
-                                    <div className="col-5 col-sm-4 col-md-3">
-
+                                    <div className="col-6">
                                         <button
                                             type="button"
-                                            className="address-back-btn w-100"
-                                            onClick={
-                                                handlePreviousStep
-                                            }
+                                            className="address-back-btn w-100 btn btn-danger"
+                                            onClick={handlePreviousStep}
                                         >
-                                            → بازگشت
+                                            بازگشت
                                         </button>
                                     </div>
 
 
-                                    <div className="col-7 col-sm-8 col-md-9">
-
+                                    <div className="col-6">
                                         <button
                                             type="submit"
-                                            className="address-submit-btn w-100"
+                                            className="address-submit-btn w-100 btn btn-success"
                                         >
-                                            ثبت آدرس
+                                            ثبت
                                         </button>
                                     </div>
                                 </div>
+
+
                             </div>
+
                         </form>
                     )}
                 </Modal.Body>

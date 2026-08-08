@@ -71,7 +71,7 @@
     border-radius: 10px;
     background: #f5f5f5;
     color: #777;
-    font-size: 25px;
+    font-size: 35px;
     line-height: 1;
     cursor: pointer;
     transition: 0.2s;
@@ -542,57 +542,251 @@
     background: #eaf9ff;
 }
 
+
 .address-form {
-    padding: 0 2px;
+    padding: 6px 4px 4px;
+    direction: rtl;
 }
 
-.address-form label {
-    display: block;
-    margin-bottom: 7px;
-    color: #444;
-    font-size: 11px;
-    font-weight: 700;
+
+.address-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 18px;
+}
+
+
+.address-field,
+.address-field-small {
+    min-width: 0;
+}
+
+.address-field-large {
+    grid-column: span 1;
+}
+
+.address-description-field {
+    grid-column: 1 / -1;
+}
+
+
+
+.address-field label,
+.address-field-small label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    margin-bottom: 9px;
+    padding-right: 3px;
+
+    color: #263238;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.5;
 }
 
 .required {
-    color: #e53935;
+    color: #ef4444;
     margin-right: 3px;
+    font-size: 15px;
 }
+
+
+.address-input-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.address-field-icon {
+    width: 45px;
+    min-width: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #08a9ed;
+    font-size: 18px;
+    font-weight: 800;
+
+    border-left: 1px solid #e5eaf0;
+}
+
 
 .address-input {
-    height: 44px !important;
-    border-radius: 9px !important;
-    border: 1px solid #dedede !important;
+    flex: 1;
+    width: 100%;
+    height: 54px !important;
+    padding: 0 15px !important;
+    border: none !important;
+    outline: none !important;
     box-shadow: none !important;
+    background: transparent !important;
+    color: #1e293b !important;
     font-family: inherit !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
+    font-weight: 600;
     direction: rtl;
-    transition: 0.2s;
 }
 
-.address-input:focus {
-    border-color: #08a9ed !important;
-    box-shadow: 0 0 0 3px rgba(8, 169, 237, 0.08) !important;
-}
 
 .address-input::placeholder {
-    color: #b2b2b2;
+    color: #a7b0bb;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.address-input-wrapper:focus-within {
+    background: #ffffff;
+    border-color: #08a9ed;
+    box-shadow:
+        0 0 0 4px rgba(8, 169, 237, 0.09),
+        0 7px 20px rgba(8, 169, 237, 0.08);
+    transform: translateY(-1px);
+}
+
+.address-input-wrapper:focus-within .address-field-icon {
+    color: #008fd0;
+}
+
+
+.address-textarea-wrapper {
+    align-items: flex-start;
+    min-height: 120px;
 }
 
 .address-textarea {
+    flex: 1;
+    min-height: 120px;
+    padding: 15px !important;
     resize: vertical;
-    min-height: 90px;
-    border-radius: 9px !important;
-    border: 1px solid #dedede !important;
+    border: none !important;
+    outline: none !important;
     box-shadow: none !important;
+    background: transparent !important;
+    color: #1e293b !important;
     font-family: inherit !important;
-    font-size: 12px !important;
+    font-size: 14px !important;
+    font-weight: 500;
+    line-height: 1.9;
     direction: rtl;
 }
 
+.address-textarea::placeholder {
+    color: #a7b0bb;
+    font-size: 13px;
+}
+
 .address-textarea:focus {
-    border-color: #08a9ed !important;
-    box-shadow: 0 0 0 3px rgba(8, 169, 237, 0.08) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
+.textarea-icon {
+    padding-top: 17px;
+}
+
+
+.address-input-wrapper:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+
+
+.address-field-small {
+    min-width: 0;
+}
+
+
+@media (max-width: 768px) {
+
+    .address-form {
+        padding: 3px 0;
+    }
+
+    .address-form-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 12px;
+    }
+
+    .address-description-field {
+        grid-column: 1 / -1;
+    }
+
+    .address-field label,
+    .address-field-small label {
+        font-size: 13px;
+        margin-bottom: 7px;
+    }
+
+    .address-input-wrapper {
+        min-height: 51px;
+        border-radius: 11px;
+    }
+
+    .address-input {
+        height: 51px !important;
+        font-size: 14px !important;
+    }
+
+    .address-field-icon {
+        width: 39px;
+        min-width: 39px;
+        font-size: 16px;
+    }
+
+    .address-textarea-wrapper,
+    .address-textarea {
+        min-height: 105px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .address-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .address-description-field {
+        grid-column: auto;
+    }
+
+    .address-input-wrapper {
+        min-height: 52px;
+    }
+
+    .address-input {
+        height: 52px !important;
+        font-size: 14px !important;
+    }
+
+    .address-field-icon {
+        width: 42px;
+        min-width: 42px;
+    }
+
+    .address-field label,
+    .address-field-small label {
+        font-size: 13px;
+    }
 }
 
 .address-form-buttons {
@@ -734,8 +928,7 @@
     .address-close-btn {
         width: 32px;
         height: 32px;
-
-        font-size: 21px;
+        font-size: 30px;
     }
 
     .address-stepper {
