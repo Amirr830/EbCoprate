@@ -99,8 +99,6 @@ export default function AddDefMsgModal(props) {
     const [searchResults, setSearchResults] = useState([]);
     const [searchLoading, setSearchLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
-
-
     const [originPosition, setOriginPosition] = useState(null);
     const [destinationPosition, setDestinationPosition] = useState(null);
     const [originAddress, setOriginAddress] = useState("");
@@ -237,20 +235,15 @@ export default function AddDefMsgModal(props) {
     const handleShow = () => {
         setShow(true);
         setStep(1);
-
         setSearch("");
         setSearchResults([]);
         setShowResults(false);
-
         setOriginPosition(null);
         setDestinationPosition(null);
-
         setOriginAddress("");
         setDestinationAddress("");
-
         setShowAlert(false);
         setAlertMessage("");
-
         setFormData({
             origin: {
                 province: "خراسان رضوی",
@@ -979,12 +972,7 @@ export default function AddDefMsgModal(props) {
                                 </div>
 
                                 <div className="summary-content">
-                                    <span>
-                                        موقعیت انتخاب شده
-                                    </span>
-
                                     <div className="location-summary-routes">
-
                                         <div className="route-summary-item origin-summary">
 
                                             <span className="route-summary-dot">
@@ -992,11 +980,11 @@ export default function AddDefMsgModal(props) {
                                             </span>
 
                                             <div>
-                                                <small>
+                                                <span style={{ fontSize: "15px" }}>
                                                     مبدأ
-                                                </small>
+                                                </span>
 
-                                                <strong>
+                                                <strong style={{ fontSize: "15px" }}>
                                                     {originAddress ||
                                                         "موقعیت مبدأ انتخاب شد"}
                                                 </strong>
@@ -1017,11 +1005,11 @@ export default function AddDefMsgModal(props) {
                                             </span>
 
                                             <div>
-                                                <small>
+                                                <span style={{ fontSize: "15px" }}>
                                                     مقصد
-                                                </small>
+                                                </span>
 
-                                                <strong>
+                                                <strong style={{ fontSize: "15px" }}>
                                                     {destinationAddress ||
                                                         "موقعیت مقصد انتخاب شد"}
                                                 </strong>
@@ -1038,6 +1026,7 @@ export default function AddDefMsgModal(props) {
                                     onClick={
                                         handlePreviousStep
                                     }
+                                    style={{ fontSize: "15px" }}
                                 >
                                     تغییر موقعیت
                                 </button>
@@ -1064,9 +1053,9 @@ export default function AddDefMsgModal(props) {
                                                         مشخصات مبدأ
                                                     </strong>
 
-                                                    <small>
+                                                    <span>
                                                         اطلاعات محل دریافت
-                                                    </small>
+                                                    </span>
                                                 </div>
 
                                             </div>
@@ -1497,6 +1486,7 @@ export default function AddDefMsgModal(props) {
                                         <button
                                             type="submit"
                                             className=" w-100 btn btn-success"
+                                            style={{ fontSize: "20px" }}
                                         >
                                             ثبت
                                         </button>
@@ -1506,6 +1496,7 @@ export default function AddDefMsgModal(props) {
                                             type="button"
                                             className=" w-100 btn btn-danger"
                                             onClick={handlePreviousStep}
+                                            style={{ fontSize: "20px" }}
                                         >
                                             بازگشت
                                         </button>
