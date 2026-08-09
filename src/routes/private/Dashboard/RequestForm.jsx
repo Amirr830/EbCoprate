@@ -447,13 +447,34 @@ function RequestForm() {
 
 
 
-        <Row>
-          <Col xs={12}>
-            <button type="button" className="btn btn-success w-100 py-2 fw-bold fs-5">
-              ثبت درخواست
-            </button>
-          </Col>
-        </Row>
+<Row>
+  <Col xs={12}>
+    <button
+      type="button"
+      className="btn btn-success w-100 py-2 fw-bold fs-5"
+      onClick={() => {
+        if (!originAddress || !destinationAddress || !vehicleType) {
+          alert("لطفاً مبدأ، مقصد و نوع وسیله را انتخاب کنید.");
+          return;
+        }
+
+        navigate(paths.private.definitions.CurrentRequest, {
+          state: {
+            requestStarted: true,
+            originAddress,
+            destinationAddress,
+            vehicleType,
+            selectedServices,
+            sender,
+            cash,
+          },
+        });
+      }}
+    >
+      ثبت درخواست
+    </button>
+  </Col>
+</Row>
 
       </div>
     </Container>
