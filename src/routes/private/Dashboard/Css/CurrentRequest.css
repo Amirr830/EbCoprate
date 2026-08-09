@@ -372,3 +372,64 @@
   word-break: break-word;
 }
 
+.request-services-payment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eef0f3;
+}
+
+.request-services-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.request-service-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: #fff8e6;
+  color: #8a6100;
+  border: 1px solid #f3d58a;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.request-payment {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+.request-payment-label {
+  color: #6c757d;
+  font-size: 15px;
+}
+
+.request-payment-value {
+  font-size: 13px;
+  padding: 5px 9px;
+  border-radius: 8px;
+}
+
+.request-payment-cash {
+  color: #198754;
+  background: #eaf8f0;
+  border: 1px solid #c8ead7;
+}
+
+.request-payment-credit {
+  color: #dc3545;
+  background: #fff0f1;
+  border: 1px solid #f5c6cb;
+}

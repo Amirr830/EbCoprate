@@ -8,6 +8,8 @@ import { IoCallSharp, IoTimeOutline } from 'react-icons/io5';
 import { FaMotorcycle } from 'react-icons/fa';
 import { useLocation, useNavigationType } from 'react-router-dom';
 import strings from "../../../app/String.json"
+import PaymentModal from "./Modals/PaymentModal"
+
 
 const courierIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png',
@@ -20,21 +22,21 @@ function CurrentRequest() {
   const location = useLocation();
   const navigationType = useNavigationType();
 
-const {
-  requestStarted: navigationRequestStarted = false,
-  originAddress: navigationOriginAddress = "",
-  destinationAddress: navigationDestinationAddress = "",
-  vehicleType = "",
-  selectedServices = [],
-  sender = true,
-  cash = true,
-} = location.state || {};
+  const {
+    requestStarted: navigationRequestStarted = false,
+    originAddress: navigationOriginAddress = "",
+    destinationAddress: navigationDestinationAddress = "",
+    vehicleType = "",
+    selectedServices = [],
+    sender = true,
+    cash = true,
+  } = location.state || {};
 
-const requestStarted =
-  navigationRequestStarted && navigationType === "PUSH";
+  const requestStarted =
+    navigationRequestStarted && navigationType === "PUSH";
 
-const originAddress = requestStarted ? navigationOriginAddress : "";
-const destinationAddress = requestStarted ? navigationDestinationAddress : "";
+  const originAddress = requestStarted ? navigationOriginAddress : "";
+  const destinationAddress = requestStarted ? navigationDestinationAddress : "";
 
   const [courierFound, setCourierFound] = useState(false);
 
@@ -55,29 +57,29 @@ const destinationAddress = requestStarted ? navigationDestinationAddress : "";
     return () => clearTimeout(timer);
   }, [requestStarted]);
 
-const [remainingMinutes, setRemainingMinutes] = useState(45);
+  const [remainingMinutes, setRemainingMinutes] = useState(45);
 
-useEffect(() => {
-  if (!requestStarted) {
+  useEffect(() => {
+    if (!requestStarted) {
+      setRemainingMinutes(45);
+      return;
+    }
+
     setRemainingMinutes(45);
-    return;
-  }
 
-  setRemainingMinutes(45);
+    const timer = setInterval(() => {
+      setRemainingMinutes((prev) => {
+        if (prev <= 5) {
+          clearInterval(timer);
+          return 0;
+        }
 
-  const timer = setInterval(() => {
-    setRemainingMinutes((prev) => {
-      if (prev <= 5) {
-        clearInterval(timer);
-        return 0;
-      }
+        return prev - 5;
+      });
+    }, 3000);
 
-      return prev - 5;
-    });
-  }, 3000);
-
-  return () => clearInterval(timer);
-}, [requestStarted]);
+    return () => clearInterval(timer);
+  }, [requestStarted]);
   return (
     <div className="current-request-container dir-rtl">
 
@@ -267,6 +269,11 @@ useEffect(() => {
 
 
 
+
+
+
+
+
           <div className="d-flex align-items-center justify-content-between gap-3 my-2">
             <div className="text-end">
               <span className="text-danger small-text d-block mb-1">
@@ -278,11 +285,26 @@ useEffect(() => {
               </div>
             </div>
 
-            <button className="btn btn-success px-4 py-2 rounded-3 shadow-sm text-white">
-              پرداخت از کیف پول
-            </button>
+
+
+            <PaymentModal>
+              <button className="btn btn-success px-4 py-2 rounded-3 shadow-sm text-white">
+                پرداخت 
+              </button>
+            </PaymentModal>
+
+
           </div>
         </div>
+
+
+
+
+
+
+
+
+
 
         <div className="request-card shadow-sm p-3 rounded-4 bg-white border">
           <div className="position-relative mb-2">
@@ -302,172 +324,127 @@ useEffect(() => {
                 </div>
               </div>
 
+              {requestStarted && (
+                <div className="flex-grow-1 text-center">
+                  {remainingMinutes > 0 ? (
+                    <>
+                      <span className="status-title  text-danger d-block fs-7">
+                        {strings.DriverOnPath}
+                      </span>
+
+                      <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-muted">
+                        <IoTimeOutline size={16} />
+
+                        <span className="small-text">
+                          {String(remainingMinutes).padStart(2, "0")}:00
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <span className="status-title fw-bold text-success d-block fs-6">
+                        راننده به مبدا رسید
+                      </span>
+
+                      <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-success">
+                        <IoTimeOutline size={16} />
+
+                        <span className="small-text fw-semibold">
+                          راننده آماده دریافت سفارش است
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+
+            </div>
+          </div>
 
 
+          <div className="route-address-card">
+            <div className="route-address-item route-origin-item">
+              <div className="route-address-indicator">
+                <span className="route-dot route-dot-origin"></span>
+                <span className="route-line"></span>
+              </div>
 
+              <div className="route-address-content">
 
+                <div className="route-address-header">
+                  <span className="route-address-label route-origin-label" style={{fontSize:"14px"}}>
+                    مبدأ
+                  </span>
 
+                </div>
 
+                <div className="route-address-value" style={{fontSize:"14px"}}>
+                  {originAddress || "مبدأ ثبت نشده است"}
+                </div>
 
+              </div>
 
+            </div>
 
+            <div className="route-address-item route-destination-item">
 
+              <div className="route-address-indicator">
+                <span className="route-dot route-dot-destination"></span>
+              </div>
 
+              <div className="route-address-content">
 
+                <div className="route-address-header" style={{fontSize:"14px"}}>
+                  <span className="route-address-label route-destination-label">
+                    مقصد
+                  </span>
 
+                </div>
 
+                <div className="route-address-value" style={{fontSize:"15px"}}>
+                  {destinationAddress || "مقصد ثبت نشده است"}
+                </div>
 
-
-
-{requestStarted && (
-  <div className="flex-grow-1 text-center">
-    {remainingMinutes > 0 ? (
-      <>
-        <span className="status-title fw-bold text-danger d-block fs-6">
-          {strings.DriverOnPath}
-        </span>
-
-        <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-muted">
-          <IoTimeOutline size={16} />
-
-          <span className="small-text">
-            {String(remainingMinutes).padStart(2, "0")}:00
-          </span>
-        </div>
-      </>
-    ) : (
-      <>
-        <span className="status-title fw-bold text-success d-block fs-6">
-          راننده به مبدا رسید
-        </span>
-
-        <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-success">
-          <IoTimeOutline size={16} />
-
-          <span className="small-text fw-semibold">
-            راننده آماده دریافت سفارش است
-          </span>
-        </div>
-      </>
-    )}
-  </div>
-)}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+              </div>
 
             </div>
 
           </div>
 
 
+          {requestStarted && (
+            <div className="request-services-payment">
 
+              {selectedServices?.length > 0 && (
+                <div className="request-services-list">
+                  {selectedServices.map((service) => (
+                    <span
+                      key={service}
+                      className="request-service-badge"
+                    >
+                      {service}
+                    </span>
+                  ))}
+                </div>
+              )}
 
+              <div className="request-payment">
+                <span className="request-payment-label">
+                  روش پرداخت 
+                </span>
 
+                <span
+                  className={`request-payment-value ${cash
+                    ? "request-payment-cash"
+                    : "request-payment-credit"
+                    }`}
+                >
+                  {cash ? "نقدی" : "اعتباری"}
+                </span>
+              </div>
 
-
-
-
-
-
-
-          <div className="route-address-card">
-
-  <div className="route-address-item route-origin-item">
-
-    <div className="route-address-indicator">
-      <span className="route-dot route-dot-origin"></span>
-      <span className="route-line"></span>
-    </div>
-
-    <div className="route-address-content">
-
-      <div className="route-address-header">
-        <span className="route-address-label route-origin-label">
-          مبدأ
-        </span>
-
-      </div>
-
-      <div className="route-address-value">
-        {originAddress || "مبدأ ثبت نشده است"}
-      </div>
-
-    </div>
-
-  </div>
-
-  <div className="route-address-item route-destination-item">
-
-    <div className="route-address-indicator">
-      <span className="route-dot route-dot-destination"></span>
-    </div>
-
-    <div className="route-address-content">
-
-      <div className="route-address-header">
-        <span className="route-address-label route-destination-label">
-          مقصد
-        </span>
-
-      </div>
-
-      <div className="route-address-value">
-        {destinationAddress || "مقصد ثبت نشده است"}
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <div className="d-flex flex-wrap gap-1">
-            {selectedServices.map((service) => (
-              <span
-                key={service}
-                className="badge bg-warning-subtle text-dark border border-warning rounded-2 px-2 py-1 small-text"
-              >
-                {service}
-              </span>
-            ))}
-
-            {!cash && sender && (
-              <span className="badge bg-danger text-white rounded-2 px-2 py-1 small-text">
-                اعتباری
-              </span>
-            )}
-
-            {cash && (
-              <span className="badge bg-success text-white rounded-2 px-2 py-1 small-text">
-                نقدی
-              </span>
-            )}
-          </div>
+            </div>
+          )}
 
         </div>
       </div>

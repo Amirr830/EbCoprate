@@ -8,9 +8,9 @@ import SideBar from './SideBar';
 import { FaCar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../src/app/paths.json";
-import NewDestinationModal from "./NewDestinationModal"
-import EdirAddressModal from "./EditAddressModal"
-import VehicleTypeModal from "./VehicleTypeModal"
+import NewDestinationModal from "./Modals/NewDestinationModal"
+import EdirAddressModal from "./Modals/EditAddressModal"
+import VehicleTypeModal from "./Modals/VehicleTypeModal"
 import strings from "../../../app/String.json"
 
 

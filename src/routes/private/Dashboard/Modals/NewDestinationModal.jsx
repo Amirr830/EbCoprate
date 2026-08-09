@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "./Css/NewDestinationModal.css";
+import "../Css/NewDestinationModal.css"
 import { FaTimes } from "react-icons/fa";
 
 const markerIcon = new L.Icon({

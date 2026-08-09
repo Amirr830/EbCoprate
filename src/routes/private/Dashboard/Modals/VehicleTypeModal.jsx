@@ -6,7 +6,8 @@ import {
     FaCarSide,
     FaCheck
 } from "react-icons/fa";
-import "./Css/VehicleTypeModal.css";
+import "../Css/VehicleTypeModal.css"
+
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
