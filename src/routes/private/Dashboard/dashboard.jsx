@@ -40,7 +40,7 @@ function Dashboard() {
               <div className="row g-3">
 
                 <div className="col-12 col-lg-5 col-xxl-4">
-                  <div className="dashboard-card">
+                  <div className="dashboard-card dashboard-card-request">
                     <RequestForm
                       toggleSidebar={toggleSidebar}
                       isSidebarOpen={isSidebarOpen}
@@ -49,7 +49,7 @@ function Dashboard() {
                 </div>
 
                 <div className="col-lg-4 col-xxl-4 d-none d-md-block">
-                  <div className="dashboard-card">
+                  <div className="dashboard-card dashboard-card-current">
                     <CurrentForm />
                   </div>
                 </div>

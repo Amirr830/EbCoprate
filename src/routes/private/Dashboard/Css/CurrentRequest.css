@@ -60,7 +60,6 @@
   color: #fff;
 }
 
-/* آدرس‌ها */
 .dot {
   width: 9px;
   height: 9px;
@@ -121,7 +120,6 @@
     align-items:center;
     justify-content:space-between;
     gap:12px;
-
     background:#fff;
     border:1px solid #e9ecef;
     border-radius:12px;

@@ -56,6 +56,38 @@
   transition: all .25s ease;
 }
 
+/* اسکرول داخلی RequestForm و CurrentForm */
+.dashboard-card-request,
+.dashboard-card-current {
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.dashboard-card-request::-webkit-scrollbar,
+.dashboard-card-current::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dashboard-card-request::-webkit-scrollbar-track,
+.dashboard-card-current::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dashboard-card-request::-webkit-scrollbar-thumb,
+.dashboard-card-current::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.dashboard-card-request::-webkit-scrollbar-thumb:hover,
+.dashboard-card-current::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 .dashboard-card:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
@@ -238,7 +270,7 @@
 }
 
 .desktop-top-space{
-    padding-top:100px;
+    padding-top:70px;
 }
 
 @media(max-width:767.98px){
