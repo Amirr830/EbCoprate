@@ -6,7 +6,11 @@
 .current-request-container {
   width: 100%;
   max-width: 480px;
+  height: calc(100vh - 100px);
   margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 15px;
 }
 
 .section-title {

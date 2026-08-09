@@ -15,40 +15,40 @@ const courierIcon = new L.Icon({
 });
 
 function CurrentRequest() {
- const location = useLocation();
-const navigationType = useNavigationType();
+  const location = useLocation();
+  const navigationType = useNavigationType();
 
-const {
-  requestStarted: navigationRequestStarted = false,
-  originAddress = "",
-  destinationAddress = "",
-  vehicleType = "",
-  selectedServices = [],
-  sender = true,
-  cash = true,
-} = location.state || {};
+  const {
+    requestStarted: navigationRequestStarted = false,
+    originAddress = "",
+    destinationAddress = "",
+    vehicleType = "",
+    selectedServices = [],
+    sender = true,
+    cash = true,
+  } = location.state || {};
 
-const requestStarted =
-  navigationRequestStarted && navigationType === "PUSH";
+  const requestStarted =
+    navigationRequestStarted && navigationType === "PUSH";
 
-const [courierFound, setCourierFound] = useState(false);
+  const [courierFound, setCourierFound] = useState(false);
 
-const position = [36.3155, 59.5323];
+  const position = [36.3155, 59.5323];
 
-useEffect(() => {
-  if (!requestStarted) {
+  useEffect(() => {
+    if (!requestStarted) {
+      setCourierFound(false);
+      return;
+    }
+
     setCourierFound(false);
-    return;
-  }
 
-  setCourierFound(false);
+    const timer = setTimeout(() => {
+      setCourierFound(true);
+    }, 3000);
 
-  const timer = setTimeout(() => {
-    setCourierFound(true);
-  }, 3000);
-
-  return () => clearTimeout(timer);
-}, [requestStarted]);
+    return () => clearTimeout(timer);
+  }, [requestStarted]);
 
   return (
     <div className="current-request-container dir-rtl">
@@ -134,70 +134,70 @@ useEffect(() => {
 
 
 
-{requestStarted && (
-  <div className="courier-info-box my-2 p-2 rounded-3 bg-light">
-    {!courierFound ? (
-      <div className="w-100 d-flex align-items-center justify-content-center py-3">
-        <div className="d-flex align-items-center gap-2">
-          <span
-            className="spinner-border spinner-border-sm text-success"
-            role="status"
-            aria-hidden="true"
-          ></span>
+          {requestStarted && (
+            <div className="courier-info-box my-2 p-2 rounded-3 bg-light">
+              {!courierFound ? (
+                <div className="w-100 d-flex align-items-center justify-content-center py-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <span
+                      className="spinner-border spinner-border-sm text-success"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
 
-          <span className="fw-bold text-muted">
-            در حال جستجو...
-          </span>
-        </div>
-      </div>
-    ) : (
-      <div className="d-flex align-items-center justify-content-between">
-        <div className="courier-avatar rounded-3 border d-flex align-items-center justify-content-center text-muted small-text bg-white">
-          تصویر قاصد
-        </div>
+                    <span className="fw-bold text-muted">
+                      در حال جستجو...
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="courier-avatar rounded-3 border d-flex align-items-center justify-content-center text-muted small-text bg-white">
+                    تصویر قاصد
+                  </div>
 
-        <div className="flex-grow-1 px-2">
-          <div className="d-flex justify-content-between align-items-center mb-1">
-            <span className="fw-bold text-dark me-1">
-              محمود زارع
-            </span>
+                  <div className="flex-grow-1 px-2">
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                      <span className="fw-bold text-dark me-1">
+                        محمود زارع
+                      </span>
 
-            <span className="badge bg-white text-dark border rounded-pill px-2 py-1 small-text">
-              موتور هوندا
-            </span>
-          </div>
+                      <span className="badge bg-white text-dark border rounded-pill px-2 py-1 small-text">
+                        موتور هوندا
+                      </span>
+                    </div>
 
-          <div className="d-flex justify-content-between align-items-center small-text text-muted">
-            <span>
-              09151231231
-            </span>
+                    <div className="d-flex justify-content-between align-items-center small-text text-muted">
+                      <span>
+                        09151231231
+                      </span>
 
-            <span>
-              کد قاصد: 999
-            </span>
-          </div>
-        </div>
+                      <span>
+                        کد قاصد: 999
+                      </span>
+                    </div>
+                  </div>
 
-        <div className="d-flex flex-column align-items-center gap-1">
-          <div className="plate-box text-center fw-bold">
-            <div>1342</div>
-            <div>23523</div>
-          </div>
+                  <div className="d-flex flex-column align-items-center gap-1">
+                    <div className="plate-box text-center fw-bold">
+                      <div>1342</div>
+                      <div>23523</div>
+                    </div>
 
-          <a
-            href="tel:09151234578"
-            className="btn btn-success call-btn rounded-circle d-flex align-items-center justify-content-center"
-          >
-            <IoCallSharp
-              style={{ fontSize: "15px" }}
-              size={18}
-            />
-          </a>
-        </div>
-      </div>
-    )}
-  </div>
-)}
+                    <a
+                      href="tel:09151234578"
+                      className="btn btn-success call-btn rounded-circle d-flex align-items-center justify-content-center"
+                    >
+                      <IoCallSharp
+                        style={{ fontSize: "15px" }}
+                        size={18}
+                      />
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
 
 
