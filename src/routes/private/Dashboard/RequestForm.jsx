@@ -11,7 +11,7 @@ import paths from "../../../../src/app/paths.json";
 import NewDestinationModal from "./NewDestinationModal"
 import EdirAddressModal from "./EditAddressModal"
 import VehicleTypeModal from "./VehicleTypeModal"
-
+import strings from "../../../app/String.json"
 
 
 function RequestForm() {
@@ -199,13 +199,6 @@ function RequestForm() {
           </div>
         </div>
 
-
-
-
-
-
-
-
         <Row className="g-3 mb-3">
           <Col xs={12} md={6}>
             <div className="vehicle-dropdown">
@@ -280,45 +273,6 @@ function RequestForm() {
             </div>
           </Col>
         </Row>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <Row className="mb-3">
           <Col xs={12}>
@@ -404,10 +358,12 @@ function RequestForm() {
           </Col>
         </Row>
 
-
-
         <Row className="mb-2">
           <Col xs={12}>
+            <label className="segment-label">
+              پرداخت کننده
+            </label>
+
             <div className="segment-toggle-box">
               <div
                 className={`segment-btn ${sender ? 'active' : ''}`}
@@ -427,6 +383,10 @@ function RequestForm() {
 
         <Row className="mb-3">
           <Col xs={12}>
+            <label className="segment-label">
+              روش پرداخت
+            </label>
+
             <div className="segment-toggle-box">
               <div
                 className={`segment-btn ${cash ? 'active' : ''}`}
@@ -434,49 +394,57 @@ function RequestForm() {
               >
                 نقدی
               </div>
-              <div
-                className={`segment-btn ${!cash ? 'active' : ''}`}
-                onClick={() => setCash(false)}
-              >
-                اعتباری کیف پول
-              </div>
+
+              {sender && (
+                <div
+                  className={`segment-btn ${!cash ? 'active' : ''}`}
+                  onClick={() => setCash(false)}
+                >
+                  اعتباری کیف پول
+                </div>
+              )}
             </div>
           </Col>
         </Row>
-        <Row className="mb-3 g-2 align-items-stretch">
 
-          <Col xs={4} md={5}>
-            <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
-              <span className="price-title">هزینه سرویس</span>
 
-              <span className="price-amount text-success fw-bold">
-                ۲۵,۰۰۰ <small>تومان</small>
-              </span>
-            </div>
-          </Col>
+        {sender && (
+          <Row className="mb-3 g-2 align-items-stretch">
 
-          <Col xs={8} md={7}>
-            <div className="modern-discount-bar h-100">
-              <div className="d-flex align-items-center gap-2 flex-grow-1">
-                <FaTag className="discount-icon text-muted" />
+            <Col xs={4} md={5}>
+              <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
+                <span className="price-title">هزینه سرویس</span>
 
-                <input
-                  type="text"
-                  placeholder="کد تخفیف دارید؟"
-                  className="discount-input border-0 bg-transparent w-100"
-                />
+                <span className="price-amount text-success fw-bold">
+                  ۲۵,۰۰۰ <small>تومان</small>
+                </span>
               </div>
+            </Col>
 
-              <button
-                type="button"
-                className="apply-code-btn btn btn-success"
-              >
-                ثبت کد
-              </button>
-            </div>
-          </Col>
+            <Col xs={8} md={7}>
+              <div className="modern-discount-bar h-100">
+                <div className="d-flex align-items-center gap-2 flex-grow-1">
+                  <FaTag className="discount-icon text-muted" />
 
-        </Row>
+                  <input
+                    type="text"
+                    placeholder="کد تخفیف دارید؟"
+                    className="discount-input border-0 bg-transparent w-100"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className="apply-code-btn btn btn-success"
+                >
+                  ثبت کد
+                </button>
+              </div>
+            </Col>
+
+          </Row>
+        )}
+
 
 
         <Row>

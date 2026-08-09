@@ -80,7 +80,7 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
 }
 .vehicle-card.selected {
-    border-color: #198754;
+    border-color: #b6d601;
     background: #f5fff9;
     box-shadow: 0 8px 25px rgba(25, 135, 84, 0.12);
 }
