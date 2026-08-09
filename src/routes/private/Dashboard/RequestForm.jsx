@@ -9,7 +9,7 @@ import { FaCar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import paths from "../../../../src/app/paths.json";
 import NewDestinationModal from "./NewDestinationModal"
-
+import EdirAddressModal from "./EditAddressModal"
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -20,6 +20,9 @@ function RequestForm() {
   const [vehicleType, setVehicleType] = useState("موتور (همراه جعبه)");
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+
+  const [editAddress, setEditAddress] = useState("");
+
   const serviceOptions = [
     "بار سنگین",
     "صندوق",
@@ -32,6 +35,8 @@ function RequestForm() {
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [serviceOpen, setServiceOpen] = useState(false);
+  const [originAddress, setOriginAddress] = useState("");
+  const [destinationAddress, setDestinationAddress] = useState("");
 
   const toggleService = (item) => {
     if (selectedServices.includes(item)) {
@@ -41,6 +46,32 @@ function RequestForm() {
     } else {
       setSelectedServices([...selectedServices, item]);
     }
+  };
+
+  const handleAddressSubmit = (data) => {
+    const createAddress = (addressData) => {
+      const parts = [
+        addressData.street,
+        addressData.alley
+          ? `کوچه ${addressData.alley}`
+          : "",
+        addressData.plaque
+          ? `پلاک ${addressData.plaque}`
+          : "",
+        addressData.unit
+          ? `واحد ${addressData.unit}`
+          : "",
+      ];
+      return parts
+        .filter(Boolean)
+        .join("، ");
+    };
+    setOriginAddress(
+      createAddress(data.origin)
+    );
+    setDestinationAddress(
+      createAddress(data.destination)
+    );
   };
 
   return (
@@ -97,7 +128,9 @@ function RequestForm() {
         </div>
 
         <Row className="mb-3">
-          <NewDestinationModal>
+          <NewDestinationModal
+            onAddressSubmit={handleAddressSubmit}
+          >
             <Col xs={12}>
               <button type="button" className="btn btn-primary w-100">
                 <span className="plus-icon">+</span> افزودن مقصد جدید
@@ -113,39 +146,62 @@ function RequestForm() {
 
 
 
-        <div className="route-card mb-3">
-
-          <div className="route-item">
-            <div className="route-side">
-              <span className="route-dot origin-dot"></span>
-              <span className="route-label">مبدأ</span>
-            </div>
-
-            <div className="route-address">
-              سیدرضی ۵۵، پلاک ۵۸
-            </div>
-
-            <button className="route-edit">
-              <FaPencilAlt />
-            </button>
-          </div>
-
-          <div className="route-item">
-            <div className="route-side">
-              <span className="route-dot dest-dot"></span>
-              <span className="route-label">مقصد</span>
-            </div>
-
-            <div className="route-address">
-              سیدرضی ۵۵، پلاک ۵۸
-            </div>
-
-            <button className="route-edit">
-              <FaPencilAlt />
-            </button>
-          </div>
-
-        </div>
+<div className="route-card mb-3">
+  <div className="route-item">
+    <div className="route-side">
+      <span className="route-dot origin-dot"></span>
+      <span className="route-label">مبدأ</span>
+    </div>
+    <div className="route-address">
+      {originAddress || (
+        <span className="route-placeholder">
+          هنوز مبدأ انتخاب نشده است
+        </span>
+      )}
+    </div>
+    <EdirAddressModal
+      address={originAddress}
+      addressType="origin"
+      onAddressChange={(newAddress) => {
+        setOriginAddress(newAddress);
+      }}
+    >
+      <button
+        type="button"
+        className="route-edit"
+      >
+        <FaPencilAlt />
+      </button>
+    </EdirAddressModal>
+  </div>
+  <div className="route-item">
+    <div className="route-side">
+      <span className="route-dot dest-dot"></span>
+      <span className="route-label">مقصد</span>
+    </div>
+    <div className="route-address">
+      {destinationAddress || (
+        <span className="route-placeholder">
+          هنوز مقصد انتخاب نشده است
+        </span>
+      )}
+    </div>
+    <EdirAddressModal
+      address={destinationAddress}
+      addressType="destination"
+      onAddressChange={(newAddress) => {
+        setDestinationAddress(newAddress);
+      }}
+    >
+      <button
+        type="button"
+        className="route-edit"
+      >
+        <FaPencilAlt />
+      </button>
+    </EdirAddressModal>
+  </div>
+</div>
 
 
 

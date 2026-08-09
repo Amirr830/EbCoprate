@@ -4,6 +4,7 @@ import {
     MapContainer,
     TileLayer,
     Marker,
+    Tooltip,
     useMap,
     useMapEvents,
 } from "react-leaflet";
@@ -27,21 +28,56 @@ const markerIcon = new L.Icon({
 
 const MASHHAD_CENTER = [36.2972, 59.6067];
 
-function MapController({ position }) {
-    const map = useMap()
+const destinationMarkerIcon = new L.Icon({
+    iconUrl:
+        "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+
+    iconRetinaUrl:
+        "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png",
+
+    shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+});
+
+function MapController({
+    originPosition,
+    destinationPosition,
+}) {
+    const map = useMap();
+
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             map.invalidateSize();
+
+            const position =
+                destinationPosition ||
+                originPosition;
+
             if (position) {
                 map.flyTo(position, 17, {
                     animate: true,
                     duration: 1.2,
                 });
             } else {
-                map.setView(MASHHAD_CENTER, 13);
+                map.setView(
+                    MASHHAD_CENTER,
+                    13
+                );
             }
         }, 150);
-    }, [map, position]);
+
+        return () => clearTimeout(timer);
+    }, [
+        map,
+        originPosition,
+        destinationPosition,
+    ]);
+
     return null;
 }
 
@@ -63,28 +99,19 @@ export default function AddDefMsgModal(props) {
     const [searchResults, setSearchResults] = useState([]);
     const [searchLoading, setSearchLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
-    const [selectedPosition, setSelectedPosition] = useState(null);
-    const [selectedAddress, setSelectedAddress] = useState("");
-    const [formData, setFormData] = useState({
-        province: "خراسان رضوی",
-        city: "مشهد",
-        street: "",
-        alley: "",
-        plaque: "",
-        unit: "",
-        postalCode: "",
-        description: "",
-    });
 
-    const handleShow = () => {
-        setShow(true);
-        setStep(1);
-        setSearch("");
-        setSearchResults([]);
-        setShowResults(false);
-        setSelectedPosition(null);
-        setSelectedAddress("");
-        setFormData({
+
+    const [originPosition, setOriginPosition] = useState(null);
+    const [destinationPosition, setDestinationPosition] = useState(null);
+    const [originAddress, setOriginAddress] = useState("");
+    const [destinationAddress, setDestinationAddress] = useState("");
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
+
+
+
+    const [formData, setFormData] = useState({
+        origin: {
             province: "خراسان رضوی",
             city: "مشهد",
             street: "",
@@ -93,6 +120,159 @@ export default function AddDefMsgModal(props) {
             unit: "",
             postalCode: "",
             description: "",
+        },
+
+        destination: {
+            province: "خراسان رضوی",
+            city: "مشهد",
+            street: "",
+            alley: "",
+            plaque: "",
+            unit: "",
+            postalCode: "",
+            description: "",
+        },
+    });
+
+
+    const handleMarkerDragEnd = async (event, type) => {
+        const { lat, lng } = event.target.getLatLng();
+
+        const newPosition = [lat, lng];
+
+        if (type === "origin") {
+            setOriginPosition(newPosition);
+        }
+
+        if (type === "destination") {
+            setDestinationPosition(newPosition);
+        }
+
+        try {
+            const url =
+                "https://nominatim.openstreetmap.org/reverse" +
+                "?format=jsonv2" +
+                "&addressdetails=1" +
+                "&accept-language=fa" +
+                "&lat=" +
+                lat +
+                "&lon=" +
+                lng;
+
+            const response = await fetch(url, {
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Reverse geocoding failed");
+            }
+
+            const data = await response.json();
+
+            if (!data) {
+                return;
+            }
+
+            const addressText =
+                data.display_name || "";
+
+            const address =
+                data.address || {};
+
+            const street =
+                address.road ||
+                address.pedestrian ||
+                address.residential ||
+                address.neighbourhood ||
+                "";
+
+            const city =
+                address.city ||
+                address.town ||
+                address.municipality ||
+                "مشهد";
+
+            const province =
+                address.state ||
+                "خراسان رضوی";
+
+            if (type === "origin") {
+                setOriginAddress(addressText);
+
+                setFormData((prev) => ({
+                    ...prev,
+
+                    origin: {
+                        ...prev.origin,
+
+                        province,
+                        city,
+                        street,
+                    },
+                }));
+            }
+
+            if (type === "destination") {
+                setDestinationAddress(addressText);
+
+                setFormData((prev) => ({
+                    ...prev,
+
+                    destination: {
+                        ...prev.destination,
+
+                        province,
+                        city,
+                        street,
+                    },
+                }));
+            }
+
+        } catch (error) {
+        }
+    };
+
+    const handleShow = () => {
+        setShow(true);
+        setStep(1);
+
+        setSearch("");
+        setSearchResults([]);
+        setShowResults(false);
+
+        setOriginPosition(null);
+        setDestinationPosition(null);
+
+        setOriginAddress("");
+        setDestinationAddress("");
+
+        setShowAlert(false);
+        setAlertMessage("");
+
+        setFormData({
+            origin: {
+                province: "خراسان رضوی",
+                city: "مشهد",
+                street: "",
+                alley: "",
+                plaque: "",
+                unit: "",
+                postalCode: "",
+                description: "",
+            },
+
+            destination: {
+                province: "خراسان رضوی",
+                city: "مشهد",
+                street: "",
+                alley: "",
+                plaque: "",
+                unit: "",
+                postalCode: "",
+                description: "",
+            },
         });
     };
 
@@ -103,15 +283,22 @@ export default function AddDefMsgModal(props) {
         setSearch("");
         setSearchResults([]);
         setShowResults(false);
-        setSelectedPosition(null);
-        setSelectedAddress("");
+        setOriginPosition(null);
+        setDestinationPosition(null);
+        setOriginAddress("");
+        setDestinationAddress("");
+        setShowAlert(false);
+        setAlertMessage("");
     };
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e, type) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: value,
+            [type]: {
+                ...prev[type],
+                [name]: value,
+            },
         }));
     };
 
@@ -171,36 +358,82 @@ export default function AddDefMsgModal(props) {
     const handleSelectResult = (result) => {
         const lat = Number(result.lat);
         const lon = Number(result.lon);
+
         const position = [lat, lon];
-        setSelectedPosition(position);
-        setSelectedAddress(
-            result.display_name || ""
-        );
+
+        let targetType = null;
+
+        if (!originPosition) {
+            targetType = "origin";
+            setOriginPosition(position);
+        } else if (!destinationPosition) {
+            targetType = "destination";
+            setDestinationPosition(position);
+        } else {
+            return;
+        }
+
         const address = result.address || {};
+
         const street =
             address.road ||
             address.pedestrian ||
             address.residential ||
             address.neighbourhood ||
             "";
+
         const city =
             address.city ||
             address.town ||
             address.municipality ||
             "مشهد";
+
+        const addressText =
+            result.display_name || "";
+
         setSearch(
             result.name ||
             street ||
             ""
         );
-        setFormData((prev) => ({
-            ...prev,
-            province:
-                address.state ||
-                "خراسان رضوی",
-            city: city,
-            street: street,
-        }));
+
+        if (targetType === "origin") {
+            setOriginAddress(addressText);
+
+            setFormData((prev) => ({
+                ...prev,
+
+                origin: {
+                    ...prev.origin,
+
+                    province:
+                        address.state ||
+                        "خراسان رضوی",
+
+                    city: city,
+                    street: street,
+                },
+            }));
+        }
+
+        if (targetType === "destination") {
+            setDestinationAddress(addressText);
+
+            setFormData((prev) => ({
+                ...prev,
+
+                destination: {
+                    ...prev.destination,
+
+                    province:
+                        address.state ||
+                        "خراسان رضوی",
+
+                    city: city,
+                    street: street,
+                },
+            }));
+        }
 
         setShowResults(false);
     };
@@ -209,10 +442,22 @@ export default function AddDefMsgModal(props) {
     const handleMapClick = async (event) => {
         const lat = event.latlng.lat;
         const lon = event.latlng.lng;
-        const position = [lat, lon];
-        setSelectedPosition(position);
-        try {
 
+        const position = [lat, lon];
+
+        let targetType = null;
+
+        if (!originPosition) {
+            targetType = "origin";
+            setOriginPosition(position);
+        } else if (!destinationPosition) {
+            targetType = "destination";
+            setDestinationPosition(position);
+        } else {
+            return;
+        }
+
+        try {
             const url =
                 "https://nominatim.openstreetmap.org/reverse" +
                 "?format=jsonv2" +
@@ -228,60 +473,97 @@ export default function AddDefMsgModal(props) {
                     Accept: "application/json",
                 },
             });
+
             if (!response.ok) {
-                throw new Error(
-                    "Reverse geocoding failed"
-                );
+                throw new Error("Reverse geocoding failed");
             }
 
             const data = await response.json();
+
             if (!data) {
                 return;
             }
 
-            setSelectedAddress(
-                data.display_name || ""
-            );
+            const addressText =
+                data.display_name || "";
 
             const address = data.address || {};
+
             const street =
                 address.road ||
                 address.pedestrian ||
                 address.residential ||
+                address.neighbourhood ||
                 "";
+
             const city =
                 address.city ||
                 address.town ||
                 address.municipality ||
                 "مشهد";
-            setSearch(street);
-            setFormData((prev) => ({
-                ...prev,
-                province:
-                    address.state ||
-                    "خراسان رضوی",
 
-                city: city,
-                street: street,
-            }));
+            if (targetType === "origin") {
+                setOriginAddress(addressText);
 
+                setFormData((prev) => ({
+                    ...prev,
+
+                    origin: {
+                        ...prev.origin,
+
+                        province:
+                            address.state ||
+                            "خراسان رضوی",
+
+                        city: city,
+                        street: street,
+                    },
+                }));
+            }
+
+            if (targetType === "destination") {
+                setDestinationAddress(addressText);
+
+                setFormData((prev) => ({
+                    ...prev,
+
+                    destination: {
+                        ...prev.destination,
+
+                        province:
+                            address.state ||
+                            "خراسان رضوی",
+
+                        city: city,
+                        street: street,
+                    },
+                }));
+            }
 
         } catch (error) {
-
             console.error(
                 "Reverse Address Error:",
                 error
             );
-
         }
     };
 
 
-
     const handleNextStep = () => {
-        if (!selectedPosition) {
+        if (!originPosition || !destinationPosition) {
+            setAlertMessage(
+                "لطفاً مبدأ و مقصد را انتخاب کنید"
+            );
+
+            setShowAlert(true);
+
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3500);
+
             return;
         }
+
         setStep(2);
     };
 
@@ -290,20 +572,29 @@ export default function AddDefMsgModal(props) {
         setStep(1);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const finalData = {
-            ...formData,
-            latitude:
-                selectedPosition?.[0] || null,
-            longitude:
-                selectedPosition?.[1] || null,
-            address:
-                selectedAddress || "",
-        };
-
-        handleClose();
+const handleSubmit = (e) => {
+    e.preventDefault();
+    const finalData = {
+        ...formData,
+        originLatitude:
+            originPosition?.[0] || null,
+        originLongitude:
+            originPosition?.[1] || null,
+        originAddress:
+            originAddress || "",
+        destinationLatitude:
+            destinationPosition?.[0] || null,
+        destinationLongitude:
+            destinationPosition?.[1] || null,
+        destinationAddress:
+            destinationAddress || "",
     };
+    console.log("Final Data:", finalData);
+    if (props?.onAddressSubmit) {
+        props.onAddressSubmit(finalData);
+    }
+    handleClose();
+};
 
     let newFirstChild;
 
@@ -336,18 +627,39 @@ export default function AddDefMsgModal(props) {
                     className="add-address-modal-body"
                     dir="rtl"
                 >
-                    <div className="address-modal-header">
+                    {showAlert && (
+                        <div className="address-top-alert">
+                            <div className="address-top-alert-icon">
+                                !
+                            </div>
 
+                            <div className="address-top-alert-content">
+                                <strong>
+                                    انتخاب موقعیت ناقص است
+                                </strong>
+
+                                <span>
+                                    {alertMessage}
+                                </span>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setShowAlert(false)}
+                            >
+                                <FaTimes />
+                            </button>
+                        </div>
+                    )}
+                    <div className="address-modal-header">
 
                         <button
                             type="button"
                             className="address-close-btn btn btn-danger"
                             onClick={handleClose}
                         >
-                            <FaTimes/>
+                            <FaTimes />
                         </button>
-
-
 
 
                         <div className="address-header-title">
@@ -368,7 +680,7 @@ export default function AddDefMsgModal(props) {
 
                     </div>
 
-                    <div className="address-stepper">
+                    {/* <div className="address-stepper">
                         <div
                             className={`step-item ${step >= 1
                                 ? "active"
@@ -410,7 +722,7 @@ export default function AddDefMsgModal(props) {
 
                         </div>
 
-                    </div>
+                    </div> */}
 
                     {step === 1 && (
 
@@ -539,60 +851,109 @@ export default function AddDefMsgModal(props) {
                                         }
                                     />
                                     <MapController
-                                        position={
-                                            selectedPosition
-                                        }
+                                        originPosition={originPosition}
+                                        destinationPosition={destinationPosition}
                                     />
-                                    {selectedPosition && (
+
+                                    {originPosition && (
                                         <Marker
-                                            position={
-                                                selectedPosition
-                                            }
-                                            icon={
-                                                markerIcon
-                                            }
-                                        />
+                                            position={originPosition}
+                                            icon={markerIcon}
+                                            draggable={true}
+                                            eventHandlers={{
+                                                dragend: (event) =>
+                                                    handleMarkerDragEnd(
+                                                        event,
+                                                        "origin"
+                                                    ),
+                                            }}
+                                        >
+                                            <Tooltip
+                                                direction="top"
+                                                offset={[0, -35]}
+                                                permanent={false}
+                                            >
+                                                مبدأ
+                                            </Tooltip>
+                                        </Marker>
+                                    )}
+
+                                    {destinationPosition && (
+                                        <Marker
+                                            position={destinationPosition}
+                                            icon={destinationMarkerIcon}
+                                            draggable={true}
+                                            eventHandlers={{
+                                                dragend: (event) =>
+                                                    handleMarkerDragEnd(
+                                                        event,
+                                                        "destination"
+                                                    ),
+                                            }}
+                                        >
+                                            <Tooltip
+                                                direction="top"
+                                                offset={[0, -35]}
+                                                permanent={false}
+                                            >
+                                                مقصد
+                                            </Tooltip>
+                                        </Marker>
                                     )}
                                 </MapContainer>
 
-                                {!selectedPosition && (
+                                {!originPosition && !destinationPosition && (
                                     <div className="map-center-hint">
                                         <span>
-                                            روی نقشه کلیک کنید یا خیابان را جستجو کنید
+                                            ابتدا مبدأ را روی نقشه انتخاب کنید
+                                        </span>
+                                    </div>
+                                )}
+
+                                {originPosition && !destinationPosition && (
+                                    <div className="map-center-hint">
+                                        <span>
+                                            حالا مقصد را روی نقشه انتخاب کنید
                                         </span>
                                     </div>
                                 )}
                             </div>
 
-                            {selectedPosition && (
+                            {(originPosition || destinationPosition) && (
                                 <div className="selected-address-box">
+
                                     <div className="selected-address-icon">
                                         ✓
                                     </div>
 
                                     <div className="selected-address-content">
+
                                         <span>
-                                            موقعیت انتخاب شد
+                                            {destinationPosition
+                                                ? "مبدأ و مقصد انتخاب شدند"
+                                                : "مبدأ انتخاب شد؛ حالا مقصد را انتخاب کنید"}
                                         </span>
+
                                         <strong>
-                                            {selectedAddress ||
-                                                "موقعیت روی نقشه انتخاب شد"}
+                                            {destinationPosition
+                                                ? "هر دو موقعیت با موفقیت انتخاب شدند"
+                                                : originAddress ||
+                                                "موقعیت مبدأ روی نقشه انتخاب شد"}
                                         </strong>
+
                                     </div>
+
                                 </div>
                             )}
 
 
                             <button
                                 type="button"
-                                className={`address-next-btn ${selectedPosition
+                                className={`address-next-btn ${originPosition && destinationPosition
                                     ? "enabled"
                                     : "disabled"
-                                    } `}
-
-                                disabled={
-                                    !selectedPosition
-                                }
+                                    }`}
+                                disabled={false}
                                 onClick={
                                     handleNextStep
                                 }
@@ -622,10 +983,53 @@ export default function AddDefMsgModal(props) {
                                         موقعیت انتخاب شده
                                     </span>
 
-                                    <strong>
-                                        {selectedAddress ||
-                                            "موقعیت روی نقشه"}
-                                    </strong>
+                                    <div className="location-summary-routes">
+
+                                        <div className="route-summary-item origin-summary">
+
+                                            <span className="route-summary-dot">
+                                                ●
+                                            </span>
+
+                                            <div>
+                                                <small>
+                                                    مبدأ
+                                                </small>
+
+                                                <strong>
+                                                    {originAddress ||
+                                                        "موقعیت مبدأ انتخاب شد"}
+                                                </strong>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div className="route-summary-arrow">
+                                            ←
+                                        </div>
+
+
+                                        <div className="route-summary-item destination-summary">
+
+                                            <span className="route-summary-dot">
+                                                ●
+                                            </span>
+
+                                            <div>
+                                                <small>
+                                                    مقصد
+                                                </small>
+
+                                                <strong>
+                                                    {destinationAddress ||
+                                                        "موقعیت مقصد انتخاب شد"}
+                                                </strong>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                                 </div>
 
 
@@ -641,148 +1045,474 @@ export default function AddDefMsgModal(props) {
 
 
                             <div className="address-form">
-                                <div className="address-form-grid">
 
-                                    <div className="address-field">
-                                        <label>
-                                            استان
-                                        </label>
+                                <div className="row g-4">
 
-                                        <div className="address-input-wrapper">
-                                            <span className="address-field-icon">⌖</span>
+                                    {/* ================= مبدأ ================= */}
 
-                                            <input
-                                                type="text"
-                                                name="province"
-                                                value={formData.province}
-                                                onChange={handleInputChange}
-                                                className="form-control address-input"
-                                                placeholder="نام استان"
-                                            />
+                                    <div className="col-12 col-lg-6">
+
+                                        <div className="address-location-card origin-card">
+
+                                            <div className="address-location-card-header">
+
+                                                <div className="address-location-card-icon">
+                                                    <span>●</span>
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        مشخصات مبدأ
+                                                    </strong>
+
+                                                    <small>
+                                                        اطلاعات محل دریافت
+                                                    </small>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="address-form-grid">
+
+                                                {/* استان */}
+                                                <div className="address-field">
+                                                    <label>
+                                                        استان
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ⌖
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="province"
+                                                            value={formData.origin.province}
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            className="form-control address-input"
+                                                            placeholder="نام استان"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* شهر */}
+                                                <div className="address-field">
+                                                    <label>
+                                                        شهر
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ●
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="city"
+                                                            value={formData.origin.city}
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            className="form-control address-input"
+                                                            placeholder="نام شهر"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* خیابان */}
+                                                <div className="address-field address-field-large">
+                                                    <label>
+                                                        خیابان
+                                                        <span className="required">
+                                                            *
+                                                        </span>
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ⌁
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="street"
+                                                            value={formData.origin.street}
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            placeholder="سیدرضی"
+                                                            className="form-control address-input"
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* کوچه */}
+                                                <div className="address-field">
+                                                    <label>
+                                                        کوچه
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ⌂
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="alley"
+                                                            value={formData.origin.alley}
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            placeholder="کوچه"
+                                                            className="form-control address-input"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* پلاک */}
+                                                <div className="address-field-small">
+                                                    <label>
+                                                        پلاک
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            #
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="plaque"
+                                                            value={formData.origin.plaque}
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            placeholder="پلاک"
+                                                            className="form-control address-input"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* واحد */}
+                                                <div className="address-field-small">
+                                                    <label>
+                                                        واحد
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ▦
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="unit"
+                                                            value={formData.origin.unit}
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            placeholder="واحد"
+                                                            className="form-control address-input"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* توضیحات */}
+                                                <div className="address-field address-description-field">
+                                                    <label>
+                                                        توضیحات مبدأ
+                                                    </label>
+
+                                                    <div className="address-input-wrapper address-textarea-wrapper">
+
+                                                        <span className="address-field-icon textarea-icon">
+                                                            ✎
+                                                        </span>
+
+                                                        <textarea
+                                                            name="description"
+                                                            value={
+                                                                formData.origin.description
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "origin"
+                                                                )
+                                                            }
+                                                            placeholder="توضیحات محل دریافت..."
+                                                            rows={4}
+                                                            className="form-control address-textarea"
+                                                        />
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
 
 
-                                    <div className="address-field">
-                                        <label>
-                                            شهر
-                                        </label>
+                                    {/* ================= مقصد ================= */}
 
-                                        <div className="address-input-wrapper">
-                                            <span className="address-field-icon">●</span>
+                                    <div className="col-12 col-lg-6">
 
-                                            <input
-                                                type="text"
-                                                name="city"
-                                                value={formData.city}
-                                                onChange={handleInputChange}
-                                                className="form-control address-input"
-                                                placeholder="نام شهر"
-                                            />
+                                        <div className="address-location-card destination-card">
+
+                                            <div className="address-location-card-header">
+
+                                                <div className="address-location-card-icon">
+                                                    <span>●</span>
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        مشخصات مقصد
+                                                    </strong>
+
+                                                    <small>
+                                                        اطلاعات محل تحویل
+                                                    </small>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="address-form-grid">
+
+                                                {/* استان */}
+                                                <div className="address-field">
+                                                    <label>
+                                                        استان
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ⌖
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="province"
+                                                            value={
+                                                                formData.destination.province
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            className="form-control address-input"
+                                                            placeholder="نام استان"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* شهر */}
+                                                <div className="address-field">
+                                                    <label>
+                                                        شهر
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ●
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="city"
+                                                            value={
+                                                                formData.destination.city
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            className="form-control address-input"
+                                                            placeholder="نام شهر"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* خیابان */}
+                                                <div className="address-field address-field-large">
+                                                    <label>
+                                                        خیابان
+                                                        <span className="required">
+                                                            *
+                                                        </span>
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ⌁
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="street"
+                                                            value={
+                                                                formData.destination.street
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            placeholder="سیدرضی"
+                                                            className="form-control address-input"
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* کوچه */}
+                                                <div className="address-field">
+                                                    <label>
+                                                        کوچه
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ⌂
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="alley"
+                                                            value={
+                                                                formData.destination.alley
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            placeholder="کوچه"
+                                                            className="form-control address-input"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* پلاک */}
+                                                <div className="address-field-small">
+                                                    <label>
+                                                        پلاک
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            #
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="plaque"
+                                                            value={
+                                                                formData.destination.plaque
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            placeholder="پلاک"
+                                                            className="form-control address-input"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* واحد */}
+                                                <div className="address-field-small">
+                                                    <label>
+                                                        واحد
+                                                    </label>
+
+                                                    <div className="address-input-wrapper">
+                                                        <span className="address-field-icon">
+                                                            ▦
+                                                        </span>
+
+                                                        <input
+                                                            type="text"
+                                                            name="unit"
+                                                            value={
+                                                                formData.destination.unit
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            placeholder="واحد"
+                                                            className="form-control address-input"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="address-field address-description-field">
+                                                    <label>
+                                                        توضیحات مقصد
+                                                    </label>
+
+                                                    <div className="address-input-wrapper address-textarea-wrapper">
+
+                                                        <span className="address-field-icon textarea-icon">
+                                                            ✎
+                                                        </span>
+
+                                                        <textarea
+                                                            name="description"
+                                                            value={
+                                                                formData.destination.description
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleInputChange(
+                                                                    e,
+                                                                    "destination"
+                                                                )
+                                                            }
+                                                            placeholder="توضیحات محل تحویل..."
+                                                            rows={4}
+                                                            className="form-control address-textarea"
+                                                        />
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                    </div>
 
-
-                                    <div className="address-field address-field-large">
-                                        <label>
-                                            خیابان
-                                            <span className="required">*</span>
-                                        </label>
-
-                                        <div className="address-input-wrapper">
-                                            <span className="address-field-icon">⌁</span>
-
-                                            <input
-                                                type="text"
-                                                name="street"
-                                                value={formData.street}
-                                                onChange={handleInputChange}
-                                                placeholder="سیدرضی"
-                                                className="form-control address-input"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-
-                                    <div className="address-field">
-                                        <label>
-                                            کوچه
-                                        </label>
-
-                                        <div className="address-input-wrapper">
-                                            <span className="address-field-icon">⌂</span>
-
-                                            <input
-                                                type="text"
-                                                name="alley"
-                                                value={formData.alley}
-                                                onChange={handleInputChange}
-                                                placeholder="کوچه ۲۰"
-                                                className="form-control address-input"
-                                            />
-                                        </div>
-                                    </div>
-
-
-                                    <div className="address-field-small">
-                                        <label>
-                                            پلاک
-                                        </label>
-
-                                        <div className="address-input-wrapper">
-                                            <span className="address-field-icon">#</span>
-
-                                            <input
-                                                type="text"
-                                                name="plaque"
-                                                value={formData.plaque}
-                                                onChange={handleInputChange}
-                                                placeholder="پلاک"
-                                                className="form-control address-input"
-                                            />
-                                        </div>
-                                    </div>
-
-
-                                    <div className="address-field-small">
-                                        <label>
-                                            واحد
-                                        </label>
-
-                                        <div className="address-input-wrapper">
-                                            <span className="address-field-icon">▦</span>
-
-                                            <input
-                                                type="text"
-                                                name="unit"
-                                                value={formData.unit}
-                                                onChange={handleInputChange}
-                                                placeholder="واحد"
-                                                className="form-control address-input"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="address-field address-description-field">
-                                        <label>
-                                            توضیحات آدرس
-                                        </label>
-
-                                        <div className="address-input-wrapper address-textarea-wrapper">
-                                            <span className="address-field-icon textarea-icon">
-                                                ✎
-                                            </span>
-
-                                            <textarea
-                                                name="description"
-                                                value={formData.description}
-                                                onChange={handleInputChange}
-                                                placeholder="توضیحات تکمیلی آدرس را وارد کنید..."
-                                                rows={4}
-                                                className="form-control address-textarea"
-                                            />
-                                        </div>
                                     </div>
 
                                 </div>
@@ -794,7 +1524,7 @@ export default function AddDefMsgModal(props) {
                                     <div className="col-6">
                                         <button
                                             type="button"
-                                            className="address-back-btn w-100 btn btn-danger"
+                                            className=" w-100 btn btn-danger"
                                             onClick={handlePreviousStep}
                                         >
                                             بازگشت
@@ -805,7 +1535,7 @@ export default function AddDefMsgModal(props) {
                                     <div className="col-6">
                                         <button
                                             type="submit"
-                                            className="address-submit-btn w-100 btn btn-success"
+                                            className=" w-100 btn btn-success"
                                         >
                                             ثبت
                                         </button>

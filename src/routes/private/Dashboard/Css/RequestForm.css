@@ -757,3 +757,59 @@
   }
 
 }
+
+
+.route-address {
+    flex: 1;
+    min-width: 0;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.8;
+    color: #1f2937;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.route-placeholder {
+    color: #9ca3af;
+    font-weight: 500;
+    font-size: 13px;
+}
+.route-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.route-side {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 70px;
+}
+.route-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+}
+.route-edit {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 9px;
+    background: #f3f4f6;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.route-edit:hover {
+    background: #e5e7eb;
+    color: #2563eb;
+    transform: translateY(-1px);
+}
