@@ -318,7 +318,7 @@ function CurrentRequest() {
                     نوع وسیله
                   </div>
 
-                  <div className="fw-bold" style={{ fontSize: "12px" }}>
+                  <div style={{ fontSize: "12px" }}>
                     {vehicleType || "نوع وسیله مشخص نشده"}
                   </div>
                 </div>
