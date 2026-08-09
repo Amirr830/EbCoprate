@@ -7,6 +7,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { IoCallSharp, IoTimeOutline } from 'react-icons/io5';
 import { FaMotorcycle } from 'react-icons/fa';
 import { useLocation, useNavigationType } from 'react-router-dom';
+import strings from "../../../app/String.json"
 
 const courierIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png',
@@ -14,22 +15,26 @@ const courierIcon = new L.Icon({
   iconAnchor: [18, 18],
 });
 
+
 function CurrentRequest() {
   const location = useLocation();
   const navigationType = useNavigationType();
 
-  const {
-    requestStarted: navigationRequestStarted = false,
-    originAddress = "",
-    destinationAddress = "",
-    vehicleType = "",
-    selectedServices = [],
-    sender = true,
-    cash = true,
-  } = location.state || {};
+const {
+  requestStarted: navigationRequestStarted = false,
+  originAddress: navigationOriginAddress = "",
+  destinationAddress: navigationDestinationAddress = "",
+  vehicleType = "",
+  selectedServices = [],
+  sender = true,
+  cash = true,
+} = location.state || {};
 
-  const requestStarted =
-    navigationRequestStarted && navigationType === "PUSH";
+const requestStarted =
+  navigationRequestStarted && navigationType === "PUSH";
+
+const originAddress = requestStarted ? navigationOriginAddress : "";
+const destinationAddress = requestStarted ? navigationDestinationAddress : "";
 
   const [courierFound, setCourierFound] = useState(false);
 
@@ -50,6 +55,29 @@ function CurrentRequest() {
     return () => clearTimeout(timer);
   }, [requestStarted]);
 
+const [remainingMinutes, setRemainingMinutes] = useState(45);
+
+useEffect(() => {
+  if (!requestStarted) {
+    setRemainingMinutes(45);
+    return;
+  }
+
+  setRemainingMinutes(45);
+
+  const timer = setInterval(() => {
+    setRemainingMinutes((prev) => {
+      if (prev <= 5) {
+        clearInterval(timer);
+        return 0;
+      }
+
+      return prev - 5;
+    });
+  }, 3000);
+
+  return () => clearInterval(timer);
+}, [requestStarted]);
   return (
     <div className="current-request-container dir-rtl">
 
@@ -209,11 +237,11 @@ function CurrentRequest() {
               </div>
 
               <div className="route-address-content">
-                <span className="route-address-label route-origin-label">
+                <span className="route-address-label route-origin-label" >
                   مبدأ
                 </span>
 
-                <span className="route-address-value">
+                <span className="route-address-value" style={{ fontSize: "15px" }}>
                   {originAddress || "مبدأ ثبت نشده است"}
                 </span>
               </div>
@@ -229,14 +257,12 @@ function CurrentRequest() {
                   مقصد
                 </span>
 
-                <span className="route-address-value">
+                <span className="route-address-value" style={{ fontSize: "15px" }}>
                   {destinationAddress || "مقصد ثبت نشده است"}
                 </span>
               </div>
             </div>
           </div>
-
-
 
 
 
@@ -260,14 +286,6 @@ function CurrentRequest() {
 
         <div className="request-card shadow-sm p-3 rounded-4 bg-white border">
           <div className="position-relative mb-2">
-
-            <button
-              type="button"
-              className="btn p-0 text-secondary border-0 position-absolute top-0 start-0"
-            >
-              <BsThreeDotsVertical size={20} />
-            </button>
-
             <div className="d-flex align-items-center justify-content-between">
 
               <div className="vehicle-badge bg-success text-white px-3 py-2 rounded-3 d-flex align-items-center gap-2">
@@ -284,63 +302,149 @@ function CurrentRequest() {
                 </div>
               </div>
 
-              <div className="flex-grow-1 text-center">
 
-                <span className="status-title fw-bold text-danger d-block fs-6">
-                  در حال یافتن نزدیک‌ترین قاصد
-                </span>
 
-                <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-muted">
-                  <span className="text-danger fw-semibold small-text">
-                    در حال جستجو
-                  </span>
 
-                  <IoTimeOutline size={16} />
 
-                  <span className="small-text">
-                    12:53:30 پنج‌شنبه 25 آبان
-                  </span>
-                </div>
 
-              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+{requestStarted && (
+  <div className="flex-grow-1 text-center">
+    {remainingMinutes > 0 ? (
+      <>
+        <span className="status-title fw-bold text-danger d-block fs-6">
+          {strings.DriverOnPath}
+        </span>
+
+        <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-muted">
+          <IoTimeOutline size={16} />
+
+          <span className="small-text">
+            {String(remainingMinutes).padStart(2, "0")}:00
+          </span>
+        </div>
+      </>
+    ) : (
+      <>
+        <span className="status-title fw-bold text-success d-block fs-6">
+          راننده به مبدا رسید
+        </span>
+
+        <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-success">
+          <IoTimeOutline size={16} />
+
+          <span className="small-text fw-semibold">
+            راننده آماده دریافت سفارش است
+          </span>
+        </div>
+      </>
+    )}
+  </div>
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             </div>
 
           </div>
 
-          <div className="addresses-list-row my-2">
 
-            <div className="address-item">
-              <span className="dot dot-danger"></span>
 
-              <div className="address-content">
-                <span className="address-label text-danger">
-                  مبدأ
-                </span>
 
-                <span className="address-value">
-                  {originAddress || "مبدأ ثبت نشده است"}
-                </span>
-              </div>
-            </div>
 
-            <div className="address-divider"></div>
 
-            <div className="address-item">
-              <span className="dot dot-green"></span>
 
-              <div className="address-content">
-                <span className="address-label text-success">
-                  مقصد
-                </span>
 
-                <span className="address-value">
-                  {destinationAddress || "مقصد ثبت نشده است"}
-                </span>
-              </div>
-            </div>
 
-          </div>
+
+
+
+          <div className="route-address-card">
+
+  <div className="route-address-item route-origin-item">
+
+    <div className="route-address-indicator">
+      <span className="route-dot route-dot-origin"></span>
+      <span className="route-line"></span>
+    </div>
+
+    <div className="route-address-content">
+
+      <div className="route-address-header">
+        <span className="route-address-label route-origin-label">
+          مبدأ
+        </span>
+
+      </div>
+
+      <div className="route-address-value">
+        {originAddress || "مبدأ ثبت نشده است"}
+      </div>
+
+    </div>
+
+  </div>
+
+  <div className="route-address-item route-destination-item">
+
+    <div className="route-address-indicator">
+      <span className="route-dot route-dot-destination"></span>
+    </div>
+
+    <div className="route-address-content">
+
+      <div className="route-address-header">
+        <span className="route-address-label route-destination-label">
+          مقصد
+        </span>
+
+      </div>
+
+      <div className="route-address-value">
+        {destinationAddress || "مقصد ثبت نشده است"}
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
           <div className="d-flex flex-wrap gap-1">
             {selectedServices.map((service) => (

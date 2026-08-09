@@ -572,29 +572,29 @@ export default function AddDefMsgModal(props) {
         setStep(1);
     };
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-    const finalData = {
-        ...formData,
-        originLatitude:
-            originPosition?.[0] || null,
-        originLongitude:
-            originPosition?.[1] || null,
-        originAddress:
-            originAddress || "",
-        destinationLatitude:
-            destinationPosition?.[0] || null,
-        destinationLongitude:
-            destinationPosition?.[1] || null,
-        destinationAddress:
-            destinationAddress || "",
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const finalData = {
+            ...formData,
+            originLatitude:
+                originPosition?.[0] || null,
+            originLongitude:
+                originPosition?.[1] || null,
+            originAddress:
+                originAddress || "",
+            destinationLatitude:
+                destinationPosition?.[0] || null,
+            destinationLongitude:
+                destinationPosition?.[1] || null,
+            destinationAddress:
+                destinationAddress || "",
+        };
+        console.log("Final Data:", finalData);
+        if (props?.onAddressSubmit) {
+            props.onAddressSubmit(finalData);
+        }
+        handleClose();
     };
-    console.log("Final Data:", finalData);
-    if (props?.onAddressSubmit) {
-        props.onAddressSubmit(finalData);
-    }
-    handleClose();
-};
 
     let newFirstChild;
 
@@ -1048,7 +1048,6 @@ const handleSubmit = (e) => {
 
                                 <div className="row g-4">
 
-                                    {/* ================= مبدأ ================= */}
 
                                     <div className="col-12 col-lg-6">
 
@@ -1074,7 +1073,6 @@ const handleSubmit = (e) => {
 
                                             <div className="address-form-grid">
 
-                                                {/* استان */}
                                                 <div className="address-field">
                                                     <label>
                                                         استان
@@ -1101,7 +1099,6 @@ const handleSubmit = (e) => {
                                                     </div>
                                                 </div>
 
-                                                {/* شهر */}
                                                 <div className="address-field">
                                                     <label>
                                                         شهر
@@ -1128,7 +1125,6 @@ const handleSubmit = (e) => {
                                                     </div>
                                                 </div>
 
-                                                {/* خیابان */}
                                                 <div className="address-field address-field-large">
                                                     <label>
                                                         خیابان
@@ -1159,7 +1155,6 @@ const handleSubmit = (e) => {
                                                     </div>
                                                 </div>
 
-                                                {/* کوچه */}
                                                 <div className="address-field">
                                                     <label>
                                                         کوچه
@@ -1169,24 +1164,22 @@ const handleSubmit = (e) => {
                                                         <span className="address-field-icon">
                                                             ⌂
                                                         </span>
-
                                                         <input
                                                             type="text"
                                                             name="alley"
                                                             value={formData.origin.alley}
-                                                            onChange={(e) =>
-                                                                handleInputChange(
-                                                                    e,
-                                                                    "origin"
-                                                                )
-                                                            }
+                                                            onChange={(e) => {
+                                                                e.target.value = e.target.value.replace(/\D/g, "");
+                                                                handleInputChange(e, "origin");
+                                                            }}
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             placeholder="کوچه"
                                                             className="form-control address-input"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                {/* پلاک */}
                                                 <div className="address-field-small">
                                                     <label>
                                                         پلاک
@@ -1196,24 +1189,22 @@ const handleSubmit = (e) => {
                                                         <span className="address-field-icon">
                                                             #
                                                         </span>
-
                                                         <input
                                                             type="text"
                                                             name="plaque"
                                                             value={formData.origin.plaque}
-                                                            onChange={(e) =>
-                                                                handleInputChange(
-                                                                    e,
-                                                                    "origin"
-                                                                )
-                                                            }
+                                                            onChange={(e) => {
+                                                                e.target.value = e.target.value.replace(/\D/g, "");
+                                                                handleInputChange(e, "origin");
+                                                            }}
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             placeholder="پلاک"
                                                             className="form-control address-input"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                {/* واحد */}
                                                 <div className="address-field-small">
                                                     <label>
                                                         واحد
@@ -1223,24 +1214,22 @@ const handleSubmit = (e) => {
                                                         <span className="address-field-icon">
                                                             ▦
                                                         </span>
-
                                                         <input
                                                             type="text"
                                                             name="unit"
                                                             value={formData.origin.unit}
-                                                            onChange={(e) =>
-                                                                handleInputChange(
-                                                                    e,
-                                                                    "origin"
-                                                                )
-                                                            }
+                                                            onChange={(e) => {
+                                                                e.target.value = e.target.value.replace(/\D/g, "");
+                                                                handleInputChange(e, "origin");
+                                                            }}
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             placeholder="واحد"
                                                             className="form-control address-input"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                {/* توضیحات */}
                                                 <div className="address-field address-description-field">
                                                     <label>
                                                         توضیحات مبدأ
@@ -1276,7 +1265,6 @@ const handleSubmit = (e) => {
                                     </div>
 
 
-                                    {/* ================= مقصد ================= */}
 
                                     <div className="col-12 col-lg-6">
 
@@ -1301,8 +1289,6 @@ const handleSubmit = (e) => {
                                             </div>
 
                                             <div className="address-form-grid">
-
-                                                {/* استان */}
                                                 <div className="address-field">
                                                     <label>
                                                         استان
@@ -1331,7 +1317,6 @@ const handleSubmit = (e) => {
                                                     </div>
                                                 </div>
 
-                                                {/* شهر */}
                                                 <div className="address-field">
                                                     <label>
                                                         شهر
@@ -1360,7 +1345,6 @@ const handleSubmit = (e) => {
                                                     </div>
                                                 </div>
 
-                                                {/* خیابان */}
                                                 <div className="address-field address-field-large">
                                                     <label>
                                                         خیابان
@@ -1393,7 +1377,6 @@ const handleSubmit = (e) => {
                                                     </div>
                                                 </div>
 
-                                                {/* کوچه */}
                                                 <div className="address-field">
                                                     <label>
                                                         کوچه
@@ -1403,26 +1386,22 @@ const handleSubmit = (e) => {
                                                         <span className="address-field-icon">
                                                             ⌂
                                                         </span>
-
                                                         <input
                                                             type="text"
                                                             name="alley"
-                                                            value={
-                                                                formData.destination.alley
-                                                            }
-                                                            onChange={(e) =>
-                                                                handleInputChange(
-                                                                    e,
-                                                                    "destination"
-                                                                )
-                                                            }
+                                                            value={formData.destination.alley}
+                                                            onChange={(e) => {
+                                                                e.target.value = e.target.value.replace(/\D/g, "");
+                                                                handleInputChange(e, "destination");
+                                                            }}
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             placeholder="کوچه"
                                                             className="form-control address-input"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                {/* پلاک */}
                                                 <div className="address-field-small">
                                                     <label>
                                                         پلاک
@@ -1432,26 +1411,22 @@ const handleSubmit = (e) => {
                                                         <span className="address-field-icon">
                                                             #
                                                         </span>
-
                                                         <input
                                                             type="text"
                                                             name="plaque"
-                                                            value={
-                                                                formData.destination.plaque
-                                                            }
-                                                            onChange={(e) =>
-                                                                handleInputChange(
-                                                                    e,
-                                                                    "destination"
-                                                                )
-                                                            }
+                                                            value={formData.destination.plaque}
+                                                            onChange={(e) => {
+                                                                e.target.value = e.target.value.replace(/\D/g, "");
+                                                                handleInputChange(e, "destination");
+                                                            }}
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             placeholder="پلاک"
                                                             className="form-control address-input"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                {/* واحد */}
                                                 <div className="address-field-small">
                                                     <label>
                                                         واحد
@@ -1461,19 +1436,16 @@ const handleSubmit = (e) => {
                                                         <span className="address-field-icon">
                                                             ▦
                                                         </span>
-
                                                         <input
                                                             type="text"
                                                             name="unit"
-                                                            value={
-                                                                formData.destination.unit
-                                                            }
-                                                            onChange={(e) =>
-                                                                handleInputChange(
-                                                                    e,
-                                                                    "destination"
-                                                                )
-                                                            }
+                                                            value={formData.destination.unit}
+                                                            onChange={(e) => {
+                                                                e.target.value = e.target.value.replace(/\D/g, "");
+                                                                handleInputChange(e, "destination");
+                                                            }}
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             placeholder="واحد"
                                                             className="form-control address-input"
                                                         />

@@ -248,12 +248,17 @@ function RequestForm() {
               <input
                 id="courierCode"
                 type="text"
-                placeholder="کد یا نام قاصد..."
+                inputMode="numeric"
+                pattern="[0-9]*"
+                placeholder="کد قاصد..."
                 autoComplete="off"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/\D/g, "");
+                }}
               />
 
               <label htmlFor="courierCode">
-                قاصد دلخواه
+                کد قاصد
               </label>
             </div>
           </Col>
@@ -447,34 +452,34 @@ function RequestForm() {
 
 
 
-<Row>
-  <Col xs={12}>
-    <button
-      type="button"
-      className="btn btn-success w-100 py-2 fw-bold fs-5"
-      onClick={() => {
-        if (!originAddress || !destinationAddress || !vehicleType) {
-          alert("لطفاً مبدأ، مقصد و نوع وسیله را انتخاب کنید.");
-          return;
-        }
+        <Row>
+          <Col xs={12}>
+            <button
+              type="button"
+              className="btn btn-success w-100 py-2 fw-bold fs-5"
+              onClick={() => {
+                if (!originAddress || !destinationAddress || !vehicleType) {
+                  alert("لطفاً مبدأ، مقصد و نوع وسیله را انتخاب کنید.");
+                  return;
+                }
 
-        navigate(paths.private.definitions.CurrentRequest, {
-          state: {
-            requestStarted: true,
-            originAddress,
-            destinationAddress,
-            vehicleType,
-            selectedServices,
-            sender,
-            cash,
-          },
-        });
-      }}
-    >
-      ثبت درخواست
-    </button>
-  </Col>
-</Row>
+                navigate(paths.private.definitions.CurrentRequest, {
+                  state: {
+                    requestStarted: true,
+                    originAddress,
+                    destinationAddress,
+                    vehicleType,
+                    selectedServices,
+                    sender,
+                    cash,
+                  },
+                });
+              }}
+            >
+              ثبت درخواست
+            </button>
+          </Col>
+        </Row>
 
       </div>
     </Container>
