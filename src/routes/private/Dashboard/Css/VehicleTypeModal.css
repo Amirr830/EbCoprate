@@ -1,0 +1,215 @@
+.vehicle-select-modal .modal-dialog {
+    width: 100%;
+    max-width: 720px;
+    margin: 1rem auto;
+}
+.vehicle-select-modal .modal-content {
+    border: none;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.22);
+}
+.vehicle-modal-body {
+    padding: 24px;
+    background: #ffffff;
+}
+.vehicle-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+}
+.vehicle-modal-title {
+    margin: 0;
+    color: #212529;
+    font-size: 21px;
+    line-height: 1.7;
+}
+.vehicle-modal-subtitle {
+    margin: 4px 0 0;
+    color: #8a929b;
+    font-size: 13px;
+    line-height: 1.8;
+}
+.vehicle-modal-close {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border: none;
+    border-radius: 10px;
+    background: red;
+    color: white;
+    font-size: 25px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.vehicle-modal-close:hover {
+    background: #ffe5e5;
+    color: #dc3545;
+}
+.vehicle-modal-divider {
+    width: 100%;
+    height: 1px;
+    margin: 18px 0 20px;
+    background: #edf0f2;
+}
+.vehicle-card {
+    width: 100%;
+    min-height: 118px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 17px;
+    border: 1.5px solid #e7e9ec;
+    border-radius: 17px;
+    background: #ffffff;
+    text-align: right;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.22s ease;
+}
+.vehicle-card:hover {
+    border-color: #b9c0c8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+.vehicle-card.selected {
+    border-color: #198754;
+    background: #f5fff9;
+    box-shadow: 0 8px 25px rgba(25, 135, 84, 0.12);
+}
+.vehicle-card-icon {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f3f5;
+    color: #495057;
+    font-size: 25px;
+    transition: all 0.22s ease;
+}
+.vehicle-card:hover .vehicle-card-icon {
+    background: #e9ecef;
+}
+.vehicle-card.selected .vehicle-card-icon {
+    background: #198754;
+    color: #ffffff;
+}
+.vehicle-card-content {
+    min-width: 0;
+    flex: 1;
+}
+.vehicle-card-title {
+    margin-bottom: 4px;
+    color: #212529;
+    font-size: 15px;
+}
+.vehicle-card-description {
+    color: #8a929b;
+    font-size: 12px;
+    line-height: 1.8;
+}
+.vehicle-card-check {
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+    border: 1.5px solid #dfe3e7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 11px;
+    transition: all 0.2s ease;
+}
+.vehicle-card.selected .vehicle-card-check {
+    border-color: #198754;
+    background: #198754;
+}
+.vehicle-selected-info {
+    min-height: 48px;
+    margin-top: 20px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: #7a828a;
+    font-size: 13px;
+}
+.vehicle-selected-info strong {
+    color: #212529;
+    font-size: 13px;
+}
+.vehicle-modal-actions {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #edf0f2;
+}
+.vehicle-confirm-btn,
+.vehicle-cancel-btn {
+    width: 50%;
+    min-width: 0;
+    height: 50px;
+    border-radius: 13px;
+    font-family: inherit;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.22s ease;
+}
+.vehicle-confirm-btn {
+    border: 1px solid #198754;
+    background: linear-gradient(135deg, #198754, #20a464);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(25, 135, 84, 0.16);
+}
+.vehicle-confirm-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #157347, #198754);
+    transform: translateY(-1px);
+    box-shadow: 0 9px 24px rgba(25, 135, 84, 0.22);
+}
+.vehicle-confirm-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+.vehicle-confirm-btn:disabled {
+    border-color: #dfe3e7;
+    background: #eef0f2;
+    color: #a0a7ae;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+.vehicle-cancel-btn {
+    border: 1px solid #e1e5e9;
+    background: red;
+    color: white;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+.vehicle-cancel-btn:hover {
+    border-color: #ff0000;
+    background: #9e0000;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.07);
+}
+.vehicle-cancel-btn:active {
+    transform: translateY(0);
+}

@@ -1523,21 +1523,19 @@ const handleSubmit = (e) => {
                                 <div className="row w-100 g-2">
                                     <div className="col-6">
                                         <button
+                                            type="submit"
+                                            className=" w-100 btn btn-success"
+                                        >
+                                            ثبت
+                                        </button>
+                                    </div>
+                                    <div className="col-6">
+                                        <button
                                             type="button"
                                             className=" w-100 btn btn-danger"
                                             onClick={handlePreviousStep}
                                         >
                                             بازگشت
-                                        </button>
-                                    </div>
-
-
-                                    <div className="col-6">
-                                        <button
-                                            type="submit"
-                                            className=" w-100 btn btn-success"
-                                        >
-                                            ثبت
                                         </button>
                                     </div>
                                 </div>

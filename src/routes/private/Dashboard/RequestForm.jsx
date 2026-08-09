@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import paths from "../../../../src/app/paths.json";
 import NewDestinationModal from "./NewDestinationModal"
 import EdirAddressModal from "./EditAddressModal"
+import VehicleTypeModal from "./VehicleTypeModal"
+
+
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -17,7 +20,7 @@ function RequestForm() {
   const [showMenu, setShowMenu] = useState(false);
   const handleCloseMenu = () => setShowMenu(false);
   const handleShowMenu = () => setShowMenu(true);
-  const [vehicleType, setVehicleType] = useState("موتور (همراه جعبه)");
+  const [vehicleType, setVehicleType] = useState("");
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -139,70 +142,62 @@ function RequestForm() {
           </NewDestinationModal>
         </Row>
 
-
-
-
-
-
-
-
-<div className="route-card mb-3">
-  <div className="route-item">
-    <div className="route-side">
-      <span className="route-dot origin-dot"></span>
-      <span className="route-label">مبدأ</span>
-    </div>
-    <div className="route-address">
-      {originAddress || (
-        <span className="route-placeholder">
-          هنوز مبدأ انتخاب نشده است
-        </span>
-      )}
-    </div>
-    <EdirAddressModal
-      address={originAddress}
-      addressType="origin"
-      onAddressChange={(newAddress) => {
-        setOriginAddress(newAddress);
-      }}
-    >
-      <button
-        type="button"
-        className="route-edit"
-      >
-        <FaPencilAlt />
-      </button>
-    </EdirAddressModal>
-  </div>
-  <div className="route-item">
-    <div className="route-side">
-      <span className="route-dot dest-dot"></span>
-      <span className="route-label">مقصد</span>
-    </div>
-    <div className="route-address">
-      {destinationAddress || (
-        <span className="route-placeholder">
-          هنوز مقصد انتخاب نشده است
-        </span>
-      )}
-    </div>
-    <EdirAddressModal
-      address={destinationAddress}
-      addressType="destination"
-      onAddressChange={(newAddress) => {
-        setDestinationAddress(newAddress);
-      }}
-    >
-      <button
-        type="button"
-        className="route-edit"
-      >
-        <FaPencilAlt />
-      </button>
-    </EdirAddressModal>
-  </div>
-</div>
-
+        <div className="route-card mb-3">
+          <div className="route-item">
+            <div className="route-side">
+              <span className="route-dot origin-dot"></span>
+              <span className="route-label">مبدأ</span>
+            </div>
+            <div className="route-address">
+              {originAddress || (
+                <span className="route-placeholder">
+                  هنوز مبدأ انتخاب نشده است
+                </span>
+              )}
+            </div>
+            <EdirAddressModal
+              address={originAddress}
+              addressType="origin"
+              onAddressChange={(newAddress) => {
+                setOriginAddress(newAddress);
+              }}
+            >
+              <button
+                type="button"
+                className="route-edit"
+              >
+                <FaPencilAlt />
+              </button>
+            </EdirAddressModal>
+          </div>
+          <div className="route-item">
+            <div className="route-side">
+              <span className="route-dot dest-dot"></span>
+              <span className="route-label">مقصد</span>
+            </div>
+            <div className="route-address">
+              {destinationAddress || (
+                <span className="route-placeholder">
+                  هنوز مقصد انتخاب نشده است
+                </span>
+              )}
+            </div>
+            <EdirAddressModal
+              address={destinationAddress}
+              addressType="destination"
+              onAddressChange={(newAddress) => {
+                setDestinationAddress(newAddress);
+              }}
+            >
+              <button
+                type="button"
+                className="route-edit"
+              >
+                <FaPencilAlt />
+              </button>
+            </EdirAddressModal>
+          </div>
+        </div>
 
 
 
@@ -211,100 +206,36 @@ function RequestForm() {
 
 
 
-
-
-
-
-        <Row className="mb-3">
-          <Col xs={12}>
+        <Row className="g-3 mb-3">
+          <Col xs={12} md={6}>
             <div className="vehicle-dropdown">
               <label className="vehicle-label">
                 نوع وسیله
               </label>
-              <details ref={dropdownRef}>
-                <summary>
-                  <div className="selected-vehicle">
-                    <div>
-                      <div className="vehicle-name">
-                        {vehicleType}
-                      </div>
-                      <small>
-                        انتخاب وسیله نقلیه
-                      </small>
-                    </div>
-                    {
-                      vehicleType === "ماشین"
-                        ? <FaCar size={15} />
-                        : <FaMotorcycle size={15} />
-                    }
-                  </div>
-                </summary>
 
-                <div
-                  className="vehicle-option box-bike"
-                  onClick={() => {
-                    setVehicleType("موتور (همراه جعبه)");
-                    dropdownRef.current.removeAttribute("open");
+              <VehicleTypeModal
+                onVehicleSelect={(vehicle) => {
+                  setVehicleType(vehicle);
+                }}
+              >
+                <button
+                  type="button"
+                  className={`select-vehicle-btn ${vehicleType ? "vehicle-selected-btn" : ""}`}
+                  style={{
+                    fontSize: "18px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
                   }}
                 >
-                  <div>
-                    <div className="title">
-                      موتور همراه جعبه
-                    </div>
-                    <div className="subtitle">
-                      مناسب بسته و مرسوله
-                    </div>
-                  </div>
-                  <FaMotorcycle size={15} />
-                </div>
-
-                <div
-                  className="vehicle-option bike"
-                  onClick={() => {
-                    setVehicleType("موتور (بدون جعبه)");
-                    dropdownRef.current.removeAttribute("open");
-                  }}
-                >
-
-                  <div>
-                    <div className="title">
-                      موتور بدون جعبه
-                    </div>
-                    <div className="subtitle">
-                      سریع‌ترین ارسال
-                    </div>
-                  </div>
-                  <FaMotorcycle size={15} />
-                </div>
-
-                <div
-                  className="vehicle-option car"
-                  onClick={() => {
-                    setVehicleType("ماشین");
-                    dropdownRef.current.removeAttribute("open");
-                  }}
-                >
-
-                  <div>
-                    <div className="title">
-                      ماشین
-                    </div>
-                    <div className="subtitle">
-                      مناسب بارهای حجیم
-                    </div>
-                  </div>
-                  <FaCar size={15} />
-                </div>
-              </details>
+                  {vehicleType || "انتخاب نوع وسیله"}
+                </button>
+              </VehicleTypeModal>
             </div>
-
           </Col>
-        </Row>
-
-        <Row className="gy-3 mb-3">
-
-          <Col xs={12} md={6} lg={4}>
-            <div className="custom-floating-input modern-field">
+          <Col xs={12} md={6}>
+            <div className="custom-floating-input modern-field h-100">
               <select id="stopTime" defaultValue="بدون توقف">
                 <option>بدون توقف</option>
                 <option>۱۵ دقیقه</option>
@@ -316,9 +247,11 @@ function RequestForm() {
               </label>
             </div>
           </Col>
+        </Row>
 
-          <Col xs={12} md={6} lg={4}>
-            <div className="custom-floating-input modern-field">
+        <Row className="g-3 mb-3">
+          <Col xs={12} md={6}>
+            <div className="custom-floating-input modern-field h-100">
               <input
                 id="courierCode"
                 type="text"
@@ -332,8 +265,8 @@ function RequestForm() {
             </div>
           </Col>
 
-          <Col xs={12} md={12} lg={4}>
-            <div className="custom-floating-input modern-field">
+          <Col xs={12} md={6}>
+            <div className="custom-floating-input modern-field h-100">
               <select id="itemValue" defaultValue="زیر ۲۵ میلیون تومان">
                 <option>زیر ۲۵ میلیون تومان</option>
                 <option>۲۵ تا ۵۰ میلیون تومان</option>
@@ -346,8 +279,45 @@ function RequestForm() {
               </label>
             </div>
           </Col>
-
         </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <Row className="mb-3">
