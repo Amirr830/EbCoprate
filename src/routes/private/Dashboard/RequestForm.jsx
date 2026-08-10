@@ -54,6 +54,8 @@ function RequestForm() {
   const handleAddressSubmit = (data) => {
     const createAddress = (addressData) => {
       const parts = [
+        addressData.province,
+        addressData.city,
         addressData.street,
         addressData.alley
           ? `کوچه ${addressData.alley}`
@@ -65,16 +67,21 @@ function RequestForm() {
           ? `واحد ${addressData.unit}`
           : "",
       ];
+
       return parts
         .filter(Boolean)
         .join("، ");
     };
-    setOriginAddress(
-      createAddress(data.origin)
-    );
-    setDestinationAddress(
-      createAddress(data.destination)
-    );
+
+    const address = createAddress(data.address);
+
+    if (data.addressType === "origin") {
+      setOriginAddress(address);
+    }
+
+    if (data.addressType === "destination") {
+      setDestinationAddress(address);
+    }
   };
 
   return (
@@ -143,18 +150,36 @@ function RequestForm() {
         </Row>
 
         <div className="route-card mb-3">
+
           <div className="route-item">
             <div className="route-side">
               <span className="route-dot origin-dot"></span>
               <span className="route-label">مبدأ</span>
             </div>
-            <div className="route-address">
-              {originAddress || (
-                <span className="route-placeholder">
-                  هنوز مبدأ انتخاب نشده است
-                </span>
-              )}
-            </div>
+
+            {originAddress ? (
+              <div className="route-address">
+                {originAddress}
+              </div>
+            ) : (
+              <NewDestinationModal
+                addressType="origin"
+                onAddressSubmit={handleAddressSubmit}
+              >
+                <div
+                  className="route-address"
+                  style={{
+                    cursor: "pointer",
+                    width: "100%",
+                  }}
+                >
+                  <span className="route-placeholder">
+                    هنوز مبدأ انتخاب نشده است
+                  </span>
+                </div>
+              </NewDestinationModal>
+            )}
+
             <EdirAddressModal
               address={originAddress}
               addressType="origin"
@@ -170,18 +195,37 @@ function RequestForm() {
               </button>
             </EdirAddressModal>
           </div>
+
+
           <div className="route-item">
             <div className="route-side">
               <span className="route-dot dest-dot"></span>
               <span className="route-label">مقصد</span>
             </div>
-            <div className="route-address">
-              {destinationAddress || (
-                <span className="route-placeholder">
-                  هنوز مقصد انتخاب نشده است
-                </span>
-              )}
-            </div>
+
+            {destinationAddress ? (
+              <div className="route-address">
+                {destinationAddress}
+              </div>
+            ) : (
+              <NewDestinationModal
+                addressType="destination"
+                onAddressSubmit={handleAddressSubmit}
+              >
+                <div
+                  className="route-address"
+                  style={{
+                    cursor: "pointer",
+                    width: "100%",
+                  }}
+                >
+                  <span className="route-placeholder">
+                    هنوز مقصد انتخاب نشده است
+                  </span>
+                </div>
+              </NewDestinationModal>
+            )}
+
             <EdirAddressModal
               address={destinationAddress}
               addressType="destination"
@@ -197,7 +241,10 @@ function RequestForm() {
               </button>
             </EdirAddressModal>
           </div>
+
         </div>
+
+
 
         <Row className="g-3 mb-3">
           <Col xs={12} md={6}>
@@ -413,42 +460,40 @@ function RequestForm() {
         </Row>
 
 
-        {sender && (
-          <Row className="mb-3 g-2 align-items-stretch">
+        <Row className="mb-3 g-2 align-items-stretch">
 
-            <Col xs={4} md={5}>
-              <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
-                <span className="price-title">هزینه سرویس</span>
+          <Col xs={4} md={5}>
+            <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
+              <span className="price-title">هزینه سرویس</span>
 
-                <span className="price-amount text-success fw-bold">
-                  ۲۵,۰۰۰ <small>تومان</small>
-                </span>
+              <span className="price-amount text-success fw-bold">
+                ۲۵,۰۰۰ <small>تومان</small>
+              </span>
+            </div>
+          </Col>
+
+          <Col xs={8} md={7}>
+            <div className="modern-discount-bar h-100">
+              <div className="d-flex align-items-center gap-2 flex-grow-1">
+                <FaTag className="discount-icon text-muted" />
+
+                <input
+                  type="text"
+                  placeholder="کد تخفیف دارید؟"
+                  className="discount-input border-0 bg-transparent w-100"
+                />
               </div>
-            </Col>
 
-            <Col xs={8} md={7}>
-              <div className="modern-discount-bar h-100">
-                <div className="d-flex align-items-center gap-2 flex-grow-1">
-                  <FaTag className="discount-icon text-muted" />
+              <button
+                type="button"
+                className="apply-code-btn btn btn-success"
+              >
+                ثبت کد
+              </button>
+            </div>
+          </Col>
 
-                  <input
-                    type="text"
-                    placeholder="کد تخفیف دارید؟"
-                    className="discount-input border-0 bg-transparent w-100"
-                  />
-                </div>
-
-                <button
-                  type="button"
-                  className="apply-code-btn btn btn-success"
-                >
-                  ثبت کد
-                </button>
-              </div>
-            </Col>
-
-          </Row>
-        )}
+        </Row>
 
 
 
