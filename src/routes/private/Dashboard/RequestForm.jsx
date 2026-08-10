@@ -12,7 +12,8 @@ import NewDestinationModal from "./Modals/NewDestinationModal"
 import EdirAddressModal from "./Modals/EditAddressModal"
 import VehicleTypeModal from "./Modals/VehicleTypeModal"
 import strings from "../../../app/String.json"
-
+import SubmitRequestModal from "./Modals/SubmitRequestModal"
+import { useLocation } from "react-router-dom";
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -22,8 +23,8 @@ function RequestForm() {
   const handleShowMenu = () => setShowMenu(true);
   const [vehicleType, setVehicleType] = useState("");
   const dropdownRef = useRef(null);
+  const location = useLocation();
   const navigate = useNavigate();
-
   const [editAddress, setEditAddress] = useState("");
 
   const serviceOptions = [
@@ -40,6 +41,57 @@ function RequestForm() {
   const [serviceOpen, setServiceOpen] = useState(false);
   const [originAddress, setOriginAddress] = useState("");
   const [destinationAddress, setDestinationAddress] = useState("");
+
+
+  const resetForm = () => {
+
+    setOriginAddress("");
+    setDestinationAddress("");
+    setVehicleType("");
+    setSelectedServices([]);
+
+    setSender(true);
+    setCash(true);
+
+    setServiceOpen(false);
+
+  };
+
+  useEffect(() => {
+    const quickRequest = location?.state?.quickRequest;
+    if (!quickRequest) {
+      return;
+    }
+    setOriginAddress(quickRequest.originAddress || "");
+    setDestinationAddress(
+      quickRequest.destinationAddress || ""
+    );
+    setVehicleType(
+      quickRequest.vehicleType || ""
+    );
+    setSelectedServices(
+      quickRequest.selectedServices || []
+    );
+    setSender(
+      typeof quickRequest.sender === "boolean"
+        ? quickRequest.sender
+        : true
+    );
+    setCash(
+      typeof quickRequest.cash === "boolean"
+        ? quickRequest.cash
+        : true
+    );
+
+    window.history.replaceState(
+      {},
+      document.title
+    );
+
+
+  }, [location.state]);
+
+
 
   const toggleService = (item) => {
     if (selectedServices.includes(item)) {
@@ -83,6 +135,48 @@ function RequestForm() {
       setDestinationAddress(address);
     }
   };
+
+
+
+
+  const handleConfirmSubmit = (shouldAddToQuickRequest) => {
+    const requestData = {
+      originAddress,
+      destinationAddress,
+      vehicleType,
+      selectedServices,
+      sender,
+      cash,
+    };
+
+    if (shouldAddToQuickRequest) {
+      const oldQuickRequests = JSON.parse(
+        localStorage.getItem("quickRequests") || "[]"
+      );
+
+      const newQuickRequest = {
+        id: Date.now(),
+        ...requestData,
+      };
+
+      localStorage.setItem(
+        "quickRequests",
+        JSON.stringify([
+          ...oldQuickRequests,
+          newQuickRequest,
+        ])
+      );
+    }
+
+    navigate(paths.private.definitions.CurrentRequest, {
+      state: {
+        requestStarted: true,
+        ...requestData,
+      },
+    });
+  };
+
+
 
   return (
     <Container fluid className="modern-request-container h-100 d-flex justify-content-center align-items-center p-0 p-md-2">
@@ -498,33 +592,20 @@ function RequestForm() {
         </Row>
 
 
-
         <Row>
           <Col xs={12}>
-            <button
-              type="button"
-              className="btn btn-success w-100 py-2 fw-bold fs-5"
-              onClick={() => {
-                if (!originAddress || !destinationAddress || !vehicleType) {
-                  alert("لطفاً مبدأ، مقصد و نوع وسیله را انتخاب کنید.");
-                  return;
-                }
-
-                navigate(paths.private.definitions.CurrentRequest, {
-                  state: {
-                    requestStarted: true,
-                    originAddress,
-                    destinationAddress,
-                    vehicleType,
-                    selectedServices,
-                    sender,
-                    cash,
-                  },
-                });
+            <SubmitRequestModal
+              onConfirm={(shouldAddToQuickRequest) => {
+                handleConfirmSubmit(shouldAddToQuickRequest);
               }}
             >
-              ثبت درخواست
-            </button>
+              <button
+                type="button"
+                className="btn btn-success w-100 py-2 fw-bold fs-5"
+              >
+                ثبت درخواست
+              </button>
+            </SubmitRequestModal>
           </Col>
         </Row>
 

@@ -6,19 +6,17 @@
 
 .modern-form-card {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  max-height: calc(100vh - 140px); /* تنظیم حداکثر ارتفاع کارت */
-  overflow-y: auto;                 /* فعال‌سازی اسکرول عمودی داخلی */
+  max-height: calc(100vh - 140px); 
+  overflow-y: auto;                
   overflow-x: hidden;
-  scrollbar-width: thin;             /* تنظیم عرض اسکرول در مروگرها */
+  scrollbar-width: thin;            
   scrollbar-color: #cbd5e1 transparent;
 }
 
-/* محتوای داخل فرم برای حفظ فاصله از لبه‌ها */
 .form-scroll-content {
   width: 100%;
 }
 
-/* استایل ظریف اسکرول‌بار دقیقاً روی لبه داخلی کادر */
 .modern-form-card::-webkit-scrollbar {
   width: 5px;
 }

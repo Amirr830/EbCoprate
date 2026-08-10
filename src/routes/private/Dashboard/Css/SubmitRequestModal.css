@@ -1,0 +1,202 @@
+.submit-request-modal .modal-dialog {
+  width: 100%;
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 0 12px;
+}
+
+.submit-request-modal .modal-content {
+  border: none;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  direction: rtl;
+}
+
+.submit-request-header {
+  position: relative;
+  min-height: 68px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #edf0f3;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.submit-request-title {
+  margin: 0;
+  margin-left: auto;
+  color: #1f2937;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: left;
+}
+
+.submit-request-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.submit-request-close:hover {
+  background: #dc2626;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.submit-request-close:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.submit-request-body {
+  padding: 28px 24px 24px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.submit-request-icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 16px;
+  border-radius: 16px;
+  background: #ecfdf3;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 900;
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.1);
+}
+
+.submit-request-question {
+  color: #1f2937;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.8;
+  margin-bottom: 7px;
+}
+
+.submit-request-description {
+  color: #8a94a3;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+
+.quick-request-option {
+  width: 100%;
+  display: block;
+  padding: 14px 15px;
+  border: 1px solid #dce4ec;
+  border-radius: 15px;
+  background: #f8fafc;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.quick-request-option:hover {
+  border-color: #86efac;
+  background: #f0fdf4;
+  box-shadow: 0 5px 16px rgba(22, 163, 74, 0.08);
+}
+
+.quick-request-checkbox {
+  width: 21px;
+  height: 21px;
+  margin-left: 12px;
+  margin-right: 0;
+  accent-color: #16a34a;
+  cursor: pointer;
+}
+
+.quick-request-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.quick-request-title {
+  display: block;
+  color: #263238;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.quick-request-text {
+  display: block;
+  color: #8b95a1;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.submit-request-footer {
+  border-top: 1px solid #edf0f3;
+  background: #ffffff;
+}
+
+.submit-request-footer .row {
+  margin: 0;
+}
+
+.submit-request-footer .col-6 {
+  padding: 0;
+}
+
+.submit-request-btn {
+  width: 100%;
+  height: 58px;
+  border: none;
+  font-family: inherit;
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn {
+  background: #f50101;
+  color: white;
+  border-left: 1px solid #e5e7eb;
+}
+
+.cancel-btn:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.confirm-btn {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.confirm-btn:hover {
+  background: #15803d;
+}
+
+.submit-request-btn:active {
+  transform: scale(0.99);
+}
+

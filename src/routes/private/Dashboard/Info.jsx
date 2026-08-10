@@ -1,11 +1,27 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { FiChevronDown, FiEye } from "react-icons/fi";
 import historyData from "./DataHistoryInfo";
 import "./Css/Info.css";
 import { FiArrowDownLeft, FiArrowUpRight } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import paths from "../../../app/paths.json";
+
 function Info() {
+
+  const navigate = useNavigate();
+
+const [quickRequests, setQuickRequests] = useState([]);
+
+useEffect(() => {
+  const savedRequests = JSON.parse(
+    localStorage.getItem("quickRequests") || "[]"
+  );
+
+  setQuickRequests(savedRequests);
+}, []);
+
   return (
     <div className="info-container">
       <Row className="g-3">
@@ -100,13 +116,68 @@ function Info() {
           </div>
         </Col>
 
-        <Col xs={12} lg={6}>
-          <div className="info-card quick-request-card">
-            <h3 className="card-title">درخواست سریع</h3>
+<Col xs={12} lg={6}>
+  <div className="info-card quick-request-card">
+    <h3 className="card-title">
+      درخواست سریع
+    </h3>
 
-            <div className="card-content"></div>
-          </div>
-        </Col>
+    <div className="card-content">
+      {quickRequests.length === 0 ? (
+        <div className="quick-request-empty">
+          هنوز درخواستی به درخواست سریع اضافه نشده است.
+        </div>
+      ) : (
+        <div className="quick-request-list">
+          {quickRequests.map((request) => (
+            <div
+              key={request.id}
+              className="quick-request-item"
+              onClick={() => {
+                navigate(
+                  paths.private.definitions.RequestForm,
+                  {
+                    state: {
+                      quickRequest: request,
+                    },
+                  }
+                );
+              }}
+            >
+              <div className="quick-request-main">
+                <div className="quick-request-route">
+                  <span className="quick-request-dot origin-dot"></span>
+
+                  <span>
+                    {request.originAddress}
+                  </span>
+                </div>
+
+                <div className="quick-request-route">
+                  <span className="quick-request-dot destination-dot"></span>
+
+                  <span>
+                    {request.destinationAddress}
+                  </span>
+                </div>
+              </div>
+
+              <div className="quick-request-details">
+                <span>
+                  {request.vehicleType}
+                </span>
+
+                <span>
+                  {request.selectedServices?.length || 0} ویژگی
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</Col>
 
 
         <Col xs={12} lg={6}>
