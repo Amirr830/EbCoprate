@@ -33,8 +33,8 @@ function Info() {
                   </thead>
 
                   <tbody>
-                    {historyData.slice(0, 5).map((item) => (
-                      <tr key={item.id}>
+                    {historyData.map((item) => (
+                        <tr key={item.id}>
                         <td>
                           <div className="history-date">
                             <span>{item.date}</span>
@@ -86,7 +86,7 @@ function Info() {
                 </table>
               </div>
 
-              {historyData.length > 5 && (
+              {historyData.length > 3 && (
                 <button
                   type="button"
                   className="history-more-btn"
@@ -109,80 +109,81 @@ function Info() {
         </Col>
 
 
-<Col xs={12} lg={6}>
-  <div className="info-card driver-performance-card">
-    <h3 className="card-title">عملکرد راننده</h3>
-    <div className="card-content">
-      <div className="driver-performance-list">
-        <div className="performance-item">
-          <div className="performance-icon performance-income">
-            <FiArrowDownLeft />
+        <Col xs={12} lg={6}>
+          <div className="info-card driver-performance-card">
+            <h3 className="card-title">عملکرد راننده</h3>
+            <div className="card-content">
+              <div className="driver-performance-list">
+                <div className="performance-item">
+                  <div className="performance-icon performance-income">
+                    <FiArrowDownLeft />
+                  </div>
+                  <div className="performance-info">
+                    <span className="performance-title">پرداخت کرایه</span>
+                    <span className="performance-time">امروز، 14:32</span>
+                  </div>
+                  <div className="performance-amount income">
+                    <span>20,000 تومان</span>
+                    <small>ورودی</small>
+                  </div>
+                </div>
+                <div className="performance-item">
+                  <div className="performance-icon performance-expense">
+                    <FiArrowUpRight />
+                  </div>
+                  <div className="performance-info">
+                    <span className="performance-title">تسویه سفارش</span>
+                    <span className="performance-time">امروز، 13:48</span>
+                  </div>
+                  <div className="performance-amount expense">
+                    <span>8,500 تومان</span>
+                    <small>خروجی</small>
+                  </div>
+                </div>
+                <div className="performance-item">
+                  <div className="performance-icon performance-income">
+                    <FiArrowDownLeft />
+                  </div>
+                  <div className="performance-info">
+                    <span className="performance-title">دریافت هزینه ارسال</span>
+                    <span className="performance-time">امروز، 12:15</span>
+                  </div>
+                  <div className="performance-amount income">
+                    <span>35,000 تومان</span>
+                    <small>ورودی</small>
+                  </div>
+                </div>
+                <div className="performance-item">
+                  <div className="performance-icon performance-expense">
+                    <FiArrowUpRight />
+                  </div>
+                  <div className="performance-info">
+                    <span className="performance-title">پرداخت هزینه مسیر</span>
+                    <span className="performance-time">امروز، 11:40</span>
+                  </div>
+                  <div className="performance-amount expense">
+                    <span>12,000 تومان</span>
+                    <small>خروجی</small>
+                  </div>
+                </div>
+                <div className="performance-item">
+                  <div className="performance-icon performance-income">
+                    <FiArrowDownLeft />
+                  </div>
+                  <div className="performance-info">
+                    <span className="performance-title">دریافت پاداش</span>
+                    <span className="performance-time">امروز، 10:20</span>
+                  </div>
+                  <div className="performance-amount income">
+                    <span>50,000 تومان</span>
+                    <small>ورودی</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="performance-info">
-            <span className="performance-title">پرداخت کرایه</span>
-            <span className="performance-time">امروز، 14:32</span>
-          </div>
-          <div className="performance-amount income">
-            <span>20,000 تومان</span>
-            <small>ورودی</small>
-          </div>
-        </div>
-        <div className="performance-item">
-          <div className="performance-icon performance-expense">
-            <FiArrowUpRight />
-          </div>
-          <div className="performance-info">
-            <span className="performance-title">تسویه سفارش</span>
-            <span className="performance-time">امروز، 13:48</span>
-          </div>
-          <div className="performance-amount expense">
-            <span>8,500 تومان</span>
-            <small>خروجی</small>
-          </div>
-        </div>
-        <div className="performance-item">
-          <div className="performance-icon performance-income">
-            <FiArrowDownLeft />
-          </div>
-          <div className="performance-info">
-            <span className="performance-title">دریافت هزینه ارسال</span>
-            <span className="performance-time">امروز، 12:15</span>
-          </div>
-          <div className="performance-amount income">
-            <span>35,000 تومان</span>
-            <small>ورودی</small>
-          </div>
-        </div>
-        <div className="performance-item">
-          <div className="performance-icon performance-expense">
-            <FiArrowUpRight />
-          </div>
-          <div className="performance-info">
-            <span className="performance-title">پرداخت هزینه مسیر</span>
-            <span className="performance-time">امروز، 11:40</span>
-          </div>
-          <div className="performance-amount expense">
-            <span>12,000 تومان</span>
-            <small>خروجی</small>
-          </div>
-        </div>
-        <div className="performance-item">
-          <div className="performance-icon performance-income">
-            <FiArrowDownLeft />
-          </div>
-          <div className="performance-info">
-            <span className="performance-title">دریافت پاداش</span>
-            <span className="performance-time">امروز، 10:20</span>
-          </div>
-          <div className="performance-amount income">
-            <span>50,000 تومان</span>
-            <small>ورودی</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</Col>
+        </Col>
+
 
 
       </Row>

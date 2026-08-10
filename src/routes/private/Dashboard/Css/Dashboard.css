@@ -79,7 +79,6 @@
 
 .dashboard-card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .dashboard-card-request {
@@ -174,7 +173,6 @@
     padding-top: 65px;
     overflow-y: auto;
     z-index: 1050;
-    box-shadow: -5px 0 25px rgba(0, 0, 0, .15);
     transition: right .3s cubic-bezier(.4, 0, .2, 1);
   }
 
