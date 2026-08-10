@@ -56,15 +56,6 @@
   transition: all .25s ease;
 }
 
-.dashboard-card-request,
-.dashboard-card-current {
-  max-height: calc(100vh - 140px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
-}
-
 .dashboard-card-request::-webkit-scrollbar,
 .dashboard-card-current::-webkit-scrollbar {
   width: 6px;

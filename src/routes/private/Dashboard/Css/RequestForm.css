@@ -6,6 +6,34 @@
 
 .modern-form-card {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-height: calc(100vh - 140px); /* تنظیم حداکثر ارتفاع کارت */
+  overflow-y: auto;                 /* فعال‌سازی اسکرول عمودی داخلی */
+  overflow-x: hidden;
+  scrollbar-width: thin;             /* تنظیم عرض اسکرول در مروگرها */
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* محتوای داخل فرم برای حفظ فاصله از لبه‌ها */
+.form-scroll-content {
+  width: 100%;
+}
+
+/* استایل ظریف اسکرول‌بار دقیقاً روی لبه داخلی کادر */
+.modern-form-card::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modern-form-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modern-form-card::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.modern-form-card::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .hamburger-btn:focus {

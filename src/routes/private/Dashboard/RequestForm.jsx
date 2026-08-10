@@ -105,35 +105,37 @@ function RequestForm() {
       </Offcanvas>
 
       <div className="modern-form-card w-100 bg-white rounded-3 p-4 pt-3 mt-2 border shadow-sm">
-        <div className="d-flex d-md-none align-items-center justify-content-between pb-3 mb-3 border-bottom">
-          <div className="d-flex align-items-center gap-2">
-            <button
-              type="button"
-              className="btn btn-link text-dark p-0 m-0 border-0 hamburger-btn"
-              onClick={handleShowMenu}
-            >
-              <RxHamburgerMenu size={24} />
-            </button>
-            {/* <span className="fw-bold fs-5 me-1">ثبت درخواست</span> */}
-          </div>
-
-          <div
-            className="d-flex align-items-center gap-1 bg-warning px-2 py-1 rounded-2 border border-dark"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate(paths.private.definitions.Wallet)}
-          >
-            <div
-              className="bg-warning text-dark border border-dark rounded-circle p-1 d-flex align-items-center justify-content-center"
-              style={{ width: 18, height: 18 }}
-            >
-              <FaPlus size={8} />
+        <div className="form-scroll-content">
+          <div className="d-flex d-md-none align-items-center justify-content-between pb-3 mb-3 border-bottom">
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                className="btn btn-link text-dark p-0 m-0 border-0 hamburger-btn"
+                onClick={handleShowMenu}
+              >
+                <RxHamburgerMenu size={24} />
+              </button>
+              {/* <span className="fw-bold fs-5 me-1">ثبت درخواست</span> */}
             </div>
 
-            <span className="fw-bold px-1" style={{ fontSize: "12px" }}>
-              ۲۵,۰۰۰ تومان
-            </span>
+            <div
+              className="d-flex align-items-center gap-1 bg-warning px-2 py-1 rounded-2 border border-dark"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(paths.private.definitions.Wallet)}
+            >
+              <div
+                className="bg-warning text-dark border border-dark rounded-circle p-1 d-flex align-items-center justify-content-center"
+                style={{ width: 18, height: 18 }}
+              >
+                <FaPlus size={8} />
+              </div>
 
-            {/* <IoWalletOutline size={20} className="text-dark" /> */}
+              <span className="fw-bold px-1" style={{ fontSize: "12px" }}>
+                ۲۵,۰۰۰ تومان
+              </span>
+
+              {/* <IoWalletOutline size={20} className="text-dark" /> */}
+            </div>
           </div>
         </div>
 
