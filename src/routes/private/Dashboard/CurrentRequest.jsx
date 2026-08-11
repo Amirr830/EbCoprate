@@ -164,8 +164,6 @@ function CurrentRequest() {
                         {currentTime.getHours() < 12 ? 'صبح' : 'بعدازظهر'}
                       </div>
 
-
-
                     </div>
 
                   </div>
