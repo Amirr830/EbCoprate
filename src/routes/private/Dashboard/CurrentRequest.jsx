@@ -40,7 +40,17 @@ function CurrentRequest() {
 
   const [courierFound, setCourierFound] = useState(false);
 
+  const [currentTime, setCurrentTime] = useState(new Date());
+
   const position = [36.3155, 59.5323];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (!requestStarted) {
@@ -147,12 +157,14 @@ function CurrentRequest() {
                           minute: '2-digit',
                           second: '2-digit',
                           hour12: false,
-                        }).format(new Date())}
+                        }).format(currentTime)}
                       </div>
 
                       <div className="current-time-period">
-                        {new Date().getHours() < 12 ? 'صبح' : 'بعدازظهر'}
+                        {currentTime.getHours() < 12 ? 'صبح' : 'بعدازظهر'}
                       </div>
+
+
 
                     </div>
 
