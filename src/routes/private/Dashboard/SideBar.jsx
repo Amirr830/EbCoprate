@@ -33,23 +33,32 @@ function SideBar() {
   ];
 
 const handleMenuClick = (item) => {
+
   setActive(item.id);
 
   if (item.id === "dashboard") {
     navigate("/control-panel/-1/dashboard");
   }
+
+  if (item.id === "wallet") {
+    navigate("/control-panel/67/definitions/wallet");
+  }
+
+  if (item.id === "account") {
+    navigate(paths.private.definitions.userAccount);
+  }
 };
 
-const handleLogout = () => {
-  answerModal.show(
-    "آیا مایل به خروج از حساب کاربری هستید؟",
-    () => {
-      Storages.removeUserToken();
-      navigate(paths.public.login);
-    },
-    () => { }
-  );
-};
+  const handleLogout = () => {
+    answerModal.show(
+      "آیا مایل به خروج از حساب کاربری هستید؟",
+      () => {
+        Storages.removeUserToken();
+        navigate(paths.public.login);
+      },
+      () => { }
+    );
+  };
 
   return (
     <aside className="sidebar-wrapper">
@@ -68,19 +77,19 @@ const handleLogout = () => {
         </Col>
 
         <Col className="sidebar-menu-container custom-scrollbar">
-{menus.map((item) => (
-  <button
-    key={item.id}
-    onClick={() => handleMenuClick(item)}
-    className={`sidebar-btn ${active === item.id ? "active-btn" : ""}`}
-  >
-    <div className="btn-icon">{item.icon}</div>
-    <span className="btn-text">{item.title}</span>
-    <div className="btn-arrow">
-      <BsChevronLeft />
-    </div>
-  </button>
-))}
+          {menus.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleMenuClick(item)}
+              className={`sidebar-btn ${active === item.id ? "active-btn" : ""}`}
+            >
+              <div className="btn-icon">{item.icon}</div>
+              <span className="btn-text">{item.title}</span>
+              <div className="btn-arrow">
+                <BsChevronLeft />
+              </div>
+            </button>
+          ))}
         </Col>
 
         <Col xs="auto" className="sidebar-footer-section">

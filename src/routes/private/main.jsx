@@ -85,6 +85,7 @@ import ShiftReport from "./reports/shiftReport";
 import Wallet from "./Wallet/Wallet";
 import Header from "./Dashboard/Header"
 import Sidebarr from "./Dashboard/SideBar"
+import UserAccount from "../private/UserAccount/UserAccount"
 
 function Main(props) {
   var navigate = useNavigate()
@@ -316,19 +317,6 @@ function Main(props) {
               onTouchStart={() => { setOpen(false) }}
               onMouseUp={() => { setOpen(false) }}  >
 
-
-
-
-
-
-
-
-
-
-
-
-
-
               <div
                 className={`position-fixed ${isDashboard ? "d-none d-md-block" : "d-none d-md-block"}`}
                 style={{
@@ -355,30 +343,6 @@ function Main(props) {
                   </div>
                 </div>
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
               {!isDashboard && (
                 <div
@@ -491,6 +455,8 @@ function Main(props) {
                     <Route path={paths.private.definitions.shiftPattern} element={<ShiftPattern />} />
 
                     <Route path={paths.private.definitions.Wallet} element={<Wallet />} />
+                    <Route path={paths.private.definitions.userAccount} element={<UserAccount />} />
+
 
                     <Route path={paths.private.actions.dashboard} element={<Actions />} />
                     <Route path={paths.private.actions.reserve} element={<Reserve />} />

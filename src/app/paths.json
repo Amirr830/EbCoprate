@@ -40,7 +40,9 @@
             "shiftPattern": "/control-panel/63/definitions/shift-patterns",
             "duplicateAddress": "/control-panel/66/definitions/duplicate-address",
         
-            "Wallet": "/control-panel/67/definitions/wallet"
+            "Wallet": "/control-panel/67/definitions/wallet",
+            "userAccount": "/control-panel/67/definitions/userAccount"
+
         
         },
         "reports": {
