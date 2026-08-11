@@ -12,15 +12,41 @@ function Info() {
 
   const navigate = useNavigate();
 
-const [quickRequests, setQuickRequests] = useState([]);
+  const [quickRequests, setQuickRequests] = useState([]);
 
-useEffect(() => {
-  const savedRequests = JSON.parse(
-    localStorage.getItem("quickRequests") || "[]"
-  );
+  useEffect(() => {
+    const loadQuickRequests = () => {
+      const savedRequests = JSON.parse(
+        localStorage.getItem("quickRequests") || "[]"
+      );
 
-  setQuickRequests(savedRequests);
-}, []);
+      setQuickRequests(savedRequests);
+    };
+
+    loadQuickRequests();
+
+    window.addEventListener(
+      "quickRequestsUpdated",
+      loadQuickRequests
+    );
+
+    window.addEventListener(
+      "storage",
+      loadQuickRequests
+    );
+
+    return () => {
+      window.removeEventListener(
+        "quickRequestsUpdated",
+        loadQuickRequests
+      );
+
+      window.removeEventListener(
+        "storage",
+        loadQuickRequests
+      );
+    };
+  }, []);
 
   return (
     <div className="info-container">
@@ -50,7 +76,7 @@ useEffect(() => {
 
                   <tbody>
                     {historyData.map((item) => (
-                        <tr key={item.id}>
+                      <tr key={item.id}>
                         <td>
                           <div className="history-date">
                             <span>{item.date}</span>
@@ -116,68 +142,68 @@ useEffect(() => {
           </div>
         </Col>
 
-<Col xs={12} lg={6}>
-  <div className="info-card quick-request-card">
-    <h3 className="card-title">
-      درخواست سریع
-    </h3>
+        <Col xs={12} lg={6}>
+          <div className="info-card quick-request-card">
+            <h3 className="card-title">
+              درخواست سریع
+            </h3>
 
-    <div className="card-content">
-      {quickRequests.length === 0 ? (
-        <div className="quick-request-empty">
-          هنوز درخواستی به درخواست سریع اضافه نشده است.
-        </div>
-      ) : (
-        <div className="quick-request-list">
-          {quickRequests.map((request) => (
-            <div
-              key={request.id}
-              className="quick-request-item"
-              onClick={() => {
-                navigate(
-                  paths.private.definitions.RequestForm,
-                  {
-                    state: {
-                      quickRequest: request,
-                    },
-                  }
-                );
-              }}
-            >
-              <div className="quick-request-main">
-                <div className="quick-request-route">
-                  <span className="quick-request-dot origin-dot"></span>
-
-                  <span>
-                    {request.originAddress}
-                  </span>
+            <div className="card-content">
+              {quickRequests.length === 0 ? (
+                <div className="quick-request-empty">
+                  هنوز درخواستی به درخواست سریع اضافه نشده است.
                 </div>
+              ) : (
+                <div className="quick-request-list">
+                  {quickRequests.map((request) => (
+                    <div
+                      key={request.id}
+                      className="quick-request-item"
+                      onClick={() => {
+                        navigate(
+                          paths.private.definitions.RequestForm,
+                          {
+                            state: {
+                              quickRequest: request,
+                            },
+                          }
+                        );
+                      }}
+                    >
+                      <div className="quick-request-main">
+                        <div className="quick-request-route">
+                          <span className="quick-request-dot origin-dot"></span>
 
-                <div className="quick-request-route">
-                  <span className="quick-request-dot destination-dot"></span>
+                          <span>
+                            {request.originAddress}
+                          </span>
+                        </div>
 
-                  <span>
-                    {request.destinationAddress}
-                  </span>
+                        <div className="quick-request-route">
+                          <span className="quick-request-dot destination-dot"></span>
+
+                          <span>
+                            {request.destinationAddress}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="quick-request-details">
+                        <span>
+                          {request.vehicleType}
+                        </span>
+
+                        <span>
+                          {request.selectedServices?.length || 0} ویژگی
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-
-              <div className="quick-request-details">
-                <span>
-                  {request.vehicleType}
-                </span>
-
-                <span>
-                  {request.selectedServices?.length || 0} ویژگی
-                </span>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  </div>
-</Col>
+          </div>
+        </Col>
 
 
         <Col xs={12} lg={6}>

@@ -21,20 +21,18 @@ export default function AddDefMsgModal(props) {
         setShow(false);
     };
 
+
     const handleConfirm = () => {
-        const shouldRefresh = addToQuickRequest;
+        const shouldAddToQuickRequest = addToQuickRequest;
 
         if (props?.onConfirm) {
-            props.onConfirm(shouldRefresh);
+            props.onConfirm(shouldAddToQuickRequest);
         }
 
         setShow(false);
         setAddToQuickRequest(false);
-
-        if (shouldRefresh) {
-            window.location.reload();
-        }
     };
+
 
     let newFirstChild;
 

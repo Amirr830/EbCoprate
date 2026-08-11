@@ -137,8 +137,6 @@ function RequestForm() {
   };
 
 
-
-
   const handleConfirmSubmit = (shouldAddToQuickRequest) => {
     const requestData = {
       originAddress,
@@ -159,12 +157,18 @@ function RequestForm() {
         ...requestData,
       };
 
+      const updatedQuickRequests = [
+        ...oldQuickRequests,
+        newQuickRequest,
+      ];
+
       localStorage.setItem(
         "quickRequests",
-        JSON.stringify([
-          ...oldQuickRequests,
-          newQuickRequest,
-        ])
+        JSON.stringify(updatedQuickRequests)
+      );
+
+      window.dispatchEvent(
+        new Event("quickRequestsUpdated")
       );
     }
 
