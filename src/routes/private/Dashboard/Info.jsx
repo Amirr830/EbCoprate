@@ -91,7 +91,7 @@ function Info() {
         <Col xs={12}>
           <div className="info-card driver-performance-card">
             <div className="history-header">
-              <h3 className="card-title">عملکرد راننده</h3>
+              <h3 className="card-title">گزارش حساب</h3>
             </div>
             <div className="card-content">
               <div className="table-responsive history-table-wrapper">
@@ -99,7 +99,7 @@ function Info() {
                   <thead>
                     <tr>
                       <th>نوع عملکرد</th>
-                      <th>تاریخ و ساعت</th>
+                      <th>تاریخ</th>
                       <th>مبلغ</th>
                       <th>وضعیت</th>
                     </tr>
@@ -115,7 +115,7 @@ function Info() {
                         </div>
                       </td>
                       <td>
-                        <span className="performance-table-date">امروز، 14:32</span>
+                        <span className="performance-table-date">1404/01/05</span>
                       </td>
                       <td>
                         <span className="history-amount performance-income-text">20,000 تومان</span>
@@ -134,7 +134,7 @@ function Info() {
                         </div>
                       </td>
                       <td>
-                        <span className="performance-table-date">امروز، 13:48</span>
+                        <span className="performance-table-date">1405/05/18</span>
                       </td>
                       <td>
                         <span className="history-amount performance-expense-text">8,500 تومان</span>
@@ -153,7 +153,7 @@ function Info() {
                         </div>
                       </td>
                       <td>
-                        <span className="performance-table-date">امروز، 12:15</span>
+                        <span className="performance-table-date">1403/10/28</span>
                       </td>
                       <td>
                         <span className="history-amount performance-income-text">35,000 تومان</span>
