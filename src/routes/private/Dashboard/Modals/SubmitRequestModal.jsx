@@ -1,44 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import "../Css/SubmitRequestModal.css";
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
     const [addToQuickRequest, setAddToQuickRequest] = useState(false);
-
-    useEffect(() => {
-        if (show) {
-        }
-    }, [show]);
+    const [quickRequestName, setQuickRequestName] = useState("");
 
     const handleShow = () => {
         setAddToQuickRequest(false);
+        setQuickRequestName("");
         setShow(true);
     };
 
     const handleClose = () => {
         setAddToQuickRequest(false);
+        setQuickRequestName("");
         setShow(false);
     };
 
+    const handleQuickRequestChange = (e) => {
+        const checked = e.target.checked;
+
+        setAddToQuickRequest(checked);
+
+        if (!checked) {
+            setQuickRequestName("");
+        }
+    };
 
     const handleConfirm = () => {
-        const shouldAddToQuickRequest = addToQuickRequest;
+        if (addToQuickRequest) {
+            const name = quickRequestName.trim();
 
-        if (props?.onConfirm) {
-            props.onConfirm(shouldAddToQuickRequest);
+            if (!name) {
+                return;
+            }
+
+            if (props?.onConfirm) {
+                props.onConfirm(name);
+            }
+        } else {
+            if (props?.onConfirm) {
+                props.onConfirm(null);
+            }
         }
 
         setShow(false);
         setAddToQuickRequest(false);
+        setQuickRequestName("");
     };
-
 
     let newFirstChild;
 
     if (props?.children) {
         newFirstChild = React.cloneElement(
-            props?.children?.length > 1
+            props.children?.length > 1
                 ? props.children[0]
                 : props.children,
             {
@@ -46,6 +63,9 @@ export default function AddDefMsgModal(props) {
             }
         );
     }
+
+    const isNameValid =
+        !addToQuickRequest || quickRequestName.trim().length > 0;
 
     return (
         <>
@@ -89,11 +109,7 @@ export default function AddDefMsgModal(props) {
                                 <input
                                     type="checkbox"
                                     checked={addToQuickRequest}
-                                    onChange={(e) => {
-                                        setAddToQuickRequest(
-                                            e.target.checked
-                                        );
-                                    }}
+                                    onChange={handleQuickRequestChange}
                                     className="quick-request-checkbox"
                                 />
                             </Col>
@@ -115,6 +131,27 @@ export default function AddDefMsgModal(props) {
                         </Row>
                     </label>
 
+                    {addToQuickRequest && (
+                        <div className="quick-request-name-box">
+
+                            <label className="quick-request-name-label">
+                                نام درخواست سریع مربوط به این سفر را وارد کنید
+                            </label>
+
+                            <input
+                                type="text"
+                                value={quickRequestName}
+                                onChange={(e) =>
+                                    setQuickRequestName(e.target.value)
+                                }
+                                className="quick-request-name-input"
+                                placeholder="مثلاً تست"
+                                autoFocus
+                            />
+
+                        </div>
+                    )}
+
                 </Modal.Body>
 
                 <Modal.Footer className="submit-request-footer p-0">
@@ -126,6 +163,7 @@ export default function AddDefMsgModal(props) {
                                 type="button"
                                 className="submit-request-btn confirm-btn"
                                 onClick={handleConfirm}
+                                disabled={!isNameValid}
                             >
                                 ثبت
                             </button>

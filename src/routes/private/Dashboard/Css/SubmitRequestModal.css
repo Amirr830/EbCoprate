@@ -29,8 +29,7 @@
   margin: 0;
   margin-left: auto;
   color: #1f2937;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 20px;
   line-height: 1;
   text-align: left;
 }
@@ -47,8 +46,7 @@
   border-radius: 10px;
   background: #ef4444;
   color: #ffffff;
-  font-size: 25px;
-  font-weight: 400;
+  font-size: 29px;
   line-height: 30px;
   display: flex;
   align-items: center;
@@ -84,22 +82,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
-  font-weight: 900;
+  font-size: 29px;
   box-shadow: 0 6px 18px rgba(22, 163, 74, 0.1);
 }
 
 .submit-request-question {
   color: #1f2937;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 21px;
   line-height: 1.8;
   margin-bottom: 7px;
 }
 
 .submit-request-description {
   color: #8a94a3;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.8;
   margin-bottom: 22px;
 }
@@ -141,16 +137,61 @@
 .quick-request-title {
   display: block;
   color: #263238;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 18px;
   line-height: 1.6;
 }
 
 .quick-request-text {
   display: block;
   color: #8b95a1;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
+}
+
+.quick-request-name-box {
+  width: 100%;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid #dce4ec;
+  border-radius: 15px;
+  background: #ffffff;
+  text-align: right;
+  box-sizing: border-box;
+  animation: quickRequestNameShow 0.2s ease;
+}
+
+.quick-request-name-label {
+  display: block;
+  margin-bottom: 9px;
+  color: #263238;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.quick-request-name-input {
+  width: 100%;
+  height: 46px;
+  padding: 0 13px;
+  border: 1px solid #dce4ec;
+  border-radius: 11px;
+  background: #f8fafc;
+  color: #263238;
+  font-family: inherit;
+  font-size: 16px;
+  text-align: right;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.quick-request-name-input::placeholder {
+  color: #a0a8b3;
+}
+
+.quick-request-name-input:focus {
+  border-color: #16a34a;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.08);
 }
 
 .submit-request-footer {
@@ -171,9 +212,14 @@
   height: 58px;
   border: none;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.submit-request-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .cancel-btn {
@@ -192,11 +238,22 @@
   color: #ffffff;
 }
 
-.confirm-btn:hover {
+.confirm-btn:hover:not(:disabled) {
   background: #15803d;
 }
 
-.submit-request-btn:active {
+.submit-request-btn:active:not(:disabled) {
   transform: scale(0.99);
 }
 
+@keyframes quickRequestNameShow {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
