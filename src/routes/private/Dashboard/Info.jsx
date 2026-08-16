@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { FiChevronDown, FiEye } from "react-icons/fi";
+import { FiChevronDown, FiEye, FiTrash2 } from "react-icons/fi";
 import historyData from "./DataHistoryInfo";
 import "./Css/Info.css";
 import { FiArrowDownLeft, FiArrowUpRight } from "react-icons/fi";
@@ -22,6 +22,11 @@ function Info() {
       window.removeEventListener("storage", loadQuickRequests);
     };
   }, []);
+  const handleClearQuickRequests = () => {
+    localStorage.removeItem("quickRequests");
+    setQuickRequests([]);
+    window.dispatchEvent(new Event("quickRequestsUpdated"));
+  };
   return (
     <div className="info-container">
       <Row className="g-3">
@@ -80,12 +85,6 @@ function Info() {
                   </tbody>
                 </table>
               </div>
-              {/* {historyData.length > 3 && (
-                <button type="button" className="history-more-btn" disabled>
-                  <span>نمایش بیشتر</span>
-                  <FiChevronDown />
-                </button>
-              )} */}
             </div>
           </div>
         </Col>
@@ -169,24 +168,28 @@ function Info() {
             </div>
           </div>
         </Col>
-
         <Col xs={12}>
           <div className="info-card quick-request-card">
             <div className="quick-request-header">
               <div className="quick-request-title-wrapper">
                 <h3 className="card-title">درخواست سریع</h3>
               </div>
-
+              {/* {quickRequests.length > 0 && (
+                <button
+                  type="button"
+                  className="quick-request-clear-btn"
+                  onClick={handleClearQuickRequests}
+                >
+                  <FiTrash2 />
+                  <span>حذف همه</span>
+                </button>
+              )} */}
             </div>
             <div className="card-content">
               {quickRequests.length === 0 ? (
                 <div className="quick-request-empty">
-                  <div className="quick-request-empty-icon">
-                    <span></span>
-                    <span></span>
-                  </div>
                   <div className="quick-request-empty-text">
-                    هنوز درخواستی به درخواست سریع اضافه نشده است.
+                    هنوز درخواستی به درخواست سریع اضافه نشده است
                   </div>
                 </div>
               ) : (
@@ -221,7 +224,6 @@ function Info() {
             </div>
           </div>
         </Col>
-
       </Row>
     </div>
   );
