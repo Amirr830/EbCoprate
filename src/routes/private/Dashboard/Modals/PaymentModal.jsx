@@ -25,10 +25,6 @@ export default function AddDefMsgModal(props) {
         setShow(true);
     };
 
-    const handlePaymentSelect = (method) => {
-        setPaymentMethod(method);
-    };
-
     const paymentMethods = [
         {
             id: "cash",
@@ -59,6 +55,19 @@ export default function AddDefMsgModal(props) {
             color: "credit"
         }
     ];
+
+    const handlePaymentSelect = (method) => {
+        setPaymentMethod(method);
+
+        if (props?.onPaymentSelect) {
+            const selectedMethod = paymentMethods.find(
+                item => item.id === method
+            );
+
+            props.onPaymentSelect(selectedMethod);
+        }
+    };
+
 
     var newFirstChild;
 
@@ -116,8 +125,8 @@ export default function AddDefMsgModal(props) {
 
                                 <div
                                     className={`payment-method-card ${paymentMethod === method.id
-                                            ? "payment-method-selected"
-                                            : ""
+                                        ? "payment-method-selected"
+                                        : ""
                                         }`}
                                     onClick={() => handlePaymentSelect(method.id)}
                                 >
@@ -176,7 +185,7 @@ export default function AddDefMsgModal(props) {
                                 console.log("Payment Method:", paymentMethod);
                                 setShow(false);
                             }}
-                            style={{fontSize:"17px"}}
+                            style={{ fontSize: "17px" }}
                         >
                             ثبت
                         </button>
@@ -184,7 +193,7 @@ export default function AddDefMsgModal(props) {
                             type="button"
                             className="payment-cancel-btn"
                             onClick={() => setShow(false)}
-                            style={{fontSize:"17px"}}
+                            style={{ fontSize: "17px" }}
                         >
                             انصراف
                         </button>

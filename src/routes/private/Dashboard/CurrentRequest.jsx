@@ -39,9 +39,8 @@ function CurrentRequest() {
   const destinationAddress = requestStarted ? navigationDestinationAddress : "";
 
   const [courierFound, setCourierFound] = useState(false);
-
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date());
-
   const position = [36.3155, 59.5323];
 
   useEffect(() => {
@@ -185,7 +184,7 @@ function CurrentRequest() {
                         aria-hidden="true"
                       ></span>
 
-                      <span className="fw-bold text-muted">
+                      <span className="-bold text-muted">
                         در حال جستجو...
                       </span>
                     </div>
@@ -198,11 +197,11 @@ function CurrentRequest() {
 
                     <div className="flex-grow-1 px-2">
                       <div className="d-flex justify-content-between align-items-center mb-1">
-                        <span className="fw-bold text-dark me-1">
+                        <span className=" text-dark me-1">
                           محمود زارع
                         </span>
 
-                        <span className="badge bg-white text-dark border rounded-pill px-2 py-1 small-text">
+                        <span className="badge bg-white text-dark border rounded-pill px-2 py-1">
                           موتور هوندا
                         </span>
                       </div>
@@ -219,7 +218,7 @@ function CurrentRequest() {
                     </div>
 
                     <div className="d-flex flex-column align-items-center gap-1">
-                      <div className="plate-box text-center fw-bold">
+                      <div className="plate-box text-center">
                         <div>1342</div>
                         <div>23523</div>
                       </div>
@@ -229,8 +228,7 @@ function CurrentRequest() {
                         className="btn btn-success call-btn rounded-circle d-flex align-items-center justify-content-center"
                       >
                         <IoCallSharp
-                          style={{ fontSize: "15px" }}
-                          size={18}
+                          size={30}
                         />
                       </a>
                     </div>
@@ -276,43 +274,29 @@ function CurrentRequest() {
               </div>
             </div>
 
-
-
-
-
-
-
-
-
             <div className="d-flex align-items-center justify-content-between gap-3 my-2">
               <div className="text-end">
-                <span className="text-danger small-text d-block mb-1">
-                  پرداخت اعتباری در مبدأ
+                <span className="text-black small-text d-block mb-1"
+                style={{fontSize:"15px"}}>
+                  پرداخت با : {selectedPaymentMethod?.title || "انتخاب نشده"}
                 </span>
 
-                <div className="price-tag text-success fw-bold fs-4">
+                <div className="price-tag text-success fs-4">
                   25,000 <span className="fs-6 fw-normal text-dark">تومان</span>
                 </div>
               </div>
 
-
-
-              <PaymentModal>
+              <PaymentModal
+                onPaymentSelect={(method) => {
+                  setSelectedPaymentMethod(method);
+                }}
+              >
                 <button className="btn btn-success px-4 py-2 rounded-3 shadow-sm text-white">
                   پرداخت
                 </button>
               </PaymentModal>
-
-
             </div>
           </div>
-
-
-
-
-
-
-
 
 
 
@@ -324,11 +308,11 @@ function CurrentRequest() {
                   <FaMotorcycle size={20} />
 
                   <div className="text-end">
-                    <div className="opacity-75" style={{ fontSize: "11px" }}>
+                    <div className="opacity-75" style={{ fontSize: "14px" }}>
                       نوع وسیله
                     </div>
 
-                    <div style={{ fontSize: "12px" }}>
+                    <div style={{ fontSize: "14px" }}>
                       {vehicleType || "نوع وسیله مشخص نشده"}
                     </div>
                   </div>
@@ -352,7 +336,7 @@ function CurrentRequest() {
                       </>
                     ) : (
                       <>
-                        <span className="status-title fw-bold text-success d-block fs-6">
+                        <span className="status-title text-success d-block fs-6">
                           راننده به مبدا رسید
                         </span>
 
@@ -382,13 +366,13 @@ function CurrentRequest() {
                 <div className="route-address-content">
 
                   <div className="route-address-header">
-                    <span className="route-address-label route-origin-label" style={{ fontSize: "14px" }}>
+                    <span className="route-address-label route-origin-label" style={{ fontSize: "15px" }}>
                       مبدأ
                     </span>
 
                   </div>
 
-                  <div className="route-address-value" style={{ fontSize: "14px" }}>
+                  <div className="route-address-value" style={{ fontSize: "15px" }}>
                     {originAddress || "مبدأ ثبت نشده است"}
                   </div>
 
@@ -404,7 +388,7 @@ function CurrentRequest() {
 
                 <div className="route-address-content">
 
-                  <div className="route-address-header" style={{ fontSize: "14px" }}>
+                  <div className="route-address-header" style={{ fontSize: "15px" }}>
                     <span className="route-address-label route-destination-label">
                       مقصد
                     </span>
@@ -414,11 +398,8 @@ function CurrentRequest() {
                   <div className="route-address-value" style={{ fontSize: "15px" }}>
                     {destinationAddress || "مقصد ثبت نشده است"}
                   </div>
-
                 </div>
-
               </div>
-
             </div>
 
 
