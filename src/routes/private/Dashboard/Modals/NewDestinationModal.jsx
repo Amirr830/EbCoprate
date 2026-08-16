@@ -134,7 +134,11 @@ export default function NewDestinationModal(props) {
     });
   };
 
-  const handleShow = () => {
+  const handleShow = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+
     resetModal();
     setShow(true);
   };
@@ -510,14 +514,25 @@ export default function NewDestinationModal(props) {
     null;
 
   if (children) {
+    const child =
+      Array.isArray(children)
+        ? children[0]
+        : children;
+
+    const originalOnClick =
+      child?.props?.onClick;
+
     newFirstChild =
       React.cloneElement(
-        Array.isArray(children)
-          ? children[0]
-          : children,
+        child,
         {
-          onClick:
-            handleShow,
+          onClick: (event) => {
+            if (originalOnClick) {
+              originalOnClick(event);
+            }
+
+            handleShow(event);
+          },
         }
       );
   }
@@ -599,7 +614,6 @@ export default function NewDestinationModal(props) {
 
           </div>
 
-
           {step === 1 && (
 
             <div className="address-step-one">
@@ -641,7 +655,6 @@ export default function NewDestinationModal(props) {
                   )}
 
                 </div>
-
 
                 {showResults && (
                   <div className="address-search-results">
@@ -741,7 +754,6 @@ export default function NewDestinationModal(props) {
 
               </div>
 
-
               <div className="address-map-wrapper">
 
                 <MapContainer
@@ -799,7 +811,6 @@ export default function NewDestinationModal(props) {
 
                 </MapContainer>
 
-
                 {!selectedPosition && (
                   <div className="map-center-hint">
 
@@ -811,7 +822,6 @@ export default function NewDestinationModal(props) {
                 )}
 
               </div>
-
 
               {selectedPosition && (
                 <div className="selected-address-box">
@@ -831,7 +841,6 @@ export default function NewDestinationModal(props) {
 
                 </div>
               )}
-
 
               <button
                 type="button"
@@ -858,7 +867,6 @@ export default function NewDestinationModal(props) {
 
             </div>
           )}
-
 
           {step === 2 && (
 
@@ -914,7 +922,6 @@ export default function NewDestinationModal(props) {
 
                 </div>
 
-
                 <button
                   type="button"
                   onClick={
@@ -929,7 +936,6 @@ export default function NewDestinationModal(props) {
                 </button>
 
               </div>
-
 
               <div className="address-form">
 
@@ -960,7 +966,6 @@ export default function NewDestinationModal(props) {
                         </div>
 
                       </div>
-
 
                       <div className="address-form-grid">
 
@@ -993,7 +998,6 @@ export default function NewDestinationModal(props) {
 
                         </div>
 
-
                         <div className="address-field">
 
                           <label>
@@ -1022,7 +1026,6 @@ export default function NewDestinationModal(props) {
                           </div>
 
                         </div>
-
 
                         <div className="address-field address-field-large">
 
@@ -1056,7 +1059,6 @@ export default function NewDestinationModal(props) {
                           </div>
 
                         </div>
-
 
                         <div className="address-field">
 
@@ -1102,7 +1104,6 @@ export default function NewDestinationModal(props) {
 
                         </div>
 
-
                         <div className="address-field-small">
 
                           <label>
@@ -1146,7 +1147,6 @@ export default function NewDestinationModal(props) {
                           </div>
 
                         </div>
-
 
                         <div className="address-field-small">
 
@@ -1192,7 +1192,6 @@ export default function NewDestinationModal(props) {
 
                         </div>
 
-
                         <div className="address-field address-description-field">
 
                           <label>
@@ -1233,7 +1232,6 @@ export default function NewDestinationModal(props) {
                 </div>
 
               </div>
-
 
               <div className="address-form-buttons">
 

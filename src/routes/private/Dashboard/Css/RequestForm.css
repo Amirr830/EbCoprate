@@ -390,6 +390,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.route-address-clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.route-address-clickable:hover {
+  color: #198754;
+}
 .route-placeholder {
   color: #9ca3af;
   font-size: 15px;
@@ -691,7 +698,6 @@
     padding: 0 8px 120px 8px !important;
     align-items: flex-start !important;
   }
-
   .modern-form-card {
     max-height: none !important;
     height: auto !important;
@@ -701,24 +707,20 @@
     margin-bottom: 95px !important;
     border-radius: 14px !important;
   }
-
   .mobile-content-area {
     padding-bottom: 110px;
     overflow: visible !important;
   }
-
   .mobile-page-wrapper {
     padding-bottom: 110px;
     overflow: visible !important;
   }
-
   .mobile-bottom-navigation {
     bottom: 25px;
     left: 8px;
     right: 8px;
     height: 68px;
   }
-
   .mobile-nav-btn {
     font-size: 14px;
   }
