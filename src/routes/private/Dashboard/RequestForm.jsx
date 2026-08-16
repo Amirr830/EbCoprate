@@ -133,7 +133,7 @@ function RequestForm() {
     return (
       <div className="modern-form-card w-100 bg-white rounded-3 p-4 pt-3 mt-2 border shadow-sm">
         <div className="form-scroll-content">
-          <div className="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
+          <div className="d-flex d-md-none align-items-center justify-content-between pb-3 mb-3 border-bottom">
             <div className="d-flex align-items-center gap-2">
               <button type="button" className="btn btn-link text-dark p-0 m-0 border-0 hamburger-btn" onClick={handleShowMenu}>
                 <RxHamburgerMenu size={24} />

@@ -8,10 +8,25 @@
   max-width: 480px;
   max-height: calc(100vh - 140px);
   margin: 0 auto;
-  overflow-y: auto;           
+  overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: thin;         
+  scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
+}
+
+@media (max-width: 767.98px) {
+  .current-request-container {
+    max-height: none !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    scrollbar-width: none;
+  }
+
+  .current-request-scroll-content {
+    height: auto !important;
+    overflow: visible !important;
+  }
 }
 
 .current-request-scroll-content {

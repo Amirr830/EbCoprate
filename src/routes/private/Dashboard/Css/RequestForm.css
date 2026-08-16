@@ -637,19 +637,18 @@
 }
 .mobile-bottom-navigation {
   position: fixed;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
+  bottom: 50px;
+  right: 12px;
+  left: 12px;
   width: auto;
   height: 70px;
-  margin: 0;
   background: #fff;
   border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
   z-index: 1050;
   direction: rtl;
-  padding: 6px;
+  padding: 6px 8px;
 }
 .mobile-bottom-navigation > .col-4 {
   height: 100%;
@@ -678,7 +677,6 @@
 .mobile-nav-btn.active {
   background: #e8f5e9;
   color: #198754;
-  font-weight: 700;
 }
 .mobile-nav-btn:active {
   transform: scale(0.96);
@@ -690,26 +688,39 @@
 @media (max-width: 767.98px) {
   .modern-request-container {
     max-width: 100%;
-    padding: 0 8px 90px 8px !important;
+    padding: 0 8px 120px 8px !important;
     align-items: flex-start !important;
   }
+
   .modern-form-card {
-    max-height: calc(100vh - 95px);
-    margin-top: 8px !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    overflow-x: hidden;
+    margin-top: 0 !important;
+    margin-bottom: 95px !important;
     border-radius: 14px !important;
   }
-  .mobile-content-area,
-  .mobile-page-wrapper {
-    padding-bottom: 85px;
+
+  .mobile-content-area {
+    padding-bottom: 110px;
+    overflow: visible !important;
   }
+
+  .mobile-page-wrapper {
+    padding-bottom: 110px;
+    overflow: visible !important;
+  }
+
   .mobile-bottom-navigation {
-    bottom: 8px;
+    bottom: 25px;
     left: 8px;
     right: 8px;
     height: 68px;
   }
+
   .mobile-nav-btn {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
 @media (min-width: 768px) {

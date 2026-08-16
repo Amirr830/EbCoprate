@@ -115,7 +115,7 @@ function Info() {
                         </div>
                       </td>
                       <td>
-                        <span className="performance-table-date">1404/01/05</span>
+                        <span className="performance-table-date">1404//18</span>
                       </td>
                       <td>
                         <span className="history-amount performance-income-text">20,000 تومان</span>
