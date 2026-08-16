@@ -228,7 +228,7 @@ function RequestForm() {
                 <FaPlus size={8} />
               </div>
 
-              <span className="fw-bold px-1" style={{ fontSize: "12px" }}>
+              <span className=" px-1" style={{ fontSize: "16px" }}>
                 ۲۵,۰۰۰ تومان
               </span>
 
@@ -236,18 +236,6 @@ function RequestForm() {
             </div>
           </div>
         </div>
-
-        <Row className="mb-3">
-          <NewDestinationModal
-            onAddressSubmit={handleAddressSubmit}
-          >
-            <Col xs={12}>
-              <button type="button" className="btn btn-primary w-100">
-                <span className="plus-icon">+</span> افزودن مقصد جدید
-              </button>
-            </Col>
-          </NewDestinationModal>
-        </Row>
 
         <div className="route-card mb-3">
 
@@ -344,7 +332,17 @@ function RequestForm() {
 
         </div>
 
-
+        <Row className="mb-3">
+          <NewDestinationModal
+            onAddressSubmit={handleAddressSubmit}
+          >
+            <Col xs={12}>
+              <button type="button" className="btn btn-primary w-100">
+                <span className="plus-icon">+</span> افزودن مقصد جدید
+              </button>
+            </Col>
+          </NewDestinationModal>
+        </Row>
 
         <Row className="g-3 mb-3">
           <Col xs={12} md={6}>
@@ -429,7 +427,7 @@ function RequestForm() {
         <Row className="mb-3">
           <Col xs={12}>
             <div className="custom-textarea-group">
-              <textarea id="notes" placeholder="توضیحات" rows="3"></textarea>
+              <textarea id="notes" placeholder="توضیحات..." rows="3"></textarea>
             </div>
           </Col>
         </Row>
@@ -438,7 +436,6 @@ function RequestForm() {
         <Row className="mb-3">
           <Col xs={12}>
             <div className="service-dropdown">
-
               <label className="service-label">
                 ویژگی سرویس
               </label>
@@ -566,8 +563,8 @@ function RequestForm() {
             <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
               <span className="price-title">هزینه سرویس</span>
 
-              <span className="price-amount text-success fw-bold">
-                ۲۵,۰۰۰ <small>تومان</small>
+              <span className="price-amount text-success">
+                <span style={{ fontSize: "21px" }}>25,000 تومان</span>
               </span>
             </div>
           </Col>
@@ -581,6 +578,9 @@ function RequestForm() {
                   type="text"
                   placeholder="کد تخفیف دارید؟"
                   className="discount-input border-0 bg-transparent w-100"
+                  style={{
+                    fontSize: "16px",
+                  }}
                 />
               </div>
 
