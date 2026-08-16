@@ -286,7 +286,6 @@
 .current-time-value {
   color: #212529;
   font-size: 20px;
-  font-weight: 900;
   letter-spacing: 0.5px;
   line-height: 1;
   white-space: nowrap;
@@ -390,7 +389,6 @@
   color: #334155;
   font-size: 13px;
   line-height: 1.8;
-  font-weight: 600;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
