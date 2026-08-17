@@ -33,7 +33,7 @@ function Info() {
         <Col xs={12}>
           <div className="info-card history-card">
             <div className="history-header">
-              <h3 className="card-title">تاریخچه</h3>
+              <h5 className="card-title">تاریخچه</h5>
             </div>
             <div className="card-content">
               <div className="table-responsive history-table-wrapper">
@@ -91,7 +91,7 @@ function Info() {
         <Col xs={12}>
           <div className="info-card driver-performance-card">
             <div className="history-header">
-              <h3 className="card-title">گزارش حساب</h3>
+              <h5 className="card-title">گزارش حساب</h5>
             </div>
             <div className="card-content">
               <div className="table-responsive history-table-wrapper">
@@ -172,7 +172,7 @@ function Info() {
           <div className="info-card quick-request-card">
             <div className="quick-request-header">
               <div className="quick-request-title-wrapper">
-                <h3 className="card-title">درخواست سریع</h3>
+                <h5 className="card-title">درخواست سریع</h5>
               </div>
               {/* {quickRequests.length > 0 && (
                 <button

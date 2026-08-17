@@ -98,30 +98,28 @@ function RequestForm() {
     }
   };
 
-  const handleAddressSubmit = (data) => {
-    const createAddress = (addressData) => {
-      const parts = [
-        addressData.province,
-        addressData.city,
-        addressData.street,
-        addressData.alley ? `کوچه ${addressData.alley}` : "",
-        addressData.plaque ? `پلاک ${addressData.plaque}` : "",
-        addressData.unit ? `واحد ${addressData.unit}` : "",
-      ];
+const handleAddressSubmit = (data) => {
+  const createAddress = (addressData) => {
+    const parts = [
+      addressData.street,
+      addressData.alley ? `کوچه ${addressData.alley}` : "",
+      addressData.plaque ? `پلاک ${addressData.plaque}` : "",
+      addressData.unit ? `واحد ${addressData.unit}` : "",
+    ];
 
-      return parts.filter(Boolean).join("، ");
-    };
-
-    const address = createAddress(data.address);
-
-    if (data.addressType === "origin") {
-      setOriginAddress(address);
-    }
-
-    if (data.addressType === "destination") {
-      setDestinationAddress(address);
-    }
+    return parts.filter(Boolean).join("، ");
   };
+
+  const address = createAddress(data.address);
+
+  if (data.addressType === "origin") {
+    setOriginAddress(address);
+  }
+
+  if (data.addressType === "destination") {
+    setDestinationAddress(address);
+  }
+};
 
   const handleAddressClick = () => {
     resetOtherFields();

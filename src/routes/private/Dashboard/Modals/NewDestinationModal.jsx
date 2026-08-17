@@ -488,6 +488,16 @@ export default function NewDestinationModal(props) {
       return;
     }
 
+    if (!formData.street.trim()) {
+      setAlertMessage(
+        "لطفاً فیلد خیابان را پر کنید"
+      );
+
+      setShowAlert(true);
+
+      return;
+    }
+
     const finalAddress = {
       ...formData,
       latitude:
@@ -645,7 +655,7 @@ export default function NewDestinationModal(props) {
                         );
                       }
                     }}
-                    placeholder="سیدرضی ۲۰، مشهد"
+                    placeholder="نام خیابان را وارد کنید..."
                   />
 
                   {searchLoading && (
@@ -844,11 +854,10 @@ export default function NewDestinationModal(props) {
 
               <button
                 type="button"
-                className={`address-next-btn ${
-                  selectedPosition
+                className={`address-next-btn ${selectedPosition
                     ? "enabled"
                     : "disabled"
-                }`}
+                  }`}
                 disabled={
                   !selectedPosition
                 }
@@ -904,7 +913,7 @@ export default function NewDestinationModal(props) {
                           {locationTitle}
                         </span>
 
-                        <strong
+                        <p
                           style={{
                             fontSize:
                               "15px",
@@ -912,7 +921,7 @@ export default function NewDestinationModal(props) {
                         >
                           {selectedAddress ||
                             `موقعیت ${locationTitle} انتخاب شد`}
-                        </strong>
+                        </p>
 
                       </div>
 
@@ -938,15 +947,10 @@ export default function NewDestinationModal(props) {
               </div>
 
               <div className="address-form">
-
                 <div className="row g-4">
-
                   <div className="col-12">
-
                     <div className="address-location-card origin-card">
-
                       <div className="address-location-card-header">
-
                         <div className="address-location-card-icon">
                           <span>
                             ●
@@ -962,9 +966,7 @@ export default function NewDestinationModal(props) {
                           <span>
                             {locationReceiveText}
                           </span>
-
                         </div>
-
                       </div>
 
                       <div className="address-form-grid">
@@ -1051,9 +1053,8 @@ export default function NewDestinationModal(props) {
                               onChange={
                                 handleInputChange
                               }
-                              placeholder="سیدرضی"
+                              placeholder=" خیابان را وارد کنید..."
                               className="form-control address-input"
-                              required
                             />
 
                           </div>
@@ -1096,7 +1097,7 @@ export default function NewDestinationModal(props) {
                               }}
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              placeholder="کوچه"
+                              placeholder="کوچه را وارد کنید..."
                               className="form-control address-input"
                             />
 
@@ -1140,7 +1141,7 @@ export default function NewDestinationModal(props) {
                               }}
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              placeholder="پلاک"
+                              placeholder="پلاک را وارد کنید..."
                               className="form-control address-input"
                             />
 
@@ -1184,7 +1185,7 @@ export default function NewDestinationModal(props) {
                               }}
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              placeholder="واحد"
+                              placeholder="واحد را وارد کنید..."
                               className="form-control address-input"
                             />
 
