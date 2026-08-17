@@ -201,7 +201,7 @@ function CurrentRequest() {
                           محمود زارع
                         </span>
 
-                        <span className="badge bg-white text-dark border rounded-pill px-2 py-1">
+                        <span>
                           موتور هوندا
                         </span>
                       </div>
@@ -282,7 +282,7 @@ function CurrentRequest() {
                 </span>
 
                 <div className="price-tag text-success fs-4">
-                  25,000 <span className="fs-6 fw-normal text-dark">تومان</span>
+                  25,000 <span className="fs-6" color='green'>تومان</span>
                 </div>
               </div>
 

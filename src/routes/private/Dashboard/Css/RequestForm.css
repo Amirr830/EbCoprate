@@ -308,6 +308,12 @@
   color: #212529;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
+
+
+
+
+
+
 .price-card {
   background-color: #f8f9fa;
   padding: 12px;
@@ -729,4 +735,157 @@
   .mobile-bottom-navigation {
     display: none !important;
   }
+}
+
+
+
+
+
+.additional-destination-card {
+  width: 100%;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.additional-destination-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.additional-destination-title {
+  font-size: 18px;
+  color: #333;
+}
+
+.additional-destination-remove {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: #dc3545;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.additional-destination-remove:hover {
+  background: #bb2d3b;
+}
+
+.additional-destination-input {
+  min-height: 52px;
+  padding: 13px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+}
+
+
+.payment-price-section {
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #d9e3ee;
+  border-left: none;
+  border-radius: 0 14px 14px 0;
+  white-space: nowrap;
+}
+
+.payment-price-label {
+  font-size: 15px;
+  color: #6c757d;
+}
+
+.payment-price-value {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.payment-price-value strong {
+  font-size: 21px;
+}
+
+.payment-price-value span {
+  font-size: 14px;
+}
+
+.payment-discount-section {
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #d9e3ee;
+  border-right: none;
+  border-radius: 14px 0 0 14px;
+}
+
+.payment-discount-input-wrapper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.discount-icon {
+  flex-shrink: 0;
+  font-size: 17px;
+}
+
+.discount-input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: #212529;
+  font-family: inherit;
+}
+
+.discount-input::placeholder {
+  color: #9ca3af;
+}
+
+.apply-code-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 9px;
+  padding: 8px 15px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+
+.payment-discount-card {
+  width: 100%;
+  min-height: 70px;
+  background: #fff;
+  border: 1px solid #d9e3ee;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+  direction: rtl;
 }

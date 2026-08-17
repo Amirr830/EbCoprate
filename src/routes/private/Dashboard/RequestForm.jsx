@@ -28,6 +28,12 @@ function RequestForm() {
   const [itemValue, setItemValue] = useState("زیر ۲۵ میلیون تومان");
   const [notes, setNotes] = useState("");
   const [discountCode, setDiscountCode] = useState("");
+
+
+  const [additionalDestinations, setAdditionalDestinations] = useState([]);
+
+
+
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,6 +54,7 @@ function RequestForm() {
   const resetForm = () => {
     setOriginAddress("");
     setDestinationAddress("");
+    setAdditionalDestinations([]);
     setVehicleType("");
     setSelectedServices([]);
     setSender(true);
@@ -98,37 +105,80 @@ function RequestForm() {
     }
   };
 
-const handleAddressSubmit = (data) => {
-  const createAddress = (addressData) => {
-    const parts = [
-      addressData.street,
-      addressData.alley ? `کوچه ${addressData.alley}` : "",
-      addressData.plaque ? `پلاک ${addressData.plaque}` : "",
-      addressData.unit ? `واحد ${addressData.unit}` : "",
-    ];
+  const handleAddressSubmit = (data) => {
+    const createAddress = (addressData) => {
+      const parts = [
+        addressData.street,
+        addressData.alley ? `کوچه ${addressData.alley}` : "",
+        addressData.plaque ? `پلاک ${addressData.plaque}` : "",
+        addressData.unit ? `واحد ${addressData.unit}` : "",
+      ];
 
-    return parts.filter(Boolean).join("، ");
+      return parts.filter(Boolean).join("، ");
+    };
+
+    const address = createAddress(data.address);
+
+    if (data.addressType === "origin") {
+      setOriginAddress(address);
+    }
+
+    if (data.addressType === "destination") {
+      setDestinationAddress(address);
+    }
   };
-
-  const address = createAddress(data.address);
-
-  if (data.addressType === "origin") {
-    setOriginAddress(address);
-  }
-
-  if (data.addressType === "destination") {
-    setDestinationAddress(address);
-  }
-};
 
   const handleAddressClick = () => {
     resetOtherFields();
+  };
+
+  const handleAdditionalDestinationSubmit = (index, data) => {
+    const createAddress = (addressData) => {
+      const parts = [
+        addressData.street,
+        addressData.alley ? `کوچه ${addressData.alley}` : "",
+        addressData.plaque ? `پلاک ${addressData.plaque}` : "",
+        addressData.unit ? `واحد ${addressData.unit}` : "",
+      ];
+
+      return parts.filter(Boolean).join("، ");
+    };
+
+    const address = createAddress(data.address);
+
+    setAdditionalDestinations((prev) =>
+      prev.map((item, itemIndex) =>
+        itemIndex === index
+          ? {
+            ...item,
+            address,
+          }
+          : item
+      )
+    );
+  };
+
+  const addAdditionalDestination = () => {
+    setAdditionalDestinations((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        address: "",
+      },
+    ]);
+  };
+
+  const removeAdditionalDestination = (id) => {
+    setAdditionalDestinations((prev) =>
+      prev.filter((item) => item.id !== id)
+    );
   };
 
   const handleConfirmSubmit = (quickRequestName) => {
     const requestData = {
       originAddress,
       destinationAddress,
+      additionalDestinations,
       vehicleType,
       selectedServices,
       sender,
@@ -266,15 +316,66 @@ const handleAddressSubmit = (data) => {
         </div>
 
         <Row className="mb-3">
-          <NewDestinationModal onAddressSubmit={handleAddressSubmit}>
-            <Col xs={12}>
-              <button type="button" className="btn btn-primary w-100">
-                <span className="plus-icon">+</span>
-                افزودن مقصد جدید
-              </button>
-            </Col>
-          </NewDestinationModal>
+          <Col xs={12}>
+            <button
+              type="button"
+              className="btn btn-primary w-100"
+              onClick={addAdditionalDestination}
+            >
+              <span className="plus-icon">+</span>
+              افزودن مقصد جدید
+            </button>
+          </Col>
         </Row>
+
+        {additionalDestinations.map((destination, index) => (
+          <Row className="mb-3" key={destination.id}>
+            <Col xs={12}>
+              <div className="additional-destination-card">
+
+                <div className="additional-destination-header">
+                  <span className="additional-destination-title">
+                    مسیر {index + 2}
+                  </span>
+
+                  <button
+                    type="button"
+                    className="additional-destination-remove"
+                    onClick={() =>
+                      removeAdditionalDestination(destination.id)
+                    }
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+
+                <NewDestinationModal
+                  addressType="destination"
+                  onAddressSubmit={(data) =>
+                    handleAdditionalDestinationSubmit(index, data)
+                  }
+                >
+                  <div
+                    className="additional-destination-input"
+                    style={{
+                      cursor: "pointer",
+                      width: "100%",
+                    }}
+                  >
+                    {destination.address ? (
+                      destination.address
+                    ) : (
+                      <span className="route-placeholder">
+                        برای انتخاب مسیر {index + 2} کلیک کنید
+                      </span>
+                    )}
+                  </div>
+                </NewDestinationModal>
+
+              </div>
+            </Col>
+          </Row>
+        ))}
 
         <Row className="g-3 mb-3">
           <Col xs={12} md={6}>
@@ -434,47 +535,98 @@ const handleAddressSubmit = (data) => {
           </Col>
         </Row>
 
-        <Row className="mb-3 g-2 align-items-stretch">
-          <Col xs={4} md={5}>
-            <div className="price-card h-100 d-flex flex-column justify-content-center text-center">
-              <span className="price-title">
-                هزینه سرویس
-              </span>
 
-              <span className="price-amount text-success">
-                <span style={{ fontSize: "21px" }}>
-                  25,000 تومان
-                </span>
-              </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <Row className="mb-3">
+  <Col xs={12}>
+    <div className="payment-discount-card">
+      
+      <Row className="g-0 w-100 align-items-stretch">
+
+        <Col xs={4} md={4}>
+          <div className="payment-price-section h-100">
+            <span className="payment-price-value text-success">
+              <strong>25,000</strong>
+              <span> تومان</span>
+            </span>
+          </div>
+        </Col>
+
+        <Col xs={8} md={8}>
+          <div className="payment-discount-section h-100">
+
+            <div className="payment-discount-input-wrapper">
+              <FaTag className="discount-icon text-muted" />
+
+              <input
+                type="text"
+                placeholder="کد تخفیف دارید؟"
+                className="discount-input"
+                value={discountCode}
+                onChange={(e) => setDiscountCode(e.target.value)}
+              />
             </div>
-          </Col>
 
-          <Col xs={8} md={7}>
-            <div className="modern-discount-bar h-100">
-              <div className="d-flex align-items-center gap-2 flex-grow-1">
-                <FaTag className="discount-icon text-muted" />
+            <button
+              type="button"
+              className="apply-code-btn btn btn-success"
+            >
+              ثبت کد
+            </button>
 
-                <input
-                  type="text"
-                  placeholder="کد تخفیف دارید؟"
-                  className="discount-input border-0 bg-transparent w-100"
-                  style={{ fontSize: "16px" }}
-                  value={discountCode}
-                  onChange={(e) => setDiscountCode(e.target.value)}
-                />
-              </div>
+          </div>
+        </Col>
 
-              <button type="button" className="apply-code-btn btn btn-success">
-                ثبت کد
-              </button>
-            </div>
-          </Col>
-        </Row>
+      </Row>
+
+    </div>
+  </Col>
+</Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <Row>
           <Col xs={12}>
             <SubmitRequestModal onConfirm={(quickRequestName) => { handleConfirmSubmit(quickRequestName); }}>
-              <button type="button" className="btn btn-success w-100 py-2 fw-bold fs-5">
+              <button type="button" className="btn btn-success w-100 py-2" style={{fontSize:"20px"}}>
                 ثبت درخواست
               </button>
             </SubmitRequestModal>
