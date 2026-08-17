@@ -343,7 +343,7 @@ function CurrentRequest() {
                         <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-success">
                           <IoTimeOutline size={16} />
 
-                          <span className="small-text fw-semibold">
+                          <span className="small-text">
                             راننده آماده دریافت سفارش است
                           </span>
                         </div>

@@ -279,7 +279,7 @@ function RequestForm() {
             )}
 
             <EdirAddressModal address={originAddress} addressType="origin" onAddressChange={(newAddress) => { setOriginAddress(newAddress); }}>
-              <button type="button" className="route-edit">
+              <button type="button" className="btn btn-sm btn-warning">
                 <FaPencilAlt />
               </button>
             </EdirAddressModal>
@@ -308,25 +308,12 @@ function RequestForm() {
             )}
 
             <EdirAddressModal address={destinationAddress} addressType="destination" onAddressChange={(newAddress) => { setDestinationAddress(newAddress); }}>
-              <button type="button" className="route-edit">
+              <button type="button" className="btn btn-sm btn-warning">
                 <FaPencilAlt />
               </button>
             </EdirAddressModal>
           </div>
         </div>
-
-        <Row className="mb-3">
-          <Col xs={12}>
-            <button
-              type="button"
-              className="btn btn-primary w-100"
-              onClick={addAdditionalDestination}
-            >
-              <span className="plus-icon">+</span>
-              افزودن مقصد جدید
-            </button>
-          </Col>
-        </Row>
 
         {additionalDestinations.map((destination, index) => (
           <Row className="mb-3" key={destination.id}>
@@ -334,19 +321,52 @@ function RequestForm() {
               <div className="additional-destination-card">
 
                 <div className="additional-destination-header">
-                  <span className="additional-destination-title">
-                    مسیر {index + 2}
-                  </span>
+                  <div className="additional-destination-title">
+                    <span className="additional-destination-dot"></span>
 
-                  <button
-                    type="button"
-                    className="additional-destination-remove"
-                    onClick={() =>
-                      removeAdditionalDestination(destination.id)
-                    }
-                  >
-                    <FaTimes />
-                  </button>
+                    <span>
+                      مقصد {index + 1}
+                    </span>
+                  </div>
+                  <div className="additional-destination-actions">
+
+                    {destination.address && (
+                      <EdirAddressModal
+                        address={destination.address}
+                        addressType="destination"
+                        onAddressChange={(newAddress) => {
+                          setAdditionalDestinations((prev) =>
+                            prev.map((item) =>
+                              item.id === destination.id
+                                ? {
+                                  ...item,
+                                  address: newAddress,
+                                }
+                                : item
+                            )
+                          );
+                        }}
+                      >
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-warning"
+                        >
+                          <FaPencilAlt />
+                        </button>
+                      </EdirAddressModal>
+                    )}
+
+                    <button
+                      type="button"
+                      className="additional-destination-remove"
+                      onClick={() =>
+                        removeAdditionalDestination(destination.id)
+                      }
+                    >
+                      <FaTimes />
+                    </button>
+
+                  </div>
                 </div>
 
                 <NewDestinationModal
@@ -366,7 +386,7 @@ function RequestForm() {
                       destination.address
                     ) : (
                       <span className="route-placeholder">
-                        برای انتخاب مسیر {index + 2} کلیک کنید
+                        برای انتخاب مقصد {index + 1} کلیک کنید
                       </span>
                     )}
                   </div>
@@ -376,6 +396,19 @@ function RequestForm() {
             </Col>
           </Row>
         ))}
+
+        <Row className="mb-3">
+          <Col xs={12}>
+            <button
+              type="button"
+              className="btn btn-primary w-100"
+              onClick={addAdditionalDestination}
+            >
+              <span className="plus-icon">+</span>
+              افزودن مقصد جدید
+            </button>
+          </Col>
+        </Row>
 
         <Row className="g-3 mb-3">
           <Col xs={12} md={6}>
@@ -549,51 +582,51 @@ function RequestForm() {
 
 
 
-     <Row className="mb-3">
-  <Col xs={12}>
-    <div className="payment-discount-card">
-      
-      <Row className="g-0 w-100 align-items-stretch">
+        <Row className="mb-3">
+          <Col xs={12}>
+            <div className="payment-discount-card">
 
-        <Col xs={4} md={4}>
-          <div className="payment-price-section h-100">
-            <span className="payment-price-value text-success">
-              <strong>25,000</strong>
-              <span> تومان</span>
-            </span>
-          </div>
-        </Col>
+              <Row className="g-0 w-100 align-items-stretch">
 
-        <Col xs={8} md={8}>
-          <div className="payment-discount-section h-100">
+                <Col xs={4} md={4}>
+                  <div className="payment-price-section h-100">
+                    <span className="payment-price-value text-success">
+                      <strong>25,000</strong>
+                      <span> تومان</span>
+                    </span>
+                  </div>
+                </Col>
 
-            <div className="payment-discount-input-wrapper">
-              <FaTag className="discount-icon text-muted" />
+                <Col xs={8} md={8}>
+                  <div className="payment-discount-section h-100">
 
-              <input
-                type="text"
-                placeholder="کد تخفیف دارید؟"
-                className="discount-input"
-                value={discountCode}
-                onChange={(e) => setDiscountCode(e.target.value)}
-              />
+                    <div className="payment-discount-input-wrapper">
+                      <FaTag className="discount-icon text-muted" />
+
+                      <input
+                        type="text"
+                        placeholder="کد تخفیف دارید؟"
+                        className="discount-input"
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value)}
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      className="apply-code-btn btn btn-success"
+                    >
+                      ثبت کد
+                    </button>
+
+                  </div>
+                </Col>
+
+              </Row>
+
             </div>
-
-            <button
-              type="button"
-              className="apply-code-btn btn btn-success"
-            >
-              ثبت کد
-            </button>
-
-          </div>
-        </Col>
-
-      </Row>
-
-    </div>
-  </Col>
-</Row>
+          </Col>
+        </Row>
 
 
 
@@ -626,7 +659,7 @@ function RequestForm() {
         <Row>
           <Col xs={12}>
             <SubmitRequestModal onConfirm={(quickRequestName) => { handleConfirmSubmit(quickRequestName); }}>
-              <button type="button" className="btn btn-success w-100 py-2" style={{fontSize:"20px"}}>
+              <button type="button" className="btn btn-success w-100 py-2" style={{ fontSize: "20px" }}>
                 ثبت درخواست
               </button>
             </SubmitRequestModal>

@@ -741,9 +741,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
 .additional-destination-card {
   width: 100%;
-  padding: 14px;
+  padding: 9px 11px;
   background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
@@ -754,21 +763,39 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
+
 
 .additional-destination-title {
-  font-size: 18px;
-  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #374151;
 }
 
+.additional-destination-dot {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 50%;
+  background-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.08);
+}
+
+.additional-destination-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.additional-destination-edit,
 .additional-destination-remove {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border: none;
-  border-radius: 8px;
-  background: #dc3545;
-  color: #fff;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -776,21 +803,58 @@
   transition: 0.2s;
 }
 
+.additional-destination-edit {
+  background: #f3f4f6;
+  color: #6c757d;
+}
+
+.additional-destination-edit:hover {
+  background: #e5e7eb;
+  color: #2563eb;
+}
+
+.additional-destination-remove {
+  background: #dc3545;
+  color: #fff;
+}
+
 .additional-destination-remove:hover {
   background: #bb2d3b;
 }
 
 .additional-destination-input {
-  min-height: 52px;
-  padding: 13px 15px;
+  min-height: 42px;
+  padding: 8px 12px;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 9px;
   background: #f9f9f9;
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.6;
   color: #333;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .payment-price-section {
@@ -815,18 +879,20 @@
 
 .payment-price-value {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  gap: 4px;
+  font-size: 21px;
   white-space: nowrap;
 }
 
 .payment-price-value strong {
   font-size: 21px;
+
 }
 
 .payment-price-value span {
-  font-size: 14px;
+  font-size: 21px;
 }
-
 .payment-discount-section {
   width: 100%;
   min-height: 70px;
