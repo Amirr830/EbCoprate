@@ -9,19 +9,75 @@ import paths from "../../../app/paths.json";
 function Info() {
   const navigate = useNavigate();
   const [quickRequests, setQuickRequests] = useState([]);
+
   useEffect(() => {
     const loadQuickRequests = () => {
-      const savedRequests = JSON.parse(localStorage.getItem("quickRequests") || "[]");
-      setQuickRequests(savedRequests);
+      try {
+        const savedRequests = JSON.parse(
+          localStorage.getItem("quickRequests") || "[]"
+        );
+
+        const validRequests = Array.isArray(savedRequests)
+          ? savedRequests
+            .filter(
+              (item) =>
+                item &&
+                typeof item === "object" &&
+                typeof item.name === "string"
+            )
+            .map((item) => ({
+              ...item,
+              name: item.name.trim(),
+            }))
+            .filter((item) => item.name)
+          : [];
+
+        setQuickRequests(validRequests);
+
+        if (
+          !Array.isArray(savedRequests) ||
+          validRequests.length !== savedRequests.length
+        ) {
+          localStorage.setItem(
+            "quickRequests",
+            JSON.stringify(validRequests)
+          );
+        }
+      } catch (error) {
+        console.warn(
+          "خواندن درخواست‌های سریع انجام نشد.",
+          error
+        );
+
+        setQuickRequests([]);
+      }
     };
+
     loadQuickRequests();
-    window.addEventListener("quickRequestsUpdated", loadQuickRequests);
-    window.addEventListener("storage", loadQuickRequests);
+
+    window.addEventListener(
+      "quickRequestsUpdated",
+      loadQuickRequests
+    );
+
+    window.addEventListener(
+      "storage",
+      loadQuickRequests
+    );
+
     return () => {
-      window.removeEventListener("quickRequestsUpdated", loadQuickRequests);
-      window.removeEventListener("storage", loadQuickRequests);
+      window.removeEventListener(
+        "quickRequestsUpdated",
+        loadQuickRequests
+      );
+
+      window.removeEventListener(
+        "storage",
+        loadQuickRequests
+      );
     };
   }, []);
+
   const handleClearQuickRequests = () => {
     localStorage.removeItem("quickRequests");
     setQuickRequests([]);

@@ -87,12 +87,18 @@ function RequestForm() {
       return;
     }
 
-    setOriginAddress(quickRequest.originAddress || "");
-    setDestinationAddress(quickRequest.destinationAddress || "");
-    setVehicleType(quickRequest.vehicleType || "");
-    setSelectedServices(quickRequest.selectedServices || []);
-    setSender(typeof quickRequest.sender === "boolean" ? quickRequest.sender : true);
-    setCash(typeof quickRequest.cash === "boolean" ? quickRequest.cash : true);
+setOriginAddress(quickRequest.originAddress || ""); 
+setDestinationAddress(quickRequest.destinationAddress || ""); 
+setAdditionalDestinations(quickRequest.additionalDestinations || []); 
+setVehicleType(quickRequest.vehicleType || ""); 
+setSelectedServices(quickRequest.selectedServices || []); 
+setSender(typeof quickRequest.sender === "boolean" ? quickRequest.sender : true); 
+setCash(typeof quickRequest.cash === "boolean" ? quickRequest.cash : true); 
+setStopTime(quickRequest.stopTime || "بدون توقف"); 
+setCourierCode(quickRequest.courierCode || ""); 
+setItemValue(quickRequest.itemValue || "زیر ۲۵ میلیون تومان"); 
+setNotes(quickRequest.notes || ""); 
+setDiscountCode(quickRequest.discountCode || ""); 
 
     window.history.replaceState({}, document.title);
   }, [location.state]);
@@ -106,7 +112,15 @@ function RequestForm() {
   };
 
   const handleAddressSubmit = (data) => {
+    if (!data?.address) {
+      return;
+    }
+
     const createAddress = (addressData) => {
+      if (!addressData) {
+        return "";
+      }
+
       const parts = [
         addressData.street,
         addressData.alley ? `کوچه ${addressData.alley}` : "",
@@ -133,7 +147,15 @@ function RequestForm() {
   };
 
   const handleAdditionalDestinationSubmit = (index, data) => {
+    if (!data?.address) {
+      return;
+    }
+
     const createAddress = (addressData) => {
+      if (!addressData) {
+        return "";
+      }
+
       const parts = [
         addressData.street,
         addressData.alley ? `کوچه ${addressData.alley}` : "",
@@ -162,19 +184,18 @@ function RequestForm() {
     setAdditionalDestinations((prev) => [
       ...prev,
       {
-        id: Date.now(),
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
         address: "",
       },
     ]);
   };
-
   const removeAdditionalDestination = (id) => {
     setAdditionalDestinations((prev) =>
       prev.filter((item) => item.id !== id)
     );
   };
 
-  const handleConfirmSubmit = (quickRequestName) => {
+  const handleConfirmSubmit = (confirmData) => {
     const requestData = {
       originAddress,
       destinationAddress,
@@ -190,22 +211,55 @@ function RequestForm() {
       discountCode,
     };
 
+    const quickRequestName =
+      typeof confirmData === "string"
+        ? confirmData.trim()
+        : "";
+
     if (quickRequestName) {
-      const oldQuickRequests = JSON.parse(localStorage.getItem("quickRequests") || "[]");
+      try {
+        const savedQuickRequests = JSON.parse(
+          localStorage.getItem("quickRequests") || "[]"
+        );
 
-      const newQuickRequest = {
-        id: Date.now(),
-        name: quickRequestName,
-        ...requestData,
-      };
+        const oldQuickRequests = Array.isArray(savedQuickRequests)
+          ? savedQuickRequests
+            .filter(
+              (item) =>
+                item &&
+                typeof item === "object" &&
+                typeof item.name === "string"
+            )
+            .map((item) => ({
+              ...item,
+              name: item.name.trim(),
+            }))
+            .filter((item) => item.name)
+          : [];
 
-      const updatedQuickRequests = [
-        ...oldQuickRequests,
-        newQuickRequest,
-      ];
+        const newQuickRequest = {
+          id: Date.now(),
+          name: quickRequestName,
+          ...requestData,
+        };
 
-      localStorage.setItem("quickRequests", JSON.stringify(updatedQuickRequests));
-      window.dispatchEvent(new Event("quickRequestsUpdated"));
+        const updatedQuickRequests = [
+          ...oldQuickRequests,
+          newQuickRequest,
+        ];
+
+        localStorage.setItem(
+          "quickRequests",
+          JSON.stringify(updatedQuickRequests)
+        );
+
+        window.dispatchEvent(new Event("quickRequestsUpdated"));
+      } catch (error) {
+        console.warn(
+          "ذخیره درخواست سریع انجام نشد، اما ثبت درخواست ادامه پیدا می‌کند.",
+          error
+        );
+      }
     }
 
     navigate(paths.private.definitions.CurrentRequest, {

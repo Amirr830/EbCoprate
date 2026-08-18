@@ -35,7 +35,7 @@ export default function AddDefMsgModal(props) {
         ];
         const selectedPercentage =
             discountPercentages[
-                Math.floor(Math.random() * discountPercentages.length)
+            Math.floor(Math.random() * discountPercentages.length)
             ];
         const calculatedDiscount =
             Math.floor(
@@ -66,40 +66,25 @@ export default function AddDefMsgModal(props) {
             setQuickRequestName("");
         }
     };
+
     const handleConfirm = () => {
-        if (addToQuickRequest) {
-            const name = quickRequestName.trim();
-            if (!name) {
-                return;
-            }
-            if (props?.onConfirm) {
-                props.onConfirm({
-                    name: name,
-                    serviceCost: serviceCost,
-                    discount: discount,
-                    finalAmount: Math.max(
-                        serviceCost - discount,
-                        0
-                    ),
-                });
-            }
-        } else {
-            if (props?.onConfirm) {
-                props.onConfirm({
-                    name: null,
-                    serviceCost: serviceCost,
-                    discount: discount,
-                    finalAmount: Math.max(
-                        serviceCost - discount,
-                        0
-                    ),
-                });
-            }
+        const name = addToQuickRequest
+            ? quickRequestName.trim()
+            : null;
+
+        if (addToQuickRequest && !name) {
+            return;
         }
+
+        if (props?.onConfirm) {
+            props.onConfirm(name);
+        }
+
         setShow(false);
         setAddToQuickRequest(false);
         setQuickRequestName("");
     };
+
     let newFirstChild;
     if (props?.children) {
         newFirstChild = React.cloneElement(
