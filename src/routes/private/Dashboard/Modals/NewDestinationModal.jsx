@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import {
   MapContainer,
@@ -11,7 +11,11 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../Css/NewDestinationModal.css";
-import { FaTimes } from "react-icons/fa";
+import {
+  FaTimes,
+  FaChevronDown,
+  FaSearch,
+} from "react-icons/fa";
 
 const markerIcon = new L.Icon({
   iconUrl:
@@ -28,30 +32,236 @@ const markerIcon = new L.Icon({
 
 const MASHHAD_CENTER = [36.2972, 59.6067];
 
-function MapController({ selectedPosition }) {
+const CITY_OPTIONS = [
+  {
+    city: "تبریز",
+    province: "آذربایجان شرقی",
+    center: [38.0962, 46.2738],
+  },
+  {
+    city: "ارومیه",
+    province: "آذربایجان غربی",
+    center: [37.5527, 45.0761],
+  },
+  {
+    city: "اردبیل",
+    province: "اردبیل",
+    center: [38.2498, 48.2933],
+  },
+  {
+    city: "اصفهان",
+    province: "اصفهان",
+    center: [32.6546, 51.668],
+  },
+  {
+    city: "کرج",
+    province: "البرز",
+    center: [35.84, 50.9391],
+  },
+  {
+    city: "ایلام",
+    province: "ایلام",
+    center: [33.6374, 46.4227],
+  },
+  {
+    city: "بوشهر",
+    province: "بوشهر",
+    center: [28.9234, 50.8203],
+  },
+  {
+    city: "تهران",
+    province: "تهران",
+    center: [35.6892, 51.389],
+  },
+  {
+    city: "شهرکرد",
+    province: "چهارمحال و بختیاری",
+    center: [32.3256, 50.8644],
+  },
+  {
+    city: "بیرجند",
+    province: "خراسان جنوبی",
+    center: [32.8663, 59.2211],
+  },
+  {
+    city: "مشهد",
+    province: "خراسان رضوی",
+    center: [36.2972, 59.6067],
+  },
+  {
+    city: "بجنورد",
+    province: "خراسان شمالی",
+    center: [37.475, 57.333],
+  },
+  {
+    city: "اهواز",
+    province: "خوزستان",
+    center: [31.3183, 48.6706],
+  },
+  {
+    city: "زنجان",
+    province: "زنجان",
+    center: [36.6736, 48.4787],
+  },
+  {
+    city: "سمنان",
+    province: "سمنان",
+    center: [35.5729, 53.3971],
+  },
+  {
+    city: "زاهدان",
+    province: "سیستان و بلوچستان",
+    center: [29.4963, 60.8629],
+  },
+  {
+    city: "شیراز",
+    province: "فارس",
+    center: [29.5918, 52.5837],
+  },
+  {
+    city: "قزوین",
+    province: "قزوین",
+    center: [36.2688, 50.0041],
+  },
+  {
+    city: "قم",
+    province: "قم",
+    center: [34.6416, 50.8746],
+  },
+  {
+    city: "سنندج",
+    province: "کردستان",
+    center: [35.3149, 46.9988],
+  },
+  {
+    city: "کرمان",
+    province: "کرمان",
+    center: [30.2839, 57.0834],
+  },
+  {
+    city: "کرمانشاه",
+    province: "کرمانشاه",
+    center: [34.3142, 47.065],
+  },
+  {
+    city: "یاسوج",
+    province: "کهگیلویه و بویراحمد",
+    center: [30.6682, 51.588],
+  },
+  {
+    city: "گرگان",
+    province: "گلستان",
+    center: [36.8456, 54.4393],
+  },
+  {
+    city: "رشت",
+    province: "گیلان",
+    center: [37.2808, 49.5832],
+  },
+  {
+    city: "خرم‌آباد",
+    province: "لرستان",
+    center: [33.4878, 48.3558],
+  },
+  {
+    city: "ساری",
+    province: "مازندران",
+    center: [36.5659, 53.0586],
+  },
+  {
+    city: "اراک",
+    province: "مرکزی",
+    center: [34.0917, 49.6892],
+  },
+  {
+    city: "بندرعباس",
+    province: "هرمزگان",
+    center: [27.1832, 56.2666],
+  },
+  {
+    city: "همدان",
+    province: "همدان",
+    center: [34.798, 48.5148],
+  },
+  {
+    city: "یزد",
+    province: "یزد",
+    center: [31.8974, 54.3569],
+  },
+];
+
+const DEFAULT_CITY =
+  CITY_OPTIONS.find(
+    (item) => item.city === "مشهد"
+  ) || {
+    city: "مشهد",
+    province: "خراسان رضوی",
+    center: MASHHAD_CENTER,
+  };
+
+function MapController({
+  selectedPosition,
+  selectedCity,
+}) {
   const map = useMap();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      map.invalidateSize();
+    let frameOne;
+    let frameTwo;
 
-      if (selectedPosition) {
-        map.flyTo(selectedPosition, 17, {
-          animate: true,
-          duration: 1.2,
+    frameOne = requestAnimationFrame(() => {
+      map.invalidateSize({
+        pan: false,
+        animate: false,
+      });
+
+      frameTwo = requestAnimationFrame(() => {
+        map.invalidateSize({
+          pan: false,
+          animate: false,
         });
-      } else {
-        map.setView(MASHHAD_CENTER, 13);
-      }
-    }, 150);
 
-    return () => clearTimeout(timer);
-  }, [map, selectedPosition]);
+        if (selectedPosition) {
+          map.setView(
+            selectedPosition,
+            17,
+            {
+              animate: false,
+            }
+          );
+        } else {
+          map.setView(
+            selectedCity.center,
+            13,
+            {
+              animate: false,
+            }
+          );
+        }
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(
+        frameOne
+      );
+
+      cancelAnimationFrame(
+        frameTwo
+      );
+    };
+  }, [
+    map,
+    selectedPosition,
+    selectedCity,
+  ]);
 
   return null;
 }
 
-function MapClickHandler({ onMapClick }) {
+function MapClickHandler({
+  onMapClick,
+}) {
   useMapEvents({
     click: (event) => {
       onMapClick(event);
@@ -61,26 +271,76 @@ function MapClickHandler({ onMapClick }) {
   return null;
 }
 
-export default function NewDestinationModal(props) {
+export default function NewDestinationModal(
+  props
+) {
   const {
     addressType = "destination",
     onAddressSubmit,
     children,
   } = props;
 
-  const [show, setShow] = useState(false);
-  const [step, setStep] = useState(1);
+  const [show, setShow] =
+    useState(false);
 
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [step, setStep] =
+    useState(1);
 
-  const [selectedPosition, setSelectedPosition] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [search, setSearch] =
+    useState("");
 
-  const [alertMessage, setAlertMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const [
+    searchResults,
+    setSearchResults,
+  ] = useState([]);
+
+  const [
+    searchLoading,
+    setSearchLoading,
+  ] = useState(false);
+
+  const [
+    showResults,
+    setShowResults,
+  ] = useState(false);
+
+  const [
+    selectedPosition,
+    setSelectedPosition,
+  ] = useState(null);
+
+  const [
+    selectedAddress,
+    setSelectedAddress,
+  ] = useState("");
+
+  const [
+    selectedCity,
+    setSelectedCity,
+  ] = useState(DEFAULT_CITY);
+
+  const [
+    showCityDropdown,
+    setShowCityDropdown,
+  ] = useState(false);
+
+  const [
+    citySearch,
+    setCitySearch,
+  ] = useState("");
+
+  const [
+    alertMessage,
+    setAlertMessage,
+  ] = useState("");
+
+  const [
+    showAlert,
+    setShowAlert,
+  ] = useState(false);
+
+  const cityDropdownRef =
+    useRef(null);
 
   const emptyAddress = {
     address: "",
@@ -89,26 +349,59 @@ export default function NewDestinationModal(props) {
     description: "",
   };
 
-  const [formData, setFormData] = useState({
-    address: "",
-    phone: "",
-    floor: "",
-    description: "",
-  });
+  const [formData, setFormData] =
+    useState({
+      address: "",
+      phone: "",
+      floor: "",
+      description: "",
+    });
 
-  const isOrigin = addressType === "origin";
+  const isOrigin =
+    addressType === "origin";
 
-  const locationTitle = isOrigin
-    ? "مبدأ"
-    : "مقصد";
+  const locationTitle =
+    isOrigin
+      ? "مبدأ"
+      : "مقصد";
 
-  const locationReceiveText = isOrigin
-    ? "اطلاعات محل دریافت"
-    : "اطلاعات محل تحویل";
+  const locationReceiveText =
+    isOrigin
+      ? "اطلاعات محل دریافت"
+      : "اطلاعات محل تحویل";
 
-  const locationDescription = isOrigin
-    ? "توضیحات محل دریافت..."
-    : "توضیحات محل تحویل...";
+  const locationDescription =
+    isOrigin
+      ? "توضیحات محل دریافت..."
+      : "توضیحات محل تحویل...";
+
+  useEffect(() => {
+    const handleOutsideClick =
+      (event) => {
+        if (
+          cityDropdownRef.current &&
+          !cityDropdownRef.current.contains(
+            event.target
+          )
+        ) {
+          setShowCityDropdown(
+            false
+          );
+        }
+      };
+
+    document.addEventListener(
+      "mousedown",
+      handleOutsideClick
+    );
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleOutsideClick
+      );
+    };
+  }, []);
 
   const resetModal = () => {
     setStep(1);
@@ -120,13 +413,20 @@ export default function NewDestinationModal(props) {
     setSelectedAddress("");
     setShowAlert(false);
     setAlertMessage("");
+    setShowCityDropdown(false);
+    setCitySearch("");
+    setSelectedCity(
+      DEFAULT_CITY
+    );
 
     setFormData({
       ...emptyAddress,
     });
   };
 
-  const handleShow = (event) => {
+  const handleShow = (
+    event
+  ) => {
     if (event) {
       event.preventDefault();
     }
@@ -140,25 +440,85 @@ export default function NewDestinationModal(props) {
     resetModal();
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (
+    e
+  ) => {
+    const {
+      name,
+      value,
+    } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData(
+      (prev) => ({
+        ...prev,
+        [name]: value,
+      })
+    );
   };
 
-  const handleNumericInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleNumericInputChange = (
+    e
+  ) => {
+    const {
+      name,
+      value,
+    } = e.target;
 
-    const numericValue = value.replace(/\D/g, "");
+    const numericValue =
+      value.replace(/\D/g, "");
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: numericValue,
-    }));
+    setFormData(
+      (prev) => ({
+        ...prev,
+        [name]: numericValue,
+      })
+    );
   };
+
+  const handleCityChange = (
+    city
+  ) => {
+    setSelectedCity(city);
+    setShowCityDropdown(
+      false
+    );
+    setCitySearch("");
+    setSearch("");
+    setSearchResults([]);
+    setShowResults(false);
+    setSelectedPosition(null);
+    setSelectedAddress("");
+
+    setFormData(
+      (prev) => ({
+        ...prev,
+        address: "",
+      })
+    );
+  };
+
+  const filteredCities =
+    CITY_OPTIONS.filter(
+      (item) => {
+        const searchValue =
+          citySearch
+            .trim()
+            .toLowerCase();
+
+        if (!searchValue) {
+          return true;
+        }
+
+        return (
+          item.city
+            .toLowerCase()
+            .includes(searchValue) ||
+          item.province
+            .toLowerCase()
+            .includes(searchValue)
+        );
+      }
+    );
 
   const updateAddressFromMap = (
     data,
@@ -181,79 +541,91 @@ export default function NewDestinationModal(props) {
     const addressText =
       data.display_name || "";
 
-    setSelectedPosition(position);
-    setSelectedAddress(addressText);
+    setSelectedPosition(
+      position
+    );
+
+    setSelectedAddress(
+      addressText
+    );
 
     setSearch(
       street || ""
     );
 
-    setFormData((prev) => ({
-      ...prev,
-      address:
-        street ||
-        addressText ||
-        "",
-    }));
+    setFormData(
+      (prev) => ({
+        ...prev,
+        address:
+          street ||
+          addressText ||
+          "",
+      })
+    );
   };
 
-  const handleMarkerDragEnd = async (
-    event
-  ) => {
-    const {
-      lat,
-      lng,
-    } = event.target.getLatLng();
+  const handleMarkerDragEnd =
+    async (event) => {
+      const {
+        lat,
+        lng,
+      } =
+        event.target.getLatLng();
 
-    const newPosition = [
-      lat,
-      lng,
-    ];
+      const newPosition = [
+        lat,
+        lng,
+      ];
 
-    setSelectedPosition(newPosition);
-
-    try {
-      const url =
-        "https://nominatim.openstreetmap.org/reverse" +
-        "?format=jsonv2" +
-        "&addressdetails=1" +
-        "&accept-language=fa" +
-        "&lat=" +
-        lat +
-        "&lon=" +
-        lng;
-
-      const response =
-        await fetch(url, {
-          headers: {
-            Accept:
-              "application/json",
-          },
-        });
-
-      if (!response.ok) {
-        throw new Error(
-          "Reverse geocoding failed"
-        );
-      }
-
-      const data =
-        await response.json();
-
-      updateAddressFromMap(
-        data,
+      setSelectedPosition(
         newPosition
       );
-    } catch (error) {
-      console.error(
-        "Reverse Address Error:",
-        error
-      );
-    }
-  };
+
+      try {
+        const url =
+          "https://nominatim.openstreetmap.org/reverse" +
+          "?format=jsonv2" +
+          "&addressdetails=1" +
+          "&accept-language=fa" +
+          "&lat=" +
+          lat +
+          "&lon=" +
+          lng;
+
+        const response =
+          await fetch(url, {
+            headers: {
+              Accept:
+                "application/json",
+            },
+          });
+
+        if (!response.ok) {
+          throw new Error(
+            "Reverse geocoding failed"
+          );
+        }
+
+        const data =
+          await response.json();
+
+        updateAddressFromMap(
+          data,
+          newPosition
+        );
+      } catch (error) {
+        console.error(
+          "Reverse Address Error:",
+          error
+        );
+      }
+    };
 
   useEffect(() => {
-    if (!show || step !== 1) {
+    if (
+      !show ||
+      step !== 1
+    ) {
       return;
     }
 
@@ -270,10 +642,12 @@ export default function NewDestinationModal(props) {
       setTimeout(
         async () => {
           try {
-            setSearchLoading(true);
+            setSearchLoading(
+              true
+            );
 
             const query =
-              `${value}, مشهد, خراسان رضوی, ایران`;
+              `${value}, ${selectedCity.city}, ${selectedCity.province}, ایران`;
 
             const url =
               "https://nominatim.openstreetmap.org/search" +
@@ -283,15 +657,20 @@ export default function NewDestinationModal(props) {
               "&countrycodes=ir" +
               "&accept-language=fa" +
               "&q=" +
-              encodeURIComponent(query);
+              encodeURIComponent(
+                query
+              );
 
             const response =
-              await fetch(url, {
-                headers: {
-                  Accept:
-                    "application/json",
-                },
-              });
+              await fetch(
+                url,
+                {
+                  headers: {
+                    Accept:
+                      "application/json",
+                  },
+                }
+              );
 
             if (!response.ok) {
               throw new Error(
@@ -306,12 +685,21 @@ export default function NewDestinationModal(props) {
               data || []
             );
 
-            setShowResults(true);
+            setShowResults(
+              true
+            );
           } catch (error) {
-            setSearchResults([]);
-            setShowResults(true);
+            setSearchResults(
+              []
+            );
+
+            setShowResults(
+              true
+            );
           } finally {
-            setSearchLoading(false);
+            setSearchLoading(
+              false
+            );
           }
         },
         500
@@ -323,59 +711,63 @@ export default function NewDestinationModal(props) {
     search,
     show,
     step,
+    selectedCity,
   ]);
 
-  const handleSelectResult = (
-    result
-  ) => {
-    const lat =
-      Number(result.lat);
+  const handleSelectResult =
+    (result) => {
+      const lat =
+        Number(result.lat);
 
-    const lon =
-      Number(result.lon);
+      const lon =
+        Number(result.lon);
 
-    const position = [
-      lat,
-      lon,
-    ];
+      const position = [
+        lat,
+        lon,
+      ];
 
-    const address =
-      result.address || {};
+      const address =
+        result.address || {};
 
-    const street =
-      address.road ||
-      address.pedestrian ||
-      address.residential ||
-      address.neighbourhood ||
-      "";
+      const street =
+        address.road ||
+        address.pedestrian ||
+        address.residential ||
+        address.neighbourhood ||
+        "";
 
-    const addressText =
-      result.display_name || "";
+      const addressText =
+        result.display_name || "";
 
-    setSelectedPosition(
-      position
-    );
+      setSelectedPosition(
+        position
+      );
 
-    setSelectedAddress(
-      addressText
-    );
+      setSelectedAddress(
+        addressText
+      );
 
-    setSearch(
-      result.name ||
-      street ||
-      ""
-    );
+      setSearch(
+        result.name ||
+          street ||
+          ""
+      );
 
-    setFormData((prev) => ({
-      ...prev,
-      address:
-        street ||
-        addressText ||
-        "",
-    }));
+      setFormData(
+        (prev) => ({
+          ...prev,
+          address:
+            street ||
+            addressText ||
+            "",
+        })
+      );
 
-    setShowResults(false);
-  };
+      setShowResults(
+        false
+      );
+    };
 
   const handleMapClick =
     async (event) => {
@@ -441,10 +833,14 @@ export default function NewDestinationModal(props) {
           `لطفاً موقعیت ${locationTitle} را روی نقشه انتخاب کنید`
         );
 
-        setShowAlert(true);
+        setShowAlert(
+          true
+        );
 
         setTimeout(() => {
-          setShowAlert(false);
+          setShowAlert(
+            false
+          );
         }, 3500);
 
         return;
@@ -468,27 +864,37 @@ export default function NewDestinationModal(props) {
         `لطفاً موقعیت ${locationTitle} را انتخاب کنید`
       );
 
-      setShowAlert(true);
+      setShowAlert(
+        true
+      );
 
       return;
     }
 
-    if (!formData.address.trim()) {
+    if (
+      !formData.address.trim()
+    ) {
       setAlertMessage(
         "لطفاً فیلد آدرس را پر کنید"
       );
 
-      setShowAlert(true);
+      setShowAlert(
+        true
+      );
 
       return;
     }
 
-    if (!formData.phone.trim()) {
+    if (
+      !formData.phone.trim()
+    ) {
       setAlertMessage(
         "لطفاً شماره تماس را وارد کنید"
       );
 
-      setShowAlert(true);
+      setShowAlert(
+        true
+      );
 
       return;
     }
@@ -505,12 +911,17 @@ export default function NewDestinationModal(props) {
         selectedAddress ||
         formData.address ||
         "",
+      city:
+        selectedCity.city,
+      province:
+        selectedCity.province,
     };
 
     if (onAddressSubmit) {
       onAddressSubmit({
         addressType,
-        address: finalAddress,
+        address:
+          finalAddress,
       });
     }
 
@@ -533,9 +944,15 @@ export default function NewDestinationModal(props) {
       React.cloneElement(
         child,
         {
-          onClick: (event) => {
-            if (originalOnClick) {
-              originalOnClick(event);
+          onClick: (
+            event
+          ) => {
+            if (
+              originalOnClick
+            ) {
+              originalOnClick(
+                event
+              );
             }
 
             handleShow(event);
@@ -561,18 +978,16 @@ export default function NewDestinationModal(props) {
           className="add-address-modal-body"
           dir="rtl"
         >
-
           {showAlert && (
             <div className="address-top-alert">
-
               <div className="address-top-alert-icon">
                 !
               </div>
 
               <div className="address-top-alert-content">
-                <strong>
+                <p>
                   اطلاعات ناقص است
-                </strong>
+                </p>
 
                 <span>
                   {alertMessage}
@@ -582,28 +997,29 @@ export default function NewDestinationModal(props) {
               <button
                 type="button"
                 onClick={() =>
-                  setShowAlert(false)
+                  setShowAlert(
+                    false
+                  )
                 }
               >
                 <FaTimes />
               </button>
-
             </div>
           )}
 
           <div className="address-modal-header">
-
             <button
               type="button"
               className="address-close-btn btn btn-danger"
-              onClick={handleClose}
+              onClick={
+                handleClose
+              }
             >
               <FaTimes />
             </button>
 
             <div className="address-header-title">
               <div>
-
                 <h5>
                   {step === 1
                     ? `انتخاب موقعیت ${locationTitle}`
@@ -615,73 +1031,215 @@ export default function NewDestinationModal(props) {
                     ? `موقعیت ${locationTitle} را روی نقشه انتخاب کنید`
                     : `اطلاعات کامل ${locationTitle} را وارد کنید`}
                 </span>
-
               </div>
             </div>
-
           </div>
 
           {step === 1 && (
             <div className="address-step-one">
               <div className="address-search-wrapper">
-                <div className="address-search-box">
-                  <div className="search-icon">
-                    ⌕
+                <div className="row g-2 align-items-center">
+                  <div className="col-3">
+                    <div
+                      className="city-selector-wrapper"
+                      ref={
+                        cityDropdownRef
+                      }
+                    >
+                      <button
+                        type="button"
+                        className={`city-selector-btn ${
+                          showCityDropdown
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          setShowCityDropdown(
+                            (prev) =>
+                              !prev
+                          )
+                        }
+                      >
+                        <div className="city-selector-content">
+                          <span className="city-selector-label mt-2 fs-6">
+                            شهر
+                          </span>
+
+                          <p>
+                            {
+                              selectedCity.city
+                            }
+                          </p>
+                        </div>
+
+                        <FaChevronDown
+                          className={`city-selector-arrow ${
+                            showCityDropdown
+                              ? "rotate"
+                              : ""
+                          }`}
+                        />
+                      </button>
+
+                      {showCityDropdown && (
+                        <div className="city-dropdown">
+                          <div className="city-dropdown-header">
+                            <p>
+                              انتخاب شهر
+                            </p>
+                          </div>
+
+                          <div className="city-dropdown-search">
+                            <FaSearch />
+
+                            <input
+                              type="text"
+                              value={
+                                citySearch
+                              }
+                              onChange={(
+                                e
+                              ) =>
+                                setCitySearch(
+                                  e.target.value
+                                )
+                              }
+                              placeholder="جستجوی شهر یا استان..."
+                              autoFocus
+                            />
+                          </div>
+
+                          <div className="city-dropdown-list">
+                            {filteredCities.length >
+                            0 ? (
+                              filteredCities.map(
+                                (
+                                  item
+                                ) => {
+                                  const isSelected =
+                                    item.city ===
+                                      selectedCity.city &&
+                                    item.province ===
+                                      selectedCity.province;
+
+                                  return (
+                                    <button
+                                      key={
+                                        item.province
+                                      }
+                                      type="button"
+                                      className={`city-option ${
+                                        isSelected
+                                          ? "selected"
+                                          : ""
+                                      }`}
+                                      onClick={() =>
+                                        handleCityChange(
+                                          item
+                                        )
+                                      }
+                                    >
+                                      <div className="city-option-icon">
+                                        <span>
+                                          ●
+                                        </span>
+                                      </div>
+
+                                      <div className="city-option-text">
+                                        <p>
+                                          {
+                                            item.city
+                                          }
+                                        </p>
+
+                                        <small>
+                                          استان{" "}
+                                          {
+                                            item.province
+                                          }
+                                        </small>
+                                      </div>
+
+                                      {isSelected && (
+                                        <div className="city-option-check">
+                                          ✓
+                                        </div>
+                                      )}
+                                    </button>
+                                  );
+                                }
+                              )
+                            ) : (
+                              <div className="city-no-result">
+                                <FaSearch />
+
+                                <span>
+                                  شهری پیدا نشد
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  <input
-                    type="text"
-                    className="address-search-input"
-                    value={search}
-                    onChange={(e) => {
-                      setSearch(
-                        e.target.value
-                      );
-                    }}
-                    onFocus={() => {
-                      if (
-                        searchResults.length >
-                        0
-                      ) {
-                        setShowResults(
-                          true
-                        );
-                      }
-                    }}
-                    placeholder="نام خیابان را وارد کنید..."
-                  />
+                  <div className="col-9">
+                    <div className="address-search-box">
+                      <div className="search-icon">
+                        <FaSearch />
+                      </div>
 
-                  {searchLoading && (
-                    <div className="search-spinner">
-                      <span />
+                      <input
+                        type="text"
+                        className="address-search-input"
+                        value={search}
+                        onChange={(
+                          e
+                        ) => {
+                          setSearch(
+                            e.target.value
+                          );
+                        }}
+                        onFocus={() => {
+                          if (
+                            searchResults.length >
+                            0
+                          ) {
+                            setShowResults(
+                              true
+                            );
+                          }
+                        }}
+                        placeholder={`نام خیابان در ${selectedCity.city} را وارد کنید...`}
+                      />
+
+                      {searchLoading && (
+                        <div className="search-spinner">
+                          <span />
+                        </div>
+                      )}
                     </div>
-                  )}
-
+                  </div>
                 </div>
 
                 {showResults && (
                   <div className="address-search-results">
-
                     {searchLoading ? (
-
                       <div className="search-loading">
-
                         <div className="small-loader" />
 
                         <span>
                           در حال جستجوی آدرس...
                         </span>
-
                       </div>
-
-                    ) : searchResults.length > 0 ? (
-
+                    ) : searchResults.length >
+                      0 ? (
                       searchResults.map(
                         (
                           result,
                           index
                         ) => {
-
                           const address =
                             result.address ||
                             {};
@@ -704,65 +1262,76 @@ export default function NewDestinationModal(props) {
                                 )
                               }
                             >
-
                               <div className="result-location-icon">
                                 ⌖
                               </div>
-                              <div className="result-text">
 
-                                <strong>
-                                  {mainName}
-                                </strong>
+                              <div className="result-text">
+                                <p>
+                                  {
+                                    mainName
+                                  }
+                                </p>
 
                                 <span>
                                   {
                                     result.display_name
                                   }
                                 </span>
-
                               </div>
                             </button>
                           );
                         }
                       )
-
                     ) : (
-
                       <div className="no-search-result">
                         <span>
                           ⌕
                         </span>
+
                         <div>
-                          <strong>
+                          <p>
                             نتیجه‌ای پیدا نشد
-                          </strong>
+                          </p>
 
                           <small>
-                            نام خیابان را دقیق‌تر وارد کنید.
+                            نام خیابان را در{" "}
+                            {
+                              selectedCity.city
+                            }{" "}
+                            دقیق‌تر وارد کنید.
                           </small>
-
                         </div>
                       </div>
-
                     )}
-
                   </div>
                 )}
-
               </div>
 
               <div className="address-map-wrapper">
-
                 <MapContainer
-                  center={MASHHAD_CENTER}
+                  center={
+                    selectedCity.center
+                  }
                   zoom={13}
-                  scrollWheelZoom={true}
+                  scrollWheelZoom={
+                    true
+                  }
+                  preferCanvas={
+                    true
+                  }
                   className="address-map"
                 >
-
                   <TileLayer
                     attribution="&copy; OpenStreetMap"
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    keepBuffer={4}
+                    updateWhenZooming={
+                      false
+                    }
+                    updateWhenIdle={
+                      false
+                  }
                   />
 
                   <MapClickHandler
@@ -775,6 +1344,9 @@ export default function NewDestinationModal(props) {
                     selectedPosition={
                       selectedPosition
                     }
+                    selectedCity={
+                      selectedCity
+                    }
                   />
 
                   {selectedPosition && (
@@ -785,53 +1357,74 @@ export default function NewDestinationModal(props) {
                       icon={
                         markerIcon
                       }
-                      draggable={true}
+                      draggable={
+                        true
+                      }
                       eventHandlers={{
                         dragend:
                           handleMarkerDragEnd,
                       }}
                     >
-
                       <Tooltip
                         direction="top"
                         offset={[
                           0,
                           -35,
                         ]}
-                        permanent={false}
+                        permanent={
+                          false
+                        }
                       >
                         {locationTitle}
                       </Tooltip>
-
                     </Marker>
                   )}
-
                 </MapContainer>
 
                 {!selectedPosition && (
                   <div className="map-center-hint">
-
                     <span>
-                      موقعیت {locationTitle} را روی نقشه انتخاب کنید
+                      موقعیت{" "}
+                      {
+                        locationTitle
+                      }{" "}
+                      را در{" "}
+                      {
+                        selectedCity.city
+                      }{" "}
+                      روی نقشه انتخاب کنید
                     </span>
-
                   </div>
                 )}
 
+                <div className="map-city-badge fs-5">
+                  <span>
+                    شهر فعال
+                  </span>
+
+                  <p className="mt-2">
+                    {
+                      selectedCity.city
+                    }
+                  </p>
+                </div>
               </div>
 
               {selectedPosition && (
                 <div className="selected-address-box">
                   <div className="selected-address-content">
                     <span>
-                      موقعیت {locationTitle} انتخاب شد
+                      موقعیت{" "}
+                      {
+                        locationTitle
+                      }{" "}
+                      انتخاب شد
                     </span>
 
-                    <strong>
+                    <p>
                       {selectedAddress ||
                         `موقعیت ${locationTitle} روی نقشه انتخاب شد`}
-                    </strong>
-
+                    </p>
                   </div>
                 </div>
               )}
@@ -852,25 +1445,23 @@ export default function NewDestinationModal(props) {
               >
                 <span
                   style={{
-                    fontSize: "20px",
+                    fontSize:
+                      "20px",
                   }}
                 >
                   مرحله بعدی
                 </span>
               </button>
-
             </div>
           )}
 
           {step === 2 && (
-
             <form
               className="address-step-two"
               onSubmit={
                 handleSubmit
               }
             >
-
               <div className="location-summary">
                 <div className="summary-icon">
                   ✓
@@ -884,7 +1475,6 @@ export default function NewDestinationModal(props) {
                       </span>
 
                       <div>
-
                         <span
                           style={{
                             fontSize:
@@ -920,7 +1510,6 @@ export default function NewDestinationModal(props) {
                 >
                   تغییر موقعیت
                 </button>
-
               </div>
 
               <div className="address-form">
@@ -935,19 +1524,23 @@ export default function NewDestinationModal(props) {
                         </div>
 
                         <div>
-                          <strong>
-                            مشخصات {locationTitle}
-                          </strong>
+                          <p>
+                            مشخصات{" "}
+                            {
+                              locationTitle
+                            }
+                          </p>
 
                           <span>
-                            {locationReceiveText}
+                            {
+                              locationReceiveText
+                            }
                           </span>
                         </div>
                       </div>
 
                       <div className="address-form-grid">
                         <div className="address-field address-field-large">
-
                           <label>
                             آدرس
                             <span className="required">
@@ -972,7 +1565,6 @@ export default function NewDestinationModal(props) {
                               placeholder="آدرس را وارد کنید..."
                               className="form-control address-input"
                             />
-
                           </div>
                         </div>
 
@@ -1003,7 +1595,6 @@ export default function NewDestinationModal(props) {
                               placeholder="شماره تماس را وارد کنید..."
                               className="form-control address-input"
                             />
-
                           </div>
                         </div>
 
@@ -1016,6 +1607,7 @@ export default function NewDestinationModal(props) {
                             <span className="address-field-icon">
                               ▦
                             </span>
+
                             <input
                               type="text"
                               name="floor"
@@ -1030,19 +1622,22 @@ export default function NewDestinationModal(props) {
                               placeholder="طبقه را وارد کنید..."
                               className="form-control address-input"
                             />
-
                           </div>
                         </div>
 
                         <div className="address-field address-description-field">
                           <label>
-                            توضیحات {locationTitle}
+                            توضیحات{" "}
+                            {
+                              locationTitle
+                            }
                           </label>
 
                           <div className="address-input-wrapper address-textarea-wrapper">
                             <span className="address-field-icon textarea-icon">
                               ✎
                             </span>
+
                             <textarea
                               name="description"
                               value={
@@ -1054,10 +1649,11 @@ export default function NewDestinationModal(props) {
                               placeholder={
                                 locationDescription
                               }
-                              rows={4}
+                              rows={
+                                4
+                              }
                               className="form-control address-textarea"
                             />
-
                           </div>
                         </div>
                       </div>
@@ -1069,7 +1665,6 @@ export default function NewDestinationModal(props) {
               <div className="address-form-buttons">
                 <div className="row w-100 g-2">
                   <div className="col-6">
-
                     <button
                       type="submit"
                       className="w-100 btn btn-success"
@@ -1096,13 +1691,11 @@ export default function NewDestinationModal(props) {
                     >
                       بازگشت
                     </button>
-
                   </div>
                 </div>
               </div>
             </form>
           )}
-
         </Modal.Body>
       </Modal>
     </>
