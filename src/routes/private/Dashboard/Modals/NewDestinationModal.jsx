@@ -15,6 +15,7 @@ import {
   FaTimes,
   FaChevronDown,
   FaSearch,
+  FaExclamationTriangle,
 } from "react-icons/fa";
 
 const markerIcon = new L.Icon({
@@ -374,6 +375,15 @@ export default function NewDestinationModal(
     isOrigin
       ? "توضیحات محل دریافت..."
       : "توضیحات محل تحویل...";
+
+  const showFormAlert = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     const handleOutsideClick =
@@ -750,8 +760,8 @@ export default function NewDestinationModal(
 
       setSearch(
         result.name ||
-          street ||
-          ""
+        street ||
+        ""
       );
 
       setFormData(
@@ -829,19 +839,9 @@ export default function NewDestinationModal(
   const handleNextStep =
     () => {
       if (!selectedPosition) {
-        setAlertMessage(
+        showFormAlert(
           `لطفاً موقعیت ${locationTitle} را روی نقشه انتخاب کنید`
         );
-
-        setShowAlert(
-          true
-        );
-
-        setTimeout(() => {
-          setShowAlert(
-            false
-          );
-        }, 3500);
 
         return;
       }
@@ -860,12 +860,8 @@ export default function NewDestinationModal(
     e.preventDefault();
 
     if (!selectedPosition) {
-      setAlertMessage(
+      showFormAlert(
         `لطفاً موقعیت ${locationTitle} را انتخاب کنید`
-      );
-
-      setShowAlert(
-        true
       );
 
       return;
@@ -874,12 +870,8 @@ export default function NewDestinationModal(
     if (
       !formData.address.trim()
     ) {
-      setAlertMessage(
+      showFormAlert(
         "لطفاً فیلد آدرس را پر کنید"
-      );
-
-      setShowAlert(
-        true
       );
 
       return;
@@ -888,12 +880,8 @@ export default function NewDestinationModal(
     if (
       !formData.phone.trim()
     ) {
-      setAlertMessage(
+      showFormAlert(
         "لطفاً شماره تماس را وارد کنید"
-      );
-
-      setShowAlert(
-        true
       );
 
       return;
@@ -981,7 +969,7 @@ export default function NewDestinationModal(
           {showAlert && (
             <div className="address-top-alert">
               <div className="address-top-alert-icon">
-                !
+                <FaExclamationTriangle />
               </div>
 
               <div className="address-top-alert-content">
@@ -996,6 +984,7 @@ export default function NewDestinationModal(
 
               <button
                 type="button"
+                className="address-top-alert-close"
                 onClick={() =>
                   setShowAlert(
                     false
@@ -1048,11 +1037,10 @@ export default function NewDestinationModal(
                     >
                       <button
                         type="button"
-                        className={`city-selector-btn ${
-                          showCityDropdown
-                            ? "active"
-                            : ""
-                        }`}
+                        className={`city-selector-btn ${showCityDropdown
+                          ? "active"
+                          : ""
+                          }`}
                         onClick={() =>
                           setShowCityDropdown(
                             (prev) =>
@@ -1073,11 +1061,10 @@ export default function NewDestinationModal(
                         </div>
 
                         <FaChevronDown
-                          className={`city-selector-arrow ${
-                            showCityDropdown
-                              ? "rotate"
-                              : ""
-                          }`}
+                          className={`city-selector-arrow ${showCityDropdown
+                            ? "rotate"
+                            : ""
+                            }`}
                         />
                       </button>
 
@@ -1111,16 +1098,16 @@ export default function NewDestinationModal(
 
                           <div className="city-dropdown-list">
                             {filteredCities.length >
-                            0 ? (
+                              0 ? (
                               filteredCities.map(
                                 (
                                   item
                                 ) => {
                                   const isSelected =
                                     item.city ===
-                                      selectedCity.city &&
+                                    selectedCity.city &&
                                     item.province ===
-                                      selectedCity.province;
+                                    selectedCity.province;
 
                                   return (
                                     <button
@@ -1128,11 +1115,10 @@ export default function NewDestinationModal(
                                         item.province
                                       }
                                       type="button"
-                                      className={`city-option ${
-                                        isSelected
-                                          ? "selected"
-                                          : ""
-                                      }`}
+                                      className={`city-option ${isSelected
+                                        ? "selected"
+                                        : ""
+                                        }`}
                                       onClick={() =>
                                         handleCityChange(
                                           item
@@ -1331,7 +1317,7 @@ export default function NewDestinationModal(
                     }
                     updateWhenIdle={
                       false
-                  }
+                    }
                   />
 
                   <MapClickHandler
@@ -1431,11 +1417,10 @@ export default function NewDestinationModal(
 
               <button
                 type="button"
-                className={`address-next-btn ${
-                  selectedPosition
-                    ? "enabled"
-                    : "disabled"
-                }`}
+                className={`address-next-btn ${selectedPosition
+                  ? "enabled"
+                  : "disabled"
+                  }`}
                 disabled={
                   !selectedPosition
                 }
@@ -1584,12 +1569,15 @@ export default function NewDestinationModal(
                             <input
                               type="text"
                               name="phone"
-                              value={
-                                formData.phone
-                              }
-                              onChange={
-                                handleNumericInputChange
-                              }
+                              value={formData.phone}
+                              onChange={(e) => {
+                                const numericValue = e.target.value.replace(/[^0-9]/g, "");
+
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  phone: numericValue,
+                                }));
+                              }}
                               inputMode="numeric"
                               pattern="[0-9]*"
                               placeholder="شماره تماس را وارد کنید..."
