@@ -83,24 +83,16 @@ export default function NewDestinationModal(props) {
   const [showAlert, setShowAlert] = useState(false);
 
   const emptyAddress = {
-    province: "خراسان رضوی",
-    city: "مشهد",
-    street: "",
-    alley: "",
-    plaque: "",
-    unit: "",
-    postalCode: "",
+    address: "",
+    phone: "",
+    floor: "",
     description: "",
   };
 
   const [formData, setFormData] = useState({
-    province: "خراسان رضوی",
-    city: "مشهد",
-    street: "",
-    alley: "",
-    plaque: "",
-    unit: "",
-    postalCode: "",
+    address: "",
+    phone: "",
+    floor: "",
     description: "",
   });
 
@@ -157,6 +149,17 @@ export default function NewDestinationModal(props) {
     }));
   };
 
+  const handleNumericInputChange = (e) => {
+    const { name, value } = e.target;
+
+    const numericValue = value.replace(/\D/g, "");
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: numericValue,
+    }));
+  };
+
   const updateAddressFromMap = (
     data,
     position
@@ -175,16 +178,6 @@ export default function NewDestinationModal(props) {
       address.neighbourhood ||
       "";
 
-    const city =
-      address.city ||
-      address.town ||
-      address.municipality ||
-      "مشهد";
-
-    const province =
-      address.state ||
-      "خراسان رضوی";
-
     const addressText =
       data.display_name || "";
 
@@ -197,9 +190,10 @@ export default function NewDestinationModal(props) {
 
     setFormData((prev) => ({
       ...prev,
-      province,
-      city,
-      street,
+      address:
+        street ||
+        addressText ||
+        "",
     }));
   };
 
@@ -355,16 +349,6 @@ export default function NewDestinationModal(props) {
       address.neighbourhood ||
       "";
 
-    const city =
-      address.city ||
-      address.town ||
-      address.municipality ||
-      "مشهد";
-
-    const province =
-      address.state ||
-      "خراسان رضوی";
-
     const addressText =
       result.display_name || "";
 
@@ -384,9 +368,10 @@ export default function NewDestinationModal(props) {
 
     setFormData((prev) => ({
       ...prev,
-      province,
-      city,
-      street,
+      address:
+        street ||
+        addressText ||
+        "",
     }));
 
     setShowResults(false);
@@ -488,9 +473,19 @@ export default function NewDestinationModal(props) {
       return;
     }
 
-    if (!formData.street.trim()) {
+    if (!formData.address.trim()) {
       setAlertMessage(
-        "لطفاً فیلد خیابان را پر کنید"
+        "لطفاً فیلد آدرس را پر کنید"
+      );
+
+      setShowAlert(true);
+
+      return;
+    }
+
+    if (!formData.phone.trim()) {
+      setAlertMessage(
+        "لطفاً شماره تماس را وارد کنید"
       );
 
       setShowAlert(true);
@@ -507,7 +502,9 @@ export default function NewDestinationModal(props) {
         selectedPosition?.[1] ||
         null,
       fullAddress:
-        selectedAddress || "",
+        selectedAddress ||
+        formData.address ||
+        "",
     };
 
     if (onAddressSubmit) {
@@ -574,7 +571,7 @@ export default function NewDestinationModal(props) {
 
               <div className="address-top-alert-content">
                 <strong>
-                  انتخاب موقعیت ناقص است
+                  اطلاعات ناقص است
                 </strong>
 
                 <span>
@@ -625,13 +622,9 @@ export default function NewDestinationModal(props) {
           </div>
 
           {step === 1 && (
-
             <div className="address-step-one">
-
               <div className="address-search-wrapper">
-
                 <div className="address-search-box">
-
                   <div className="search-icon">
                     ⌕
                   </div>
@@ -715,7 +708,6 @@ export default function NewDestinationModal(props) {
                               <div className="result-location-icon">
                                 ⌖
                               </div>
-
                               <div className="result-text">
 
                                 <strong>
@@ -729,7 +721,6 @@ export default function NewDestinationModal(props) {
                                 </span>
 
                               </div>
-
                             </button>
                           );
                         }
@@ -738,13 +729,10 @@ export default function NewDestinationModal(props) {
                     ) : (
 
                       <div className="no-search-result">
-
                         <span>
                           ⌕
                         </span>
-
                         <div>
-
                           <strong>
                             نتیجه‌ای پیدا نشد
                           </strong>
@@ -754,7 +742,6 @@ export default function NewDestinationModal(props) {
                           </small>
 
                         </div>
-
                       </div>
 
                     )}
@@ -835,9 +822,7 @@ export default function NewDestinationModal(props) {
 
               {selectedPosition && (
                 <div className="selected-address-box">
-
                   <div className="selected-address-content">
-
                     <span>
                       موقعیت {locationTitle} انتخاب شد
                     </span>
@@ -848,16 +833,16 @@ export default function NewDestinationModal(props) {
                     </strong>
 
                   </div>
-
                 </div>
               )}
 
               <button
                 type="button"
-                className={`address-next-btn ${selectedPosition
+                className={`address-next-btn ${
+                  selectedPosition
                     ? "enabled"
                     : "disabled"
-                  }`}
+                }`}
                 disabled={
                   !selectedPosition
                 }
@@ -887,17 +872,13 @@ export default function NewDestinationModal(props) {
             >
 
               <div className="location-summary">
-
                 <div className="summary-icon">
                   ✓
                 </div>
 
                 <div className="summary-content">
-
                   <div className="location-summary-routes">
-
                     <div className="route-summary-item origin-summary">
-
                       <span className="route-summary-dot">
                         ●
                       </span>
@@ -922,13 +903,9 @@ export default function NewDestinationModal(props) {
                           {selectedAddress ||
                             `موقعیت ${locationTitle} انتخاب شد`}
                         </p>
-
                       </div>
-
                     </div>
-
                   </div>
-
                 </div>
 
                 <button
@@ -958,7 +935,6 @@ export default function NewDestinationModal(props) {
                         </div>
 
                         <div>
-
                           <strong>
                             مشخصات {locationTitle}
                           </strong>
@@ -970,241 +946,103 @@ export default function NewDestinationModal(props) {
                       </div>
 
                       <div className="address-form-grid">
-
-                        <div className="address-field">
-
-                          <label>
-                            استان
-                          </label>
-
-                          <div className="address-input-wrapper">
-
-                            <span className="address-field-icon">
-                              ⌖
-                            </span>
-
-                            <input
-                              type="text"
-                              name="province"
-                              value={
-                                formData.province
-                              }
-                              onChange={
-                                handleInputChange
-                              }
-                              className="form-control address-input"
-                              placeholder="نام استان"
-                            />
-
-                          </div>
-
-                        </div>
-
-                        <div className="address-field">
-
-                          <label>
-                            شهر
-                          </label>
-
-                          <div className="address-input-wrapper">
-
-                            <span className="address-field-icon">
-                              ●
-                            </span>
-
-                            <input
-                              type="text"
-                              name="city"
-                              value={
-                                formData.city
-                              }
-                              onChange={
-                                handleInputChange
-                              }
-                              className="form-control address-input"
-                              placeholder="نام شهر"
-                            />
-
-                          </div>
-
-                        </div>
-
                         <div className="address-field address-field-large">
 
                           <label>
-                            خیابان
+                            آدرس
                             <span className="required">
                               *
                             </span>
                           </label>
 
                           <div className="address-input-wrapper">
-
                             <span className="address-field-icon">
                               ⌁
                             </span>
 
                             <input
                               type="text"
-                              name="street"
+                              name="address"
                               value={
-                                formData.street
+                                formData.address
                               }
                               onChange={
                                 handleInputChange
                               }
-                              placeholder=" خیابان را وارد کنید..."
+                              placeholder="آدرس را وارد کنید..."
                               className="form-control address-input"
                             />
 
                           </div>
-
                         </div>
 
                         <div className="address-field">
-
                           <label>
-                            کوچه
+                            شماره تماس
+                            <span className="required">
+                              *
+                            </span>
                           </label>
 
                           <div className="address-input-wrapper">
-
                             <span className="address-field-icon">
-                              ⌂
+                              ☎
                             </span>
 
                             <input
                               type="text"
-                              name="alley"
+                              name="phone"
                               value={
-                                formData.alley
+                                formData.phone
                               }
-                              onChange={(e) => {
-
-                                const value =
-                                  e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
-
-                                setFormData(
-                                  (prev) => ({
-                                    ...prev,
-                                    alley:
-                                      value,
-                                  })
-                                );
-                              }}
+                              onChange={
+                                handleNumericInputChange
+                              }
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              placeholder="کوچه را وارد کنید..."
+                              placeholder="شماره تماس را وارد کنید..."
                               className="form-control address-input"
                             />
 
                           </div>
-
                         </div>
 
                         <div className="address-field-small">
-
                           <label>
-                            پلاک
+                            طبقه
                           </label>
 
                           <div className="address-input-wrapper">
-
-                            <span className="address-field-icon">
-                              #
-                            </span>
-
-                            <input
-                              type="text"
-                              name="plaque"
-                              value={
-                                formData.plaque
-                              }
-                              onChange={(e) => {
-
-                                const value =
-                                  e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
-
-                                setFormData(
-                                  (prev) => ({
-                                    ...prev,
-                                    plaque:
-                                      value,
-                                  })
-                                );
-                              }}
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              placeholder="پلاک را وارد کنید..."
-                              className="form-control address-input"
-                            />
-
-                          </div>
-
-                        </div>
-
-                        <div className="address-field-small">
-
-                          <label>
-                            واحد
-                          </label>
-
-                          <div className="address-input-wrapper">
-
                             <span className="address-field-icon">
                               ▦
                             </span>
-
                             <input
                               type="text"
-                              name="unit"
+                              name="floor"
                               value={
-                                formData.unit
+                                formData.floor
                               }
-                              onChange={(e) => {
-
-                                const value =
-                                  e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
-
-                                setFormData(
-                                  (prev) => ({
-                                    ...prev,
-                                    unit:
-                                      value,
-                                  })
-                                );
-                              }}
+                              onChange={
+                                handleNumericInputChange
+                              }
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              placeholder="واحد را وارد کنید..."
+                              placeholder="طبقه را وارد کنید..."
                               className="form-control address-input"
                             />
 
                           </div>
-
                         </div>
 
                         <div className="address-field address-description-field">
-
                           <label>
                             توضیحات {locationTitle}
                           </label>
 
                           <div className="address-input-wrapper address-textarea-wrapper">
-
                             <span className="address-field-icon textarea-icon">
                               ✎
                             </span>
-
                             <textarea
                               name="description"
                               value={
@@ -1221,23 +1059,15 @@ export default function NewDestinationModal(props) {
                             />
 
                           </div>
-
                         </div>
-
                       </div>
-
                     </div>
-
                   </div>
-
                 </div>
-
               </div>
 
               <div className="address-form-buttons">
-
                 <div className="row w-100 g-2">
-
                   <div className="col-6">
 
                     <button
@@ -1250,11 +1080,9 @@ export default function NewDestinationModal(props) {
                     >
                       ثبت
                     </button>
-
                   </div>
 
                   <div className="col-6">
-
                     <button
                       type="button"
                       className="w-100 btn btn-danger"
@@ -1270,11 +1098,8 @@ export default function NewDestinationModal(props) {
                     </button>
 
                   </div>
-
                 </div>
-
               </div>
-
             </form>
           )}
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import {
     FaTruckPickup,
@@ -6,19 +6,11 @@ import {
     FaCarSide,
     FaCheck
 } from "react-icons/fa";
-import "../Css/VehicleTypeModal.css"
-
+import "../Css/VehicleTypeModal.css";
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
-    const [params, setParams] = useState(props?.params);
     const [selectedVehicle, setSelectedVehicle] = useState("motor");
-
-    useEffect(() => {
-        if (show) {
-            
-        }
-    }, [show]);
 
     const handleShow = () => {
         setShow(true);
@@ -35,40 +27,66 @@ export default function AddDefMsgModal(props) {
     const vehicleOptions = [
         {
             id: "pickup",
+            vehicleClass: 1,
             title: "وانت",
             description: "مناسب بارهای حجیم و سنگین",
             icon: <FaTruckPickup />
         },
         {
             id: "motor-box",
+            vehicleClass: 2,
             title: "موتور همراه جعبه",
             description: "مناسب بسته‌ها و مرسولات",
             icon: <FaMotorcycle />
         },
         {
             id: "motor",
+            vehicleClass: 3,
             title: "موتور بدون جعبه",
             description: "مناسب ارسال‌های سریع",
             icon: <FaMotorcycle />
         },
         {
             id: "car",
+            vehicleClass: 4,
             title: "سواری",
             description: "مناسب بسته‌های معمولی",
             icon: <FaCarSide />
         }
     ];
 
-    let newFirstChild;
+    let newFirstChild = null;
 
     if (props?.children) {
-        newFirstChild = React.cloneElement(
-            props?.children?.length > 1
-                ? props.children[0]
-                : props.children,
-            { onClick: handleShow }
-        );
+        const child = Array.isArray(props.children)
+            ? props.children[0]
+            : props.children;
+
+        if (React.isValidElement(child)) {
+            newFirstChild = React.cloneElement(child, {
+                onClick: handleShow
+            });
+        }
     }
+
+    const handleConfirm = () => {
+        const selectedVehicleData = vehicleOptions.find(
+            (item) => item.id === selectedVehicle
+        );
+
+        if (!selectedVehicleData) {
+            return;
+        }
+
+        if (props?.onVehicleSelect) {
+            props.onVehicleSelect(
+                selectedVehicleData.title,
+                selectedVehicleData.vehicleClass
+            );
+        }
+
+        handleClose();
+    };
 
     return (
         <>
@@ -86,6 +104,7 @@ export default function AddDefMsgModal(props) {
                     dir="rtl"
                 >
                     <div className="vehicle-modal-header">
+
                         <button
                             type="button"
                             className="vehicle-modal-close"
@@ -93,7 +112,9 @@ export default function AddDefMsgModal(props) {
                         >
                             ×
                         </button>
+
                         <div>
+
                             <h5 className="vehicle-modal-title">
                                 انتخاب نوع وسیله
                             </h5>
@@ -101,6 +122,7 @@ export default function AddDefMsgModal(props) {
                             <p className="vehicle-modal-subtitle">
                                 وسیله مناسب برای ارسال مرسوله را انتخاب کنید
                             </p>
+
                         </div>
 
                     </div>
@@ -108,6 +130,7 @@ export default function AddDefMsgModal(props) {
                     <div className="vehicle-modal-divider"></div>
 
                     <Row className="g-3">
+
                         {vehicleOptions.map((vehicle) => (
                             <Col
                                 xs={12}
@@ -116,19 +139,22 @@ export default function AddDefMsgModal(props) {
                             >
                                 <button
                                     type="button"
-                                    className={`vehicle-card ${selectedVehicle === vehicle.id
-                                        ? "selected"
-                                        : ""
-                                        }`}
+                                    className={`vehicle-card ${
+                                        selectedVehicle === vehicle.id
+                                            ? "selected"
+                                            : ""
+                                    }`}
                                     onClick={() =>
                                         handleVehicleSelect(vehicle.id)
                                     }
                                 >
+
                                     <div className="vehicle-card-icon">
                                         {vehicle.icon}
                                     </div>
 
                                     <div className="vehicle-card-content">
+
                                         <div className="vehicle-card-title">
                                             {vehicle.title}
                                         </div>
@@ -136,24 +162,32 @@ export default function AddDefMsgModal(props) {
                                         <div className="vehicle-card-description">
                                             {vehicle.description}
                                         </div>
+
                                     </div>
 
                                     <div className="vehicle-card-check">
+
                                         {selectedVehicle === vehicle.id && (
                                             <FaCheck />
                                         )}
+
                                     </div>
+
                                 </button>
                             </Col>
                         ))}
+
                     </Row>
 
                     <div className="vehicle-modal-actions">
+
                         <button
                             type="button"
                             className="vehicle-cancel-btn"
                             onClick={handleClose}
-                            style={{ fontSize: "20px" }}
+                            style={{
+                                fontSize: "20px"
+                            }}
                         >
                             انصراف
                         </button>
@@ -162,23 +196,14 @@ export default function AddDefMsgModal(props) {
                             type="button"
                             className="vehicle-confirm-btn"
                             disabled={!selectedVehicle}
-                            onClick={() => {
-                                const selectedVehicleData = vehicleOptions.find(
-                                    (item) => item.id === selectedVehicle
-                                );
-
-                                if (selectedVehicleData) {
-                                    props?.onVehicleSelect?.(
-                                        selectedVehicleData.title
-                                    );
-                                }
-
-                                handleClose();
+                            onClick={handleConfirm}
+                            style={{
+                                fontSize: "20px"
                             }}
-                            style={{ fontSize: "20px" }}
                         >
                             ثبت
                         </button>
+
                     </div>
 
                 </Modal.Body>
