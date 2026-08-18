@@ -12,6 +12,8 @@ import VehicleTypeModal from "./Modals/VehicleTypeModal";
 import SubmitRequestModal from "./Modals/SubmitRequestModal";
 import CurrentRequest from "./CurrentRequest";
 import Info from "./Info";
+import ShippingMethodModal from "./Modals/ShippingMethodModal";
+
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -28,9 +30,10 @@ function RequestForm() {
   const [itemValue, setItemValue] = useState("زیر ۲۵ میلیون تومان");
   const [notes, setNotes] = useState("");
   const [discountCode, setDiscountCode] = useState("");
-
-
   const [additionalDestinations, setAdditionalDestinations] = useState([]);
+
+  const [serviceSpeed, setServiceSpeed] = useState("");
+
 
 
 
@@ -87,18 +90,18 @@ function RequestForm() {
       return;
     }
 
-setOriginAddress(quickRequest.originAddress || ""); 
-setDestinationAddress(quickRequest.destinationAddress || ""); 
-setAdditionalDestinations(quickRequest.additionalDestinations || []); 
-setVehicleType(quickRequest.vehicleType || ""); 
-setSelectedServices(quickRequest.selectedServices || []); 
-setSender(typeof quickRequest.sender === "boolean" ? quickRequest.sender : true); 
-setCash(typeof quickRequest.cash === "boolean" ? quickRequest.cash : true); 
-setStopTime(quickRequest.stopTime || "بدون توقف"); 
-setCourierCode(quickRequest.courierCode || ""); 
-setItemValue(quickRequest.itemValue || "زیر ۲۵ میلیون تومان"); 
-setNotes(quickRequest.notes || ""); 
-setDiscountCode(quickRequest.discountCode || ""); 
+    setOriginAddress(quickRequest.originAddress || "");
+    setDestinationAddress(quickRequest.destinationAddress || "");
+    setAdditionalDestinations(quickRequest.additionalDestinations || []);
+    setVehicleType(quickRequest.vehicleType || "");
+    setSelectedServices(quickRequest.selectedServices || []);
+    setSender(typeof quickRequest.sender === "boolean" ? quickRequest.sender : true);
+    setCash(typeof quickRequest.cash === "boolean" ? quickRequest.cash : true);
+    setStopTime(quickRequest.stopTime || "بدون توقف");
+    setCourierCode(quickRequest.courierCode || "");
+    setItemValue(quickRequest.itemValue || "زیر ۲۵ میلیون تومان");
+    setNotes(quickRequest.notes || "");
+    setDiscountCode(quickRequest.discountCode || "");
 
     window.history.replaceState({}, document.title);
   }, [location.state]);
@@ -209,6 +212,7 @@ setDiscountCode(quickRequest.discountCode || "");
       itemValue,
       notes,
       discountCode,
+      serviceSpeed,
     };
 
     const quickRequestName =
@@ -622,20 +626,6 @@ setDiscountCode(quickRequest.discountCode || "");
           </Col>
         </Row>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <Row className="mb-3">
           <Col xs={12}>
             <div className="payment-discount-card">
@@ -682,41 +672,37 @@ setDiscountCode(quickRequest.discountCode || "");
           </Col>
         </Row>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <Row>
-          <Col xs={12}>
+        <Row className="g-2">
+          <Col xs={8}>
             <SubmitRequestModal onConfirm={(quickRequestName) => { handleConfirmSubmit(quickRequestName); }}>
-              <button type="button" className="btn btn-success w-100 py-2" style={{ fontSize: "20px" }}>
+              <button
+                type="button"
+                className="btn btn-success w-100 py-2"
+                style={{ fontSize: "20px" }}
+              >
                 ثبت درخواست
               </button>
             </SubmitRequestModal>
+          </Col>
+
+          <Col xs={4}>
+            <ShippingMethodModal
+              onSelect={(speed) => {
+                setServiceSpeed(speed);
+              }}
+            >
+              <button
+                type="button"
+                className="btn btn-warning text-black w-100 py-2"
+                style={{
+                  fontSize: "15px",
+                  borderRadius: "8px",
+                  height: "50px"
+                }}
+              >
+                نحوه ارسال
+              </button>
+            </ShippingMethodModal>
           </Col>
         </Row>
       </div>

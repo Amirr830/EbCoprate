@@ -1,0 +1,223 @@
+.shipping-method-modal .modal-dialog {
+  max-width: 430px;
+  margin: 1rem auto;
+}
+
+.shipping-method-modal .modal-content {
+  border: none;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+}
+
+.shipping-modal-container {
+  width: 100%;
+  direction: rtl;
+}
+
+.shipping-modal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 20px 18px;
+  background: linear-gradient(135deg, #198754, #20a464);
+  color: #fff;
+  direction: rtl;
+}
+.shipping-header-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.shipping-header-content {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+.shipping-modal-title {
+  margin: 0;
+  font-size: 22px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.shipping-header-content span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+  line-height: 1.7;
+}
+
+.shipping-close-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border: none;
+  border-radius: 10px;
+  background: rgb(216, 18, 18);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shipping-close-btn:hover {
+  background: rgb(160, 0, 0);
+  transform: rotate(90deg);
+}
+
+.shipping-modal-content {
+  padding: 18px;
+  background: #f8fafc;
+}
+
+.shipping-method-card {
+  position: relative;
+  width: 100%;
+  min-height: 82px;
+  border: 1px solid #e3e8ef;
+  border-radius: 17px;
+  background: #fff;
+  padding: 12px 13px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
+}
+
+.shipping-method-card:hover {
+  border-color: #198754;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(25, 135, 84, 0.1);
+}
+
+.shipping-method-card.selected {
+  border-color: #198754;
+  background: linear-gradient(
+    135deg,
+    #f2fff8,
+    #ffffff
+  );
+  box-shadow: 0 8px 24px rgba(25, 135, 84, 0.13);
+}
+
+.shipping-method-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 14px;
+  background: #eef8f2;
+  color: #198754;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  transition: all 0.25s ease;
+}
+
+.shipping-method-card:hover .shipping-method-icon,
+.shipping-method-card.selected .shipping-method-icon {
+  background: #198754;
+  color: #fff;
+  transform: scale(1.04);
+}
+
+.shipping-method-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.shipping-method-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.shipping-method-title strong {
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.shipping-method-badge {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #fff4cc;
+  color: #9a6b00;
+  font-size: 10px !important;
+}
+
+.shipping-method-description {
+  display: block;
+  color: #8a94a3;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.shipping-method-check {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shipping-method-check span {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d5dce5;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.shipping-method-card:hover .shipping-method-check span {
+  border-color: #198754;
+}
+
+.shipping-method-check svg {
+  color: #198754;
+  font-size: 23px;
+  animation: shippingCheckAnimation 0.25s ease;
+}
+
+.shipping-modal-footer {
+  padding: 12px 18px 17px;
+  text-align: center;
+  background: #fff;
+  border-top: 1px solid #eef1f4;
+}
+
+.shipping-modal-footer span {
+  color: #9aa3af;
+  font-size: 11px;
+}
+
+@keyframes shippingCheckAnimation {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
