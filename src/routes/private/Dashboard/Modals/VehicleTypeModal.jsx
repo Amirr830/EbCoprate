@@ -12,11 +12,11 @@ import "../Css/VehicleTypeModal.css"
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
     const [params, setParams] = useState(props?.params);
-    const [selectedVehicle, setSelectedVehicle] = useState("");
+    const [selectedVehicle, setSelectedVehicle] = useState("motor");
 
     useEffect(() => {
         if (show) {
-            // بعد از نمایش مودال
+            
         }
     }, [show]);
 
