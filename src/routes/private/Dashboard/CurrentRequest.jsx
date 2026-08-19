@@ -10,13 +10,11 @@ import { useLocation, useNavigationType } from 'react-router-dom';
 import strings from "../../../app/String.json"
 import PaymentModal from "./Modals/PaymentModal"
 
-
 const courierIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/2972/2972185.png',
   iconSize: [36, 36],
   iconAnchor: [18, 18],
 });
-
 
 function CurrentRequest() {
   const location = useLocation();
@@ -89,6 +87,7 @@ function CurrentRequest() {
 
     return () => clearInterval(timer);
   }, [requestStarted]);
+
   return (
     <div className="current-request-container dir-rtl">
       <div className="current-request-scroll-content">
@@ -108,7 +107,7 @@ function CurrentRequest() {
                     <div className="current-date-info">
 
                       <div className="current-date-label">
-                        امروز
+                        {strings.today}
                       </div>
 
                       <div className="current-date-value">
@@ -119,15 +118,19 @@ function CurrentRequest() {
                             month: 'long',
                             year: 'numeric',
                           }).formatToParts(new Date());
+
                           const weekday = parts.find(
                             (item) => item.type === 'weekday'
                           )?.value;
+
                           const day = parts.find(
                             (item) => item.type === 'day'
                           )?.value;
+
                           const month = parts.find(
                             (item) => item.type === 'month'
                           )?.value;
+
                           const year = parts.find(
                             (item) => item.type === 'year'
                           )?.value;
@@ -171,8 +174,6 @@ function CurrentRequest() {
               </div>
             </div>
 
-
-
             {requestStarted && (
               <div className="courier-info-box my-2 p-2 rounded-3 bg-light">
                 {!courierFound ? (
@@ -185,42 +186,42 @@ function CurrentRequest() {
                       ></span>
 
                       <span className="-bold text-muted">
-                        در حال جستجو...
+                        {strings.courierSearching}
                       </span>
                     </div>
                   </div>
                 ) : (
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="courier-avatar rounded-3 border d-flex align-items-center justify-content-center text-muted small-text bg-white">
-                      تصویر قاصد
+                      {strings.courierImage}
                     </div>
 
                     <div className="flex-grow-1 px-2">
                       <div className="d-flex justify-content-between align-items-center mb-1">
                         <span className=" text-dark me-1">
-                          محمود زارع
+                          {strings.courierName}
                         </span>
 
                         <span>
-                          موتور هوندا
+                          {strings.motorcycleHonda}
                         </span>
                       </div>
 
                       <div className="d-flex justify-content-between align-items-center small-text text-muted">
                         <span>
-                          09151231231
+                          {strings.courierPhone}
                         </span>
 
                         <span>
-                          کد قاصد: 999
+                          {strings.courierCode}: 999
                         </span>
                       </div>
                     </div>
 
                     <div className="d-flex flex-column align-items-center gap-1">
                       <div className="plate-box text-center">
-                        <div>1342</div>
-                        <div>23523</div>
+                        <div>{strings.plateFirstNumber}</div>
+                        <div>{strings.plateSecondNumber}</div>
                       </div>
 
                       <a
@@ -237,8 +238,6 @@ function CurrentRequest() {
               </div>
             )}
 
-
-
             <div className="route-address-card py-2 border-top border-bottom my-2">
               <div className="route-address-item">
                 <div className="route-address-indicator">
@@ -248,11 +247,11 @@ function CurrentRequest() {
 
                 <div className="route-address-content">
                   <span className="route-address-label route-origin-label">
-                    مبدأ
+                    {strings.origin}
                   </span>
 
                   <span className="route-address-value" style={{ fontSize: "15px" }}>
-                    {originAddress || "مبدأ ثبت نشده است"}
+                    {originAddress || strings.requestForm.notSelectedOrigin}
                   </span>
                 </div>
               </div>
@@ -264,11 +263,11 @@ function CurrentRequest() {
 
                 <div className="route-address-content">
                   <span className="route-address-label route-destination-label">
-                    مقصد
+                    {strings.destination}
                   </span>
 
                   <span className="route-address-value" style={{ fontSize: "15px" }}>
-                    {destinationAddress || "مقصد ثبت نشده است"}
+                    {destinationAddress || strings.requestForm.notSelectedDestination}
                   </span>
                 </div>
               </div>
@@ -276,13 +275,15 @@ function CurrentRequest() {
 
             <div className="d-flex align-items-center justify-content-between gap-3 my-2">
               <div className="text-end">
-                <span className="text-black small-text d-block mb-1"
-                style={{fontSize:"15px"}}>
-                  پرداخت با : {selectedPaymentMethod?.title || "انتخاب نشده"}
+                <span
+                  className="text-black small-text d-block mb-1"
+                  style={{ fontSize: "15px" }}
+                >
+                  {strings.paymentWith} : {selectedPaymentMethod?.title || strings.notSelected}
                 </span>
 
                 <div className="price-tag text-success fs-4">
-                  25,000 <span className="fs-6" color='green'>تومان</span>
+                  {strings.price} <span className="fs-6" color='green'>{strings.currency}</span>
                 </div>
               </div>
 
@@ -292,13 +293,11 @@ function CurrentRequest() {
                 }}
               >
                 <button className="btn btn-success px-4 py-2 rounded-3 shadow-sm text-white">
-                  پرداخت
+                  {strings.payment}
                 </button>
               </PaymentModal>
             </div>
           </div>
-
-
 
           <div className="request-card shadow-sm p-3 rounded-4 bg-white border">
             <div className="position-relative mb-2">
@@ -309,11 +308,11 @@ function CurrentRequest() {
 
                   <div className="text-end">
                     <div className="opacity-75" style={{ fontSize: "14px" }}>
-                      نوع وسیله
+                      {strings.vehicle}
                     </div>
 
                     <div style={{ fontSize: "14px" }}>
-                      {vehicleType || "نوع وسیله مشخص نشده"}
+                      {vehicleType || strings.vehicleNotSpecified}
                     </div>
                   </div>
                 </div>
@@ -337,14 +336,14 @@ function CurrentRequest() {
                     ) : (
                       <>
                         <span className="status-title text-success d-block fs-6">
-                          راننده به مبدا رسید
+                          {strings.driverArrivedOrigin}
                         </span>
 
                         <div className="d-flex align-items-center justify-content-center gap-1 mt-1 text-success">
                           <IoTimeOutline size={16} />
 
                           <span className="small-text">
-                            راننده آماده دریافت سفارش است
+                            {strings.driverReadyToReceive}
                           </span>
                         </div>
                       </>
@@ -354,7 +353,6 @@ function CurrentRequest() {
 
               </div>
             </div>
-
 
             <div className="route-address-card">
               <div className="route-address-item route-origin-item">
@@ -367,13 +365,13 @@ function CurrentRequest() {
 
                   <div className="route-address-header">
                     <span className="route-address-label route-origin-label" style={{ fontSize: "15px" }}>
-                      مبدأ
+                      {strings.origin}
                     </span>
 
                   </div>
 
                   <div className="route-address-value" style={{ fontSize: "15px" }}>
-                    {originAddress || "مبدأ ثبت نشده است"}
+                    {originAddress || strings.requestForm.notSelectedOrigin}
                   </div>
 
                 </div>
@@ -390,18 +388,16 @@ function CurrentRequest() {
 
                   <div className="route-address-header" style={{ fontSize: "15px" }}>
                     <span className="route-address-label route-destination-label">
-                      مقصد
+                      {strings.destination}
                     </span>
-
                   </div>
 
                   <div className="route-address-value" style={{ fontSize: "15px" }}>
-                    {destinationAddress || "مقصد ثبت نشده است"}
+                    {destinationAddress || strings.requestForm.notSelectedDestination}
                   </div>
                 </div>
               </div>
             </div>
-
 
             {requestStarted && (
               <div className="request-services-payment">
@@ -421,16 +417,17 @@ function CurrentRequest() {
 
                 <div className="request-payment">
                   <span className="request-payment-label">
-                    روش پرداخت
+                    {strings.paymentMethod}
                   </span>
 
                   <span
-                    className={`request-payment-value ${cash
-                      ? "request-payment-cash"
-                      : "request-payment-credit"
-                      }`}
+                    className={`request-payment-value ${
+                      cash
+                        ? "request-payment-cash"
+                        : "request-payment-credit"
+                    }`}
                   >
-                    {cash ? "نقدی" : "اعتباری"}
+                    {cash ? strings.cash : strings.credit}
                   </span>
                 </div>
 

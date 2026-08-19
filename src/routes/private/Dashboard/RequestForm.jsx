@@ -6,6 +6,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import SideBar from './SideBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import paths from "../../../../src/app/paths.json";
+import strings from "../../../app/String.json"
 import NewDestinationModal from "./Modals/NewDestinationModal";
 import EdirAddressModal from "./Modals/EditAddressModal";
 import VehicleTypeModal from "./Modals/VehicleTypeModal";
@@ -50,39 +51,39 @@ function RequestForm() {
   const serviceOptions = [
     {
       id: 1,
-      title: "بار سنگین",
+      title: strings.services.heavyLoad,
     },
     {
       id: 2,
-      title: "صندوق",
+      title: strings.services.box,
     },
     {
       id: 3,
-      title: "رفت و برگشت",
+      title: strings.services.roundTrip,
     },
     {
       id: 4,
-      title: "حمل مرسوله شکستنی",
+      title: strings.services.fragile,
     },
     {
       id: 5,
-      title: "بیمه بار",
+      title: strings.services.insurance,
     },
     {
       id: 6,
-      title: "ارسال فوری",
+      title: strings.services.express,
     },
     {
       id: 7,
-      title: "نیاز به تماس",
+      title: strings.services.needCall,
     },
   ];
 
   const vehicleClassMap = {
-    "وانت": 1,
-    "موتور همراه جعبه": 2,
-    "موتور بدون جعبه": 3,
-    "سواری": 4,
+    [strings.vehicleTypes.pickup]: 1,
+    [strings.vehicleTypes.motorWithBox]: 2,
+    [strings.vehicleTypes.motorWithoutBox]: 3,
+    [strings.vehicleTypes.car]: 4,
   };
 
   const getVehicleClass = () => {
@@ -90,11 +91,11 @@ function RequestForm() {
   };
 
   const getStopTimeSec = () => {
-    if (stopTime === "۱۵ دقیقه") {
+    if (stopTime === strings.requestForm.fifteenMinutes) {
       return 15;
     }
 
-    if (stopTime === "۳۰ دقیقه") {
+    if (stopTime === strings.requestForm.thirtyMinutes) {
       return 30;
     }
 
@@ -118,9 +119,9 @@ function RequestForm() {
     setSender(true);
     setCash(true);
     setServiceOpen(false);
-    setStopTime("بدون توقف");
+    setStopTime(strings.requestForm.noStop);
     setCourierCode("");
-    setItemValue("زیر ۲۵ میلیون تومان");
+    setItemValue(strings.requestForm.underTwentyFiveMillion);
     setNotes("");
     setDiscountCode("");
     setServiceSpeed("");
@@ -132,9 +133,9 @@ function RequestForm() {
     setSender(true);
     setCash(true);
     setServiceOpen(false);
-    setStopTime("بدون توقف");
+    setStopTime(strings.requestForm.noStop);
     setCourierCode("");
-    setItemValue("زیر ۲۵ میلیون تومان");
+    setItemValue(strings.requestForm.underTwentyFiveMillion);
     setNotes("");
     setDiscountCode("");
     setServiceSpeed("");
@@ -184,7 +185,7 @@ function RequestForm() {
     );
 
     setStopTime(
-      quickRequest.stopTime || "بدون توقف"
+      quickRequest.stopTime || strings.requestForm.noStop
     );
 
     setCourierCode(
@@ -192,7 +193,8 @@ function RequestForm() {
     );
 
     setItemValue(
-      quickRequest.itemValue || "زیر ۲۵ میلیون تومان"
+      quickRequest.itemValue ||
+        strings.requestForm.underTwentyFiveMillion
     );
 
     setNotes(
@@ -382,9 +384,9 @@ function RequestForm() {
         neighbourhoodLat: null,
         neighbourhoodLng: null,
         neighbourhoodCode: null,
-        addressPhone: "0513123123",
+        addressPhone: strings.requestForm.addressPhone,
         cityCode: 1,
-        cityName: "مشهد",
+        cityName: strings.requestForm.cityName,
       },
       {
         fullAddress: destinationAddress,
@@ -395,9 +397,9 @@ function RequestForm() {
         neighbourhoodLat: null,
         neighbourhoodLng: null,
         neighbourhoodCode: null,
-        addressPhone: "0513123123",
+        addressPhone: strings.requestForm.addressPhone,
         cityCode: 1,
-        cityName: "مشهد",
+        cityName: strings.requestForm.cityName,
       },
       ...additionalDestinations
         .filter((item) => item.fullAddress || item.address)
@@ -416,9 +418,9 @@ function RequestForm() {
           neighbourhoodLat: null,
           neighbourhoodLng: null,
           neighbourhoodCode: null,
-          addressPhone: "0513123123",
+          addressPhone: strings.requestForm.addressPhone,
           cityCode: 1,
-          cityName: "مشهد",
+          cityName: strings.requestForm.cityName,
         })),
     ];
 
@@ -441,10 +443,10 @@ function RequestForm() {
     };
 
     const params = {
-      custName: "شرکت ابتکار",
-      custTel: "0513123123",
-      custMobile: "0513123123",
-      desc: notes || "توضیحات سفر",
+      custName: strings.requestForm.customerName,
+      custTel: strings.requestForm.addressPhone,
+      custMobile: strings.requestForm.addressPhone,
+      desc: notes || strings.requestForm.tripDescription,
       vehicleClass: getVehicleClass(),
       serviceSpeed: serviceSpeed || 0,
       payType: cash ? 1 : 2,
@@ -519,7 +521,7 @@ function RequestForm() {
         );
       } catch (error) {
         console.warn(
-          "ذخیره درخواست سریع انجام نشد، اما ثبت درخواست ادامه پیدا می‌کند.",
+          strings.requestForm.quickRequestSaveFailed,
           error
         );
       }
@@ -601,7 +603,7 @@ function RequestForm() {
             <div className="route-side">
               <span className="route-dot origin-dot"></span>
               <span className="route-label">
-                مبدأ
+                {strings.origin}
               </span>
             </div>
 
@@ -643,7 +645,7 @@ function RequestForm() {
                   }
                 >
                   <span className="route-placeholder">
-                    هنوز مبدأ انتخاب نشده است
+                    {strings.requestForm.notSelectedOrigin}
                   </span>
                 </div>
               </NewDestinationModal>
@@ -671,7 +673,7 @@ function RequestForm() {
             <div className="route-side">
               <span className="route-dot dest-dot"></span>
               <span className="route-label">
-                مقصد
+                {strings.destination}
               </span>
             </div>
 
@@ -713,7 +715,7 @@ function RequestForm() {
                   }
                 >
                   <span className="route-placeholder">
-                    هنوز مقصد انتخاب نشده است
+                    {strings.requestForm.notSelectedDestination}
                   </span>
                 </div>
               </NewDestinationModal>
@@ -751,7 +753,7 @@ function RequestForm() {
                       <span className="additional-destination-dot"></span>
 
                       <span>
-                        مقصد {index + 1}
+                        {strings.destination} {index + 1}
                       </span>
                     </div>
 
@@ -828,8 +830,10 @@ function RequestForm() {
                         destination.address
                       ) : (
                         <span className="route-placeholder">
-                          برای انتخاب مقصد{" "}
-                          {index + 1} کلیک کنید
+                          {strings.requestForm.clickToSelectDestinationNumber.replace(
+                            "{number}",
+                            index + 1
+                          )}
                         </span>
                       )}
                     </div>
@@ -858,7 +862,7 @@ function RequestForm() {
               >
                 +
               </span>
-              افزودن مقصد جدید
+              {strings.requestForm.addNewDestination}
             </button>
           </Col>
         </Row>
@@ -887,7 +891,7 @@ function RequestForm() {
                   }}
                 >
                   {vehicleType ||
-                    "انتخاب نوع وسیله"}
+                    strings.requestForm.vehicleType}
                 </button>
               </VehicleTypeModal>
             </div>
@@ -905,18 +909,18 @@ function RequestForm() {
                 }
               >
                 <option>
-                  بدون توقف
+                  {strings.requestForm.noStop}
                 </option>
                 <option>
-                  ۱۵ دقیقه
+                  {strings.requestForm.fifteenMinutes}
                 </option>
                 <option>
-                  ۳۰ دقیقه
+                  {strings.requestForm.thirtyMinutes}
                 </option>
               </select>
 
               <label htmlFor="stopTime">
-                توقف (دقیقه)
+                {strings.requestForm.stopTime}
               </label>
             </div>
           </Col>
@@ -930,7 +934,7 @@ function RequestForm() {
                 type="text"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                placeholder="کد قاصد..."
+                placeholder={strings.requestForm.courierCodePlaceholder}
                 autoComplete="off"
                 value={courierCode}
                 onChange={(e) =>
@@ -944,7 +948,7 @@ function RequestForm() {
               />
 
               <label htmlFor="courierCode">
-                کد قاصد
+                {strings.requestForm.courierCode}
               </label>
             </div>
           </Col>
@@ -961,21 +965,21 @@ function RequestForm() {
                 }
               >
                 <option>
-                  زیر ۲۵ میلیون تومان
+                  {strings.requestForm.underTwentyFiveMillion}
                 </option>
                 <option>
-                  ۲۵ تا ۵۰ میلیون تومان
+                  {strings.requestForm.twentyFiveToFiftyMillion}
                 </option>
                 <option>
-                  ۵۰ تا ۱۰۰ میلیون تومان
+                  {strings.requestForm.fiftyToOneHundredMillion}
                 </option>
                 <option>
-                  بیش از ۱۰۰ میلیون تومان
+                  {strings.requestForm.overOneHundredMillion}
                 </option>
               </select>
 
               <label htmlFor="itemValue">
-                ارزش کالا
+                {strings.requestForm.itemValue}
               </label>
             </div>
           </Col>
@@ -986,7 +990,7 @@ function RequestForm() {
             <div className="custom-textarea-group">
               <textarea
                 id="notes"
-                placeholder="توضیحات..."
+                placeholder={strings.requestForm.notes}
                 rows="3"
                 value={notes}
                 onChange={(e) =>
@@ -1003,7 +1007,7 @@ function RequestForm() {
           <Col xs={12}>
             <div className="service-dropdown">
               <label className="service-label">
-                ویژگی سرویس
+                {strings.requestForm.serviceFeatures}
               </label>
 
               <div
@@ -1105,7 +1109,7 @@ function RequestForm() {
         <Row className="mb-2">
           <Col xs={12}>
             <label className="segment-label">
-              پرداخت کننده
+              {strings.requestForm.payer}
             </label>
 
             <div className="segment-toggle-box">
@@ -1119,7 +1123,7 @@ function RequestForm() {
                   setSender(true)
                 }
               >
-                فرستنده
+                {strings.requestForm.sender}
               </div>
 
               <div
@@ -1132,7 +1136,7 @@ function RequestForm() {
                   setSender(false)
                 }
               >
-                گیرنده
+                {strings.requestForm.receiver}
               </div>
             </div>
           </Col>
@@ -1141,7 +1145,7 @@ function RequestForm() {
         <Row className="mb-3">
           <Col xs={12}>
             <label className="segment-label">
-              روش پرداخت
+              {strings.requestForm.paymentMethod}
             </label>
 
             <div className="segment-toggle-box">
@@ -1155,7 +1159,7 @@ function RequestForm() {
                   setCash(true)
                 }
               >
-                نقدی
+                {strings.requestForm.cash}
               </div>
 
               {sender && (
@@ -1169,7 +1173,7 @@ function RequestForm() {
                     setCash(false)
                   }
                 >
-                  اعتباری کیف پول
+                  {strings.requestForm.creditWallet}
                 </div>
               )}
             </div>
@@ -1188,7 +1192,7 @@ function RequestForm() {
                       </strong>
                       <span>
                         {" "}
-                        تومان
+                        {strings.requestForm.price}
                       </span>
                     </span>
                   </div>
@@ -1201,7 +1205,7 @@ function RequestForm() {
 
                       <input
                         type="text"
-                        placeholder="کد تخفیف دارید؟"
+                        placeholder={strings.requestForm.discountPlaceholder}
                         className="discount-input"
                         value={
                           discountCode
@@ -1218,7 +1222,7 @@ function RequestForm() {
                       type="button"
                       className="apply-code-btn btn btn-success"
                     >
-                      ثبت کد
+                      {strings.requestForm.registerCode}
                     </button>
                   </div>
                 </Col>
@@ -1245,7 +1249,7 @@ function RequestForm() {
                   fontSize: "20px",
                 }}
               >
-                ثبت درخواست
+                {strings.requestForm.request}
               </button>
             </SubmitRequestModal>
           </Col>
@@ -1265,7 +1269,7 @@ function RequestForm() {
                   height: "50px",
                 }}
               >
-                نحوه ارسال
+                {strings.requestForm.shippingMethod}
               </button>
             </ShippingMethodModal>
           </Col>
@@ -1328,7 +1332,7 @@ function RequestForm() {
               ＋
             </span>
             <span>
-              درخواست سفر
+              {strings.mobileNavigation.travelRequest}
             </span>
           </button>
         </Col>
@@ -1351,7 +1355,7 @@ function RequestForm() {
               ●
             </span>
             <span>
-              سفر فعلی
+              {strings.mobileNavigation.currentTrip}
             </span>
           </button>
         </Col>
@@ -1374,7 +1378,7 @@ function RequestForm() {
               ☰
             </span>
             <span>
-              اطلاعات سفر
+              {strings.mobileNavigation.tripInformation}
             </span>
           </button>
         </Col>

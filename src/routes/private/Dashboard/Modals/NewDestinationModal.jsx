@@ -373,8 +373,8 @@ export default function NewDestinationModal(
 
   const locationDescription =
     isOrigin
-      ? "توضیحات محل دریافت..."
-      : "توضیحات محل تحویل...";
+      ? "توضیحات ..."
+      : "توضیحات ...";
 
   const showFormAlert = (message) => {
     setAlertMessage(message);
