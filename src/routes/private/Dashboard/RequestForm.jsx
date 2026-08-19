@@ -194,7 +194,7 @@ function RequestForm() {
 
     setItemValue(
       quickRequest.itemValue ||
-        strings.requestForm.underTwentyFiveMillion
+      strings.requestForm.underTwentyFiveMillion
     );
 
     setNotes(
@@ -319,12 +319,12 @@ function RequestForm() {
       prev.map((item, itemIndex) =>
         itemIndex === index
           ? {
-              ...item,
-              address,
-              fullAddress: address,
-              lat,
-              lng,
-            }
+            ...item,
+            address,
+            fullAddress: address,
+            lat,
+            lng,
+          }
           : item
       )
     );
@@ -483,19 +483,19 @@ function RequestForm() {
         const oldQuickRequests =
           Array.isArray(savedQuickRequests)
             ? savedQuickRequests
-                .filter(
-                  (item) =>
-                    item &&
-                    typeof item === "object" &&
-                    typeof item.name === "string"
-                )
-                .map((item) => ({
-                  ...item,
-                  name: item.name.trim(),
-                }))
-                .filter(
-                  (item) => item.name
-                )
+              .filter(
+                (item) =>
+                  item &&
+                  typeof item === "object" &&
+                  typeof item.name === "string"
+              )
+              .map((item) => ({
+                ...item,
+                name: item.name.trim(),
+              }))
+              .filter(
+                (item) => item.name
+              )
             : [];
 
         const newQuickRequest = {
@@ -772,14 +772,14 @@ function RequestForm() {
                                 prev.map(
                                   (item) =>
                                     item.id ===
-                                    destination.id
+                                      destination.id
                                       ? {
-                                          ...item,
-                                          address:
-                                            newAddress,
-                                          fullAddress:
-                                            newAddress,
-                                        }
+                                        ...item,
+                                        address:
+                                          newAddress,
+                                        fullAddress:
+                                          newAddress,
+                                      }
                                       : item
                                 )
                             );
@@ -825,7 +825,7 @@ function RequestForm() {
                       }}
                     >
                       {destination.fullAddress ||
-                      destination.address ? (
+                        destination.address ? (
                         destination.fullAddress ||
                         destination.address
                       ) : (
@@ -877,11 +877,10 @@ function RequestForm() {
               >
                 <button
                   type="button"
-                  className={`select-vehicle-btn ${
-                    vehicleType
-                      ? "vehicle-selected-btn"
-                      : ""
-                  }`}
+                  className={`select-vehicle-btn ${vehicleType
+                    ? "vehicle-selected-btn"
+                    : ""
+                    }`}
                   style={{
                     fontSize: "18px",
                     display: "flex",
@@ -1011,11 +1010,10 @@ function RequestForm() {
               </label>
 
               <div
-                className={`service-box ${
-                  serviceOpen
-                    ? "active"
-                    : ""
-                }`}
+                className={`service-box ${serviceOpen
+                  ? "active"
+                  : ""
+                  }`}
                 onClick={() =>
                   setServiceOpen(
                     !serviceOpen
@@ -1024,7 +1022,7 @@ function RequestForm() {
               >
                 <div className="selected-tags">
                   {selectedServices.length ===
-                  0 ? (
+                    0 ? (
                     <div></div>
                   ) : (
                     selectedServices.map(
@@ -1059,11 +1057,10 @@ function RequestForm() {
                 </div>
 
                 <FaChevronDown
-                  className={`dropdown-icon ${
-                    serviceOpen
-                      ? "rotate"
-                      : ""
-                  }`}
+                  className={`dropdown-icon ${serviceOpen
+                    ? "rotate"
+                    : ""
+                    }`}
                 />
               </div>
 
@@ -1073,13 +1070,12 @@ function RequestForm() {
                     (item) => (
                       <div
                         key={item.id}
-                        className={`service-item ${
-                          selectedServices.includes(
-                            item.title
-                          )
-                            ? "selected"
-                            : ""
-                        }`}
+                        className={`service-item ${selectedServices.includes(
+                          item.title
+                        )
+                          ? "selected"
+                          : ""
+                          }`}
                         onClick={() =>
                           toggleService(
                             item.title
@@ -1093,10 +1089,10 @@ function RequestForm() {
                         {selectedServices.includes(
                           item.title
                         ) && (
-                          <span className="check">
-                            ✓
-                          </span>
-                        )}
+                            <span className="check">
+                              ✓
+                            </span>
+                          )}
                       </div>
                     )
                   )}
@@ -1114,11 +1110,10 @@ function RequestForm() {
 
             <div className="segment-toggle-box">
               <div
-                className={`segment-btn ${
-                  sender
-                    ? "active"
-                    : ""
-                }`}
+                className={`segment-btn ${sender
+                  ? "active"
+                  : ""
+                  }`}
                 onClick={() =>
                   setSender(true)
                 }
@@ -1127,11 +1122,10 @@ function RequestForm() {
               </div>
 
               <div
-                className={`segment-btn ${
-                  !sender
-                    ? "active"
-                    : ""
-                }`}
+                className={`segment-btn ${!sender
+                  ? "active"
+                  : ""
+                  }`}
                 onClick={() =>
                   setSender(false)
                 }
@@ -1150,11 +1144,10 @@ function RequestForm() {
 
             <div className="segment-toggle-box">
               <div
-                className={`segment-btn ${
-                  cash
-                    ? "active"
-                    : ""
-                }`}
+                className={`segment-btn ${cash
+                  ? "active"
+                  : ""
+                  }`}
                 onClick={() =>
                   setCash(true)
                 }
@@ -1164,11 +1157,10 @@ function RequestForm() {
 
               {sender && (
                 <div
-                  className={`segment-btn ${
-                    !cash
-                      ? "active"
-                      : ""
-                  }`}
+                  className={`segment-btn ${!cash
+                    ? "active"
+                    : ""
+                    }`}
                   onClick={() =>
                     setCash(false)
                   }
@@ -1180,16 +1172,27 @@ function RequestForm() {
           </Col>
         </Row>
 
+
+
+
+
+
+
         <Row className="mb-3">
           <Col xs={12}>
             <div className="payment-discount-card">
               <Row className="g-0 w-100 align-items-stretch">
-                <Col xs={4} md={4}>
+                <Col xs={7} md={7}>
                   <div className="payment-price-section h-100">
                     <span className="payment-price-value text-success">
-                      <strong>
+                      <span className="payment-price-label">
+                        هزینه سرویس
+                      </span>
+
+                      <p className="mt-1 mb-0">
                         25,000
-                      </strong>
+                      </p>
+
                       <span>
                         {" "}
                         {strings.requestForm.price}
@@ -1198,24 +1201,9 @@ function RequestForm() {
                   </div>
                 </Col>
 
-                <Col xs={8} md={8}>
+                <Col xs={5} md={5}>
                   <div className="payment-discount-section h-100">
                     <div className="payment-discount-input-wrapper">
-                      <FaTag className="discount-icon text-muted" />
-
-                      <input
-                        type="text"
-                        placeholder={strings.requestForm.discountPlaceholder}
-                        className="discount-input"
-                        value={
-                          discountCode
-                        }
-                        onChange={(e) =>
-                          setDiscountCode(
-                            e.target.value
-                          )
-                        }
-                      />
                     </div>
 
                     <button
@@ -1227,9 +1215,45 @@ function RequestForm() {
                   </div>
                 </Col>
               </Row>
+
+              <div className="discount-description">
+                <div className="discount-description-header">
+                  <div className="discount-description-title">
+                    <span className="discount-description-icon">
+                      %
+                    </span>
+
+                    <span>
+                      توضیحات تخفیف
+                    </span>
+                  </div>
+                </div>
+
+                <div className="discount-description-content">
+                  <span>
+                    توضیحات کد تخفیف...
+                  </span>
+                </div>
+              </div>
             </div>
           </Col>
         </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <Row className="g-2">
           <Col xs={8}>
@@ -1317,11 +1341,10 @@ function RequestForm() {
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${
-              mobilePage === "request"
-                ? "active"
-                : ""
-            }`}
+            className={`mobile-nav-btn ${mobilePage === "request"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               setMobilePage(
                 "request"
@@ -1340,11 +1363,10 @@ function RequestForm() {
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${
-              mobilePage === "current"
-                ? "active"
-                : ""
-            }`}
+            className={`mobile-nav-btn ${mobilePage === "current"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               setMobilePage(
                 "current"
@@ -1363,11 +1385,10 @@ function RequestForm() {
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${
-              mobilePage === "info"
-                ? "active"
-                : ""
-            }`}
+            className={`mobile-nav-btn ${mobilePage === "info"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               setMobilePage(
                 "info"

@@ -1565,13 +1565,14 @@ export default function NewDestinationModal(
                             <span className="address-field-icon">
                               ☎
                             </span>
-
                             <input
                               type="text"
                               name="phone"
                               value={formData.phone}
                               onChange={(e) => {
-                                const numericValue = e.target.value.replace(/[^0-9]/g, "");
+                                const numericValue = e.target.value
+                                  .replace(/[^0-9]/g, "")
+                                  .slice(0, 11);
 
                                 setFormData((prev) => ({
                                   ...prev,
@@ -1580,6 +1581,7 @@ export default function NewDestinationModal(
                               }}
                               inputMode="numeric"
                               pattern="[0-9]*"
+                              maxLength={11}
                               placeholder="شماره تماس را وارد کنید..."
                               className="form-control address-input"
                             />
