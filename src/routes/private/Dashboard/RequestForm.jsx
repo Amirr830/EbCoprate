@@ -6,7 +6,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import SideBar from './SideBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import paths from "../../../../src/app/paths.json";
-import strings from "../../../app/String.json"
+import strings from "../../../app/String.json";
 import NewDestinationModal from "./Modals/NewDestinationModal";
 import EdirAddressModal from "./Modals/EditAddressModal";
 import VehicleTypeModal from "./Modals/VehicleTypeModal";
@@ -14,6 +14,9 @@ import SubmitRequestModal from "./Modals/SubmitRequestModal";
 import CurrentRequest from "./CurrentRequest";
 import Info from "./Info";
 import ShippingMethodModal from "./Modals/ShippingMethodModal";
+import RegisterDiscountCode from "./Modals/RegisterDiscountCode";
+
+
 
 function RequestForm() {
   const [sender, setSender] = useState(true);
@@ -38,8 +41,11 @@ function RequestForm() {
   const [itemValue, setItemValue] = useState("زیر ۲۵ میلیون تومان");
   const [notes, setNotes] = useState("");
   const [discountCode, setDiscountCode] = useState("");
+  const [discountDescription, setDiscountDescription] = useState("");
   const [additionalDestinations, setAdditionalDestinations] = useState([]);
   const [serviceSpeed, setServiceSpeed] = useState("");
+  const [discountData, setDiscountData] = useState(null);
+  const [discountAlert, setDiscountAlert] = useState("");
   const [openAdditionalDestinationId, setOpenAdditionalDestinationId] = useState(null);
   const [showAdditionalDestinationModal, setShowAdditionalDestinationModal] = useState(false);
   const dropdownRef = useRef(null);
@@ -87,6 +93,32 @@ function RequestForm() {
     [strings.vehicleTypes.car]: 4,
   };
 
+  const handleDiscountSelect = (discount) => {
+    if (!discount?.code) {
+      return;
+    }
+
+    setDiscountCode(discount.code);
+    setDiscountData(discount);
+    setDiscountAlert("");
+  };
+
+  const handleRemoveDiscount = () => {
+    setDiscountCode("");
+    setDiscountData(null);
+    setDiscountAlert("");
+  };
+
+  const handleInvalidDiscount = () => {
+    setDiscountAlert(
+      "امکان انتخاب کد تخفیف امکان‌پذیر نیست؛ کد تخفیف نامعتبر است!"
+    );
+
+    setTimeout(() => {
+      setDiscountAlert("");
+    }, 4000);
+  };
+
   const getVehicleClass = () => {
     return vehicleClassMap[vehicleType] || 0;
   };
@@ -125,6 +157,9 @@ function RequestForm() {
     setItemValue(strings.requestForm.underTwentyFiveMillion);
     setNotes("");
     setDiscountCode("");
+    setDiscountData(null);
+    setDiscountAlert("");
+    setDiscountDescription("");
     setServiceSpeed("");
   };
 
@@ -139,7 +174,10 @@ function RequestForm() {
     setItemValue(strings.requestForm.underTwentyFiveMillion);
     setNotes("");
     setDiscountCode("");
+    setDiscountData(null);
+    setDiscountAlert("");
     setServiceSpeed("");
+    setDiscountDescription("");
   };
 
   useEffect(() => {
@@ -206,10 +244,13 @@ function RequestForm() {
       quickRequest.discountCode || ""
     );
 
+    setDiscountData(
+      quickRequest.discountData || null
+    );
+
     setServiceSpeed(
       quickRequest.serviceSpeed || ""
     );
-
     window.history.replaceState({}, document.title);
   }, [location.state]);
 
@@ -275,79 +316,80 @@ function RequestForm() {
   const handleAddressClick = () => {
     resetOtherFields();
   };
-const handleAdditionalDestinationSubmit = (data) => {
-  if (!data?.address) {
-    return;
-  }
 
-  const addressData = data.address;
+  const handleAdditionalDestinationSubmit = (data) => {
+    if (!data?.address) {
+      return;
+    }
 
-  const address =
-    addressData.address ||
-    addressData.fullAddress ||
-    [
-      addressData.street,
-      addressData.road,
-      addressData.alley
-        ? `کوچه ${addressData.alley}`
-        : "",
-      addressData.plaque
-        ? `پلاک ${addressData.plaque}`
-        : "",
-      addressData.unit
-        ? `واحد ${addressData.unit}`
-        : "",
-    ]
-      .filter(Boolean)
-      .join("، ");
+    const addressData = data.address;
 
-  const lat =
-    data.lat ??
-    addressData.lat ??
-    data.latitude ??
-    addressData.latitude ??
-    null;
-
-  const lng =
-    data.lng ??
-    addressData.lng ??
-    data.lon ??
-    addressData.lon ??
-    data.longitude ??
-    addressData.longitude ??
-    null;
-
-  const phone =
-    addressData.phone || "";
-
-  const floor =
-    addressData.floor || "";
-
-  const description =
-    addressData.description || "";
-
-  const newDestination = {
-    id: `${Date.now()}-${Math.random()
-      .toString(36)
-      .slice(2, 11)}`,
-    address,
-    fullAddress:
+    const address =
+      addressData.address ||
       addressData.fullAddress ||
+      [
+        addressData.street,
+        addressData.road,
+        addressData.alley
+          ? `کوچه ${addressData.alley}`
+          : "",
+        addressData.plaque
+          ? `پلاک ${addressData.plaque}`
+          : "",
+        addressData.unit
+          ? `واحد ${addressData.unit}`
+          : "",
+      ]
+        .filter(Boolean)
+        .join("، ");
+
+    const lat =
+      data.lat ??
+      addressData.lat ??
+      data.latitude ??
+      addressData.latitude ??
+      null;
+
+    const lng =
+      data.lng ??
+      addressData.lng ??
+      data.lon ??
+      addressData.lon ??
+      data.longitude ??
+      addressData.longitude ??
+      null;
+
+    const phone =
+      addressData.phone || "";
+
+    const floor =
+      addressData.floor || "";
+
+    const description =
+      addressData.description || "";
+
+    const newDestination = {
+      id: `${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 11)}`,
       address,
-    lat,
-    lng,
-    phone,
-    floor,
-    description,
+      fullAddress:
+        addressData.fullAddress ||
+        address,
+      lat,
+      lng,
+      phone,
+      floor,
+      description,
+    };
+
+    setAdditionalDestinations((prev) => [
+      ...prev,
+      newDestination,
+    ]);
+
+    setShowAdditionalDestinationModal(false);
   };
-
-  setAdditionalDestinations((prev) => [
-    ...prev,
-    newDestination,
-  ]);
-
-  setShowAdditionalDestinationModal(false);
-};
 
   const addAdditionalDestination = () => {
     setShowAdditionalDestinationModal(true);
@@ -432,24 +474,25 @@ const handleAdditionalDestinationSubmit = (data) => {
         })),
     ];
 
-    const requestData = {
-      originAddress,
-      destinationAddress,
-      originLocation,
-      destinationLocation,
-      additionalDestinations,
-      vehicleType,
-      selectedServices,
-      sender,
-      cash,
-      stopTime,
-      courierCode,
-      itemValue,
-      notes,
-      discountCode,
-      serviceSpeed,
-    };
-
+const requestData = {
+  originAddress,
+  destinationAddress,
+  originLocation,
+  destinationLocation,
+  additionalDestinations,
+  vehicleType,
+  selectedServices,
+  sender,
+  cash,
+  stopTime,
+  courierCode,
+  itemValue,
+  notes,
+  discountCode,
+  discountData,
+  discountDescription,
+  serviceSpeed,
+};
     const params = {
       custName: strings.requestForm.customerName,
       custTel: strings.requestForm.addressPhone,
@@ -862,18 +905,19 @@ const handleAdditionalDestinationSubmit = (data) => {
           </Col>
         </Row>
 
-<NewDestinationModal
-  addressType="destination"
-  onAddressSubmit={
-    handleAdditionalDestinationSubmit
-  }
-  onClose={() =>
-    setShowAdditionalDestinationModal(false)
-  }
-  isOpen={
-    showAdditionalDestinationModal
-  }
-/>
+        <NewDestinationModal
+          addressType="destination"
+          onAddressSubmit={
+            handleAdditionalDestinationSubmit
+          }
+          onClose={() =>
+            setShowAdditionalDestinationModal(false)
+          }
+          isOpen={
+            showAdditionalDestinationModal
+          }
+        />
+
         <Row className="g-2 mb-2">
           <Col xs={12} md={6}>
             <div className="vehicle-dropdown">
@@ -1179,45 +1223,115 @@ const handleAdditionalDestinationSubmit = (data) => {
           </Col>
         </Row>
 
-        <Row className="mb-2">
-          <Col xs={12}>
-            <div className="payment-discount-card">
-              <div className="discount-question-row">
-                <span className="discount-question">
-                  آیا کد تخفیف دارید؟
-                </span>
 
-                <button
-                  type="button"
-                  className="apply-code-btn btn btn-success"
-                >
-                  {strings.requestForm.registerCode}
-                </button>
-              </div>
 
-              <div className="payment-price-section">
-                <span className="payment-price-value text-success">
-                  <strong>250,000</strong>
-                  <strong> تومان</strong>
-                </span>
-              </div>
 
-              <div className="discount-description-form">
-                <FaTag className="discount-icon text-muted" />
 
-                <input
-                  type="text"
-                  placeholder={strings.requestForm.DescriptionDiscount}
-                  className="discount-input"
-                  value={discountCode}
-                  onChange={(e) =>
-                    setDiscountCode(e.target.value)
-                  }
-                />
-              </div>
-            </div>
-          </Col>
-        </Row>
+
+
+
+
+
+
+
+
+{discountAlert && (
+  <div className="discount-global-alert">
+    <div className="discount-global-alert-icon">
+      !
+    </div>
+
+    <div className="discount-global-alert-text">
+      {discountAlert}
+    </div>
+
+    <button
+      type="button"
+      className="discount-global-alert-close"
+      onClick={() => setDiscountAlert("")}
+    >
+      ×
+    </button>
+  </div>
+)}
+
+<Row className="mb-2">
+  <Col xs={12}>
+    <div className="payment-discount-card">
+      <div className="discount-question-row">
+        <span className="discount-question">
+          {discountData?.code ? (
+            <>
+              کد تخفیف : {" "}
+              <span className="discount-question-selected">
+                {discountData.code}
+              </span>
+            </>
+          ) : (
+            strings.requestForm.discountQuestion
+          )}
+        </span>
+
+        <div className="discount-action-buttons">
+          {discountData?.code && (
+            <button
+              type="button"
+              className="remove-discount-btn"
+              onClick={handleRemoveDiscount}
+              title="حذف کد تخفیف"
+            >
+              <FaTimes />
+            </button>
+          )}
+
+          <RegisterDiscountCode
+            onDiscountSelect={handleDiscountSelect}
+            onInvalidDiscount={handleInvalidDiscount}
+          >
+            <button
+              type="button"
+              className="apply-code-btn btn btn-success"
+            >
+              {strings.requestForm.registerCode}
+            </button>
+          </RegisterDiscountCode>
+        </div>
+      </div>
+
+      <div className="payment-price-section">
+        <span className="payment-price-value text-success">
+          <p>{strings.price}</p>
+          <p>{strings.currency}</p>
+        </span>
+      </div>
+
+      <div className="discount-description-form">
+        <FaTag className="discount-icon text-muted" />
+
+        <input
+          type="text"
+          placeholder={strings.requestForm.DescriptionDiscount}
+          className="discount-input"
+          value={discountDescription}
+          onChange={(e) => {
+            setDiscountDescription(e.target.value);
+          }}
+        />
+      </div>
+    </div>
+  </Col>
+</Row>
+
+
+
+
+
+
+
+
+
+
+
 
         <Row className="g-2">
           <Col xs={8}>

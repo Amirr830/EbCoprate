@@ -24,6 +24,7 @@
   "paymentMethod": "روش پرداخت",
   "cash": "نقدی",
   "credit": "اعتباری",
+
   "requestForm": {
     "vehicleType": "انتخاب نوع وسیله",
     "stopTime": "توقف (دقیقه)",
@@ -45,8 +46,9 @@
     "paymentMethod": "روش پرداخت",
     "cash": "نقدی",
     "creditWallet": "اعتباری کیف پول",
+    "discountQuestion": "آیا کد تخفیف دارید؟",
     "DescriptionDiscount": "توضیحات تخفیف...",
-    "registerCode": "ثبت کد",
+    "registerCode": "ثبت کد تخفیف",
     "price": "تومان",
     "addNewDestination": "افزودن مقصد جدید",
     "clickToSelectDestination": "برای انتخاب مقصد کلیک کنید",
@@ -61,6 +63,7 @@
     "addressPhone": "0513123123",
     "customerName": "شرکت ابتکار"
   },
+
   "services": {
     "heavyLoad": "بار سنگین",
     "box": "صندوق",
@@ -70,17 +73,20 @@
     "express": "ارسال فوری",
     "needCall": "نیاز به تماس"
   },
+
   "vehicleTypes": {
     "pickup": "وانت",
     "motorWithBox": "موتور همراه جعبه",
     "motorWithoutBox": "موتور بدون جعبه",
     "car": "سواری"
   },
+
   "mobileNavigation": {
     "travelRequest": "درخواست سفر",
     "currentTrip": "سفر فعلی",
     "tripInformation": "اطلاعات سفر"
   },
+
   "info": {
     "history": "تاریخچه",
     "date": "تاریخ",
