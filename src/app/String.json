@@ -45,7 +45,7 @@
     "paymentMethod": "روش پرداخت",
     "cash": "نقدی",
     "creditWallet": "اعتباری کیف پول",
-    "discountPlaceholder": "کد تخفیف دارید؟",
+    "DescriptionDiscount": "توضیحات تخفیف...",
     "registerCode": "ثبت کد",
     "price": "تومان",
     "addNewDestination": "افزودن مقصد جدید",

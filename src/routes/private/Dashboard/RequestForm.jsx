@@ -40,7 +40,8 @@ function RequestForm() {
   const [discountCode, setDiscountCode] = useState("");
   const [additionalDestinations, setAdditionalDestinations] = useState([]);
   const [serviceSpeed, setServiceSpeed] = useState("");
-
+  const [openAdditionalDestinationId, setOpenAdditionalDestinationId] = useState(null);
+  const [showAdditionalDestinationModal, setShowAdditionalDestinationModal] = useState(false);
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -274,75 +275,82 @@ function RequestForm() {
   const handleAddressClick = () => {
     resetOtherFields();
   };
+const handleAdditionalDestinationSubmit = (data) => {
+  if (!data?.address) {
+    return;
+  }
 
-  const handleAdditionalDestinationSubmit = (index, data) => {
-    if (!data?.address) {
-      return;
-    }
+  const addressData = data.address;
 
-    const addressData = data.address;
+  const address =
+    addressData.address ||
+    addressData.fullAddress ||
+    [
+      addressData.street,
+      addressData.road,
+      addressData.alley
+        ? `کوچه ${addressData.alley}`
+        : "",
+      addressData.plaque
+        ? `پلاک ${addressData.plaque}`
+        : "",
+      addressData.unit
+        ? `واحد ${addressData.unit}`
+        : "",
+    ]
+      .filter(Boolean)
+      .join("، ");
 
-    const address =
-      addressData.address ||
-      [
-        addressData.street,
-        addressData.alley
-          ? `کوچه ${addressData.alley}`
-          : "",
-        addressData.plaque
-          ? `پلاک ${addressData.plaque}`
-          : "",
-        addressData.unit
-          ? `واحد ${addressData.unit}`
-          : "",
-      ]
-        .filter(Boolean)
-        .join("، ");
+  const lat =
+    data.lat ??
+    addressData.lat ??
+    data.latitude ??
+    addressData.latitude ??
+    null;
 
-    const lat =
-      data.lat ??
-      addressData.lat ??
-      data.latitude ??
-      addressData.latitude ??
-      null;
+  const lng =
+    data.lng ??
+    addressData.lng ??
+    data.lon ??
+    addressData.lon ??
+    data.longitude ??
+    addressData.longitude ??
+    null;
 
-    const lng =
-      data.lng ??
-      addressData.lng ??
-      data.lon ??
-      addressData.lon ??
-      data.longitude ??
-      addressData.longitude ??
-      null;
+  const phone =
+    addressData.phone || "";
 
-    setAdditionalDestinations((prev) =>
-      prev.map((item, itemIndex) =>
-        itemIndex === index
-          ? {
-            ...item,
-            address,
-            fullAddress: address,
-            lat,
-            lng,
-          }
-          : item
-      )
-    );
+  const floor =
+    addressData.floor || "";
+
+  const description =
+    addressData.description || "";
+
+  const newDestination = {
+    id: `${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 11)}`,
+    address,
+    fullAddress:
+      addressData.fullAddress ||
+      address,
+    lat,
+    lng,
+    phone,
+    floor,
+    description,
   };
 
+  setAdditionalDestinations((prev) => [
+    ...prev,
+    newDestination,
+  ]);
+
+  setShowAdditionalDestinationModal(false);
+};
+
   const addAdditionalDestination = () => {
-    setAdditionalDestinations((prev) => [
-      ...prev,
-      {
-        id: `${Date.now()}-${Math.random()
-          .toString(36)
-          .slice(2, 11)}`,
-        address: "",
-        fullAddress: "",
-        lat: null,
-        lng: null,
-      },
-    ]);
+    setShowAdditionalDestinationModal(true);
   };
 
   const removeAdditionalDestination = (id) => {
@@ -556,9 +564,9 @@ function RequestForm() {
     }
 
     return (
-      <div className="modern-form-card w-100 bg-white rounded-3 p-4 pt-3 mt-2 border shadow-sm">
+      <div className="modern-form-card w-100 bg-white rounded-3 p-3 pt-2 mt-2 border shadow-sm">
         <div className="form-scroll-content">
-          <div className="d-flex d-md-none align-items-center justify-content-between pb-3 mb-3 border-bottom">
+          <div className="d-flex d-md-none align-items-center justify-content-between pb-2 mb-2 border-bottom">
             <div className="d-flex align-items-center gap-2">
               <button
                 type="button"
@@ -598,7 +606,7 @@ function RequestForm() {
           </div>
         </div>
 
-        <div className="route-card mb-3">
+        <div className="route-card mb-2">
           <div className="route-item">
             <div className="route-side">
               <span className="route-dot origin-dot"></span>
@@ -743,7 +751,7 @@ function RequestForm() {
         {additionalDestinations.map(
           (destination, index) => (
             <Row
-              className="mb-3"
+              className="mb-2"
               key={destination.id}
             >
               <Col xs={12}>
@@ -808,50 +816,37 @@ function RequestForm() {
                     </div>
                   </div>
 
-                  <NewDestinationModal
-                    addressType="destination"
-                    onAddressSubmit={(data) =>
-                      handleAdditionalDestinationSubmit(
-                        index,
-                        data
-                      )
-                    }
+                  <div
+                    className="additional-destination-input"
+                    style={{
+                      width: "100%",
+                    }}
                   >
-                    <div
-                      className="additional-destination-input"
-                      style={{
-                        cursor: "pointer",
-                        width: "100%",
-                      }}
-                    >
-                      {destination.fullAddress ||
-                        destination.address ? (
-                        destination.fullAddress ||
-                        destination.address
-                      ) : (
-                        <span className="route-placeholder">
-                          {strings.requestForm.clickToSelectDestinationNumber.replace(
-                            "{number}",
-                            index + 1
-                          )}
-                        </span>
-                      )}
-                    </div>
-                  </NewDestinationModal>
+                    {destination.fullAddress ||
+                      destination.address ? (
+                      destination.fullAddress ||
+                      destination.address
+                    ) : (
+                      <span className="route-placeholder">
+                        {strings.requestForm.clickToSelectDestinationNumber.replace(
+                          "{number}",
+                          index + 1
+                        )}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </Col>
             </Row>
           )
         )}
 
-        <Row className="mb-3">
+        <Row className="mb-2">
           <Col xs={12}>
             <button
               type="button"
               className="btn btn-primary w-100"
-              onClick={
-                addAdditionalDestination
-              }
+              onClick={addAdditionalDestination}
             >
               <span
                 className="plus-icon"
@@ -867,7 +862,19 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="g-3 mb-3">
+<NewDestinationModal
+  addressType="destination"
+  onAddressSubmit={
+    handleAdditionalDestinationSubmit
+  }
+  onClose={() =>
+    setShowAdditionalDestinationModal(false)
+  }
+  isOpen={
+    showAdditionalDestinationModal
+  }
+/>
+        <Row className="g-2 mb-2">
           <Col xs={12} md={6}>
             <div className="vehicle-dropdown">
               <VehicleTypeModal
@@ -925,7 +932,7 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="g-3 mb-3">
+        <Row className="g-2 mb-2">
           <Col xs={12} md={6}>
             <div className="custom-floating-input modern-field h-100">
               <input
@@ -984,13 +991,13 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="mb-3">
+        <Row className="mb-2">
           <Col xs={12}>
             <div className="custom-textarea-group">
               <textarea
                 id="notes"
                 placeholder={strings.requestForm.notes}
-                rows="3"
+                rows="2"
                 value={notes}
                 onChange={(e) =>
                   setNotes(
@@ -1002,7 +1009,7 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="mb-3">
+        <Row className="mb-2">
           <Col xs={12}>
             <div className="service-dropdown">
               <label className="service-label">
@@ -1136,7 +1143,7 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="mb-3">
+        <Row className="mb-2">
           <Col xs={12}>
             <label className="segment-label">
               {strings.requestForm.paymentMethod}
@@ -1172,88 +1179,45 @@ function RequestForm() {
           </Col>
         </Row>
 
-
-
-
-
-
-
-        <Row className="mb-3">
+        <Row className="mb-2">
           <Col xs={12}>
             <div className="payment-discount-card">
-              <Row className="g-0 w-100 align-items-stretch">
-                <Col xs={7} md={7}>
-                  <div className="payment-price-section h-100">
-                    <span className="payment-price-value text-success">
-                      <span className="payment-price-label">
-                        هزینه سرویس
-                      </span>
+              <div className="discount-question-row">
+                <span className="discount-question">
+                  آیا کد تخفیف دارید؟
+                </span>
 
-                      <p className="mt-1 mb-0">
-                        25,000
-                      </p>
+                <button
+                  type="button"
+                  className="apply-code-btn btn btn-success"
+                >
+                  {strings.requestForm.registerCode}
+                </button>
+              </div>
 
-                      <span>
-                        {" "}
-                        {strings.requestForm.price}
-                      </span>
-                    </span>
-                  </div>
-                </Col>
+              <div className="payment-price-section">
+                <span className="payment-price-value text-success">
+                  <strong>250,000</strong>
+                  <strong> تومان</strong>
+                </span>
+              </div>
 
-                <Col xs={5} md={5}>
-                  <div className="payment-discount-section h-100">
-                    <div className="payment-discount-input-wrapper">
-                    </div>
+              <div className="discount-description-form">
+                <FaTag className="discount-icon text-muted" />
 
-                    <button
-                      type="button"
-                      className="apply-code-btn btn btn-success"
-                    >
-                      {strings.requestForm.registerCode}
-                    </button>
-                  </div>
-                </Col>
-              </Row>
-
-              <div className="discount-description">
-                <div className="discount-description-header">
-                  <div className="discount-description-title">
-                    <span className="discount-description-icon">
-                      %
-                    </span>
-
-                    <span>
-                      توضیحات تخفیف
-                    </span>
-                  </div>
-                </div>
-
-                <div className="discount-description-content">
-                  <span>
-                    توضیحات کد تخفیف...
-                  </span>
-                </div>
+                <input
+                  type="text"
+                  placeholder={strings.requestForm.DescriptionDiscount}
+                  className="discount-input"
+                  value={discountCode}
+                  onChange={(e) =>
+                    setDiscountCode(e.target.value)
+                  }
+                />
               </div>
             </div>
           </Col>
         </Row>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <Row className="g-2">
           <Col xs={8}>

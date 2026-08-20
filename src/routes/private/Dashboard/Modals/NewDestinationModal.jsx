@@ -279,10 +279,22 @@ export default function NewDestinationModal(
     addressType = "destination",
     onAddressSubmit,
     children,
+    isOpen = false,
+    onClose,
   } = props;
 
-  const [show, setShow] =
-    useState(false);
+const isControlled =
+  Object.prototype.hasOwnProperty.call(
+    props,
+    "isOpen"
+  );
+
+const [internalShow, setInternalShow] =
+  useState(false);
+
+const show = isControlled
+  ? isOpen
+  : internalShow;
 
   const [step, setStep] =
     useState(1);
@@ -434,21 +446,32 @@ export default function NewDestinationModal(
     });
   };
 
-  const handleShow = (
-    event
-  ) => {
-    if (event) {
-      event.preventDefault();
-    }
+const handleShow = (
+  event
+) => {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
 
-    resetModal();
-    setShow(true);
-  };
+  resetModal();
 
-  const handleClose = () => {
-    setShow(false);
-    resetModal();
-  };
+  if (!isControlled) {
+    setInternalShow(true);
+  }
+};
+
+const handleClose = () => {
+  if (!isControlled) {
+    setInternalShow(false);
+  }
+
+  resetModal();
+
+  if (onClose) {
+    onClose();
+  }
+};
 
   const handleInputChange = (
     e
@@ -854,9 +877,7 @@ export default function NewDestinationModal(
       setStep(1);
     };
 
-  const handleSubmit = (
-    e
-  ) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!selectedPosition) {
@@ -867,21 +888,9 @@ export default function NewDestinationModal(
       return;
     }
 
-    if (
-      !formData.address.trim()
-    ) {
+    if (!formData.address.trim()) {
       showFormAlert(
         "لطفاً فیلد آدرس را پر کنید"
-      );
-
-      return;
-    }
-
-    if (
-      !formData.phone.trim()
-    ) {
-      showFormAlert(
-        "لطفاً شماره تماس را وارد کنید"
       );
 
       return;
@@ -890,30 +899,33 @@ export default function NewDestinationModal(
     const finalAddress = {
       ...formData,
       latitude:
-        selectedPosition?.[0] ||
-        null,
+        selectedPosition?.[0] || null,
       longitude:
-        selectedPosition?.[1] ||
-        null,
+        selectedPosition?.[1] || null,
+      lat:
+        selectedPosition?.[0] || null,
+      lng:
+        selectedPosition?.[1] || null,
       fullAddress:
         selectedAddress ||
         formData.address ||
         "",
-      city:
-        selectedCity.city,
-      province:
-        selectedCity.province,
+      city: selectedCity.city,
+      province: selectedCity.province,
     };
 
-    if (onAddressSubmit) {
-      onAddressSubmit({
-        addressType,
-        address:
-          finalAddress,
-      });
-    }
+if (onAddressSubmit) {
+  onAddressSubmit({
+    addressType,
+    address: finalAddress,
+    lat: finalAddress.lat,
+    lng: finalAddress.lng,
+    latitude: finalAddress.latitude,
+    longitude: finalAddress.longitude,
+  });
+}
 
-    handleClose();
+handleClose();
   };
 
   let newFirstChild =
@@ -948,6 +960,16 @@ export default function NewDestinationModal(
         }
       );
   }
+
+  useEffect(() => {
+  if (!isControlled) {
+    return;
+  }
+
+  if (isOpen) {
+    resetModal();
+  }
+}, [isOpen, isControlled]);
 
   return (
     <>
