@@ -17,8 +17,63 @@ import ShippingMethodModal from "./Modals/ShippingMethodModal";
 import RegisterDiscountCode from "./Modals/RegisterDiscountCode";
 
 
+const getRequestData = (strings) => {
+  return {
+    serviceOptions: [
+      {
+        id: 1,
+        title: strings.services.heavyLoad,
+      },
+      {
+        id: 2,
+        title: strings.services.box,
+      },
+      {
+        id: 3,
+        title: strings.services.roundTrip,
+      },
+      {
+        id: 4,
+        title: strings.services.fragile,
+      },
+      {
+        id: 5,
+        title: strings.services.insurance,
+      },
+      {
+        id: 6,
+        title: strings.services.express,
+      },
+      {
+        id: 7,
+        title: strings.services.needCall,
+      },
+    ],
+
+    vehicleClassMap: {
+      [strings.vehicleTypes.pickup]: 1,
+      [strings.vehicleTypes.motorWithBox]: 2,
+      [strings.vehicleTypes.motorWithoutBox]: 3,
+      [strings.vehicleTypes.car]: 4,
+    },
+
+    stopTimes: [
+      strings.requestForm.noStop,
+      strings.requestForm.fifteenMinutes,
+      strings.requestForm.thirtyMinutes,
+    ],
+
+    itemValues: [
+      strings.requestForm.underTwentyFiveMillion,
+      strings.requestForm.twentyFiveToFiftyMillion,
+      strings.requestForm.fiftyToOneHundredMillion,
+      strings.requestForm.overOneHundredMillion,
+    ],
+  };
+};
 
 function RequestForm() {
+
   const [sender, setSender] = useState(true);
   const [cash, setCash] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -51,47 +106,10 @@ function RequestForm() {
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
-
+  const requestData = getRequestData(strings);
   const handleCloseMenu = () => setShowMenu(false);
   const handleShowMenu = () => setShowMenu(true);
 
-  const serviceOptions = [
-    {
-      id: 1,
-      title: strings.services.heavyLoad,
-    },
-    {
-      id: 2,
-      title: strings.services.box,
-    },
-    {
-      id: 3,
-      title: strings.services.roundTrip,
-    },
-    {
-      id: 4,
-      title: strings.services.fragile,
-    },
-    {
-      id: 5,
-      title: strings.services.insurance,
-    },
-    {
-      id: 6,
-      title: strings.services.express,
-    },
-    {
-      id: 7,
-      title: strings.services.needCall,
-    },
-  ];
-
-  const vehicleClassMap = {
-    [strings.vehicleTypes.pickup]: 1,
-    [strings.vehicleTypes.motorWithBox]: 2,
-    [strings.vehicleTypes.motorWithoutBox]: 3,
-    [strings.vehicleTypes.car]: 4,
-  };
 
   const handleDiscountSelect = (discount) => {
     if (!discount?.code) {
@@ -120,7 +138,7 @@ function RequestForm() {
   };
 
   const getVehicleClass = () => {
-    return vehicleClassMap[vehicleType] || 0;
+    return requestData.vehicleClassMap[vehicleType] || 0;
   };
 
   const getStopTimeSec = () => {
@@ -133,6 +151,20 @@ function RequestForm() {
     }
 
     return 0;
+  };
+
+  const getPaymentType = () => {
+    if (cash) {
+      return {
+        payType: 1,
+        payTypeName: "نقدی",
+      };
+    }
+
+    return {
+      payType: 2,
+      payTypeName: "اعتباری از کیف پول",
+    };
   };
 
   const resetForm = () => {
@@ -406,7 +438,7 @@ function RequestForm() {
   const handleConfirmSubmit = (confirmData) => {
     const selectedAccessibilityIds = selectedServices
       .map((serviceTitle) => {
-        const service = serviceOptions.find(
+        const service = requestData.serviceOptions.find(
           (item) => item.title === serviceTitle
         );
 
@@ -416,7 +448,7 @@ function RequestForm() {
 
     const selectedAccessibilityNames = selectedServices
       .map((serviceTitle) => {
-        const service = serviceOptions.find(
+        const service = requestData.serviceOptions.find(
           (item) => item.title === serviceTitle
         );
 
@@ -474,7 +506,9 @@ function RequestForm() {
         })),
     ];
 
-const requestData = {
+const paymentType = getPaymentType();
+
+const savedRequestData = {
   originAddress,
   destinationAddress,
   originLocation,
@@ -492,6 +526,9 @@ const requestData = {
   discountData,
   discountDescription,
   serviceSpeed,
+
+  payType: paymentType.payType,
+  payTypeName: paymentType.payTypeName,
 };
     const params = {
       custName: strings.requestForm.customerName,
@@ -500,7 +537,6 @@ const requestData = {
       desc: notes || strings.requestForm.tripDescription,
       vehicleClass: getVehicleClass(),
       serviceSpeed: serviceSpeed || 0,
-      payType: cash ? 1 : 2,
       stopTimeSec: getStopTimeSec(),
       discountCode: discountCode || null,
       accessibilities: selectedAccessibilityIds.join(","),
@@ -514,6 +550,8 @@ const requestData = {
       targetDriverCode: 123,
       force: 0,
       addresses,
+      payType: paymentType.payType,
+      payTypeName: paymentType.payTypeName,
     };
 
     console.log("params:", params);
@@ -583,7 +621,7 @@ const requestData = {
       {
         state: {
           requestStarted: true,
-          ...requestData,
+          ...savedRequestData,
         },
       }
     );
@@ -605,6 +643,7 @@ const requestData = {
         </div>
       );
     }
+
 
     return (
       <div className="modern-form-card w-100 bg-white rounded-3 p-3 pt-2 mt-2 border shadow-sm">
@@ -789,100 +828,87 @@ const requestData = {
               </button>
             </EdirAddressModal>
           </div>
-        </div>
+          {additionalDestinations.map(
+            (destination, index) => (
+              <div
+                className="route-item"
+                key={destination.id}
+              >
+                <div className="route-side">
+                  <span className="route-dot dest-dot"></span>
 
-        {additionalDestinations.map(
-          (destination, index) => (
-            <Row
-              className="mb-2"
-              key={destination.id}
-            >
-              <Col xs={12}>
-                <div className="additional-destination-card">
-                  <div className="additional-destination-header">
-                    <div className="additional-destination-title">
-                      <span className="additional-destination-dot"></span>
+                  <span className="route-label">
+                    {strings.destination} {index + 1}
+                  </span>
+                </div>
 
-                      <span>
-                        {strings.destination} {index + 1}
-                      </span>
-                    </div>
-
-                    <div className="additional-destination-actions">
-                      {destination.address && (
-                        <EdirAddressModal
-                          address={
-                            destination.address
-                          }
-                          addressType="destination"
-                          onAddressChange={(
-                            newAddress
-                          ) => {
-                            setAdditionalDestinations(
-                              (prev) =>
-                                prev.map(
-                                  (item) =>
-                                    item.id ===
-                                      destination.id
-                                      ? {
-                                        ...item,
-                                        address:
-                                          newAddress,
-                                        fullAddress:
-                                          newAddress,
-                                      }
-                                      : item
-                                )
-                            );
-                          }}
-                        >
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-warning"
-                          >
-                            <FaPencilAlt />
-                          </button>
-                        </EdirAddressModal>
+                <div
+                  className="route-address"
+                  style={{
+                    width: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  {destination.fullAddress ||
+                    destination.address ? (
+                    destination.fullAddress ||
+                    destination.address
+                  ) : (
+                    <span className="route-placeholder">
+                      {strings.requestForm.clickToSelectDestinationNumber.replace(
+                        "{number}",
+                        index + 1
                       )}
+                    </span>
+                  )}
+                </div>
 
+                <div className="d-flex gap-1">
+                  {destination.address && (
+                    <EdirAddressModal
+                      address={destination.address}
+                      addressType="destination"
+                      onAddressChange={(newAddress) => {
+                        setAdditionalDestinations(
+                          (prev) =>
+                            prev.map(
+                              (item) =>
+                                item.id === destination.id
+                                  ? {
+                                    ...item,
+                                    address: newAddress,
+                                    fullAddress: newAddress,
+                                  }
+                                  : item
+                            )
+                        );
+                      }}
+                    >
                       <button
                         type="button"
-                        className="additional-destination-remove"
-                        onClick={() =>
-                          removeAdditionalDestination(
-                            destination.id
-                          )
-                        }
+                        className="btn btn-sm btn-warning"
                       >
-                        <FaTimes />
+                        <FaPencilAlt />
                       </button>
-                    </div>
-                  </div>
+                    </EdirAddressModal>
+                  )}
 
-                  <div
-                    className="additional-destination-input"
-                    style={{
-                      width: "100%",
-                    }}
+                  <button
+                    type="button"
+                    className="additional-destination-remove"
+                    onClick={() =>
+                      removeAdditionalDestination(
+                        destination.id
+                      )
+                    }
                   >
-                    {destination.fullAddress ||
-                      destination.address ? (
-                      destination.fullAddress ||
-                      destination.address
-                    ) : (
-                      <span className="route-placeholder">
-                        {strings.requestForm.clickToSelectDestinationNumber.replace(
-                          "{number}",
-                          index + 1
-                        )}
-                      </span>
-                    )}
-                  </div>
+                    <FaTimes />
+                  </button>
                 </div>
-              </Col>
-            </Row>
-          )
-        )}
+              </div>
+            )
+          )}
+        </div>
 
         <Row className="mb-2">
           <Col xs={12}>
@@ -958,15 +984,11 @@ const requestData = {
                   )
                 }
               >
-                <option>
-                  {strings.requestForm.noStop}
-                </option>
-                <option>
-                  {strings.requestForm.fifteenMinutes}
-                </option>
-                <option>
-                  {strings.requestForm.thirtyMinutes}
-                </option>
+                {requestData.stopTimes.map((item) => (
+                  <option key={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
 
               <label htmlFor="stopTime">
@@ -1014,18 +1036,11 @@ const requestData = {
                   )
                 }
               >
-                <option>
-                  {strings.requestForm.underTwentyFiveMillion}
-                </option>
-                <option>
-                  {strings.requestForm.twentyFiveToFiftyMillion}
-                </option>
-                <option>
-                  {strings.requestForm.fiftyToOneHundredMillion}
-                </option>
-                <option>
-                  {strings.requestForm.overOneHundredMillion}
-                </option>
+                {requestData.itemValues.map((item) => (
+                  <option key={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
 
               <label htmlFor="itemValue">
@@ -1117,7 +1132,7 @@ const requestData = {
 
               {serviceOpen && (
                 <div className="service-menu">
-                  {serviceOptions.map(
+                  {requestData.serviceOptions.map(
                     (item) => (
                       <div
                         key={item.id}
@@ -1223,114 +1238,92 @@ const requestData = {
           </Col>
         </Row>
 
+        {discountAlert && (
+          <div className="discount-global-alert">
+            <div className="discount-global-alert-icon">
+              !
+            </div>
 
+            <div className="discount-global-alert-text">
+              {discountAlert}
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-{discountAlert && (
-  <div className="discount-global-alert">
-    <div className="discount-global-alert-icon">
-      !
-    </div>
-
-    <div className="discount-global-alert-text">
-      {discountAlert}
-    </div>
-
-    <button
-      type="button"
-      className="discount-global-alert-close"
-      onClick={() => setDiscountAlert("")}
-    >
-      ×
-    </button>
-  </div>
-)}
-
-<Row className="mb-2">
-  <Col xs={12}>
-    <div className="payment-discount-card">
-      <div className="discount-question-row">
-        <span className="discount-question">
-          {discountData?.code ? (
-            <>
-              کد تخفیف : {" "}
-              <span className="discount-question-selected">
-                {discountData.code}
-              </span>
-            </>
-          ) : (
-            strings.requestForm.discountQuestion
-          )}
-        </span>
-
-        <div className="discount-action-buttons">
-          {discountData?.code && (
             <button
               type="button"
-              className="remove-discount-btn"
-              onClick={handleRemoveDiscount}
-              title="حذف کد تخفیف"
+              className="discount-global-alert-close"
+              onClick={() => setDiscountAlert("")}
             >
-              <FaTimes />
+              ×
             </button>
-          )}
+          </div>
+        )}
 
-          <RegisterDiscountCode
-            onDiscountSelect={handleDiscountSelect}
-            onInvalidDiscount={handleInvalidDiscount}
-          >
-            <button
-              type="button"
-              className="apply-code-btn btn btn-success"
-            >
-              {strings.requestForm.registerCode}
-            </button>
-          </RegisterDiscountCode>
-        </div>
-      </div>
+        <Row className="mb-2">
+          <Col xs={12}>
+            <div className="payment-discount-card">
+              <div className="discount-question-row">
+                <span className="discount-question">
+                  {discountData?.code ? (
+                    <>
+                      کد تخفیف : {" "}
+                      <span className="discount-question-selected">
+                        {discountData.code}
+                      </span>
+                    </>
+                  ) : (
+                    strings.requestForm.discountQuestion
+                  )}
+                </span>
 
-      <div className="payment-price-section">
-        <span className="payment-price-value text-success">
-          <p>{strings.price}</p>
-          <p>{strings.currency}</p>
-        </span>
-      </div>
+                <div className="discount-action-buttons">
+                  {discountData?.code && (
+                    <button
+                      type="button"
+                      className="remove-discount-btn"
+                      onClick={handleRemoveDiscount}
+                      title="حذف کد تخفیف"
+                    >
+                      <FaTimes />
+                    </button>
+                  )}
 
-      <div className="discount-description-form">
-        <FaTag className="discount-icon text-muted" />
+                  <RegisterDiscountCode
+                    onDiscountSelect={handleDiscountSelect}
+                    onInvalidDiscount={handleInvalidDiscount}
+                  >
+                    <button
+                      type="button"
+                      className="apply-code-btn btn btn-success"
+                    >
+                      {strings.requestForm.registerCode}
+                    </button>
+                  </RegisterDiscountCode>
+                </div>
+              </div>
 
-        <input
-          type="text"
-          placeholder={strings.requestForm.DescriptionDiscount}
-          className="discount-input"
-          value={discountDescription}
-          onChange={(e) => {
-            setDiscountDescription(e.target.value);
-          }}
-        />
-      </div>
-    </div>
-  </Col>
-</Row>
+              <div className="payment-price-section">
+                <span className="payment-price-value text-success">
+                  <p>{strings.price}</p>
+                  <p>{strings.currency}</p>
+                </span>
+              </div>
 
+              <div className="discount-description-form">
+                <FaTag className="discount-icon text-muted" />
 
-
-
-
-
-
-
-
-
+                <input
+                  type="text"
+                  placeholder={strings.requestForm.DescriptionDiscount}
+                  className="discount-input"
+                  value={discountDescription}
+                  onChange={(e) => {
+                    setDiscountDescription(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          </Col>
+        </Row>
 
 
         <Row className="g-2">

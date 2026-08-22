@@ -9,8 +9,15 @@ import {
 import "../Css/VehicleTypeModal.css";
 
 export default function AddDefMsgModal(props) {
+
+    const getDefaultVehicle = () => {
+        return "motor";
+    };
+
     const [show, setShow] = useState(false);
-    const [selectedVehicle, setSelectedVehicle] = useState("motor");
+    const [selectedVehicle, setSelectedVehicle] = useState(
+        getDefaultVehicle()
+    );
 
     const handleShow = () => {
         setShow(true);
@@ -24,54 +31,64 @@ export default function AddDefMsgModal(props) {
         setSelectedVehicle(vehicle);
     };
 
-    const vehicleOptions = [
-        {
-            id: "pickup",
-            vehicleClass: 1,
-            title: "وانت",
-            description: "مناسب بارهای حجیم و سنگین",
-            icon: <FaTruckPickup />
-        },
-        {
-            id: "motor-box",
-            vehicleClass: 2,
-            title: "موتور همراه جعبه",
-            description: "مناسب بسته‌ها و مرسولات",
-            icon: <FaMotorcycle />
-        },
-        {
-            id: "motor",
-            vehicleClass: 3,
-            title: "موتور بدون جعبه",
-            description: "مناسب ارسال‌های سریع",
-            icon: <FaMotorcycle />
-        },
-        {
-            id: "car",
-            vehicleClass: 4,
-            title: "سواری",
-            description: "مناسب بسته‌های معمولی",
-            icon: <FaCarSide />
-        }
-    ];
+    const getVehicleOptions = () => {
+        return [
+            {
+                id: "pickup",
+                vehicleClass: 1,
+                title: "وانت",
+                description: "مناسب بارهای حجیم و سنگین",
+                icon: <FaTruckPickup />
+            },
+            {
+                id: "motor-box",
+                vehicleClass: 2,
+                title: "موتور همراه جعبه",
+                description: "مناسب بسته‌ها و مرسولات",
+                icon: <FaMotorcycle />
+            },
+            {
+                id: "motor",
+                vehicleClass: 3,
+                title: "موتور بدون جعبه",
+                description: "مناسب ارسال‌های سریع",
+                icon: <FaMotorcycle />
+            },
+            {
+                id: "car",
+                vehicleClass: 4,
+                title: "سواری",
+                description: "مناسب بسته‌های معمولی",
+                icon: <FaCarSide />
+            }
+        ];
+    };
+
+    const vehicleOptions = getVehicleOptions();
+
 
     let newFirstChild = null;
 
     if (props?.children) {
+
         const child = Array.isArray(props.children)
             ? props.children[0]
             : props.children;
 
         if (React.isValidElement(child)) {
+
             newFirstChild = React.cloneElement(child, {
                 onClick: handleShow
             });
+
         }
     }
 
+
     const handleConfirm = () => {
         const selectedVehicleData = vehicleOptions.find(
-            (item) => item.id === selectedVehicle
+            (item) =>
+                item.id === selectedVehicle
         );
 
         if (!selectedVehicleData) {
@@ -79,14 +96,15 @@ export default function AddDefMsgModal(props) {
         }
 
         if (props?.onVehicleSelect) {
+
             props.onVehicleSelect(
                 selectedVehicleData.title,
                 selectedVehicleData.vehicleClass
             );
         }
-
         handleClose();
     };
+
 
     return (
         <>
@@ -103,8 +121,8 @@ export default function AddDefMsgModal(props) {
                     className="vehicle-modal-body"
                     dir="rtl"
                 >
-                    <div className="vehicle-modal-header">
 
+                    <div className="vehicle-modal-header">
                         <button
                             type="button"
                             className="vehicle-modal-close"
@@ -113,8 +131,8 @@ export default function AddDefMsgModal(props) {
                             ×
                         </button>
 
-                        <div>
 
+                        <div>
                             <h5 className="vehicle-modal-title">
                                 انتخاب نوع وسیله
                             </h5>
@@ -122,21 +140,19 @@ export default function AddDefMsgModal(props) {
                             <p className="vehicle-modal-subtitle">
                                 وسیله مناسب برای ارسال مرسوله را انتخاب کنید
                             </p>
-
                         </div>
-
                     </div>
 
+
                     <div className="vehicle-modal-divider"></div>
-
                     <Row className="g-3">
-
                         {vehicleOptions.map((vehicle) => (
                             <Col
                                 xs={12}
                                 sm={6}
                                 key={vehicle.id}
                             >
+
                                 <button
                                     type="button"
                                     className={`vehicle-card ${
@@ -145,7 +161,9 @@ export default function AddDefMsgModal(props) {
                                             : ""
                                     }`}
                                     onClick={() =>
-                                        handleVehicleSelect(vehicle.id)
+                                        handleVehicleSelect(
+                                            vehicle.id
+                                        )
                                     }
                                 >
 
@@ -154,7 +172,6 @@ export default function AddDefMsgModal(props) {
                                     </div>
 
                                     <div className="vehicle-card-content">
-
                                         <div className="vehicle-card-title">
                                             {vehicle.title}
                                         </div>
@@ -166,7 +183,6 @@ export default function AddDefMsgModal(props) {
                                     </div>
 
                                     <div className="vehicle-card-check">
-
                                         {selectedVehicle === vehicle.id && (
                                             <FaCheck />
                                         )}
@@ -176,11 +192,10 @@ export default function AddDefMsgModal(props) {
                                 </button>
                             </Col>
                         ))}
-
                     </Row>
 
-                    <div className="vehicle-modal-actions">
 
+                    <div className="vehicle-modal-actions">
                         <button
                             type="button"
                             className="vehicle-cancel-btn"
@@ -203,11 +218,10 @@ export default function AddDefMsgModal(props) {
                         >
                             ثبت
                         </button>
-
                     </div>
-
                 </Modal.Body>
             </Modal>
+
         </>
     );
 }
