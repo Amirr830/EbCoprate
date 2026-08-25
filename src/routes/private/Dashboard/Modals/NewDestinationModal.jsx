@@ -1407,17 +1407,7 @@ handleClose();
                   </div>
                 )}
 
-                <div className="map-city-badge fs-5">
-                  <span>
-                    شهر فعال
-                  </span>
 
-                  <p className="mt-2">
-                    {
-                      selectedCity.city
-                    }
-                  </p>
-                </div>
               </div>
 
               {selectedPosition && (
