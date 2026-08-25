@@ -35,6 +35,18 @@ const MASHHAD_CENTER = [36.2972, 59.6067];
 
 const CITY_OPTIONS = [
   {
+    city: "مشهد",
+    province: "خراسان رضوی",
+    center: [36.2972, 59.6067],
+  },
+
+  {
+    city: "تهران",
+    province: "تهران",
+    center: [35.6892, 51.389],
+  },
+
+  {
     city: "تبریز",
     province: "آذربایجان شرقی",
     center: [38.0962, 46.2738],
@@ -70,11 +82,6 @@ const CITY_OPTIONS = [
     center: [28.9234, 50.8203],
   },
   {
-    city: "تهران",
-    province: "تهران",
-    center: [35.6892, 51.389],
-  },
-  {
     city: "شهرکرد",
     province: "چهارمحال و بختیاری",
     center: [32.3256, 50.8644],
@@ -83,11 +90,6 @@ const CITY_OPTIONS = [
     city: "بیرجند",
     province: "خراسان جنوبی",
     center: [32.8663, 59.2211],
-  },
-  {
-    city: "مشهد",
-    province: "خراسان رضوی",
-    center: [36.2972, 59.6067],
   },
   {
     city: "بجنورد",
