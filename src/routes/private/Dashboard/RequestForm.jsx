@@ -506,30 +506,30 @@ function RequestForm() {
         })),
     ];
 
-const paymentType = getPaymentType();
+    const paymentType = getPaymentType();
 
-const savedRequestData = {
-  originAddress,
-  destinationAddress,
-  originLocation,
-  destinationLocation,
-  additionalDestinations,
-  vehicleType,
-  selectedServices,
-  sender,
-  cash,
-  stopTime,
-  courierCode,
-  itemValue,
-  notes,
-  discountCode,
-  discountData,
-  discountDescription,
-  serviceSpeed,
+    const savedRequestData = {
+      originAddress,
+      destinationAddress,
+      originLocation,
+      destinationLocation,
+      additionalDestinations,
+      vehicleType,
+      selectedServices,
+      sender,
+      cash,
+      stopTime,
+      courierCode,
+      itemValue,
+      notes,
+      discountCode,
+      discountData,
+      discountDescription,
+      serviceSpeed,
 
-  payType: paymentType.payType,
-  payTypeName: paymentType.payTypeName,
-};
+      payType: paymentType.payType,
+      payTypeName: paymentType.payTypeName,
+    };
     const params = {
       custName: strings.requestForm.customerName,
       custTel: strings.requestForm.addressPhone,
@@ -628,23 +628,6 @@ const savedRequestData = {
   };
 
   const renderMobilePage = () => {
-    if (mobilePage === "current") {
-      return (
-        <div className="mobile-page-wrapper">
-          <CurrentRequest />
-        </div>
-      );
-    }
-
-    if (mobilePage === "info") {
-      return (
-        <div className="mobile-page-wrapper">
-          <Info />
-        </div>
-      );
-    }
-
-
     return (
       <div className="modern-form-card w-100 bg-white rounded-3 p-3 pt-2 mt-2 border shadow-sm">
         <div className="form-scroll-content">
@@ -1376,7 +1359,7 @@ const savedRequestData = {
   return (
     <Container
       fluid
-      className="modern-request-container h-100 d-flex justify-content-center align-items-center p-0 p-md-2"
+      className="modern-request-container d-flex justify-content-center align-items-start p-0 p-md-2"
     >
       <Offcanvas
         show={showMenu}
@@ -1401,7 +1384,23 @@ const savedRequestData = {
       </Offcanvas>
 
       <div className="d-md-none w-100 mobile-content-area">
-        {renderMobilePage()}
+
+        {mobilePage === "request" && (
+          renderMobilePage()
+        )}
+
+        {mobilePage === "current" && (
+          <div className="mobile-page-wrapper">
+            <CurrentRequest />
+          </div>
+        )}
+
+        {mobilePage === "info" && (
+          <div className="mobile-page-wrapper">
+            <Info />
+          </div>
+        )}
+
       </div>
 
       <div className="d-none d-md-block w-100">
@@ -1409,22 +1408,20 @@ const savedRequestData = {
       </div>
 
       <Row className="d-md-none mobile-bottom-navigation">
+
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${mobilePage === "request"
-              ? "active"
-              : ""
+            className={`mobile-nav-btn ${mobilePage === "request" ? "active" : ""
               }`}
-            onClick={() =>
-              setMobilePage(
-                "request"
-              )
-            }
+            onClick={() => {
+              setMobilePage("request");
+            }}
           >
             <span className="mobile-nav-icon">
               ＋
             </span>
+
             <span>
               {strings.mobileNavigation.travelRequest}
             </span>
@@ -1434,19 +1431,16 @@ const savedRequestData = {
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${mobilePage === "current"
-              ? "active"
-              : ""
+            className={`mobile-nav-btn ${mobilePage === "current" ? "active" : ""
               }`}
-            onClick={() =>
-              setMobilePage(
-                "current"
-              )
-            }
+            onClick={() => {
+              setMobilePage("current");
+            }}
           >
             <span className="mobile-nav-icon">
               ●
             </span>
+
             <span>
               {strings.mobileNavigation.currentTrip}
             </span>
@@ -1456,24 +1450,22 @@ const savedRequestData = {
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${mobilePage === "info"
-              ? "active"
-              : ""
+            className={`mobile-nav-btn ${mobilePage === "info" ? "active" : ""
               }`}
-            onClick={() =>
-              setMobilePage(
-                "info"
-              )
-            }
+            onClick={() => {
+              setMobilePage("info");
+            }}
           >
             <span className="mobile-nav-icon">
               ☰
             </span>
+
             <span>
               {strings.mobileNavigation.tripInformation}
             </span>
           </button>
         </Col>
+
       </Row>
     </Container>
   );
