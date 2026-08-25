@@ -555,7 +555,7 @@ const params = {
   payTypeName: paymentType.payTypeName,
 };
 
-    console.log("params:", params);
+    console.log("paramsssssssss:", params);
 
     const quickRequestName =
       typeof confirmData === "string"
