@@ -24,7 +24,6 @@
   "paymentMethod": "روش پرداخت",
   "cash": "نقدی",
   "credit": "اعتباری",
-
   "requestForm": {
     "vehicleType": "انتخاب نوع وسیله",
     "stopTime": "توقف (دقیقه)",
@@ -63,7 +62,6 @@
     "addressPhone": "0513123123",
     "customerName": "شرکت ابتکار"
   },
-
   "services": {
     "heavyLoad": "بار سنگین",
     "box": "صندوق",
@@ -73,20 +71,17 @@
     "express": "ارسال فوری",
     "needCall": "نیاز به تماس"
   },
-
   "vehicleTypes": {
     "pickup": "وانت",
     "motorWithBox": "موتور همراه جعبه",
     "motorWithoutBox": "موتور بدون جعبه",
     "car": "سواری"
   },
-
   "mobileNavigation": {
     "travelRequest": "درخواست سفر",
     "currentTrip": "سفر فعلی",
     "tripInformation": "اطلاعات سفر"
   },
-
   "info": {
     "history": "تاریخچه",
     "date": "تاریخ",
@@ -106,5 +101,52 @@
     "quickRequestEmpty": "هنوز درخواستی به درخواست سریع اضافه نشده است",
     "currency": "تومان",
     "quickRequestReadFailed": "خواندن درخواست‌های سریع انجام نشد."
+  },
+  "newDestinationModal": {
+    "selectOriginLocation": "انتخاب موقعیت مبدأ",
+    "selectDestinationLocation": "انتخاب موقعیت مقصد",
+    "completeOriginAddress": "تکمیل آدرس مبدأ",
+    "completeDestinationAddress": "تکمیل آدرس مقصد",
+    "selectOriginLocationDescription": "موقعیت مبدأ را روی نقشه انتخاب کنید",
+    "selectDestinationLocationDescription": "موقعیت مقصد را روی نقشه انتخاب کنید",
+    "completeOriginAddressDescription": "اطلاعات کامل مبدأ را وارد کنید",
+    "completeDestinationAddressDescription": "اطلاعات کامل مقصد را وارد کنید",
+    "city": "شهر",
+    "selectCity": "انتخاب شهر",
+    "searchCityOrProvince": "جستجوی شهر یا استان...",
+    "cityNotFound": "شهری پیدا نشد",
+    "searchAddressPlaceholder": "نام خیابان را وارد کنید...",
+    "searchAddressInCityPlaceholder": "نام خیابان در {city} را وارد کنید...",
+    "searchingAddress": "در حال جستجوی آدرس...",
+    "searchResultNotFound": "نتیجه‌ای پیدا نشد",
+    "searchAddressMorePrecisely": "نام خیابان را در {city} دقیق‌تر وارد کنید.",
+    "foundLocation": "موقعیت پیدا شده",
+    "mapLocationHint": "موقعیت {location} را در {city} روی نقشه انتخاب کنید",
+    "locationSelected": "موقعیت {location} انتخاب شد",
+    "locationSelectedOnMap": "موقعیت {location} روی نقشه انتخاب شد",
+    "incompleteInformation": "اطلاعات ناقص است",
+    "selectLocationOnMap": "لطفاً موقعیت {location} را روی نقشه انتخاب کنید",
+    "selectLocation": "لطفاً موقعیت {location} را انتخاب کنید",
+    "addressRequired": "لطفاً فیلد آدرس را پر کنید",
+    "originInformation": "اطلاعات محل دریافت",
+    "destinationInformation": "اطلاعات محل تحویل",
+    "address": "آدرس",
+    "addressPlaceholder": "آدرس را وارد کنید...",
+    "phoneNumber": "شماره تماس",
+    "phoneNumberPlaceholder": "شماره تماس را وارد کنید...",
+    "floor": "طبقه",
+    "floorPlaceholder": "طبقه را وارد کنید...",
+    "locationDescription": "توضیحات {location}",
+    "locationDescriptionPlaceholder": "توضیحات ...",
+    "nextStep": "مرحله بعدی",
+    "changeLocation": "تغییر موقعیت",
+    "submit": "ثبت",
+    "back": "بازگشت",
+    "locationSummary": "{location}",
+    "selectedLocationSummary": "موقعیت {location} انتخاب شد",
+    "reverseGeocodingFailed": "Reverse geocoding failed",
+    "addressSearchFailed": "جستجوی آدرس ناموفق",
+    "phoneNumberRequired": "لطفاً فیلد شماره تلفن را پر کنید",
+    "addressAndPhoneRequired": "لطفاً فیلد آدرس و شماره تلفن را پر کنید"
   }
 }

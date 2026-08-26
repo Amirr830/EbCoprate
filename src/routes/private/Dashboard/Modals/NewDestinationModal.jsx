@@ -1,4 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Modal } from "react-bootstrap";
 import {
   MapContainer,
@@ -11,13 +15,8 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../Css/NewDestinationModal.css";
-import {
-  FaTimes,
-  FaChevronDown,
-  FaSearch,
-  FaExclamationTriangle,
-} from "react-icons/fa";
-
+import { FaTimes,FaChevronDown,FaSearch,FaExclamationTriangle} from "react-icons/fa";
+import strings from "../../../../app/String.json"
 const markerIcon = new L.Icon({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
@@ -51,141 +50,169 @@ const CITY_OPTIONS = [
     province: "آذربایجان شرقی",
     center: [38.0962, 46.2738],
   },
+
   {
     city: "ارومیه",
     province: "آذربایجان غربی",
     center: [37.5527, 45.0761],
   },
+
   {
     city: "اردبیل",
     province: "اردبیل",
     center: [38.2498, 48.2933],
   },
+
   {
     city: "اصفهان",
     province: "اصفهان",
     center: [32.6546, 51.668],
   },
+
   {
     city: "کرج",
     province: "البرز",
     center: [35.84, 50.9391],
   },
+
   {
     city: "ایلام",
     province: "ایلام",
     center: [33.6374, 46.4227],
   },
+
   {
     city: "بوشهر",
     province: "بوشهر",
     center: [28.9234, 50.8203],
   },
+
   {
     city: "شهرکرد",
     province: "چهارمحال و بختیاری",
     center: [32.3256, 50.8644],
   },
+
   {
     city: "بیرجند",
     province: "خراسان جنوبی",
     center: [32.8663, 59.2211],
   },
+
   {
     city: "بجنورد",
     province: "خراسان شمالی",
     center: [37.475, 57.333],
   },
+
   {
     city: "اهواز",
     province: "خوزستان",
     center: [31.3183, 48.6706],
   },
+
   {
     city: "زنجان",
     province: "زنجان",
     center: [36.6736, 48.4787],
   },
+
   {
     city: "سمنان",
     province: "سمنان",
     center: [35.5729, 53.3971],
   },
+
   {
     city: "زاهدان",
     province: "سیستان و بلوچستان",
     center: [29.4963, 60.8629],
   },
+
   {
     city: "شیراز",
     province: "فارس",
     center: [29.5918, 52.5837],
   },
+
   {
     city: "قزوین",
     province: "قزوین",
     center: [36.2688, 50.0041],
   },
+
   {
     city: "قم",
     province: "قم",
     center: [34.6416, 50.8746],
   },
+
   {
     city: "سنندج",
     province: "کردستان",
     center: [35.3149, 46.9988],
   },
+
   {
     city: "کرمان",
     province: "کرمان",
     center: [30.2839, 57.0834],
   },
+
   {
     city: "کرمانشاه",
     province: "کرمانشاه",
     center: [34.3142, 47.065],
   },
+
   {
     city: "یاسوج",
     province: "کهگیلویه و بویراحمد",
     center: [30.6682, 51.588],
   },
+
   {
     city: "گرگان",
     province: "گلستان",
     center: [36.8456, 54.4393],
   },
+
   {
     city: "رشت",
     province: "گیلان",
     center: [37.2808, 49.5832],
   },
+
   {
     city: "خرم‌آباد",
     province: "لرستان",
     center: [33.4878, 48.3558],
   },
+
   {
     city: "ساری",
     province: "مازندران",
     center: [36.5659, 53.0586],
   },
+
   {
     city: "اراک",
     province: "مرکزی",
     center: [34.0917, 49.6892],
   },
+
   {
     city: "بندرعباس",
     province: "هرمزگان",
     center: [27.1832, 56.2666],
   },
+
   {
     city: "همدان",
     province: "همدان",
     center: [34.798, 48.5148],
   },
+
   {
     city: "یزد",
     province: "یزد",
@@ -285,18 +312,18 @@ export default function NewDestinationModal(
     onClose,
   } = props;
 
-const isControlled =
-  Object.prototype.hasOwnProperty.call(
-    props,
-    "isOpen"
-  );
+  const isControlled =
+    Object.prototype.hasOwnProperty.call(
+      props,
+      "isOpen"
+    );
 
-const [internalShow, setInternalShow] =
-  useState(false);
+  const [internalShow, setInternalShow] =
+    useState(false);
 
-const show = isControlled
-  ? isOpen
-  : internalShow;
+  const show = isControlled
+    ? isOpen
+    : internalShow;
 
   const [step, setStep] =
     useState(1);
@@ -377,18 +404,16 @@ const show = isControlled
 
   const locationTitle =
     isOrigin
-      ? "مبدأ"
-      : "مقصد";
+      ? strings.origin
+      : strings.destination;
 
   const locationReceiveText =
     isOrigin
-      ? "اطلاعات محل دریافت"
-      : "اطلاعات محل تحویل";
+      ? strings.newDestinationModal.originInformation
+      : strings.newDestinationModal.destinationInformation;
 
   const locationDescription =
-    isOrigin
-      ? "توضیحات ..."
-      : "توضیحات ...";
+    strings.newDestinationModal.locationDescriptionPlaceholder;
 
   const showFormAlert = (message) => {
     setAlertMessage(message);
@@ -448,32 +473,32 @@ const show = isControlled
     });
   };
 
-const handleShow = (
-  event
-) => {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
+  const handleShow = (
+    event
+  ) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-  resetModal();
+    resetModal();
 
-  if (!isControlled) {
-    setInternalShow(true);
-  }
-};
+    if (!isControlled) {
+      setInternalShow(true);
+    }
+  };
 
-const handleClose = () => {
-  if (!isControlled) {
-    setInternalShow(false);
-  }
+  const handleClose = () => {
+    if (!isControlled) {
+      setInternalShow(false);
+    }
 
-  resetModal();
+    resetModal();
 
-  if (onClose) {
-    onClose();
-  }
-};
+    if (onClose) {
+      onClose();
+    }
+  };
 
   const handleInputChange = (
     e
@@ -637,7 +662,7 @@ const handleClose = () => {
 
         if (!response.ok) {
           throw new Error(
-            "Reverse geocoding failed"
+            strings.newDestinationModal.reverseGeocodingFailed
           );
         }
 
@@ -709,7 +734,7 @@ const handleClose = () => {
 
             if (!response.ok) {
               throw new Error(
-                "جستجوی آدرس ناموفق"
+                strings.newDestinationModal.addressSearchFailed
               );
             }
 
@@ -842,7 +867,7 @@ const handleClose = () => {
 
         if (!response.ok) {
           throw new Error(
-            "Reverse geocoding failed"
+            strings.newDestinationModal.reverseGeocodingFailed
           );
         }
 
@@ -865,7 +890,10 @@ const handleClose = () => {
     () => {
       if (!selectedPosition) {
         showFormAlert(
-          `لطفاً موقعیت ${locationTitle} را روی نقشه انتخاب کنید`
+          strings.newDestinationModal.selectLocationOnMap.replace(
+            "{location}",
+            locationTitle
+          )
         );
 
         return;
@@ -879,56 +907,86 @@ const handleClose = () => {
       setStep(1);
     };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    if (!selectedPosition) {
-      showFormAlert(
-        `لطفاً موقعیت ${locationTitle} را انتخاب کنید`
-      );
+  if (!selectedPosition) {
+    showFormAlert(
+      strings.newDestinationModal.selectLocation.replace(
+        "{location}",
+        locationTitle
+      )
+    );
 
-      return;
-    }
+    return;
+  }
 
-    if (!formData.address.trim()) {
-      showFormAlert(
-        "لطفاً فیلد آدرس را پر کنید"
-      );
+  const isAddressEmpty =
+    !formData.address.trim();
 
-      return;
-    }
+  const isPhoneEmpty =
+    !formData.phone.trim();
 
-    const finalAddress = {
-      ...formData,
-      latitude:
-        selectedPosition?.[0] || null,
-      longitude:
-        selectedPosition?.[1] || null,
-      lat:
-        selectedPosition?.[0] || null,
-      lng:
-        selectedPosition?.[1] || null,
-      fullAddress:
-        selectedAddress ||
-        formData.address ||
-        "",
-      city: selectedCity.city,
-      province: selectedCity.province,
-    };
+  if (
+    isAddressEmpty &&
+    isPhoneEmpty
+  ) {
+    showFormAlert(
+      strings.newDestinationModal.addressAndPhoneRequired
+    );
 
-if (onAddressSubmit) {
-  onAddressSubmit({
-    addressType,
-    address: finalAddress,
-    lat: finalAddress.lat,
-    lng: finalAddress.lng,
-    latitude: finalAddress.latitude,
-    longitude: finalAddress.longitude,
-  });
-}
+    return;
+  }
 
-handleClose();
+  if (isAddressEmpty) {
+    showFormAlert(
+      strings.newDestinationModal.addressRequired
+    );
+
+    return;
+  }
+
+  if (isPhoneEmpty) {
+    showFormAlert(
+      strings.newDestinationModal.phoneNumberRequired
+    );
+
+    return;
+  }
+
+  const finalAddress = {
+    ...formData,
+    latitude:
+      selectedPosition?.[0] || null,
+    longitude:
+      selectedPosition?.[1] || null,
+    lat:
+      selectedPosition?.[0] || null,
+    lng:
+      selectedPosition?.[1] || null,
+    fullAddress:
+      selectedAddress ||
+      formData.address ||
+      "",
+    city: selectedCity.city,
+    province: selectedCity.province,
   };
+
+  if (onAddressSubmit) {
+    onAddressSubmit({
+      addressType,
+      address: finalAddress,
+      lat: finalAddress.lat,
+      lng: finalAddress.lng,
+      latitude:
+        finalAddress.latitude,
+      longitude:
+        finalAddress.longitude,
+    });
+  }
+
+  handleClose();
+};
 
   let newFirstChild =
     null;
@@ -964,14 +1022,14 @@ handleClose();
   }
 
   useEffect(() => {
-  if (!isControlled) {
-    return;
-  }
+    if (!isControlled) {
+      return;
+    }
 
-  if (isOpen) {
-    resetModal();
-  }
-}, [isOpen, isControlled]);
+    if (isOpen) {
+      resetModal();
+    }
+  }, [isOpen, isControlled]);
 
   return (
     <>
@@ -998,7 +1056,9 @@ handleClose();
 
               <div className="address-top-alert-content">
                 <p>
-                  اطلاعات ناقص است
+                  {
+                    strings.newDestinationModal.incompleteInformation
+                  }
                 </p>
 
                 <span>
@@ -1035,14 +1095,22 @@ handleClose();
               <div>
                 <h5>
                   {step === 1
-                    ? `انتخاب موقعیت ${locationTitle}`
-                    : `تکمیل آدرس ${locationTitle}`}
+                    ? isOrigin
+                      ? strings.newDestinationModal.selectOriginLocation
+                      : strings.newDestinationModal.selectDestinationLocation
+                    : isOrigin
+                      ? strings.newDestinationModal.completeOriginAddress
+                      : strings.newDestinationModal.completeDestinationAddress}
                 </h5>
 
                 <span>
                   {step === 1
-                    ? `موقعیت ${locationTitle} را روی نقشه انتخاب کنید`
-                    : `اطلاعات کامل ${locationTitle} را وارد کنید`}
+                    ? isOrigin
+                      ? strings.newDestinationModal.selectOriginLocationDescription
+                      : strings.newDestinationModal.selectDestinationLocationDescription
+                    : isOrigin
+                      ? strings.newDestinationModal.completeOriginAddressDescription
+                      : strings.newDestinationModal.completeDestinationAddressDescription}
                 </span>
               </div>
             </div>
@@ -1061,10 +1129,11 @@ handleClose();
                     >
                       <button
                         type="button"
-                        className={`city-selector-btn ${showCityDropdown
-                          ? "active"
-                          : ""
-                          }`}
+                        className={`city-selector-btn ${
+                          showCityDropdown
+                            ? "active"
+                            : ""
+                        }`}
                         onClick={() =>
                           setShowCityDropdown(
                             (prev) =>
@@ -1074,7 +1143,9 @@ handleClose();
                       >
                         <div className="city-selector-content">
                           <span className="city-selector-label mt-2 fs-6">
-                            شهر
+                            {
+                              strings.newDestinationModal.city
+                            }
                           </span>
 
                           <p>
@@ -1085,10 +1156,11 @@ handleClose();
                         </div>
 
                         <FaChevronDown
-                          className={`city-selector-arrow ${showCityDropdown
-                            ? "rotate"
-                            : ""
-                            }`}
+                          className={`city-selector-arrow ${
+                            showCityDropdown
+                              ? "rotate"
+                              : ""
+                          }`}
                         />
                       </button>
 
@@ -1096,7 +1168,9 @@ handleClose();
                         <div className="city-dropdown">
                           <div className="city-dropdown-header">
                             <p>
-                              انتخاب شهر
+                              {
+                                strings.newDestinationModal.selectCity
+                              }
                             </p>
                           </div>
 
@@ -1115,7 +1189,9 @@ handleClose();
                                   e.target.value
                                 )
                               }
-                              placeholder="جستجوی شهر یا استان..."
+                              placeholder={
+                                strings.newDestinationModal.searchCityOrProvince
+                              }
                               autoFocus
                             />
                           </div>
@@ -1139,10 +1215,11 @@ handleClose();
                                         item.province
                                       }
                                       type="button"
-                                      className={`city-option ${isSelected
-                                        ? "selected"
-                                        : ""
-                                        }`}
+                                      className={`city-option ${
+                                        isSelected
+                                          ? "selected"
+                                          : ""
+                                      }`}
                                       onClick={() =>
                                         handleCityChange(
                                           item
@@ -1184,7 +1261,9 @@ handleClose();
                                 <FaSearch />
 
                                 <span>
-                                  شهری پیدا نشد
+                                  {
+                                    strings.newDestinationModal.cityNotFound
+                                  }
                                 </span>
                               </div>
                             )}
@@ -1221,7 +1300,10 @@ handleClose();
                             );
                           }
                         }}
-                        placeholder={`نام خیابان در ${selectedCity.city} را وارد کنید...`}
+                        placeholder={strings.newDestinationModal.searchAddressInCityPlaceholder.replace(
+                          "{city}",
+                          selectedCity.city
+                        )}
                       />
 
                       {searchLoading && (
@@ -1240,7 +1322,9 @@ handleClose();
                         <div className="small-loader" />
 
                         <span>
-                          در حال جستجوی آدرس...
+                          {
+                            strings.newDestinationModal.searchingAddress
+                          }
                         </span>
                       </div>
                     ) : searchResults.length >
@@ -1259,7 +1343,7 @@ handleClose();
                             address.road ||
                             address.pedestrian ||
                             address.residential ||
-                            "موقعیت پیدا شده";
+                            strings.newDestinationModal.foundLocation;
 
                           return (
                             <button
@@ -1301,15 +1385,16 @@ handleClose();
 
                         <div>
                           <p>
-                            نتیجه‌ای پیدا نشد
+                            {
+                              strings.newDestinationModal.searchResultNotFound
+                            }
                           </p>
 
                           <small>
-                            نام خیابان را در{" "}
-                            {
+                            {strings.newDestinationModal.searchAddressMorePrecisely.replace(
+                              "{city}",
                               selectedCity.city
-                            }{" "}
-                            دقیق‌تر وارد کنید.
+                            )}
                           </small>
                         </div>
                       </div>
@@ -1385,7 +1470,9 @@ handleClose();
                           false
                         }
                       >
-                        {locationTitle}
+                        {
+                          locationTitle
+                        }
                       </Tooltip>
                     </Marker>
                   )}
@@ -1394,36 +1481,36 @@ handleClose();
                 {!selectedPosition && (
                   <div className="map-center-hint">
                     <span>
-                      موقعیت{" "}
-                      {
-                        locationTitle
-                      }{" "}
-                      را در{" "}
-                      {
-                        selectedCity.city
-                      }{" "}
-                      روی نقشه انتخاب کنید
+                      {strings.newDestinationModal.mapLocationHint
+                        .replace(
+                          "{location}",
+                          locationTitle
+                        )
+                        .replace(
+                          "{city}",
+                          selectedCity.city
+                        )}
                     </span>
                   </div>
                 )}
-
-
               </div>
 
               {selectedPosition && (
                 <div className="selected-address-box">
                   <div className="selected-address-content">
                     <span>
-                      موقعیت{" "}
-                      {
+                      {strings.newDestinationModal.locationSelected.replace(
+                        "{location}",
                         locationTitle
-                      }{" "}
-                      انتخاب شد
+                      )}
                     </span>
 
                     <p>
                       {selectedAddress ||
-                        `موقعیت ${locationTitle} روی نقشه انتخاب شد`}
+                        strings.newDestinationModal.locationSelectedOnMap.replace(
+                          "{location}",
+                          locationTitle
+                        )}
                     </p>
                   </div>
                 </div>
@@ -1431,10 +1518,11 @@ handleClose();
 
               <button
                 type="button"
-                className={`address-next-btn ${selectedPosition
-                  ? "enabled"
-                  : "disabled"
-                  }`}
+                className={`address-next-btn ${
+                  selectedPosition
+                    ? "enabled"
+                    : "disabled"
+                }`}
                 disabled={
                   !selectedPosition
                 }
@@ -1448,7 +1536,9 @@ handleClose();
                       "20px",
                   }}
                 >
-                  مرحله بعدی
+                  {
+                    strings.newDestinationModal.nextStep
+                  }
                 </span>
               </button>
             </div>
@@ -1480,7 +1570,9 @@ handleClose();
                               "15px",
                           }}
                         >
-                          {locationTitle}
+                          {
+                            locationTitle
+                          }
                         </span>
 
                         <p
@@ -1490,7 +1582,10 @@ handleClose();
                           }}
                         >
                           {selectedAddress ||
-                            `موقعیت ${locationTitle} انتخاب شد`}
+                            strings.newDestinationModal.locationSelectedOnMap.replace(
+                              "{location}",
+                              locationTitle
+                            )}
                         </p>
                       </div>
                     </div>
@@ -1507,7 +1602,9 @@ handleClose();
                       "15px",
                   }}
                 >
-                  تغییر موقعیت
+                  {
+                    strings.newDestinationModal.changeLocation
+                  }
                 </button>
               </div>
 
@@ -1524,7 +1621,6 @@ handleClose();
 
                         <div>
                           <p>
-                            مشخصات{" "}
                             {
                               locationTitle
                             }
@@ -1541,7 +1637,10 @@ handleClose();
                       <div className="address-form-grid">
                         <div className="address-field address-field-large">
                           <label>
-                            آدرس
+                            {
+                              strings.newDestinationModal.address
+                            }
+
                             <span className="required">
                               *
                             </span>
@@ -1561,7 +1660,9 @@ handleClose();
                               onChange={
                                 handleInputChange
                               }
-                              placeholder="آدرس را وارد کنید..."
+                              placeholder={
+                                strings.newDestinationModal.addressPlaceholder
+                              }
                               className="form-control address-input"
                             />
                           </div>
@@ -1569,7 +1670,10 @@ handleClose();
 
                         <div className="address-field">
                           <label>
-                            شماره تماس
+                            {
+                              strings.newDestinationModal.phoneNumber
+                            }
+
                             <span className="required">
                               *
                             </span>
@@ -1579,24 +1683,40 @@ handleClose();
                             <span className="address-field-icon">
                               ☎
                             </span>
+
                             <input
                               type="text"
                               name="phone"
-                              value={formData.phone}
+                              value={
+                                formData.phone
+                              }
                               onChange={(e) => {
-                                const numericValue = e.target.value
-                                  .replace(/[^0-9]/g, "")
-                                  .slice(0, 11);
+                                const numericValue =
+                                  e.target.value
+                                    .replace(
+                                      /[^0-9]/g,
+                                      ""
+                                    )
+                                    .slice(
+                                      0,
+                                      11
+                                    );
 
-                                setFormData((prev) => ({
-                                  ...prev,
-                                  phone: numericValue,
-                                }));
+                                setFormData(
+                                  (prev) => ({
+                                    ...prev,
+                                    phone: numericValue,
+                                  })
+                                );
                               }}
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              maxLength={11}
-                              placeholder="شماره تماس را وارد کنید..."
+                              maxLength={
+                                11
+                              }
+                              placeholder={
+                                strings.newDestinationModal.phoneNumberPlaceholder
+                              }
                               className="form-control address-input"
                             />
                           </div>
@@ -1604,7 +1724,9 @@ handleClose();
 
                         <div className="address-field-small">
                           <label>
-                            طبقه
+                            {
+                              strings.newDestinationModal.floor
+                            }
                           </label>
 
                           <div className="address-input-wrapper">
@@ -1623,7 +1745,9 @@ handleClose();
                               }
                               inputMode="numeric"
                               pattern="[0-9]*"
-                              placeholder="طبقه را وارد کنید..."
+                              placeholder={
+                                strings.newDestinationModal.floorPlaceholder
+                              }
                               className="form-control address-input"
                             />
                           </div>
@@ -1631,9 +1755,11 @@ handleClose();
 
                         <div className="address-field address-description-field">
                           <label>
-                            توضیحات{" "}
                             {
-                              locationTitle
+                              strings.newDestinationModal.locationDescription.replace(
+                                "{location}",
+                                locationTitle
+                              )
                             }
                           </label>
 
@@ -1651,7 +1777,7 @@ handleClose();
                                 handleInputChange
                               }
                               placeholder={
-                                locationDescription
+                                strings.newDestinationModal.locationDescriptionPlaceholder
                               }
                               rows={
                                 4
@@ -1677,7 +1803,9 @@ handleClose();
                           "20px",
                       }}
                     >
-                      ثبت
+                      {
+                        strings.newDestinationModal.submit
+                      }
                     </button>
                   </div>
 
@@ -1693,7 +1821,9 @@ handleClose();
                           "20px",
                       }}
                     >
-                      بازگشت
+                      {
+                        strings.newDestinationModal.back
+                      }
                     </button>
                   </div>
                 </div>

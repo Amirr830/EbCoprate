@@ -20,7 +20,7 @@ export default function RegisterDiscountCode(props) {
         const codes = [
             {
                 id: 1,
-                code: "WELCOME10",
+                code: "کاربران جدید",
                 title: "تخفیف ویژه کاربران جدید",
                 description: "۱۰ درصد تخفیف برای اولین درخواست",
                 percent: 10,
@@ -28,7 +28,7 @@ export default function RegisterDiscountCode(props) {
             },
             {
                 id: 2,
-                code: "SAVE20",
+                code: "سرویس ویژه",
                 title: "تخفیف ویژه سرویس",
                 description: "۲۰ درصد تخفیف روی هزینه سرویس",
                 percent: 20,
@@ -36,7 +36,7 @@ export default function RegisterDiscountCode(props) {
             },
             {
                 id: 3,
-                code: "VIP30",
+                code: "کاربران ویژه",
                 title: "تخفیف کاربران ویژه",
                 description: "۳۰ درصد تخفیف برای کاربران ویژه",
                 percent: 30,
@@ -44,7 +44,7 @@ export default function RegisterDiscountCode(props) {
             },
             {
                 id: 4,
-                code: "FIRST50",
+                code: "اولین سفارش",
                 title: "تخفیف اولین سفارش",
                 description: "۵۰ هزار تومان تخفیف",
                 amount: 50000,
@@ -52,7 +52,7 @@ export default function RegisterDiscountCode(props) {
             },
             {
                 id: 5,
-                code: "SPECIAL25",
+                code: "ویژه",
                 title: "تخفیف ویژه سرویس",
                 description: "۲۵ درصد تخفیف روی هزینه سرویس",
                 percent: 25,
