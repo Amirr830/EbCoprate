@@ -27,14 +27,87 @@
   border-radius: 16px;
 }
 
+
+
+.custom-amount-label {
+  display: block;
+  text-align: right;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+
+
+.custom-amount-input {
+  width: 100%;
+  height: 58px !important;
+  min-height: 58px !important;
+  padding: 10px 16px !important;
+  font-size: 1.15rem !important;
+  text-align: center;
+  direction: ltr;
+  color: #1e293b;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+  outline: none !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+
+.custom-amount-input:focus,
+.custom-amount-input:active,
+.custom-amount-input:focus-visible {
+  border-color: #22c55e !important;
+
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22) !important;
+
+  outline: none !important;
+
+  background-color: #ffffff !important;
+}
+
+
+.custom-amount-input::placeholder {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.amount-unit {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+
 .bg-emerald {
   background-color: #00ff66 !important;
   color: #000000 !important;
-  font-weight: bold;
+  box-shadow: none !important;
+  transition: 0.2s ease;
 }
 
 .bg-emerald:hover {
   background-color: #00e65c !important;
+  color: #000000 !important;
+
+  box-shadow: none !important;
+}
+
+.bg-emerald:focus,
+.bg-emerald:active,
+.bg-emerald:focus-visible {
+  background-color: #00e65c !important;
+  color: #000000 !important;
+
+  box-shadow: none !important;
+
+  outline: none !important;
 }
 
 .btn-outline-secondary {
@@ -49,32 +122,27 @@
   color: #0f172a;
 }
 
-.bg-emerald {
-  background-color: #00ff66 !important;
-  color: #000000 !important;
-  font-weight: bold;
-  box-shadow: none !important;
-  transition: 0.2s ease;
-}
-
-.bg-emerald:hover {
-  background-color: #00e65c !important;
-  color: #000000 !important;
-  box-shadow: none !important;
-}
-
-.bg-emerald:focus,
-.bg-emerald:active,
-.bg-emerald:focus-visible {
-  background-color: #00e65c !important;
-  color: #000000 !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-
 button:focus,
-button:active {
+button:active,
+button:focus-visible {
   box-shadow: none !important;
   outline: none !important;
+}
+
+
+.form-control:focus {
+  outline: none !important;
+}
+
+
+.custom-amount-input:focus,
+.custom-amount-input:active,
+.custom-amount-input:focus-visible {
+  border-color: #22c55e !important;
+
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22) !important;
+
+  outline: none !important;
+
+  background-color: #ffffff !important;
 }
