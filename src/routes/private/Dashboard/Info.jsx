@@ -213,7 +213,7 @@ function Info() {
 
                       <td>
                         <span className="performance-table-date">
-                          1404//18
+                          1404/05/18
                         </span>
                       </td>
 
