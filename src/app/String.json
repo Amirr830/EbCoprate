@@ -148,5 +148,22 @@
     "addressSearchFailed": "جستجوی آدرس ناموفق",
     "phoneNumberRequired": "لطفاً فیلد شماره تلفن را پر کنید",
     "addressAndPhoneRequired": "لطفاً فیلد آدرس و شماره تلفن را پر کنید"
+  },
+  "wallet": {
+    "balance": "موجودی",
+    "zeroBalance": "۰ ریال",
+    "increaseBalance": "افزایش موجودی کیف پول سازمانی",
+    "increaseBalanceDescription": "مبلغ موردنظرتان برای افزایش موجودی کیف پول سازمان را وارد کنید.",
+    "suggestedAmounts": "مبالغ پیشنهادی",
+    "oneMillionRial": "۱,۰۰۰,۰۰۰ ریال",
+    "fiveMillionRial": "۵,۰۰۰,۰۰۰ ریال",
+    "tenMillionRial": "۱۰,۰۰۰,۰۰۰ ریال",
+    "customAmount": "مبلغ دلخواه",
+    "customAmountPlaceholder": "مبلغ دلخواه را وارد کنید",
+    "rial": "ریال",
+    "onlinePayment": "پرداخت آنلاین",
+    "financialHistory": "تاریخچه مالی",
+    "noTransactions": "هنوز تراکنشی ثبت نشده است",
+    "noTransactionsDescription": "پس از اولین شارژ یا پرداخت، اطلاعات اینجا نمایش داده می‌شود."
   }
 }

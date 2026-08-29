@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import "./Css/SupportTrainingModal.css";
-import { 
-  FaHeadset, 
-  FaPhoneAlt, 
-  FaPaperPlane, 
-  FaCommentDots, 
-  FaGraduationCap, 
-  FaTimes 
+import {
+    FaHeadset,
+    FaPhoneAlt,
+    FaPaperPlane,
+    FaCommentDots,
+    FaGraduationCap,
+    FaTimes
 } from "react-icons/fa";
 import { MdOutlineSupportAgent } from "react-icons/md";
+import TicketModal from "./TicketModal"
+
+
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
 
@@ -52,10 +55,10 @@ export default function AddDefMsgModal(props) {
                     <div className="support-card">
 
                         <div className="support-top-section">
-                            
+
                             <div className="support-avatar-wrapper">
                                 <div className="support-avatar-icon">
-                                    <MdOutlineSupportAgent  />
+                                    <MdOutlineSupportAgent />
                                 </div>
                             </div>
 
@@ -74,9 +77,11 @@ export default function AddDefMsgModal(props) {
                         </div>
 
                         <div className="support-actions">
-                            <button className="support-action-btn">
-                                <span>ارسال تیکت جدید</span>
-                            </button>
+                            <TicketModal>
+                                <button className="support-action-btn">
+                                    <span>ارسال تیکت جدید</span>
+                                </button>
+                            </TicketModal>
 
                             <button className="support-action-btn">
                                 <span>نظرات و پیشنهادات</span>
