@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import TicketModal from "./TicketModal"
-
+import CommentSuggestionModal from "./CommentSuggestionModal"
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
@@ -83,9 +83,11 @@ export default function AddDefMsgModal(props) {
                                 </button>
                             </TicketModal>
 
-                            <button className="support-action-btn">
-                                <span>نظرات و پیشنهادات</span>
-                            </button>
+                            <CommentSuggestionModal>
+                                <button className="support-action-btn">
+                                    <span>نظرات و پیشنهادات</span>
+                                </button>
+                            </CommentSuggestionModal>
 
                             <button className="support-action-btn">
                                 <span>آموزش استفاده از پنل</span>
