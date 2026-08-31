@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckAccess } from "../../../app/checkAccess";
@@ -34,12 +33,12 @@ function Dashboard() {
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
-
-      <div className="dashboard-layout">
+      <div className="dashboard-layout desktop-top-space">
         <main className="dashboard-main hideScroll">
           <div className="dashboard-content">
-            <div className="dashboard-inner">
-              <div className="row g-3 justify-content-center">
+            <div className="dashboard-inner container-fluid">
+              <div className="row g-3">
+
                 <div className="col-12 col-lg-5 col-xxl-4">
                   <div className="dashboard-card dashboard-card-request">
                     <RequestForm
@@ -56,7 +55,7 @@ function Dashboard() {
                 </div>
 
                 <div className="col-lg-4 col-xxl-4 d-none d-md-block">
-                  <div className="dashboard-card dashboard-card-info">
+                  <div className="dashboard-card">
                     <Info />
                   </div>
                 </div>

@@ -1,350 +1,50 @@
-:root {
-  --header-height: 100px;
-  --sidebar-width: 350px;
-  --mobile-header-height: 60px;
-  --page-background: #eceff1;
-  --content-padding: 0px;
-  --content-horizontal-offset: -55px;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  min-width: 0;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden !important;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--page-background);
-}
-
-.main-layout {
-  position: relative;
-
-  width: 100%;
-  height: 100vh;
-  min-height: 100vh;
-
-  overflow: hidden !important;
-
-  background-color: var(--page-background);
-}
-.desktop-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1000;
-  display: block;
-  width: 100%;
-  height: var(--header-height);
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-
-
-.desktop-header-sidebar {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  width: var(--sidebar-width);
-  min-width: var(--sidebar-width);
-  height: var(--header-height);
-
-  overflow: hidden;
-}
-
-
-
-.desktop-header-area {
-  position: absolute;
-  top: 0;
-  right: calc(
-    var(--sidebar-width) + var(--content-horizontal-offset)
-  );
-  left: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  width: auto;
-  height: var(--header-height);
-
-  margin: 0;
-  padding: 0 60px 0 60px;
-
-  overflow: hidden;
-}
-
-
-
-.desktop-header-area > * {
-  display: flex;
-  align-items: center;
-
-  width: 100%;
-  max-width: none;
-  height: 100%;
-
-  margin: 0;
-  padding: 0;
-}
-
-.main-page-content {
-  position: fixed;
-
-  top: var(--header-height);
-  right: calc(
-    var(--sidebar-width) + var(--content-horizontal-offset)
-  );
-  bottom: 0;
-  left: 0;
-
-  z-index: 1;
-
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  width: auto;
-  min-width: 0;
-  height: calc(100vh - var(--header-height));
-
-  overflow-x: hidden !important;
-  overflow-y: hidden !important;
-
-  background-color: var(--page-background);
-}
-.main-content-inner {
-  display: block;
-
-  width: 100%;
-  max-width: 1600px;
-  min-width: 0;
-  min-height: 100%;
-
-  margin: 0 auto;
-  padding: var(--content-padding);
-
-  overflow-x: hidden;
-}
-
-.main-content-inner > * {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-}
-
-.main-content-inner .row {
-  max-width: 100%;
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.main-content-inner .container,
-.main-content-inner .container-fluid {
-  width: 100%;
-  max-width: 100%;
-
-  margin-right: auto;
-  margin-left: auto;
-}
-
-
-
-.mobile-header {
-  display: none;
-}
-
-
-
-.mobile-sidebar-overlay {
-  position: fixed;
-  inset: 0;
-
-  z-index: 1998;
-
-  background-color: rgba(0, 0, 0, 0.45);
-}
-
-
-.mobile-sidebar-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 1999;
-  width: 280px;
-  max-width: 85%;
-  height: 100vh;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  background-color: #ffffff;
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.25);
-
-  animation: slideSidebarFromRight 0.25s ease-out;
-}
-
-@keyframes slideSidebarFromRight {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-
-.mobile-menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
-  height: 40px;
-  padding: 0;
-
-  border: none;
-  border-radius: 8px;
-
-  color: #263238;
-  background-color: transparent;
-
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.mobile-menu-button:hover {
-  background-color: #f1f3f4;
-}
-
-.mobile-header-title {
-  overflow: hidden;
-
-  color: #263238;
-
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.mobile-header-placeholder {
-  width: 40px;
-  height: 40px;
-}
-
-
-@media (max-width: 767px) {
-  :root {
-    --content-padding: 12px;
-    --content-horizontal-offset: 0px;
-  }
-
-  html,
-  body,
-  #root {
-    overflow: hidden;
-  }
-
-  .main-layout {
-    width: 100%;
-    min-height: 100vh;
-  }
-
-  .desktop-header {
-    display: none !important;
-  }
-
-  .mobile-header {
-    position: fixed;
+.main-header-wrapper {
+    height: 100px;
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1500;
+    z-index: 1000;
+    background: #fff;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    position: fixed;
+}
+
+
+.main-sidebar-header {
+    width: 350px;
+    flex-shrink: 0;
+}
+
+
+.main-header-content {
+    flex: 1;
     width: 100%;
-    height: var(--mobile-header-height);
-    padding: 0 15px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
+}
+
 
 .main-page-content {
-  position: fixed;
-
-  top: var(--mobile-header-height);
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  width: 100%;
-  height: calc(100vh - var(--mobile-header-height));
-
-  overflow-x: hidden !important;
-  overflow-y: hidden !important;
-}
-
-  .main-content-inner {
-    width: 100%;
-    max-width: 100%;
-
-    padding: var(--content-padding);
-  }
+    margin-top: 100px;
+    margin-right: 350px;
+    width: calc(100% - 350px);
+    min-height: calc(100vh - 100px);
+    box-sizing: border-box;
+    overflow: auto;
 }
 
 
+@media(max-width:767px) {
 
-@media (min-width: 768px) and (max-width: 1200px) {
-  :root {
-    --sidebar-width: 300px;
-    --content-horizontal-offset: 15px;
-  }
+    .main-header-wrapper {
+        display: none !important;
+    }
 
-  .desktop-header-sidebar {
-    width: var(--sidebar-width);
-    min-width: var(--sidebar-width);
-  }
+    .main-page-content {
+        margin-top: 0;
+        margin-right: 0;
+        width: 100%;
+        min-height: 100vh;
+        overflow: auto;
+    }
 
-  .desktop-header-area {
-    right: calc(
-      var(--sidebar-width) + var(--content-horizontal-offset)
-    );
-
-    padding: 0 15px 0 20px;
-  }
-
-  .main-page-content {
-    right: calc(
-      var(--sidebar-width) + var(--content-horizontal-offset)
-    );
-  }
-}
-
-@media (min-width: 1201px) {
-  .main-content-inner {
-    max-width: 1600px;
-  }
 }

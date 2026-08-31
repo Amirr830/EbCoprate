@@ -754,7 +754,7 @@
 
 .mobile-bottom-navigation {
   position: fixed;
-  bottom: 50px;
+  bottom: 25px;
   right: 12px;
   left: 12px;
   width: auto;
@@ -763,9 +763,12 @@
   border: 1px solid #e5e7eb;
   border-radius: 16px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
-  z-index: 1050;
+  z-index: 99999;
   direction: rtl;
   padding: 6px 8px;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
 
 .mobile-bottom-navigation > .col-4 {
@@ -836,12 +839,18 @@
     overflow: visible !important;
   }
 
-  .mobile-bottom-navigation {
-    bottom: 25px;
-    left: 8px;
-    right: 8px;
-    height: 68px;
-  }
+.mobile-bottom-navigation {
+  position: fixed !important;
+  bottom: 25px !important;
+  left: 8px !important;
+  right: 8px !important;
+  height: 68px;
+  width: auto;
+  z-index: 99999;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
 
   .mobile-nav-btn {
     font-size: 14px;
