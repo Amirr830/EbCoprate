@@ -31,23 +31,26 @@ function SideBar() {
     { id: "support", title: "پشتیبانی", icon: <BsHeadset /> },
     { id: "about", title: "درباره ما", icon: <BsInfoCircleFill /> },
   ];
+const handleMenuClick = (item) => { 
 
-const handleMenuClick = (item) => {
+  setActive(item.id); 
 
-  setActive(item.id);
+  if (item.id === "dashboard") { 
+    navigate("/control-panel/-1/dashboard"); 
+  } 
 
-  if (item.id === "dashboard") {
-    navigate("/control-panel/-1/dashboard");
+  if (item.id === "wallet") { 
+    navigate("/control-panel/67/definitions/wallet"); 
+  } 
+
+  if (item.id === "account") { 
+    navigate(paths.private.definitions.userAccount); 
+  } 
+
+  if (item.id === "support") {
+    navigate("/control-panel/68/definitions/support");
   }
-
-  if (item.id === "wallet") {
-    navigate("/control-panel/67/definitions/wallet");
-  }
-
-  if (item.id === "account") {
-    navigate(paths.private.definitions.userAccount);
-  }
-};
+}; 
 
   const handleLogout = () => {
     answerModal.show(

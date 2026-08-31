@@ -26,7 +26,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="container-fluid dashboard-page p-0">
+    <div className="container-fluid  p-0">
       {isSidebarOpen && (
         <div
           className="sidebar-backdrop d-md-none"

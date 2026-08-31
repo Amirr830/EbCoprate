@@ -1,10 +1,4 @@
-.dashboard-page {
-  direction: rtl;
-  background: #f5f6fa;
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+
 
 .dashboard-layout {
   display: flex;
@@ -25,7 +19,6 @@
   flex: 1;
   min-width: 0;
   min-height: calc(100vh - 100px);
-  margin-right: 290px;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -119,7 +112,6 @@
   }
 
   .dashboard-main {
-    margin-right: 300px;
     padding: 16px;
   }
 
@@ -145,7 +137,6 @@
   }
 
   .dashboard-main {
-    margin-right: 270px;
     padding: 12px;
   }
 
@@ -170,7 +161,6 @@
     width: 280px;
     height: 100vh;
     background: #fff;
-    padding-top: 65px;
     overflow-y: auto;
     z-index: 1050;
     transition: right .3s cubic-bezier(.4, 0, .2, 1);
@@ -256,9 +246,7 @@
 
 }
 
-.desktop-top-space{
-    padding-top:70px;
-}
+
 
 @media(max-width:767.98px){
     .desktop-top-space{
