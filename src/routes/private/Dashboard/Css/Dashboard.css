@@ -1,105 +1,178 @@
+
 .dashboard-page {
   direction: rtl;
-  background: #f5f6fa;
+
   width: 100%;
+  height: 100vh;
   min-height: 100vh;
-  overflow-x: hidden;
+
+  margin: 0;
+  padding: 0 !important;
+
+  background: transparent !important;
+  overflow: hidden !important;
 }
+
+
+
 
 .dashboard-layout {
   display: flex;
-  width: 100%;
-  min-height: 100vh;
-}
+  justify-content: center;
+  align-items: flex-start;
 
-.dashboard-sidebar {
-  width: 310px;
-  flex: 0 0 310px;
-  background: #ffffff;
-  border-left: 1px solid rgba(226, 232, 240, 0.9);
-  position: relative;
-  z-index: 1050;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent !important;
+
+  overflow: hidden !important;
 }
 
 .dashboard-main {
-  flex: 1;
-  min-width: 0;
-  min-height: calc(100vh - 100px);
-  margin-right: 290px;
-  padding: 20px;
+  width: 100%;
+  max-width: 1900px;
+
+  height: 100vh;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0 20px;
+
   box-sizing: border-box;
-  overflow-y: auto;
+
+  background: transparent !important;
+
+
+  overflow: hidden !important;
 }
+
 
 .dashboard-content {
   width: 100%;
   max-width: 1700px;
+
+  height: 100%;
+
   margin: 0 auto;
+  padding: 0;
+
+  background: transparent !important;
+
+  overflow: hidden !important;
 }
+
 
 .dashboard-inner {
   width: 100%;
+  height: 100%;
+
+  margin: 0 auto;
+  padding: 0;
+
+  background: transparent !important;
+
+  overflow: hidden !important;
 }
 
-.dashboard-panels {
+
+
+.dashboard-inner > .row {
   width: 100%;
-  margin: 0;
+
+  margin-left: 0;
+  margin-right: 0;
+
+  padding: 0;
+
+  background: transparent !important;
+
+  align-items: flex-start;
 }
 
-.dashboard-col {
-  display: flex;
-}
 
 .dashboard-card {
   width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent !important;
+
+  border: none !important;
+  box-shadow: none !important;
+
   overflow: hidden;
+
   transition: all .25s ease;
 }
 
-.dashboard-card-request::-webkit-scrollbar,
-.dashboard-card-current::-webkit-scrollbar {
-  width: 6px;
-}
-
-.dashboard-card-request::-webkit-scrollbar-track,
-.dashboard-card-current::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.dashboard-card-request::-webkit-scrollbar-thumb,
-.dashboard-card-current::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-
-.dashboard-card-request::-webkit-scrollbar-thumb:hover,
-.dashboard-card-current::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
 
 .dashboard-card:hover {
   transform: translateY(-1px);
 }
 
+
 .dashboard-card-request {
   min-height: 620px;
 }
+
+
 
 .dashboard-card-current {
   min-height: 560px;
 }
 
+
 .dashboard-card-info {
   min-height: 420px;
 }
 
+
+
+.dashboard-card-request::-webkit-scrollbar,
+.dashboard-card-current::-webkit-scrollbar,
+.dashboard-card-info::-webkit-scrollbar {
+  display: none;
+}
+
+.dashboard-card-request,
+.dashboard-card-current,
+.dashboard-card-info {
+  scrollbar-width: none;
+}
+
+
+.dashboard-sidebar {
+  width: 310px;
+  flex: 0 0 310px;
+
+  background: #ffffff;
+
+  border-left: 1px solid rgba(226, 232, 240, 0.9);
+
+  position: relative;
+  z-index: 1050;
+}
+
+
+
 .sidebar-backdrop {
   position: fixed;
+
   inset: 0;
+
   background: rgba(15, 23, 42, .45);
+
   z-index: 1040;
+
   animation: fadeIn .25s ease;
 }
+
 
 @keyframes fadeIn {
   from {
@@ -111,16 +184,18 @@
   }
 }
 
-@media (max-width:1399.98px) {
 
-  .dashboard-sidebar {
-    width: 280px;
-    flex-basis: 280px;
-  }
+
+@media (max-width: 1399.98px) {
 
   .dashboard-main {
-    margin-right: 300px;
-    padding: 16px;
+    max-width: 1500px;
+
+    padding: 0 16px;
+  }
+
+  .dashboard-content {
+    max-width: 1400px;
   }
 
   .dashboard-card-request {
@@ -134,19 +209,19 @@
   .dashboard-card-info {
     min-height: 390px;
   }
-
 }
 
-@media (max-width:1199.98px) {
 
-  .dashboard-sidebar {
-    width: 260px;
-    flex-basis: 260px;
-  }
+@media (max-width: 1199.98px) {
 
   .dashboard-main {
-    margin-right: 270px;
-    padding: 12px;
+    max-width: 1200px;
+
+    padding: 0 12px;
+  }
+
+  .dashboard-content {
+    max-width: 1150px;
   }
 
   .dashboard-card-request,
@@ -154,114 +229,204 @@
   .dashboard-card-info {
     min-height: auto;
   }
-
 }
 
-@media (max-width:767.98px) {
+
+
+@media (max-width: 767.98px) {
+
+  .dashboard-page {
+    width: 100%;
+
+    height: 100vh;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    overflow: hidden !important;
+  }
+
 
   .dashboard-layout {
     display: block;
+
+    width: 100%;
+
+    height: 100vh;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .dashboard-main {
+    width: 100%;
+    max-width: 100%;
+
+    height: 100vh;
+    min-height: 100vh;
+
+    margin: 0 !important;
+
+    padding: 0 10px !important;
+
+    background: transparent !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .dashboard-content {
+    width: 100%;
+    max-width: 100%;
+
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .dashboard-inner {
+    width: 100%;
+    max-width: 100%;
+
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent !important;
+
+    overflow: hidden !important;
+  }
+
+
+  .dashboard-inner > .row {
+    width: 100%;
+
+    height: 100%;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    padding: 0;
+
+    background: transparent !important;
+  }
+
+
+  .dashboard-card {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent !important;
+
+    border: none !important;
+    box-shadow: none !important;
+
+    border-radius: 14px;
+  }
+
+
+  .dashboard-card-request {
+    display: block;
+
+    width: 100%;
+
+    min-height: auto;
+  }
+
+
+  .dashboard-card-current,
+  .dashboard-card-info {
+    display: none !important;
+
+    min-height: auto;
   }
 
   .dashboard-sidebar {
     position: fixed;
+
     top: 0;
     right: -100%;
+
     width: 280px;
     height: 100vh;
+
     background: #fff;
+
     padding-top: 65px;
+
     overflow-y: auto;
+
     z-index: 1050;
+
     transition: right .3s cubic-bezier(.4, 0, .2, 1);
   }
+
 
   .dashboard-sidebar.open-mobile {
     right: 0;
   }
 
-  .dashboard-page {
-    min-height: auto;
-  }
-
-  .dashboard-main {
-    width: 100%;
-    min-height: auto;
-    margin-right: 0;
-    padding: 10px;
-    overflow: visible;
-  }
-
-  .dashboard-content {
-    max-width: 100%;
-  }
-
-  .dashboard-inner {
-    width: 100%;
-    padding: 8px 8px 70px;
-  }
 
   .dashboard-panels {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: block;
   }
+
 
   .dashboard-col {
     width: 100%;
-  }
 
-  .dashboard-card {
-    border-radius: 14px;
-  }
+    display: block;
 
-  .dashboard-card-request,
-  .dashboard-card-current,
-  .dashboard-card-info {
-    min-height: auto;
+    margin-bottom: 10px;
   }
-
 }
 
-@media (max-width:767.98px){
 
 
-  .dashboard-card-current,
-  .dashboard-card-info{
-      display:none !important;
-  }
-
-  .dashboard-main{
-      width:100%;
-      margin:0 !important;
-      padding:10px !important;
-      min-height:auto;
-  }
-
-  .dashboard-panels{
-      display:block;
-  }
-
-  .dashboard-col{
-      width:100%;
-      display:block;
-      margin-bottom:10px;
-  }
-
-  .dashboard-card-request{
-      display:block;
-      width:100%;
-      min-height:auto;
-  }
-
+html,
+body {
+  overflow: hidden !important;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.desktop-top-space{
-    padding-top:70px;
+
+#root {
+  width: 100%;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden !important;
 }
 
-@media(max-width:767.98px){
-    .desktop-top-space{
-        padding-top:0;
-    }
+
+.dashboard-page,
+.dashboard-layout,
+.dashboard-main,
+.dashboard-content,
+.dashboard-inner {
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
 }
+

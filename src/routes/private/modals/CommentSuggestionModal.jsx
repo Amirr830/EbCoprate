@@ -188,6 +188,7 @@ export default function AddDefMsgModal({
                 contentClassName="feedback-modal-content"
                 backdropClassName="feedback-modal-backdrop"
                 keyboard={!isSubmitting}
+                size="lg"
             >
                 <Modal.Body
                     className="feedback-modal-body"
@@ -305,7 +306,7 @@ export default function AddDefMsgModal({
                                         onClick={handleClose}
                                         disabled={isSubmitting}
                                     >
-                                        <FaTimes />
+                                        <FaTimes style={{marginLeft:"8px"}}/>
                                         <span>
                                             انصراف
                                         </span>
