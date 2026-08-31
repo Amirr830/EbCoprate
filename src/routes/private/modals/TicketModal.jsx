@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Modal, Row, Col, Form } from "react-bootstrap";
 import { FaPaperPlane, FaTimes } from "react-icons/fa";
 import "./Css/TicketModal.css"
+import { MdConfirmationNumber } from "react-icons/md";
+import { MdSupportAgent } from "react-icons/md";
+import { FaPaperclip } from "react-icons/fa";
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
@@ -145,21 +148,22 @@ export default function AddDefMsgModal(props) {
                                 onClick={handleClose}
                                 aria-label="بستن مودال"
                             >
-                                <i className="bi bi-x-lg" />
+                                <FaTimes />
                             </button>
-                            <div className="ticket-header-content">
 
+                            <div className="ticket-header-content">
                                 <div className="ticket-header-text">
                                     <h2 id="new-ticket-modal-title">
-                                        ایجاد تیکت جدید
+                                        <span>
+                                            ایجاد تیکت جدید
+                                        </span>
                                     </h2>
-
                                 </div>
+
                                 <div className="ticket-icon">
-                                    <i className="bi bi-headset" />
+                                    <MdSupportAgent />
                                 </div>
                             </div>
-
                         </header>
 
                         <Form onSubmit={handleSubmit}>
@@ -187,7 +191,6 @@ export default function AddDefMsgModal(props) {
                                                 </Form.Label>
 
                                                 <div className="input-with-icon">
-                                                    <i className="bi bi-pencil-square" />
 
                                                     <Form.Control
                                                         type="text"
@@ -410,7 +413,7 @@ export default function AddDefMsgModal(props) {
                                                     onClick={openFileSelector}
                                                 >
                                                     <span className="upload-icon">
-                                                        <i className="bi bi-cloud-arrow-up" />
+                                                        <FaPaperclip />
                                                     </span>
 
                                                     <span className="upload-content">
@@ -419,12 +422,11 @@ export default function AddDefMsgModal(props) {
                                                         </p>
 
                                                         <small>
-                                                            فرمت‌های مجاز: JPG، PNG،
-                                                            PDF، DOC و ZIP
+                                                            فرمت‌های مجاز: JPG، PNG، PDF، DOC و ZIP
                                                         </small>
                                                     </span>
 
-                                                    <i className="bi bi-paperclip upload-clip" />
+                                                    <FaPaperclip className="upload-clip" />
                                                 </button>
                                             ) : (
                                                 <div className="selected-file">
@@ -468,7 +470,7 @@ export default function AddDefMsgModal(props) {
                                             marginLeft: "8px",
                                         }}
                                     />
-                                    <span>ارسال</span>
+                                    <span style={{ fontSize: "17px" }}>ارسال</span>
                                 </button>
 
                                 <button
@@ -482,7 +484,7 @@ export default function AddDefMsgModal(props) {
                                             marginLeft: "8px",
                                         }}
                                     />
-                                    <span>انصراف</span>
+                                    <span style={{ fontSize: "17px" }}>انصراف</span>
                                 </button>
                             </footer>
                         </Form>

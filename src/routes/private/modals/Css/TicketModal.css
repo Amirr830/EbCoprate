@@ -497,7 +497,6 @@
     min-height: 42px;
     padding: 0.55rem 1rem;
     border-radius: 10px;
-    font-family: inherit;
     font-size: 1rem;
     white-space: nowrap;
     cursor: pointer;
@@ -531,7 +530,7 @@
 }
 
 .submit-ticket-button i {
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     transition: 0.22s ease;
 }
 
