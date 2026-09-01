@@ -100,7 +100,7 @@ import Sidebarr from "./Dashboard/SideBar";
 import UserAccount from "../private/UserAccount/UserAccount";
 import Support from "../private/Support/Support";
 import Ticket from "../private/Ticket/Ticket"
-
+import CommentSuggestion from "./CommentSuggestion/CommentSuggestion";
 
 function Main(props) {
   var navigate = useNavigate();
@@ -1140,6 +1140,23 @@ function Main(props) {
                           <Ticket />
                         }
                       />
+
+
+                      <Route
+                        path={
+                          paths.private.definitions.commentSuggestion
+                        }
+                        element={
+                          <CommentSuggestion />
+                        }
+                      />
+
+
+
+
+
+
+
 
 
 

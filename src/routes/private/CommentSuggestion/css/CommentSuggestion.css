@@ -1,0 +1,386 @@
+.feedback-page {
+width: 100%;
+min-height: 100%;
+padding: 20px;
+background: #f6f8fb;
+direction: rtl;
+}
+
+.feedback-container {
+width: 100%;
+max-width: 100%;
+padding: 0;
+overflow: hidden;
+border-radius: 28px;
+background: #f6f8fb;
+box-shadow: 0 24px 70px rgba(11, 29, 51, 0.12);
+}
+
+.feedback-header-row {
+position: relative;
+margin: 0;
+padding: 26px 30px 24px;
+overflow: hidden;
+background: linear-gradient(135deg, #0d8f72, #16b982);
+color: #ffffff;
+direction: rtl;
+}
+
+.feedback-header-row::after {
+content: "";
+position: absolute;
+left: -30px;
+bottom: -46px;
+width: 160px;
+height: 100px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.09);
+transform: rotate(-22deg);
+}
+
+.feedback-title-wrapper {
+position: relative;
+z-index: 2;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+gap: 14px;
+width: 100%;
+direction: rtl;
+}
+
+.feedback-title-content {
+text-align: right;
+direction: rtl;
+}
+
+.feedback-title-icon {
+display: flex;
+align-items: center;
+justify-content: center;
+flex: 0 0 auto;
+width: 50px;
+height: 50px;
+border: 1px solid rgba(255, 255, 255, 0.35);
+border-radius: 16px;
+background: rgba(255, 255, 255, 0.16);
+color: #ffffff;
+font-size: 23px;
+}
+
+.feedback-title {
+margin: 0;
+color: #ffffff !important;
+font-size: clamp(18px, 2.4vw, 25px);
+letter-spacing: -0.4px;
+text-align: right;
+text-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.feedback-subtitle {
+margin: 6px 0 0;
+color: rgba(255, 255, 255, 0.88);
+font-size: 14px;
+text-align: right;
+}
+
+.feedback-section-row {
+margin: 0;
+padding: 25px 30px 0;
+}
+
+.feedback-section-heading {
+display: flex;
+align-items: center;
+gap: 9px;
+margin-bottom: 16px;
+direction: rtl;
+}
+
+.feedback-heading-line {
+display: block;
+flex: 0 0 auto;
+width: 5px;
+height: 21px;
+border-radius: 8px;
+background: #12ae7c;
+}
+
+.feedback-section-heading h3 {
+margin: 0;
+color: #233a55;
+font-size: 16px;
+}
+
+.feedback-category-grid {
+display: grid;
+grid-template-columns: repeat(3, minmax(0, 1fr));
+gap: 12px;
+width: 100%;
+}
+
+.feedback-category-card {
+position: relative;
+display: flex;
+align-items: center;
+gap: 9px;
+min-height: 58px;
+padding: 12px 13px;
+overflow: hidden;
+border: 1px solid #e4eaf0;
+border-radius: 16px;
+background: #ffffff;
+color: #68788c;
+cursor: pointer;
+text-align: right;
+direction: rtl;
+transition: 0.22s ease;
+}
+
+.feedback-category-card:hover {
+border-color: #a9dfca;
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(20, 66, 90, 0.08);
+}
+
+.feedback-category-card.active {
+border-color: #19b980;
+background: #ecfbf5;
+color: #147d60;
+box-shadow: 0 8px 18px rgba(25, 185, 128, 0.12);
+}
+
+.feedback-category-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+flex: 0 0 auto;
+width: 32px;
+height: 32px;
+border-radius: 11px;
+font-size: 18px;
+}
+
+.feedback-category-card.green .feedback-category-icon {
+background: #dff8ed;
+color: #0caa73;
+}
+
+.feedback-category-card.blue .feedback-category-icon {
+background: #e6f1ff;
+color: #3c83dc;
+}
+
+.feedback-category-card.purple .feedback-category-icon {
+background: #f0eaff;
+color: #8664d8;
+}
+
+.feedback-category-card.orange .feedback-category-icon {
+background: #fff0dd;
+color: #e79532;
+}
+
+.feedback-category-card.red .feedback-category-icon {
+background: #ffeaec;
+color: #dd6871;
+}
+
+.feedback-category-card.gray .feedback-category-icon {
+background: #edf0f4;
+color: #7a8795;
+}
+
+.feedback-category-title {
+overflow: hidden;
+font-size: 15px;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.feedback-selected-mark {
+position: absolute;
+top: 7px;
+left: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 18px;
+height: 18px;
+border-radius: 50%;
+background: #19b980;
+color: #ffffff;
+font-size: 14px;
+}
+
+.feedback-textarea-wrapper {
+position: relative;
+width: 100%;
+}
+
+.feedback-textarea {
+display: block;
+width: 100%;
+min-height: 145px;
+padding: 16px 17px 34px;
+resize: vertical;
+border: 1px solid #e1e8ef;
+border-radius: 17px;
+outline: 0;
+background: #ffffff;
+color: #2b4058;
+font-family: inherit;
+font-size: 15px;
+line-height: 2;
+text-align: right;
+direction: rtl;
+transition: 0.2s ease;
+}
+
+.feedback-textarea::placeholder {
+color: #a4afbb;
+}
+
+.feedback-textarea:focus {
+border-color: #20b985;
+box-shadow: 0 0 0 4px rgba(32, 185, 133, 0.1);
+}
+
+.feedback-character-count {
+position: absolute;
+bottom: 11px;
+left: 14px;
+color: #9aa7b4;
+direction: ltr;
+font-size: 13px;
+}
+
+.feedback-footer-row {
+margin: 0;
+padding: 24px 30px 30px;
+}
+
+.feedback-button-column {
+padding-right: 6px;
+padding-left: 6px;
+}
+
+.feedback-action-buttons {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.feedback-submit-button {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+gap: 9px;
+min-height: 50px;
+padding: 12px 18px;
+border: 0;
+border-radius: 15px;
+background: linear-gradient(
+135deg,
+#10ae76,
+#1bc688
+);
+color: #ffffff;
+font-family: inherit;
+font-size: 17px;
+cursor: pointer;
+box-shadow: 0 9px 20px rgba(16, 174, 118, 0.22);
+transition: 0.2s ease;
+}
+
+.feedback-submit-button:hover:not(:disabled) {
+background: linear-gradient(
+135deg,
+#0d9868,
+#12b978
+);
+transform: translateY(-2px);
+box-shadow: 0 12px 25px rgba(16, 174, 118, 0.3);
+}
+
+.feedback-submit-button:disabled {
+cursor: not-allowed;
+opacity: 0.55;
+box-shadow: none;
+}
+
+.feedback-cancel-button {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+gap: 8px;
+min-height: 50px;
+padding: 12px 18px;
+border: 1px solid #dc3545;
+border-radius: 15px;
+font-family: inherit;
+font-size: 17px;
+cursor: pointer;
+transition: 0.2s ease;
+}
+
+.feedback-cancel-button:hover:not(:disabled) {
+transform: translateY(-2px);
+}
+
+.feedback-cancel-button:disabled {
+cursor: not-allowed;
+opacity: 0.55;
+}
+
+@media (max-width: 576px) {
+
+
+.feedback-page {
+    padding: 10px;
+}
+
+.feedback-category-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    row-gap: 6px;
+    column-gap: 0;
+    width: 100%;
+}
+
+.feedback-category-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.feedback-footer-row {
+    padding: 20px 15px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.feedback-button-column {
+    width: 50%;
+    flex: 0 0 50%;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.feedback-submit-button,
+.feedback-cancel-button {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 8px;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+
+}

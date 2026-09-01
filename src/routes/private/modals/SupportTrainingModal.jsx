@@ -12,7 +12,6 @@ import {
     FaTimes
 } from "react-icons/fa";
 import { MdOutlineSupportAgent } from "react-icons/md";
-import CommentSuggestionModal from "./CommentSuggestionModal";
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
@@ -26,6 +25,11 @@ export default function AddDefMsgModal(props) {
     const handleGoToTicket = () => {
         setShow(false);
         navigate("/control-panel/69/definitions/ticket");
+    };
+
+    const handleGoToCommentSuggestion = () => {
+        setShow(false);
+        navigate("/control-panel/70/definitions/commentSuggestion");
     };
 
     let newFirstChild;
@@ -48,6 +52,7 @@ export default function AddDefMsgModal(props) {
                 dialogClassName="support-modal"
             >
                 <Modal.Body className="support-modal-body" dir="rtl">
+
                     <button
                         className="support-close-btn"
                         onClick={() => setShow(false)}
@@ -71,6 +76,7 @@ export default function AddDefMsgModal(props) {
                             </div>
 
                             <div className="support-contact-list">
+
                                 <div className="support-contact-item">
                                     <span className="contact-text">
                                         تماس با پشتیبانی
@@ -86,6 +92,7 @@ export default function AddDefMsgModal(props) {
 
                                     <FaPhoneAlt className="contact-icon" />
                                 </div>
+
                             </div>
 
                         </div>
@@ -96,22 +103,30 @@ export default function AddDefMsgModal(props) {
                                 className="support-action-btn"
                                 onClick={handleGoToTicket}
                             >
-                                <span>ارسال تیکت جدید</span>
+                                <span>
+                                    ارسال تیکت جدید
+                                </span>
                             </button>
 
-                            <CommentSuggestionModal>
-                                <button className="support-action-btn">
-                                    <span>نظرات و پیشنهادات</span>
-                                </button>
-                            </CommentSuggestionModal>
+                            <button
+                                className="support-action-btn"
+                                onClick={handleGoToCommentSuggestion}
+                            >
+                                <span>
+                                    نظرات و پیشنهادات
+                                </span>
+                            </button>
 
                             <button className="support-action-btn">
-                                <span>آموزش استفاده از پنل</span>
+                                <span>
+                                    آموزش استفاده از پنل
+                                </span>
                             </button>
 
                         </div>
 
                     </div>
+
                 </Modal.Body>
             </Modal>
         </>
