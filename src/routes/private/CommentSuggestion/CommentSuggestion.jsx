@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import {
 FaPaperPlane,
 FaCommentDots,
@@ -12,6 +13,8 @@ params,
 onSubmit,
 }) {
 
+
+const navigate = useNavigate();
 
 const [selectedCategory, setSelectedCategory] = useState("");
 const [message, setMessage] = useState("");
@@ -274,6 +277,7 @@ return (
                             onClick={() => {
                                 setMessage("");
                                 setSelectedCategory("");
+                                navigate("/");
                             }}
                             disabled={isSubmitting}
                         >
@@ -296,5 +300,6 @@ return (
 
     </div>
 );
+
 
 }
