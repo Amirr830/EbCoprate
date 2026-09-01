@@ -42,7 +42,9 @@
         
             "Wallet": "/control-panel/67/definitions/wallet",
             "userAccount": "/control-panel/67/definitions/userAccount",
-            "support": "/control-panel/68/definitions/support"
+            "support": "/control-panel/68/definitions/support",
+            "ticket": "/control-panel/69/definitions/ticket"
+
 
 
         

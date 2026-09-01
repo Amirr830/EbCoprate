@@ -84,7 +84,7 @@ import Kiosk from "./actions/kiosk";
 import ControlPanelSetting from "./settings/controlPanelSetting";
 import TripCountReport from "./reports/tripCountReport";
 import TripChartDaily from "./reports/tripChartDaily";
-import TripChartMonthly from "./reports/tripChartMonthly";
+import TripChartMonthly from "./reports/tripChartMonthly"
 import Shifts from "./definitions/shifts";
 import ShiftGroups from "./definitions/shiftGroups";
 import ShiftPattern from "./definitions/shiftPattern";
@@ -99,6 +99,8 @@ import Header from "./Dashboard/Header";
 import Sidebarr from "./Dashboard/SideBar";
 import UserAccount from "../private/UserAccount/UserAccount";
 import Support from "../private/Support/Support";
+import Ticket from "../private/Ticket/Ticket"
+
 
 function Main(props) {
   var navigate = useNavigate();
@@ -610,10 +612,9 @@ function Main(props) {
               <div
                 className={`
                   main-page-content
-                  ${
-                    isDashboard
-                      ? "main-dashboard-page"
-                      : ""
+                  ${isDashboard
+                    ? "main-dashboard-page"
+                    : ""
                   }
                 `}
                 ref={divScrollRef}
@@ -1129,6 +1130,19 @@ function Main(props) {
                         }
                       />
 
+
+
+                      <Route
+                        path={
+                          paths.private.definitions.ticket
+                        }
+                        element={
+                          <Ticket />
+                        }
+                      />
+
+
+
                       <Route
                         path={
                           paths.private.actions.dashboard
@@ -1200,6 +1214,7 @@ function Main(props) {
                           <Weather />
                         }
                       />
+
 
                       <Route
                         path={

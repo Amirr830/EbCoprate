@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./Css/SupportTrainingModal.css";
 import {
     FaHeadset,
@@ -10,14 +12,20 @@ import {
     FaTimes
 } from "react-icons/fa";
 import { MdOutlineSupportAgent } from "react-icons/md";
-import TicketModal from "./TicketModal"
-import CommentSuggestionModal from "./CommentSuggestionModal"
+import CommentSuggestionModal from "./CommentSuggestionModal";
 
 export default function AddDefMsgModal(props) {
     const [show, setShow] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleShow = () => {
         setShow(true);
+    };
+
+    const handleGoToTicket = () => {
+        setShow(false);
+        navigate("/control-panel/69/definitions/ticket");
     };
 
     let newFirstChild;
@@ -64,12 +72,18 @@ export default function AddDefMsgModal(props) {
 
                             <div className="support-contact-list">
                                 <div className="support-contact-item">
-                                    <span className="contact-text">تماس با پشتیبانی</span>
+                                    <span className="contact-text">
+                                        تماس با پشتیبانی
+                                    </span>
+
                                     <FaPhoneAlt className="contact-icon" />
                                 </div>
 
                                 <div className="support-contact-item">
-                                    <span className="contact-text">تماس با مدیریت</span>
+                                    <span className="contact-text">
+                                        تماس با مدیریت
+                                    </span>
+
                                     <FaPhoneAlt className="contact-icon" />
                                 </div>
                             </div>
@@ -77,11 +91,13 @@ export default function AddDefMsgModal(props) {
                         </div>
 
                         <div className="support-actions">
-                            <TicketModal>
-                                <button className="support-action-btn">
-                                    <span>ارسال تیکت جدید</span>
-                                </button>
-                            </TicketModal>
+
+                            <button
+                                className="support-action-btn"
+                                onClick={handleGoToTicket}
+                            >
+                                <span>ارسال تیکت جدید</span>
+                            </button>
 
                             <CommentSuggestionModal>
                                 <button className="support-action-btn">
@@ -92,6 +108,7 @@ export default function AddDefMsgModal(props) {
                             <button className="support-action-btn">
                                 <span>آموزش استفاده از پنل</span>
                             </button>
+
                         </div>
 
                     </div>
