@@ -101,6 +101,7 @@ import UserAccount from "../private/UserAccount/UserAccount";
 import Support from "../private/Support/Support";
 import Ticket from "../private/Ticket/Ticket"
 import CommentSuggestion from "./CommentSuggestion/CommentSuggestion";
+import Request from "./Requests/Request"
 
 function Main(props) {
   var navigate = useNavigate();
@@ -1151,7 +1152,14 @@ function Main(props) {
                         }
                       />
 
-
+                      <Route
+                        path={
+                          paths.private.definitions.request
+                        }
+                        element={
+                          <Request />
+                        }
+                      />
 
 
 
