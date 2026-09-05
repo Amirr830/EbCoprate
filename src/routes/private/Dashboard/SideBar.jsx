@@ -45,21 +45,21 @@ function SideBar() {
       title: "حساب کاربری",
       icon: <BsPersonFill />
     },
-    {
-      id: "friends",
-      title: "دعوت دوستان",
-      icon: <BsPeopleFill />
-    },
+    // {
+    //   id: "friends",
+    //   title: "دعوت دوستان",
+    //   icon: <BsPeopleFill />
+    // },
     {
       id: "support",
       title: "پشتیبانی",
       icon: <BsHeadset />
     },
-    {
-      id: "about",
-      title: "درباره ما",
-      icon: <BsInfoCircleFill />
-    }
+    // {
+    //   id: "about",
+    //   title: "درباره ما",
+    //   icon: <BsInfoCircleFill />
+    // }
   ];
 
   const getActiveMenu = () => {
