@@ -26,13 +26,15 @@ function Dashboard() {
   };
 
   return (
-    <div className="container-fluid  p-0">
+    <div className="container-fluid p-0 dashboard-page">
+
       {isSidebarOpen && (
         <div
           className="sidebar-backdrop d-md-none"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
+
       <div className="dashboard-layout desktop-top-space">
         <main className="dashboard-main hideScroll">
           <div className="dashboard-content">
@@ -55,11 +57,10 @@ function Dashboard() {
                 </div>
 
                 <div className="col-lg-4 col-xxl-4 d-none d-md-block">
-                  <div className="dashboard-card">
+                  <div className="dashboard-card dashboard-card-info">
                     <Info />
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

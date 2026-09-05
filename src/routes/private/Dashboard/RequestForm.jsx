@@ -283,6 +283,7 @@ function RequestForm() {
     setServiceSpeed(
       quickRequest.serviceSpeed || ""
     );
+
     window.history.replaceState({}, document.title);
   }, [location.state]);
 
@@ -530,30 +531,31 @@ function RequestForm() {
       payType: paymentType.payType,
       payTypeName: paymentType.payTypeName,
     };
-const params = {
-  custName: strings.requestForm.customerName,
-  custTel: strings.requestForm.addressPhone,
-  custMobile: strings.requestForm.addressPhone,
-  desc: notes || strings.requestForm.tripDescription,
-  vehicleClass: getVehicleClass(),
-  serviceSpeed: serviceSpeed || 0,
-  stopTimeSec: getStopTimeSec(),
-  discountCode: discountCode || null,
-  discountDescription: discountDescription || "",
-  accessibilities: selectedAccessibilityIds.join(","),
-  accessibilitiesStr: selectedAccessibilityNames.join(","),
-  fareExtra: 0,
-  farePercent: 0,
-  fareAlternative: 0,
-  agentType: 3,
-  fullResult: 1,
-  tripCount: 1,
-  targetDriverCode: 123,
-  force: 0,
-  addresses,
-  payType: paymentType.payType,
-  payTypeName: paymentType.payTypeName,
-};
+
+    const params = {
+      custName: strings.requestForm.customerName,
+      custTel: strings.requestForm.addressPhone,
+      custMobile: strings.requestForm.addressPhone,
+      desc: notes || strings.requestForm.tripDescription,
+      vehicleClass: getVehicleClass(),
+      serviceSpeed: serviceSpeed || 0,
+      stopTimeSec: getStopTimeSec(),
+      discountCode: discountCode || null,
+      discountDescription: discountDescription || "",
+      accessibilities: selectedAccessibilityIds.join(","),
+      accessibilitiesStr: selectedAccessibilityNames.join(","),
+      fareExtra: 0,
+      farePercent: 0,
+      fareAlternative: 0,
+      agentType: 3,
+      fullResult: 1,
+      tripCount: 1,
+      targetDriverCode: 123,
+      force: 0,
+      addresses,
+      payType: paymentType.payType,
+      payTypeName: paymentType.payTypeName,
+    };
 
     console.log("paramsssssssss:", params);
 
@@ -628,50 +630,42 @@ const params = {
     );
   };
 
+  const renderMobileHeader = () => {
+    return (
+      <div className="mobile-common-header">
+        <div className="mobile-header-menu">
+          <button
+            type="button"
+            className="btn btn-link text-dark p-0 m-0 border-0 hamburger-btn"
+            onClick={handleShowMenu}
+          >
+            <RxHamburgerMenu size={24} />
+          </button>
+        </div>
+
+        <div
+          className="mobile-wallet-box"
+          onClick={() =>
+            navigate(
+              paths.private.definitions.Wallet
+            )
+          }
+        >
+          <div className="mobile-wallet-plus">
+            <FaPlus size={8} />
+          </div>
+
+          <span>
+            ۲۵,۰۰۰ تومان
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   const renderMobilePage = () => {
     return (
       <div className="modern-form-card w-100 bg-white rounded-3 p-3 pt-2 mt-2 border shadow-sm">
-        <div className="form-scroll-content">
-          <div className="d-flex d-md-none align-items-center justify-content-between pb-2 mb-2 border-bottom">
-            <div className="d-flex align-items-center gap-2">
-              <button
-                type="button"
-                className="btn btn-link text-dark p-0 m-0 border-0 hamburger-btn"
-                onClick={handleShowMenu}
-              >
-                <RxHamburgerMenu size={24} />
-              </button>
-            </div>
-
-            <div
-              className="d-flex align-items-center gap-1 bg-warning px-2 py-1 rounded-2 border border-dark"
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                navigate(
-                  paths.private.definitions.Wallet
-                )
-              }
-            >
-              <div
-                className="bg-warning text-dark border border-dark rounded-circle p-1 d-flex align-items-center justify-content-center"
-                style={{
-                  width: 18,
-                  height: 18,
-                }}
-              >
-                <FaPlus size={8} />
-              </div>
-
-              <span
-                className="px-1"
-                style={{ fontSize: "16px" }}
-              >
-                ۲۵,۰۰۰ تومان
-              </span>
-            </div>
-          </div>
-        </div>
-
         <div className="route-card mb-2">
           <div className="route-item">
             <div className="route-side">
@@ -812,6 +806,7 @@ const params = {
               </button>
             </EdirAddressModal>
           </div>
+
           {additionalDestinations.map(
             (destination, index) => (
               <div
@@ -1386,18 +1381,22 @@ const params = {
 
       <div className="d-md-none w-100 mobile-content-area">
 
+        {renderMobileHeader()}
+
         {mobilePage === "request" && (
-          renderMobilePage()
+          <div className="mobile-page-wrapper mobile-request-page">
+            {renderMobilePage()}
+          </div>
         )}
 
         {mobilePage === "current" && (
-          <div className="mobile-page-wrapper">
+          <div className="mobile-page-wrapper mobile-current-page">
             <CurrentRequest />
           </div>
         )}
 
         {mobilePage === "info" && (
-          <div className="mobile-page-wrapper">
+          <div className="mobile-page-wrapper mobile-info-page">
             <Info />
           </div>
         )}

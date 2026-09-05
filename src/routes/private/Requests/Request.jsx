@@ -365,28 +365,6 @@ function Requests() {
                 fluid
                 className="requests-container"
             >
-                <Row
-                    className="requests-main-header align-items-center"
-                >
-                    <Col
-                        xs={12}
-                        md={8}
-                        lg={9}
-                    >
-                        <div className="requests-title-section">
-                            <div className="requests-main-icon">
-                                <BsBoxSeam />
-                            </div>
-
-                            <div className="requests-title-content">
-                                <div className="requests-title">
-                                    درخواست‌ها
-                                </div>
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-
                 <Row className="requests-tabs-wrapper">
                     <Col xs={12}>
                         <div className="requests-tabs">
