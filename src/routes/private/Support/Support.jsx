@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Container, Row, Col, Accordion } from "react-bootstrap";
+import { Container, Row, Col, Accordion, Offcanvas } from "react-bootstrap";
 import {
     FaChevronRight,
     FaSearch,
@@ -9,14 +9,18 @@ import {
     FaQuestionCircle,
     FaHeadset,
     FaArrowLeft,
-    FaEnvelope
+    FaEnvelope,
+    FaBars,
+    FaTimes
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import SideBar from "../Dashboard/SideBar";
 import "./css/Support.css";
 
 function Support() {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState("");
+    const [showMenu, setShowMenu] = useState(false);
 
     const supportQuestions = [
         {
@@ -77,115 +81,170 @@ function Support() {
         navigate("/control-panel/69/definitions/ticket");
     };
 
+    const handleCloseMenu = () => {
+        setShowMenu(false);
+    };
+
+    const handleShowMenu = () => {
+        setShowMenu(true);
+    };
+
     return (
-        <div className="support-page">
-            <Container fluid className="support-container">
-                <Row className="support-main-row">
-                    <Col xs={12}>
-                        <div className="support-main-card">
-                            <div className="support-hero">
-                                <Row className="align-items-center">
-                                    <Col xs={12} md={8}>
-                                        <div className="support-hero-content">
-                                            <div className="support-hero-text">
-                                                <button
-                                                    type="button"
-                                                    className="support-ticket-button support-ticket-button-top"
-                                                    onClick={handleNewTicket}
+        <div className="support-layout" dir="rtl">
+            <div className="support-mobile-header d-md-none">
+                <div className="support-mobile-header-inner">
+                    <button
+                        type="button"
+                        className="support-mobile-menu-btn"
+                        aria-label="باز کردن منو"
+                        onClick={handleShowMenu}
+                    >
+                        <span className="support-mobile-menu-icon">
+                            <FaBars size={19} />
+                        </span>
+                        <span className="support-mobile-menu-text">
+                            منو
+                        </span>
+                    </button>
+                    <div className="support-mobile-page-title">
+                        <span className="support-mobile-title-text">
+                            پشتیبانی
+                        </span>
+                        <span className="support-mobile-title-line" />
+                    </div>
+                </div>
+            </div>
+
+            <Offcanvas
+                show={showMenu}
+                onHide={handleCloseMenu}
+                placement="end"
+                dir="rtl"
+                className="custom-mobile-menu p-0"
+            >
+                <Offcanvas.Header className="d-flex justify-content-end align-items-center border-bottom pb-2 pt-3 px-3">
+                    <button
+                        type="button"
+                        className="btn p-0 border-0 text-muted"
+                        onClick={handleCloseMenu}
+                    >
+                        <FaTimes size={20} />
+                    </button>
+                </Offcanvas.Header>
+                <Offcanvas.Body className="p-0 overflow-hidden">
+                    <SideBar />
+                </Offcanvas.Body>
+            </Offcanvas>
+
+            <div className="support-page">
+                <Container fluid className="support-container">
+                    <Row className="support-main-row">
+                        <Col xs={12}>
+                            <div className="support-main-card">
+                                <div className="support-hero">
+                                    <Row className="align-items-center">
+                                        <Col xs={12} md={8}>
+                                            <div className="support-hero-content">
+                                                <div className="support-hero-text">
+                                                    <button
+                                                        type="button"
+                                                        className="support-ticket-button support-ticket-button-top"
+                                                        onClick={handleNewTicket}
+                                                    >
+                                                        <FaPlus />
+                                                        <span>
+                                                            ارسال تیکت جدید
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                        <Col xs={12} md={4}>
+                                            <div className="support-phone-card">
+                                                <div className="support-phone-icon">
+                                                    <FaPhoneAlt />
+                                                </div>
+                                                <div className="support-phone-info">
+                                                    <span>پشتیبانی تلفنی</span>
+                                                    <strong>1890</strong>
+                                                    <small>آماده پاسخگویی به شما</small>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+
+                                <Row className="support-content-row">
+                                    <Col xs={12} lg={12}>
+                                        <div className="support-section">
+                                            <div className="support-section-header">
+                                                <div className="support-section-title">
+                                                    <div className="support-section-icon">
+                                                        <FaQuestionCircle />
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                            پرسش‌های متداول
+                                                        </span>
+                                                        <small>
+                                                            پاسخ سریع به سوالات شما
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <span className="support-question-count">
+                                                    {filteredQuestions.length} سوال
+                                                </span>
+                                            </div>
+
+                                            {filteredQuestions.length > 0 ? (
+                                                <Accordion
+                                                    className="support-accordion"
+                                                    defaultActiveKey="0"
                                                 >
-                                                    <FaPlus />
+                                                    {filteredQuestions.map((item, index) => (
+                                                        <Accordion.Item
+                                                            eventKey={String(index)}
+                                                            key={item.id}
+                                                        >
+                                                            <Accordion.Header>
+                                                                <div className="support-question-header">
+                                                                    <div className="support-question-number">
+                                                                        {index + 1}
+                                                                    </div>
+                                                                    <span>
+                                                                        {item.title}
+                                                                    </span>
+                                                                </div>
+                                                            </Accordion.Header>
+                                                            <Accordion.Body>
+                                                                <div className="support-answer-content">
+                                                                    {item.description}
+                                                                </div>
+                                                            </Accordion.Body>
+                                                        </Accordion.Item>
+                                                    ))}
+                                                </Accordion>
+                                            ) : (
+                                                <div className="support-empty">
+                                                    <div className="support-empty-icon">
+                                                        <FaSearch />
+                                                    </div>
                                                     <span>
-                                                        ارسال تیکت جدید
+                                                        پرسشی پیدا نشد
                                                     </span>
-                                                    
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                    <Col xs={12} md={4}>
-                                        <div className="support-phone-card">
-                                            <div className="support-phone-icon">
-                                                <FaPhoneAlt />
-                                            </div>
-                                            <div className="support-phone-info">
-                                                <span>پشتیبانی تلفنی</span>
-                                                <strong>1890</strong>
-                                                <small>آماده پاسخگویی به شما</small>
-                                            </div>
+                                                    <small>
+                                                        نتیجه‌ای مطابق جستجوی شما وجود ندارد.
+                                                    </small>
+                                                </div>
+                                            )}
                                         </div>
                                     </Col>
                                 </Row>
                             </div>
-
-                            <Row className="support-content-row">
-                                <Col xs={12} lg={12}>
-                                    <div className="support-section">
-                                        <div className="support-section-header">
-                                            <div className="support-section-title">
-                                                <div className="support-section-icon">
-                                                    <FaQuestionCircle />
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        پرسش‌های متداول
-                                                    </span>
-                                                    <small>
-                                                        پاسخ سریع به سوالات شما
-                                                    </small>
-                                                </div>
-                                            </div>
-                                            <span className="support-question-count">
-                                                {filteredQuestions.length} سوال
-                                            </span>
-                                        </div>
-                                        {filteredQuestions.length > 0 ? (
-                                            <Accordion
-                                                className="support-accordion"
-                                                defaultActiveKey="0"
-                                            >
-                                                {filteredQuestions.map((item, index) => (
-                                                    <Accordion.Item
-                                                        eventKey={String(index)}
-                                                        key={item.id}
-                                                    >
-                                                        <Accordion.Header>
-                                                            <div className="support-question-header">
-                                                                <div className="support-question-number">
-                                                                    {index + 1}
-                                                                </div>
-                                                                <span>
-                                                                    {item.title}
-                                                                </span>
-                                                            </div>
-                                                        </Accordion.Header>
-                                                        <Accordion.Body>
-                                                            <div className="support-answer-content">
-                                                                {item.description}
-                                                            </div>
-                                                        </Accordion.Body>
-                                                    </Accordion.Item>
-                                                ))}
-                                            </Accordion>
-                                        ) : (
-                                            <div className="support-empty">
-                                                <div className="support-empty-icon">
-                                                    <FaSearch />
-                                                </div>
-                                                <span>
-                                                    پرسشی پیدا نشد
-                                                </span>
-                                                <small>
-                                                    نتیجه‌ای مطابق جستجوی شما وجود ندارد.
-                                                </small>
-                                            </div>
-                                        )}
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </div>
     );
 }
