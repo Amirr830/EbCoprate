@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Offcanvas } from "react-bootstrap";
 import {
     BsCheck2Circle,
     BsClockHistory,
@@ -13,7 +12,9 @@ import {
     BsBoxSeam,
     BsThreeDotsVertical
 } from "react-icons/bs";
+import { FaBars, FaTimes } from "react-icons/fa";
 import "./css/Request.css";
+import SideBar from "../Dashboard/SideBar"
 
 const getStaticRequests = () => {
     return [
@@ -134,6 +135,15 @@ function Requests() {
     const [activeTab, setActiveTab] = useState("completed");
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
+
+    const handleCloseMenu = () => {
+        setShowMenu(false);
+    };
+
+    const handleShowMenu = () => {
+        setShowMenu(true);
+    };
 
     const getStaticTabClass = () => {
         if (activeTab === "all") {
@@ -361,6 +371,58 @@ function Requests() {
             className={`requests-page ${getStaticTabClass()}`}
             dir="rtl"
         >
+
+<div className="requests-mobile-header d-md-none">
+    <div className="requests-mobile-header-inner">
+
+        <button
+            type="button"
+            className="requests-mobile-menu-btn"
+            aria-label="باز کردن منو"
+            onClick={handleShowMenu}
+        >
+            <span className="requests-mobile-menu-icon">
+                <FaBars size={17} />
+            </span>
+
+            <span className="requests-mobile-menu-text">
+                منو
+            </span>
+        </button>
+
+        <div className="requests-mobile-page-title">
+            <span className="requests-mobile-title-text">
+                درخواست‌ها
+            </span>
+
+            <span className="requests-mobile-title-line" />
+        </div>
+
+    </div>
+</div>
+
+            <Offcanvas
+                show={showMenu}
+                onHide={handleCloseMenu}
+                placement="end"
+                dir="rtl"
+                className="custom-mobile-menu p-0"
+            >
+                <Offcanvas.Header className="d-flex justify-content-end align-items-center border-bottom pb-2 pt-3 px-3">
+                    <button
+                        type="button"
+                        className="btn p-0 border-0 text-muted"
+                        onClick={handleCloseMenu}
+                    >
+                        <FaTimes size={20} />
+                    </button>
+                </Offcanvas.Header>
+
+                <Offcanvas.Body className="p-0 overflow-hidden">
+                    <SideBar />
+                </Offcanvas.Body>
+            </Offcanvas>
+
             <Container
                 fluid
                 className="requests-container"
@@ -406,8 +468,6 @@ function Requests() {
                             {getSectionTitle()}
                         </div>
                     </Col>
-
-
                 </Row>
 
                 {loading ? (
@@ -480,13 +540,16 @@ function Requests() {
                                                         </div>
                                                         <span>مبدا</span>
                                                     </div>
+
                                                     <div className="request-location-address">
                                                         {request.origin}
                                                     </div>
                                                 </div>
+
                                                 <div className="request-route-arrow">
                                                     ←
                                                 </div>
+
                                                 <div className="request-location-item request-destination-item">
                                                     <div className="request-location-title">
                                                         <div className="request-point request-destination-point">
@@ -494,6 +557,7 @@ function Requests() {
                                                         </div>
                                                         <span>مقصد</span>
                                                     </div>
+
                                                     <div className="request-location-address">
                                                         {request.destination}
                                                     </div>
