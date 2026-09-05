@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Css/SideBar.css";
 
 import {
@@ -22,7 +22,7 @@ import answerModal from "../../../modals/answerModal";
 
 function SideBar() {
   const navigate = useNavigate();
-  const [active, setActive] = useState("dashboard");
+  const location = useLocation();
 
   const menus = [
     {
@@ -62,11 +62,49 @@ function SideBar() {
     }
   ];
 
-  const handleMenuClick = (item) => {
-    setActive(item.id);
+  const getActiveMenu = () => {
+    const currentPath = location.pathname;
 
+    if (currentPath === paths.private.dashboard) {
+      return "dashboard";
+    }
+
+    if (
+      currentPath === "/control-panel/71/definitions/request" ||
+      currentPath.startsWith("/control-panel/71/definitions/request/")
+    ) {
+      return "requests";
+    }
+
+    if (
+      currentPath === paths.private.definitions.Wallet ||
+      currentPath.startsWith(`${paths.private.definitions.Wallet}/`)
+    ) {
+      return "wallet";
+    }
+
+    if (
+      currentPath === paths.private.definitions.userAccount ||
+      currentPath.startsWith(`${paths.private.definitions.userAccount}/`)
+    ) {
+      return "account";
+    }
+
+    if (
+      currentPath === "/control-panel/68/definitions/support" ||
+      currentPath.startsWith("/control-panel/68/definitions/support/")
+    ) {
+      return "support";
+    }
+
+    return "";
+  };
+
+  const active = getActiveMenu();
+
+  const handleMenuClick = (item) => {
     if (item.id === "dashboard") {
-      navigate("/control-panel/-1/dashboard");
+      navigate(paths.private.dashboard);
     }
 
     if (item.id === "requests") {
@@ -74,7 +112,7 @@ function SideBar() {
     }
 
     if (item.id === "wallet") {
-      navigate("/control-panel/67/definitions/wallet");
+      navigate(paths.private.definitions.Wallet);
     }
 
     if (item.id === "account") {
@@ -124,6 +162,7 @@ function SideBar() {
         </Col>
 
         <Col className="sidebar-menu-container custom-scrollbar">
+
           {menus.map((item) => (
             <button
               key={item.id}
@@ -145,6 +184,7 @@ function SideBar() {
               </div>
             </button>
           ))}
+
         </Col>
 
         <Col xs="auto" className="sidebar-footer-section">

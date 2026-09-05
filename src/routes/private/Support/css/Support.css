@@ -3,7 +3,7 @@
     height: 100vh;
     min-height: 100vh;
     direction: rtl;
-    background: linear-gradient(180deg, #f5f7f8 0%, #eef2f4 100%);
+ 
     overflow-y: auto;
     overflow-x: hidden;
     padding: 10px;

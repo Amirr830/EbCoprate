@@ -248,6 +248,10 @@
     transition: all .3s ease;
 }
 
+.main-header-wrapper {
+  left: 20px;
+  width: calc(100% - 20px);
+}
 .header-btn::before {
     content: "";
     position: absolute;

@@ -107,7 +107,7 @@ function Main(props) {
   var navigate = useNavigate();
 
   var [isOpen, setOpen] = useState(false);
-
+const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   var navbarSize = "10px";
 
   useLocation();
@@ -118,6 +118,18 @@ function Main(props) {
       activePage: undefined
     }
   );
+
+  useEffect(() => {
+  const handleOpenMobileMenu = () => {
+    setIsSidebarOpen(true);
+  };
+
+  window.addEventListener("openMobileMenu", handleOpenMobileMenu);
+
+  return () => {
+    window.removeEventListener("openMobileMenu", handleOpenMobileMenu);
+  };
+}, []);
 
   const [activeMenu, setActiveMenu] = useState(undefined);
 

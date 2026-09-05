@@ -24,6 +24,10 @@ function Header() {
 
     const showBack =
         location.pathname !== paths.private.dashboard;
+
+    const isWalletPage =
+        location.pathname === paths.private.definitions.Wallet;
+
     return (
         <header className="dashboard-header">
             <div className="container-fluid px-3">
@@ -32,13 +36,13 @@ function Header() {
                     <div className="col-auto">
                         <div className="d-flex align-items-center gap-3">
 
-                            {location.pathname === paths.private.dashboard && (
+                            {!isWalletPage && (
                                 <button
                                     className="btn btn-warning"
-                                    style={{fontSize:"25px" , height:"40px" , borderRadius:"8px" , width:"150px"}}
+                                    style={{ fontSize: "25px", height: "40px", borderRadius: "8px", width: "150px" }}
                                     onClick={() => navigate(paths.private.definitions.Wallet)}
                                 >
-                                    <FaWallet className="wallet-icon" style={{marginLeft:"10px"}}/>
+                                    <FaWallet className="wallet-icon" style={{ marginLeft: "10px" }} />
                                     <span className="wallet-price">25,000 تومان</span>
                                 </button>
                             )}

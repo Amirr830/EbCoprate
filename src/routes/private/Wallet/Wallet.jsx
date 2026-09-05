@@ -1,12 +1,34 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Wallet.css";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { FaWallet } from "react-icons/fa";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Offcanvas,
+} from "react-bootstrap";
+import {
+  FaWallet,
+  FaArrowUp,
+  FaCreditCard,
+  FaHistory,
+  FaPlus,
+  FaCheckCircle,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import strings from "../../../app/String.json";
+import paths from "../../../app/paths.json";
+import SideBar from "../Dashboard/SideBar"
 
 function Wallet() {
+  const navigate = useNavigate();
+
   const [amount, setAmount] = useState("");
   const [amountFocused, setAmountFocused] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const formatAmount = (value) => {
     const onlyNumbers = value.replace(/\D/g, "");
@@ -26,171 +48,291 @@ function Wallet() {
     setAmount(formatAmount(String(value)));
   };
 
+  const handleCloseMenu = () => {
+    setShowMenu(false);
+  };
+
+  const handleShowMenu = () => {
+    setShowMenu(true);
+  };
+
   const numericAmount = amount.replace(/,/g, "");
 
   return (
     <div className="wallet-page-wrapper">
-      <Container fluid className="px-3">
-        <Row className="mb-2 mb-lg-3 align-items-center">
-          <Col
-            xs={12}
-            className="d-flex justify-content-between align-items-center text-muted small"
+
+      <div className="wallet-mobile-header">
+        <button
+          type="button"
+          className="wallet-mobile-menu-btn"
+          aria-label="باز کردن منو"
+          onClick={handleShowMenu}
+        >
+          <FaBars size={24} />
+        </button>
+      </div>
+
+      <Offcanvas
+        show={showMenu}
+        onHide={handleCloseMenu}
+        placement="end"
+        dir="rtl"
+        className="custom-mobile-menu p-0"
+      >
+        <Offcanvas.Header className="d-flex justify-content-end align-items-center border-bottom pb-2 pt-3 px-3">
+          <button
+            type="button"
+            className="btn p-0 border-0 text-muted"
+            onClick={handleCloseMenu}
           >
-          </Col>
-        </Row>
+            <FaTimes size={20} />
+          </button>
+        </Offcanvas.Header>
 
-        <Row className="g-3 align-items-stretch">
-          <Col xs={12} lg={3} className="d-none d-lg-block"></Col>
+        <Offcanvas.Body className="p-0 overflow-hidden">
+          <SideBar />
+        </Offcanvas.Body>
+      </Offcanvas>
 
-          <Col xs={12} lg={4}>
-            <div className="wallet-card h-100 p-3 p-xl-4 d-flex flex-column justify-content-between">
-              <Row className="align-items-center mb-3">
-                <Col xs={5} className="text-center">
-                  <div className="wallet-illustration mx-auto d-flex align-items-center justify-content-center">
-                    <FaWallet size={32} className="text-success" />
-                  </div>
-                </Col>
+      <Container fluid className="wallet-container">
+        <Row className="wallet-main-row g-4">
 
-                <Col xs={7} className="text-end">
-                  <div className="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-success bg-opacity-10 text-success dir-rtl">
-                    <FaWallet />
+          <Col xs={12} xl={6}>
+            <div className="wallet-main-card">
+
+              <div className="wallet-balance-box">
+
+                <div className="wallet-balance-top">
+
+                  <div className="wallet-balance-label">
+                    <span className="wallet-small-icon">
+                      <FaWallet />
+                    </span>
 
                     <span>
-                      {strings.wallet.balance}:{" "}
-                      {strings.wallet.zeroBalance}
+                      {strings.wallet.balance}
                     </span>
                   </div>
-                </Col>
-              </Row>
 
-              <div className="text-end mb-3">
-                <h6 className="mb-1 text-dark">
-                  {strings.wallet.increaseBalance}
-                </h6>
+                  <div className="wallet-status">
+                    <FaCheckCircle />
+                    <span>فعال</span>
+                  </div>
 
-                <p className="text-muted small mb-0">
-                  {strings.wallet.increaseBalanceDescription}
-                </p>
-              </div>
-
-              <div className="mb-3">
-                <div className="text-end text-muted small mb-2">
-                  {strings.wallet.suggestedAmounts}
                 </div>
 
-                <Row className="g-2">
-                  <Col xs={4}>
-                    <Button
-                      type="button"
-                      variant="outline-primary"
-                      className="w-100 rounded-pill py-1 text-nowrap"
-                      onClick={() => handleSuggestedAmount(1000000)}
-                    >
-                      {strings.wallet.oneMillionRial}
-                    </Button>
-                  </Col>
+                <div className="wallet-balance-content">
+                  <div className="wallet-balance-number">
+                    {strings.wallet.zeroBalance}
+                  </div>
+                </div>
 
-                  <Col xs={4}>
-                    <Button
-                      type="button"
-                      variant="outline-primary"
-                      className="w-100 rounded-pill py-1 text-nowrap"
-                      onClick={() => handleSuggestedAmount(5000000)}
-                    >
-                      {strings.wallet.fiveMillionRial}
-                    </Button>
-                  </Col>
+                <div className="wallet-balance-bottom">
+                  <span>
+                    موجودی قابل استفاده
+                  </span>
 
-                  <Col xs={4}>
-                    <Button
-                      type="button"
-                      variant="outline-primary"
-                      className="w-100 rounded-pill py-1 text-nowrap"
-                      onClick={() => handleSuggestedAmount(10000000)}
-                    >
-                      {strings.wallet.tenMillionRial}
-                    </Button>
-                  </Col>
-                </Row>
+                  <FaArrowUp />
+                </div>
+
               </div>
 
-              <Form.Group className="mb-3">
-                <Form.Label className="custom-amount-label">
-                  {strings.wallet.customAmount}
-                </Form.Label>
+              <div className="wallet-deposit-section">
 
-                <Form.Control
-                  type="text"
-                  inputMode="numeric"
-                  value={amount}
-                  onChange={handleAmountChange}
-                  placeholder={strings.wallet.customAmountPlaceholder}
-                  className="custom-amount-input shadow-none"
-                  onFocus={() => setAmountFocused(true)}
-                  onBlur={() => setAmountFocused(false)}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "#22c55e";
-                    e.currentTarget.style.boxShadow =
-                      "0 0 0 3px rgba(34, 197, 94, 0.22)";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!amountFocused) {
-                      e.currentTarget.style.borderColor = "#cbd5e1";
-                      e.currentTarget.style.boxShadow = "none";
-                    }
-                  }}
-                  style={{
-                    borderColor: amountFocused
-                      ? "#22c55e"
-                      : "#cbd5e1",
-                    boxShadow: amountFocused
-                      ? "0 0 0 3px rgba(34, 197, 94, 0.22)"
-                      : "none",
-                    outline: "none",
-                  }}
-                />
+                <div className="wallet-section-heading">
 
-                {amount && (
-                  <div className="amount-unit">
-                    {strings.wallet.rial}
+                  <div className="wallet-section-icon">
+                    <FaPlus />
                   </div>
-                )}
-              </Form.Group>
 
-              <Button
-                type="button"
-                className="w-100 py-2 rounded-3 border-0 bg-emerald"
-                disabled={!numericAmount}
-              >
-                {strings.wallet.onlinePayment}
-              </Button>
+                  <div>
+                    <h5>
+                      {strings.wallet.increaseBalance}
+                    </h5>
+
+                    <p>
+                      {strings.wallet.increaseBalanceDescription}
+                    </p>
+                  </div>
+
+                </div>
+
+                <div className="wallet-suggested-section">
+
+                  <div className="wallet-field-title">
+                    {strings.wallet.suggestedAmounts}
+                  </div>
+
+                  <div className="wallet-suggested-grid">
+
+                    <button
+                      type="button"
+                      className="wallet-suggested-btn"
+                      onClick={() =>
+                        handleSuggestedAmount(1000000)
+                      }
+                    >
+                      <span className="suggested-amount">
+                        1,000,000
+                      </span>
+
+                      <span className="suggested-label">
+                        {strings.wallet.oneMillionRial}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="wallet-suggested-btn"
+                      onClick={() =>
+                        handleSuggestedAmount(5000000)
+                      }
+                    >
+                      <span className="suggested-amount">
+                        5,000,000
+                      </span>
+
+                      <span className="suggested-label">
+                        {strings.wallet.fiveMillionRial}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="wallet-suggested-btn"
+                      onClick={() =>
+                        handleSuggestedAmount(10000000)
+                      }
+                    >
+                      <span className="suggested-amount">
+                        10,000,000
+                      </span>
+
+                      <span className="suggested-label">
+                        {strings.wallet.tenMillionRial}
+                      </span>
+                    </button>
+
+                  </div>
+
+                </div>
+
+                <Form.Group className="wallet-amount-group">
+
+                  <Form.Label className="wallet-field-title">
+                    {strings.wallet.customAmount}
+                  </Form.Label>
+
+                  <div
+                    className={`wallet-input-wrapper ${
+                      amountFocused
+                        ? "wallet-input-focused"
+                        : ""
+                    }`}
+                  >
+                    <Form.Control
+                      type="text"
+                      inputMode="numeric"
+                      value={amount}
+                      onChange={handleAmountChange}
+                      placeholder={
+                        strings.wallet.customAmountPlaceholder
+                      }
+                      className="wallet-amount-input"
+                      onFocus={() =>
+                        setAmountFocused(true)
+                      }
+                      onBlur={() =>
+                        setAmountFocused(false)
+                      }
+                    />
+
+                    {amount && (
+                      <span className="wallet-input-unit">
+                        {strings.wallet.rial}
+                      </span>
+                    )}
+
+                  </div>
+
+                </Form.Group>
+
+                <Button
+                  type="button"
+                  className="wallet-payment-btn"
+                  disabled={!numericAmount}
+                >
+                  <span className="wallet-payment-icon">
+                    <FaCreditCard />
+                  </span>
+
+                  <span>
+                    {strings.wallet.onlinePayment}
+                  </span>
+
+                  <span className="wallet-payment-arrow">
+                    ←
+                  </span>
+                </Button>
+
+              </div>
+
             </div>
           </Col>
 
-          <Col xs={12} lg={4}>
-            <div className="wallet-card h-100 d-flex flex-column justify-content-between p-3 p-xl-4">
-              <div className="d-flex justify-content-end text-muted small">
-                {strings.wallet.financialHistory}
+          <Col xs={12} xl={6}>
+            <div className="wallet-history-card">
+
+              <div className="wallet-history-header">
+
+                <div className="wallet-history-title-wrapper">
+
+                  <div className="wallet-history-icon">
+                    <FaHistory />
+                  </div>
+
+                  <div>
+                    <h5>
+                      {strings.wallet.financialHistory}
+                    </h5>
+
+                    <p>
+                      سوابق و تراکنش‌های کیف پول
+                    </p>
+                  </div>
+
+                </div>
+
+                <div className="wallet-history-count">
+                  ۰ تراکنش
+                </div>
+
               </div>
 
-              <div className="text-center text-muted my-auto py-4">
-                <FaWallet
-                  size={40}
-                  className="mb-3 opacity-25"
-                />
+              <div className="wallet-history-divider"></div>
 
-                <h6 className="mb-1 text-secondary">
+              <div className="wallet-empty-state">
+
+                <div className="wallet-empty-icon">
+                  <FaHistory />
+                </div>
+
+                <h3>
                   {strings.wallet.noTransactions}
+                </h3>
+
+                <h6>
+                  {strings.wallet.noTransactionsDescription}
                 </h6>
 
-                <small className="text-muted">
-                  {strings.wallet.noTransactionsDescription}
-                </small>
               </div>
+
             </div>
           </Col>
+
         </Row>
       </Container>
+
     </div>
   );
 }
