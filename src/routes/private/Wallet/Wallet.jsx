@@ -61,16 +61,30 @@ function Wallet() {
   return (
     <div className="wallet-page-wrapper">
 
-      <div className="wallet-mobile-header">
-        <button
-          type="button"
-          className="wallet-mobile-menu-btn"
-          aria-label="باز کردن منو"
-          onClick={handleShowMenu}
-        >
-          <FaBars size={24} />
-        </button>
-      </div>
+<div className="wallet-mobile-header">
+    <button
+        type="button"
+        className="wallet-mobile-menu-btn"
+        aria-label="باز کردن منو"
+        onClick={handleShowMenu}
+    >
+        <span className="wallet-mobile-menu-icon">
+            <FaBars size={19} />
+        </span>
+
+        <span className="wallet-mobile-menu-text">
+            منو
+        </span>
+    </button>
+
+    <div className="wallet-mobile-page-title">
+        <span className="wallet-mobile-title-text">
+            کیف پول
+        </span>
+
+        <span className="wallet-mobile-title-line" />
+    </div>
+</div>
 
       <Offcanvas
         show={showMenu}
