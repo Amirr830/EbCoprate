@@ -8,14 +8,13 @@ import {
     BsSquareFill,
     BsCalendar3,
     BsTruck,
-    BsGeoAlt,
     BsBoxSeam,
-    BsThreeDotsVertical
+    BsStarFill
 } from "react-icons/bs";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./css/Request.css";
-import SideBar from "../Dashboard/SideBar"
-
+import SideBar from "../Dashboard/SideBar";
+import TripPollModal from "./TripPollModal";
 const getStaticRequests = () => {
     return [
         {
@@ -130,41 +129,32 @@ const getStaticRequests = () => {
         }
     ];
 };
-
 function Requests() {
     const [activeTab, setActiveTab] = useState("completed");
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showMenu, setShowMenu] = useState(false);
-
     const handleCloseMenu = () => {
         setShowMenu(false);
     };
-
     const handleShowMenu = () => {
         setShowMenu(true);
     };
-
     const getStaticTabClass = () => {
         if (activeTab === "all") {
             return "requests-tabs-all";
         }
-
         if (activeTab === "completed") {
             return "requests-tabs-completed";
         }
-
         if (activeTab === "current") {
             return "requests-tabs-current";
         }
-
         if (activeTab === "cancelled") {
             return "requests-tabs-cancelled";
         }
-
         return "requests-tabs-all";
     };
-
     const getRequests = async () => {
         try {
             setLoading(true);
@@ -182,10 +172,8 @@ function Requests() {
             setLoading(false);
         }
     };
-
     const loadRequests = async () => {
         const result = await getRequests();
-
         if (Array.isArray(result)) {
             setRequests(result);
         }
@@ -193,11 +181,9 @@ function Requests() {
             setRequests([]);
         }
     };
-
     useEffect(() => {
         loadRequests();
     }, []);
-
     const tabs = [
         {
             id: "all",
@@ -220,12 +206,10 @@ function Requests() {
             icon: <BsXCircle />
         }
     ];
-
     const getFilteredRequests = () => {
         if (activeTab === "all") {
             return requests;
         }
-
         if (activeTab === "completed") {
             return requests.filter((item) => {
                 return (
@@ -234,7 +218,6 @@ function Requests() {
                 );
             });
         }
-
         if (activeTab === "current") {
             return requests.filter((item) => {
                 return (
@@ -244,23 +227,18 @@ function Requests() {
                 );
             });
         }
-
         if (activeTab === "cancelled") {
             return requests.filter((item) => {
                 return item.statusType === "cancelled";
             });
         }
-
         return [];
     };
-
     const filteredRequests = getFilteredRequests();
-
     const getTabCount = (tabId) => {
         if (tabId === "all") {
             return requests.length;
         }
-
         if (tabId === "completed") {
             return requests.filter((item) => {
                 return (
@@ -269,7 +247,6 @@ function Requests() {
                 );
             }).length;
         }
-
         if (tabId === "current") {
             return requests.filter((item) => {
                 return (
@@ -279,16 +256,13 @@ function Requests() {
                 );
             }).length;
         }
-
         if (tabId === "cancelled") {
             return requests.filter((item) => {
                 return item.statusType === "cancelled";
             }).length;
         }
-
         return 0;
     };
-
     const getStatusClass = (request) => {
         if (
             request.statusType === "completed" ||
@@ -296,7 +270,6 @@ function Requests() {
         ) {
             return "completed";
         }
-
         if (
             request.statusType === "current" ||
             request.statusType === "moving" ||
@@ -304,103 +277,79 @@ function Requests() {
         ) {
             return "current";
         }
-
         if (request.statusType === "cancelled") {
             return "cancelled";
         }
-
         return "current";
     };
-
     const getStatusIcon = (request) => {
         const statusClass = getStatusClass(request);
-
         if (statusClass === "completed") {
             return <BsCheck2Circle />;
         }
-
         if (statusClass === "cancelled") {
             return <BsXCircle />;
         }
-
         return <BsClockHistory />;
     };
-
     const getStatusTitle = (request) => {
         if (request.status) {
             return request.status;
         }
-
         if (request.statusType === "completed") {
             return "تکمیل شده";
         }
-
         if (request.statusType === "current") {
             return "در حال انجام";
         }
-
         if (request.statusType === "cancelled") {
             return "لغو شده";
         }
-
         return "";
     };
-
     const getSectionTitle = () => {
         if (activeTab === "all") {
             return "همه درخواست‌ها";
         }
-
         if (activeTab === "completed") {
             return "درخواست‌های تکمیل شده";
         }
-
         if (activeTab === "current") {
             return "درخواست‌های در حال انجام";
         }
-
         if (activeTab === "cancelled") {
             return "درخواست‌های لغو شده";
         }
-
         return "درخواست‌ها";
     };
-
     return (
         <div
             className={`requests-page ${getStaticTabClass()}`}
             dir="rtl"
         >
-
-<div className="requests-mobile-header d-md-none">
-    <div className="requests-mobile-header-inner">
-
-        <button
-            type="button"
-            className="requests-mobile-menu-btn"
-            aria-label="باز کردن منو"
-            onClick={handleShowMenu}
-        >
-            <span className="requests-mobile-menu-icon">
-                <FaBars size={17} />
-            </span>
-
-            <span className="requests-mobile-menu-text">
-                منو
-            </span>
-        </button>
-
-        <div className="requests-mobile-page-title">
-            <span className="requests-mobile-title-text">
-                درخواست‌ها
-            </span>
-
-            <span className="requests-mobile-title-line" />
-        </div>
-
-    </div>
-</div>
-
+            <div className="requests-mobile-header d-md-none">
+                <div className="requests-mobile-header-inner">
+                    <button
+                        type="button"
+                        className="requests-mobile-menu-btn"
+                        aria-label="باز کردن منو"
+                        onClick={handleShowMenu}
+                    >
+                        <span className="requests-mobile-menu-icon">
+                            <FaBars size={17} />
+                        </span>
+                        <span className="requests-mobile-menu-text">
+                            منو
+                        </span>
+                    </button>
+                    <div className="requests-mobile-page-title">
+                        <span className="requests-mobile-title-text">
+                            درخواست‌ها
+                        </span>
+                        <span className="requests-mobile-title-line" />
+                    </div>
+                </div>
+            </div>
             <Offcanvas
                 show={showMenu}
                 onHide={handleCloseMenu}
@@ -417,12 +366,10 @@ function Requests() {
                         <FaTimes size={20} />
                     </button>
                 </Offcanvas.Header>
-
                 <Offcanvas.Body className="p-0 overflow-hidden">
                     <SideBar />
                 </Offcanvas.Body>
             </Offcanvas>
-
             <Container
                 fluid
                 className="requests-container"
@@ -443,11 +390,9 @@ function Requests() {
                                     <div className="requests-tab-icon">
                                         {tab.icon}
                                     </div>
-
                                     <span>
                                         {tab.title}
                                     </span>
-
                                     <div className="requests-tab-count">
                                         {getTabCount(tab.id)}
                                     </div>
@@ -456,7 +401,6 @@ function Requests() {
                         </div>
                     </Col>
                 </Row>
-
                 <Row
                     className="requests-section-header align-items-center"
                 >
@@ -469,13 +413,11 @@ function Requests() {
                         </div>
                     </Col>
                 </Row>
-
                 {loading ? (
                     <Row>
                         <Col xs={12}>
                             <div className="requests-loading">
                                 <div className="requests-loading-spinner" />
-
                                 <span>
                                     در حال دریافت اطلاعات...
                                 </span>
@@ -488,7 +430,9 @@ function Requests() {
                             filteredRequests.map((request) => {
                                 const statusClass =
                                     getStatusClass(request);
-
+                                const shouldShowDetailButton =
+                                    statusClass === "completed" ||
+                                    statusClass === "cancelled";
                                 return (
                                     <Col
                                         key={request.id}
@@ -506,32 +450,38 @@ function Requests() {
                                                     <div className="request-date-icon">
                                                         <BsCalendar3 />
                                                     </div>
-
                                                     <div className="request-date-content">
-                                                        <div className="request-date" style={{ fontSize: "14px" }}>
+                                                        <div
+                                                            className="request-date"
+                                                            style={{
+                                                                fontSize: "14px"
+                                                            }}
+                                                        >
                                                             {request.date}
                                                         </div>
-
-                                                        <div className="request-time" style={{ fontSize: "14px" }}>
+                                                        <div
+                                                            className="request-time"
+                                                            style={{
+                                                                fontSize: "14px"
+                                                            }}
+                                                        >
                                                             {request.time}
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div
                                                     className={`request-status-badge request-status-${statusClass}`}
-                                                    style={{ fontSize: "13px" }}
+                                                    style={{
+                                                        fontSize: "13px"
+                                                    }}
                                                 >
                                                     {getStatusIcon(request)}
-
                                                     <span>
                                                         {getStatusTitle(request)}
                                                     </span>
                                                 </div>
                                             </div>
-
                                             <div className="request-main-divider" />
-
                                             <div className="request-route-container">
                                                 <div className="request-location-item request-origin-item">
                                                     <div className="request-location-title">
@@ -540,16 +490,13 @@ function Requests() {
                                                         </div>
                                                         <span>مبدا</span>
                                                     </div>
-
                                                     <div className="request-location-address">
                                                         {request.origin}
                                                     </div>
                                                 </div>
-
                                                 <div className="request-route-arrow">
                                                     ←
                                                 </div>
-
                                                 <div className="request-location-item request-destination-item">
                                                     <div className="request-location-title">
                                                         <div className="request-point request-destination-point">
@@ -557,59 +504,60 @@ function Requests() {
                                                         </div>
                                                         <span>مقصد</span>
                                                     </div>
-
                                                     <div className="request-location-address">
                                                         {request.destination}
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div className="request-main-divider" />
-
                                             <div className="request-card-footer">
                                                 <div className="request-vehicle-section">
                                                     <div className="request-vehicle-icon">
                                                         <BsTruck />
                                                     </div>
-
                                                     <div className="request-vehicle-content">
                                                         <span className="request-footer-label">
                                                             وسیله نقلیه
                                                         </span>
-
                                                         <span className="request-vehicle-name">
                                                             {request.vehicle}
                                                         </span>
                                                     </div>
                                                 </div>
-
                                                 <div className="request-price-section">
                                                     <span className="request-footer-label">
                                                         هزینه :
                                                     </span>
-
                                                     <div className="request-price">
                                                         <span>
                                                             {request.price}
                                                         </span>
-
                                                         <small>
                                                             تومان
                                                         </small>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <button
-                                                type="button"
-                                                className="request-detail-button"
-                                            >
-                                                <BsGeoAlt />
-
-                                                <span>
-                                                    مشاهده جزئیات درخواست
-                                                </span>
-                                            </button>
+                                            {shouldShowDetailButton && (
+                                                <TripPollModal>
+                                                    <button
+                                                        type="button"
+                                                        className={`request-detail-button request-detail-button-${statusClass}`}
+                                                    >
+                                                        <span className="request-detail-button-icon">
+                                                            <BsStarFill />
+                                                        </span>
+                                                        <span className="request-detail-button-content">
+                                                            <span className="request-detail-button-title">
+                                                                نظرسنجی سفر
+                                                            </span>
+                                                        </span>
+                                                        <span className="request-detail-button-arrow">
+                                                            ←
+                                                        </span>
+                                                    </button>
+                                                </TripPollModal>
+                                            )}
                                         </div>
                                     </Col>
                                 );
@@ -620,11 +568,9 @@ function Requests() {
                                     <div className="requests-empty-icon">
                                         <BsBoxSeam />
                                     </div>
-
                                     <div className="requests-empty-title">
                                         درخواستی وجود ندارد
                                     </div>
-
                                     <div className="requests-empty-description">
                                         در حال حاضر موردی در این بخش وجود ندارد.
                                     </div>
@@ -637,5 +583,4 @@ function Requests() {
         </div>
     );
 }
-
 export default Requests;
