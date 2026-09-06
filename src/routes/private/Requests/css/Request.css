@@ -6,17 +6,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
-    background:
-        radial-gradient(
-            circle at 100% 0%,
-            rgba(38, 193, 120, 0.09),
-            transparent 30%
-        ),
-        linear-gradient(
-            180deg,
-            #f8faf9 0%,
-            #f1f5f3 100%
-        );
+
     transition:
         background 0.3s ease;
 }
@@ -76,7 +66,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.9);
     border: 1px solid #e5ebe8;
 }
 .requests-total-icon {
@@ -87,7 +76,6 @@
     align-items: center;
     justify-content: center;
     color: #26b873;
-    background: #edfaf3;
     font-size: 19px;
 }
 .requests-total-content {
@@ -110,7 +98,6 @@
     top: 0;
     z-index: 20;
     padding: 6px 0;
-    background: rgba(248, 250, 249, 0.96);
     transition:
         background 0.3s ease;
 }
@@ -120,7 +107,6 @@
     align-items: stretch;
     padding: 4px;
     border-radius: 15px;
-    background: #ffffff;
     border: 1px solid #e6ece9;
     transition:
         background 0.3s ease,

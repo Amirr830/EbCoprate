@@ -393,9 +393,7 @@ function Requests() {
                                     <span>
                                         {tab.title}
                                     </span>
-                                    <div className="requests-tab-count">
-                                        {getTabCount(tab.id)}
-                                    </div>
+                    
                                 </button>
                             ))}
                         </div>
