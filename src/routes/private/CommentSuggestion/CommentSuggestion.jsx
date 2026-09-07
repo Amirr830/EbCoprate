@@ -1,305 +1,340 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Offcanvas } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
-FaPaperPlane,
-FaCommentDots,
-FaTimes
+    FaPaperPlane,
+    FaCommentDots,
+    FaTimes,
+    FaBars,
+    FaWallet,
 } from "react-icons/fa";
 import "./css/CommentSuggestion.css";
+import SideBar from "../Dashboard/SideBar";
 
 export default function CommentSuggestion({
-params,
-onSubmit,
+    params,
+    onSubmit,
 }) {
+    const navigate = useNavigate();
 
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [message, setMessage] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
-const navigate = useNavigate();
-
-const [selectedCategory, setSelectedCategory] = useState("");
-const [message, setMessage] = useState("");
-const [isSubmitting, setIsSubmitting] = useState(false);
-
-const getFeedbackCategories = () => {
-    return [
-        {
-            id: "service",
-            title: "کیفیت سرویس",
-            icon: "✦",
-            color: "green",
-        },
-        {
-            id: "speed",
-            title: "سرعت اینترنت",
-            icon: "⚡",
-            color: "blue",
-        },
-        {
-            id: "coverage",
-            title: "پوشش شبکه",
-            icon: "⌁",
-            color: "purple",
-        },
-        {
-            id: "support",
-            title: "پشتیبانی",
-            icon: "♧",
-            color: "orange",
-        },
-        {
-            id: "billing",
-            title: "صورتحساب",
-            icon: "▣",
-            color: "red",
-        },
-        {
-            id: "other",
-            title: "سایر موارد",
-            icon: "⋯",
-            color: "gray",
-        },
-    ];
-};
-
-const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!selectedCategory || !message.trim()) {
-        return;
-    }
-
-    const categories = getFeedbackCategories();
-
-    const selectedItem = categories.find(
-        (item) => item.id === selectedCategory
-    );
-
-    const formData = {
-        category: selectedCategory,
-        categoryTitle: selectedItem?.title || "",
-        message: message.trim(),
-        params,
+    const getFeedbackCategories = () => {
+        return [
+            {
+                id: "service",
+                title: "کیفیت سرویس",
+                icon: "✦",
+                color: "green",
+            },
+            {
+                id: "speed",
+                title: "سرعت اینترنت",
+                icon: "⚡",
+                color: "blue",
+            },
+            {
+                id: "coverage",
+                title: "پوشش شبکه",
+                icon: "⌁",
+                color: "purple",
+            },
+            {
+                id: "support",
+                title: "پشتیبانی",
+                icon: "♧",
+                color: "orange",
+            },
+            {
+                id: "billing",
+                title: "صورتحساب",
+                icon: "▣",
+                color: "red",
+            },
+            {
+                id: "other",
+                title: "سایر موارد",
+                icon: "⋯",
+                color: "gray",
+            },
+        ];
     };
 
-    try {
-        setIsSubmitting(true);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-        if (onSubmit) {
-            await onSubmit(formData);
+        if (!selectedCategory || !message.trim()) {
+            return;
         }
 
-        setMessage("");
-        setSelectedCategory("");
+        const categories = getFeedbackCategories();
 
-    } catch (error) {
-        console.error("خطا در ثبت دیدگاه:", error);
-    } finally {
-        setIsSubmitting(false);
-    }
-};
-
-const renderCategories = () => {
-    const categories = getFeedbackCategories();
-
-    return categories.map((category) => {
-        const isSelected =
-            selectedCategory === category.id;
-
-        return (
-            <button
-                key={category.id}
-                type="button"
-                className={`feedback-category-card ${
-                    isSelected ? "active" : ""
-                } ${category.color}`}
-                onClick={() =>
-                    setSelectedCategory(category.id)
-                }
-            >
-                <span className="feedback-category-icon">
-                    {category.icon}
-                </span>
-
-                <span className="feedback-category-title">
-                    {category.title}
-                </span>
-
-                {isSelected && (
-                    <span className="feedback-selected-mark">
-                        ✓
-                    </span>
-                )}
-            </button>
+        const selectedItem = categories.find(
+            (item) => item.id === selectedCategory
         );
-    });
-};
 
-return (
-    <div
-        className="feedback-page"
-        dir="rtl"
-    >
+        const formData = {
+            category: selectedCategory,
+            categoryTitle: selectedItem?.title || "",
+            message: message.trim(),
+            params,
+        };
 
-        <Container
-            fluid
-            className="feedback-container"
-        >
+        try {
+            setIsSubmitting(true);
 
-            <Row className="feedback-header-row align-items-center">
+            if (onSubmit) {
+                await onSubmit(formData);
+            }
 
-                <Col
-                    xs={12}
-                    className="d-flex justify-content-end"
+            setMessage("");
+            setSelectedCategory("");
+        } catch (error) {
+            console.error("خطا در ثبت دیدگاه:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const renderCategories = () => {
+        const categories = getFeedbackCategories();
+
+        return categories.map((category) => {
+            const isSelected =
+                selectedCategory === category.id;
+
+            return (
+                <button
+                    key={category.id}
+                    type="button"
+                    className={`feedback-category-card ${
+                        isSelected ? "active" : ""
+                    } ${category.color}`}
+                    onClick={() =>
+                        setSelectedCategory(category.id)
+                    }
                 >
+                    <span className="feedback-category-icon">
+                        {category.icon}
+                    </span>
 
-                    <div className="feedback-title-wrapper">
+                    <span className="feedback-category-title">
+                        {category.title}
+                    </span>
 
-                        <div className="feedback-title-content">
+                    {isSelected && (
+                        <span className="feedback-selected-mark">
+                            ✓
+                        </span>
+                    )}
+                </button>
+            );
+        });
+    };
 
-                            <h2 className="feedback-title">
-                                نظرات و پیشنهادها
-                            </h2>
+    const handleCloseMenu = () => {
+        setShowMenu(false);
+    };
 
-                        </div>
+    const handleShowMenu = () => {
+        setShowMenu(true);
+    };
 
-                        <div className="feedback-title-icon">
-                            <FaCommentDots />
-                        </div>
+    const handleWalletClick = () => {
+        navigate("/control-panel/67/definitions/wallet");
+    };
 
-                    </div>
+    return (
+        <div
+            className="feedback-page"
+            dir="rtl"
+        >
+            <div
+                className="feedback-mobile-header d-md-none"
+            >
+                <div className="feedback-mobile-header-inner">
+                    <button
+                        type="button"
+                        className="feedback-mobile-menu-btn"
+                        aria-label="باز کردن منو"
+                        onClick={handleShowMenu}
+                    >
+                        <span className="feedback-mobile-menu-icon">
+                            <FaBars size={17} style={{color:"black"}}/>
+                        </span>
 
-                </Col>
+                        <span className="feedback-mobile-menu-text">
+                            منو
+                        </span>
+                    </button>
 
-            </Row>
+                    <button
+                        type="button"
+                        className="feedback-mobile-wallet-btn"
+                        onClick={handleWalletClick}
+                        aria-label="رفتن به کیف پول"
+                    >
+                        <span className="feedback-mobile-wallet-icon">
+                            <FaWallet size={16} />
+                        </span>
 
-            <form onSubmit={handleSubmit}>
+                        <span className="feedback-mobile-wallet-content">
+                            <span className="feedback-mobile-wallet-amount">
+                                ۲۵۰,۰۰۰ تومان
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
 
-                <Row className="feedback-section-row">
+            <div style={{ marginTop: "5px" }}></div>
 
-                    <Col xs={12}>
+            <Offcanvas
+                show={showMenu}
+                onHide={handleCloseMenu}
+                placement="end"
+                dir="rtl"
+                className="custom-mobile-menu p-0"
+            >
+                <Offcanvas.Header className="d-flex justify-content-end align-items-center border-bottom pb-2 pt-3 px-3">
+                    <button
+                        type="button"
+                        className="btn p-0 border-0 text-muted"
+                        onClick={handleCloseMenu}
+                    >
+                        <FaTimes size={20} />
+                    </button>
+                </Offcanvas.Header>
 
-                        <div className="feedback-section-heading">
+                <Offcanvas.Body className="p-0 overflow-hidden">
+                    <SideBar />
+                </Offcanvas.Body>
+            </Offcanvas>
 
-                            <span className="feedback-heading-line" />
-
-                            <h3>
-                                موضوع نظر شما چیست؟
-                            </h3>
-
-                        </div>
-
-                        <div className="feedback-category-grid">
-                            {renderCategories()}
-                        </div>
-
-                    </Col>
-
-                </Row>
-
-                <Row className="feedback-section-row">
-
-                    <Col xs={12}>
-
-                        <div className="feedback-section-heading">
-
-                            <span className="feedback-heading-line" />
-
-                            <h3>
-                                توضیحات و دیدگاه شما
-                            </h3>
-
-                        </div>
-
-                        <div className="feedback-textarea-wrapper">
-
-                            <textarea
-                                className="feedback-textarea"
-                                value={message}
-                                onChange={(event) =>
-                                    setMessage(
-                                        event.target.value
-                                    )
-                                }
-                                placeholder="دیدگاه خود را درباره خدمات با ما در میان بگذارید..."
-                                maxLength={500}
-                                rows={6}
-                            />
-
-                            <div className="feedback-character-count">
-                                {message.length} / 500
+            <Container
+                fluid
+                className="feedback-container"
+            >
+                <Row className="feedback-header-row align-items-center">
+                    <Col
+                        xs={12}
+                        className="d-flex justify-content-end"
+                    >
+                        <div className="feedback-title-wrapper">
+                            <div className="feedback-title-content">
+                                <h2 className="feedback-title">
+                                    نظرات و پیشنهادها
+                                </h2>
                             </div>
 
+                            <div className="feedback-title-icon">
+                                <FaCommentDots />
+                            </div>
                         </div>
-
                     </Col>
-
                 </Row>
 
-                <Row className="feedback-footer-row align-items-center">
+                <form onSubmit={handleSubmit}>
+                    <Row className="feedback-section-row">
+                        <Col xs={12}>
+                            <div className="feedback-section-heading">
+                                <span className="feedback-heading-line" />
 
-                    <Col
-                        xs={6}
-                        lg={6}
-                        className="feedback-button-column"
-                    >
+                                <h3>
+                                    موضوع نظر شما چیست؟
+                                </h3>
+                            </div>
 
-                        <button
-                            type="submit"
-                            className="feedback-submit-button"
-                            disabled={
-                                !selectedCategory ||
-                                !message.trim() ||
-                                isSubmitting
-                            }
+                            <div className="feedback-category-grid">
+                                {renderCategories()}
+                            </div>
+                        </Col>
+                    </Row>
+
+                    <Row className="feedback-section-row">
+                        <Col xs={12}>
+                            <div className="feedback-section-heading">
+                                <span className="feedback-heading-line" />
+
+                                <h3>
+                                    توضیحات و دیدگاه شما
+                                </h3>
+                            </div>
+
+                            <div className="feedback-textarea-wrapper">
+                                <textarea
+                                    className="feedback-textarea"
+                                    value={message}
+                                    onChange={(event) =>
+                                        setMessage(
+                                            event.target.value
+                                        )
+                                    }
+                                    placeholder="دیدگاه خود را درباره خدمات با ما در میان بگذارید..."
+                                    maxLength={500}
+                                    rows={6}
+                                />
+
+                                <div className="feedback-character-count">
+                                    {message.length} / 500
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+
+                    <Row className="feedback-footer-row align-items-center">
+                        <Col
+                            xs={6}
+                            lg={6}
+                            className="feedback-button-column"
                         >
+                            <button
+                                type="submit"
+                                className="feedback-submit-button"
+                                disabled={
+                                    !selectedCategory ||
+                                    !message.trim() ||
+                                    isSubmitting
+                                }
+                            >
+                                <FaPaperPlane />
 
-                            <FaPaperPlane />
+                                <span>
+                                    {isSubmitting
+                                        ? "در حال ثبت..."
+                                        : "ثبت"}
+                                </span>
+                            </button>
+                        </Col>
 
-                            <span>
-                                {isSubmitting
-                                    ? "در حال ثبت..."
-                                    : "ثبت"}
-                            </span>
-
-                        </button>
-
-                    </Col>
-
-                    <Col
-                        xs={6}
-                        lg={6}
-                        className="feedback-button-column"
-                    >
-
-                        <button
-                            type="button"
-                            className="feedback-cancel-button btn btn-danger"
-                            onClick={() => {
-                                setMessage("");
-                                setSelectedCategory("");
-                                navigate("/");
-                            }}
-                            disabled={isSubmitting}
+                        <Col
+                            xs={6}
+                            lg={6}
+                            className="feedback-button-column"
                         >
+                            <button
+                                type="button"
+                                className="feedback-cancel-button btn btn-danger"
+                                onClick={() => {
+                                    setMessage("");
+                                    setSelectedCategory("");
+                                    navigate("/");
+                                }}
+                                disabled={isSubmitting}
+                            >
+                                <FaTimes />
 
-                            <FaTimes />
-
-                            <span>
-                                انصراف
-                            </span>
-
-                        </button>
-
-                    </Col>
-
-                </Row>
-
-            </form>
-
-        </Container>
-
-    </div>
-);
-
-
+                                <span>
+                                    انصراف
+                                </span>
+                            </button>
+                        </Col>
+                    </Row>
+                </form>
+            </Container>
+        </div>
+    );
 }
