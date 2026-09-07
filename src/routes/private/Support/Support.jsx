@@ -11,7 +11,8 @@ import {
     FaArrowLeft,
     FaEnvelope,
     FaBars,
-    FaTimes
+    FaTimes,
+    FaWallet
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../Dashboard/SideBar";
@@ -89,6 +90,10 @@ function Support() {
         setShowMenu(true);
     };
 
+    const handleWalletClick = () => {
+        navigate("/control-panel/67/definitions/wallet");
+    };
+
     return (
         <div className="support-layout" dir="rtl">
             <div className="support-mobile-header d-md-none">
@@ -102,15 +107,29 @@ function Support() {
                         <span className="support-mobile-menu-icon">
                             <FaBars size={19} />
                         </span>
+
                         <span className="support-mobile-menu-text">
                             منو
                         </span>
                     </button>
+
                     <div className="support-mobile-page-title">
-                        <span className="support-mobile-title-text">
-                            پشتیبانی
-                        </span>
-                        <span className="support-mobile-title-line" />
+                        <button
+                            type="button"
+                            className="support-mobile-wallet-btn"
+                            onClick={handleWalletClick}
+                            aria-label="رفتن به کیف پول"
+                        >
+                            <span className="support-mobile-wallet-icon">
+                                <FaWallet size={16} />
+                            </span>
+
+                            <span className="support-mobile-wallet-content">
+                                <span className="support-mobile-wallet-amount">
+                                    ۲۵۰,۰۰۰ تومان
+                                </span>
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -131,6 +150,7 @@ function Support() {
                         <FaTimes size={20} />
                     </button>
                 </Offcanvas.Header>
+
                 <Offcanvas.Body className="p-0 overflow-hidden">
                     <SideBar />
                 </Offcanvas.Body>
@@ -152,6 +172,7 @@ function Support() {
                                                         onClick={handleNewTicket}
                                                     >
                                                         <FaPlus />
+
                                                         <span>
                                                             ارسال تیکت جدید
                                                         </span>
@@ -159,15 +180,25 @@ function Support() {
                                                 </div>
                                             </div>
                                         </Col>
+
                                         <Col xs={12} md={4}>
                                             <div className="support-phone-card">
                                                 <div className="support-phone-icon">
                                                     <FaPhoneAlt />
                                                 </div>
+
                                                 <div className="support-phone-info">
-                                                    <span>پشتیبانی تلفنی</span>
-                                                    <strong>1890</strong>
-                                                    <small>آماده پاسخگویی به شما</small>
+                                                    <span>
+                                                        پشتیبانی تلفنی
+                                                    </span>
+
+                                                    <strong>
+                                                        1890
+                                                    </strong>
+
+                                                    <small>
+                                                        آماده پاسخگویی به شما
+                                                    </small>
                                                 </div>
                                             </div>
                                         </Col>
@@ -182,15 +213,18 @@ function Support() {
                                                     <div className="support-section-icon">
                                                         <FaQuestionCircle />
                                                     </div>
+
                                                     <div>
                                                         <span>
                                                             پرسش‌های متداول
                                                         </span>
+
                                                         <small>
                                                             پاسخ سریع به سوالات شما
                                                         </small>
                                                     </div>
                                                 </div>
+
                                                 <span className="support-question-count">
                                                     {filteredQuestions.length} سوال
                                                 </span>
@@ -211,11 +245,13 @@ function Support() {
                                                                     <div className="support-question-number">
                                                                         {index + 1}
                                                                     </div>
+
                                                                     <span>
                                                                         {item.title}
                                                                     </span>
                                                                 </div>
                                                             </Accordion.Header>
+
                                                             <Accordion.Body>
                                                                 <div className="support-answer-content">
                                                                     {item.description}
@@ -229,9 +265,11 @@ function Support() {
                                                     <div className="support-empty-icon">
                                                         <FaSearch />
                                                     </div>
+
                                                     <span>
                                                         پرسشی پیدا نشد
                                                     </span>
+
                                                     <small>
                                                         نتیجه‌ای مطابق جستجوی شما وجود ندارد.
                                                     </small>

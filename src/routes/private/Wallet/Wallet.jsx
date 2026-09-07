@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Wallet.css";
+
 import {
   Container,
   Row,
@@ -9,6 +10,7 @@ import {
   Button,
   Offcanvas,
 } from "react-bootstrap";
+
 import {
   FaWallet,
   FaArrowUp,
@@ -19,9 +21,10 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+
 import strings from "../../../app/String.json";
 import paths from "../../../app/paths.json";
-import SideBar from "../Dashboard/SideBar"
+import SideBar from "../Dashboard/SideBar";
 
 function Wallet() {
   const navigate = useNavigate();
@@ -56,35 +59,55 @@ function Wallet() {
     setShowMenu(true);
   };
 
+  const handleWalletClick = () => {
+    navigate("/control-panel/67/definitions/wallet");
+  };
+
   const numericAmount = amount.replace(/,/g, "");
 
   return (
     <div className="wallet-page-wrapper">
 
-<div className="wallet-mobile-header">
-    <button
-        type="button"
-        className="wallet-mobile-menu-btn"
-        aria-label="باز کردن منو"
-        onClick={handleShowMenu}
-    >
-        <span className="wallet-mobile-menu-icon">
-            <FaBars size={19} />
-        </span>
+      <div className="wallet-mobile-header d-md-none" style={{marginTop:"5px"}}>
+        <div className="wallet-mobile-header-inner">
 
-        <span className="wallet-mobile-menu-text">
-            منو
-        </span>
-    </button>
+          <button
+            type="button"
+            className="wallet-mobile-menu-btn"
+            aria-label="باز کردن منو"
+            onClick={handleShowMenu}
+          >
+            <span className="wallet-mobile-menu-icon">
+              <FaBars size={17} />
+            </span>
 
-    <div className="wallet-mobile-page-title">
-        <span className="wallet-mobile-title-text">
-            کیف پول
-        </span>
+            <span className="wallet-mobile-menu-text">
+              منو
+            </span>
+          </button>
 
-        <span className="wallet-mobile-title-line" />
-    </div>
-</div>
+          <div className="wallet-mobile-page-title">
+            <button
+              type="button"
+              className="wallet-mobile-wallet-btn"
+              onClick={handleWalletClick}
+              aria-label="رفتن به کیف پول"
+            >
+              <span className="wallet-mobile-wallet-icon">
+                <FaWallet size={16} />
+              </span>
+
+              <span className="wallet-mobile-wallet-content">
+                <span className="wallet-mobile-wallet-amount">
+                  ۲۵۰,۰۰۰ تومان
+                </span>
+              </span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+      <div style={{marginTop:"5px"}}></div>
 
       <Offcanvas
         show={showMenu}
@@ -94,6 +117,7 @@ function Wallet() {
         className="custom-mobile-menu p-0"
       >
         <Offcanvas.Header className="d-flex justify-content-end align-items-center border-bottom pb-2 pt-3 px-3">
+
           <button
             type="button"
             className="btn p-0 border-0 text-muted"
@@ -101,6 +125,7 @@ function Wallet() {
           >
             <FaTimes size={20} />
           </button>
+
         </Offcanvas.Header>
 
         <Offcanvas.Body className="p-0 overflow-hidden">
@@ -108,10 +133,20 @@ function Wallet() {
         </Offcanvas.Body>
       </Offcanvas>
 
+      {/* =========================
+          WALLET CONTENT
+      ========================= */}
+
       <Container fluid className="wallet-container">
+
         <Row className="wallet-main-row g-4">
 
+          {/* =========================
+              BALANCE / DEPOSIT
+          ========================= */}
+
           <Col xs={12} xl={6}>
+
             <div className="wallet-main-card">
 
               <div className="wallet-balance-box">
@@ -119,6 +154,7 @@ function Wallet() {
                 <div className="wallet-balance-top">
 
                   <div className="wallet-balance-label">
+
                     <span className="wallet-small-icon">
                       <FaWallet />
                     </span>
@@ -126,27 +162,37 @@ function Wallet() {
                     <span>
                       {strings.wallet.balance}
                     </span>
+
                   </div>
 
                   <div className="wallet-status">
+
                     <FaCheckCircle />
-                    <span>فعال</span>
+
+                    <span>
+                      فعال
+                    </span>
+
                   </div>
 
                 </div>
 
                 <div className="wallet-balance-content">
+
                   <div className="wallet-balance-number">
                     {strings.wallet.zeroBalance}
                   </div>
+
                 </div>
 
                 <div className="wallet-balance-bottom">
+
                   <span>
                     موجودی قابل استفاده
                   </span>
 
                   <FaArrowUp />
+
                 </div>
 
               </div>
@@ -160,6 +206,7 @@ function Wallet() {
                   </div>
 
                   <div>
+
                     <h5>
                       {strings.wallet.increaseBalance}
                     </h5>
@@ -167,9 +214,14 @@ function Wallet() {
                     <p>
                       {strings.wallet.increaseBalanceDescription}
                     </p>
+
                   </div>
 
                 </div>
+
+                {/* =========================
+                    SUGGESTED AMOUNTS
+                ========================= */}
 
                 <div className="wallet-suggested-section">
 
@@ -186,6 +238,7 @@ function Wallet() {
                         handleSuggestedAmount(1000000)
                       }
                     >
+
                       <span className="suggested-amount">
                         1,000,000
                       </span>
@@ -193,6 +246,7 @@ function Wallet() {
                       <span className="suggested-label">
                         {strings.wallet.oneMillionRial}
                       </span>
+
                     </button>
 
                     <button
@@ -202,6 +256,7 @@ function Wallet() {
                         handleSuggestedAmount(5000000)
                       }
                     >
+
                       <span className="suggested-amount">
                         5,000,000
                       </span>
@@ -209,6 +264,7 @@ function Wallet() {
                       <span className="suggested-label">
                         {strings.wallet.fiveMillionRial}
                       </span>
+
                     </button>
 
                     <button
@@ -218,6 +274,7 @@ function Wallet() {
                         handleSuggestedAmount(10000000)
                       }
                     >
+
                       <span className="suggested-amount">
                         10,000,000
                       </span>
@@ -225,11 +282,16 @@ function Wallet() {
                       <span className="suggested-label">
                         {strings.wallet.tenMillionRial}
                       </span>
+
                     </button>
 
                   </div>
 
                 </div>
+
+                {/* =========================
+                    CUSTOM AMOUNT
+                ========================= */}
 
                 <Form.Group className="wallet-amount-group">
 
@@ -238,12 +300,12 @@ function Wallet() {
                   </Form.Label>
 
                   <div
-                    className={`wallet-input-wrapper ${
-                      amountFocused
+                    className={`wallet-input-wrapper ${amountFocused
                         ? "wallet-input-focused"
                         : ""
-                    }`}
+                      }`}
                   >
+
                     <Form.Control
                       type="text"
                       inputMode="numeric"
@@ -271,11 +333,16 @@ function Wallet() {
 
                 </Form.Group>
 
+                {/* =========================
+                    PAYMENT BUTTON
+                ========================= */}
+
                 <Button
                   type="button"
                   className="wallet-payment-btn"
                   disabled={!numericAmount}
                 >
+
                   <span className="wallet-payment-icon">
                     <FaCreditCard />
                   </span>
@@ -287,14 +354,21 @@ function Wallet() {
                   <span className="wallet-payment-arrow">
                     ←
                   </span>
+
                 </Button>
 
               </div>
 
             </div>
+
           </Col>
 
+          {/* =========================
+              HISTORY
+          ========================= */}
+
           <Col xs={12} xl={6}>
+
             <div className="wallet-history-card">
 
               <div className="wallet-history-header">
@@ -306,6 +380,7 @@ function Wallet() {
                   </div>
 
                   <div>
+
                     <h5>
                       {strings.wallet.financialHistory}
                     </h5>
@@ -313,6 +388,7 @@ function Wallet() {
                     <p>
                       سوابق و تراکنش‌های کیف پول
                     </p>
+
                   </div>
 
                 </div>
@@ -342,9 +418,11 @@ function Wallet() {
               </div>
 
             </div>
+
           </Col>
 
         </Row>
+
       </Container>
 
     </div>

@@ -15,7 +15,7 @@ import CurrentRequest from "./CurrentRequest";
 import Info from "./Info";
 import ShippingMethodModal from "./Modals/ShippingMethodModal";
 import RegisterDiscountCode from "./Modals/RegisterDiscountCode";
-
+import {FaWallet} from "react-icons/fa";
 
 const getRequestData = (strings) => {
   return {
@@ -652,7 +652,7 @@ function RequestForm() {
           }
         >
           <div className="mobile-wallet-plus">
-            <FaPlus size={8} />
+            <FaWallet size={8} />
           </div>
 
           <span>
