@@ -1,11 +1,10 @@
-
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import {
   Navigate,
-  useNavigate,
   Route,
   Routes,
-  useLocation
+  useLocation,
+  useNavigate
 } from "react-router-dom";
 import Backup from "./actions/backup";
 import paths from "../../app/paths.json";
@@ -25,6 +24,7 @@ import NavbarReducer from "../../reducers/navbarReducer";
 import { CgClose } from "react-icons/cg";
 import "./main.css";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { FaWallet } from "react-icons/fa";
 import Cars from "./definitions/cars";
 import CarBrands from "./definitions/carBrands";
 import Persons from "./definitions/persons";
@@ -84,7 +84,7 @@ import Kiosk from "./actions/kiosk";
 import ControlPanelSetting from "./settings/controlPanelSetting";
 import TripCountReport from "./reports/tripCountReport";
 import TripChartDaily from "./reports/tripChartDaily";
-import TripChartMonthly from "./reports/tripChartMonthly"
+import TripChartMonthly from "./reports/tripChartMonthly";
 import Shifts from "./definitions/shifts";
 import ShiftGroups from "./definitions/shiftGroups";
 import ShiftPattern from "./definitions/shiftPattern";
@@ -99,18 +99,29 @@ import Header from "./Dashboard/Header";
 import Sidebarr from "./Dashboard/SideBar";
 import UserAccount from "../private/UserAccount/UserAccount";
 import Support from "../private/Support/Support";
-import Ticket from "../private/Ticket/Ticket"
+import Ticket from "../private/Ticket/Ticket";
 import CommentSuggestion from "./CommentSuggestion/CommentSuggestion";
-import Request from "./Requests/Request"
+import Request from "./Requests/Request";
 
 function Main(props) {
-  var navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const socket = useSocket();
 
-  var [isOpen, setOpen] = useState(false);
-const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  var navbarSize = "10px";
+  const [isOpen, setOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(undefined);
+  const [isLoading, setLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
+  const [showBack, setShowBack] = useState(false);
+  const [pageHistory, setPageHistory] = useState([]);
+  const [onKeyDown, setOnKeyDown] = useState();
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
-  useLocation();
+  const divScrollRef = useRef();
+  const navbarSize = "10px";
+  const minSwipeDistance = 50;
 
   const [navState, navDispatch] = useReducer(
     NavbarReducer,
@@ -119,141 +130,158 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     }
   );
 
+  const isDashboard =
+    location.pathname === paths.private.dashboard;
+
   useEffect(() => {
-  const handleOpenMobileMenu = () => {
-    setIsSidebarOpen(true);
-  };
+    const handleOpenMobileMenu = () => {
+      setIsSidebarOpen(true);
+      setOpen(true);
+    };
 
-  window.addEventListener("openMobileMenu", handleOpenMobileMenu);
+    window.addEventListener(
+      "openMobileMenu",
+      handleOpenMobileMenu
+    );
 
-  return () => {
-    window.removeEventListener("openMobileMenu", handleOpenMobileMenu);
-  };
-}, []);
+    return () => {
+      window.removeEventListener(
+        "openMobileMenu",
+        handleOpenMobileMenu
+      );
+    };
+  }, []);
 
-  const [activeMenu, setActiveMenu] = useState(undefined);
+  /*
+   * وقتی مسیر عوض می‌شود یعنی کاربر از داخل سایدبار
+   * یک صفحه جدید انتخاب کرده است.
+   *
+   * در این حالت سایدبار موبایل به صورت خودکار بسته می‌شود.
+   */
+  useEffect(() => {
+    setOpen(false);
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
 
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-
-  // the required distance between touchStart and touchEnd to be detected as a swipe
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e) => {
+  const onTouchStart = (event) => {
     setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
+    setTouchStart(
+      event.targetTouches[0].clientX
+    );
   };
 
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+  const onTouchMove = (event) => {
+    setTouchEnd(
+      event.targetTouches[0].clientX
+    );
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (touchStart === null || touchEnd === null) {
+      return;
+    }
 
     const distance = touchStart - touchEnd;
-
-    const isLeftSwipe =
-      distance > minSwipeDistance;
-
     const isRightSwipe =
       distance < -minSwipeDistance;
 
-    if (isRightSwipe)
+    if (isRightSwipe) {
       setOpen(false);
-
-    // if (isLeftSwipe)
-    //   setOpen(true)
-    // add your conditional logic here
-  };
-
-  var findPath = (
-    menu,
-    menuNumber,
-    parent
-  ) => {
-    if (menuNumber) {
-      const parts =
-        String(menuNumber).split("-");
-
-      let first =
-        [...parent, parts.shift()];
-
-      var sub =
-        menu?.filter(
-          (sub =>
-            sub.id == first.join("-")
-          )
-        )[0];
-
-      if (parts?.length > 0)
-        return [
-          sub,
-          ...findPath(
-            sub?.sub,
-            parts.join("-"),
-            first
-          )
-        ];
-      else
-        return [sub];
+      setIsSidebarOpen(false);
     }
   };
 
-  var path2MenuId = (
-    menu,
+  const findPath = (
+    menuItems,
+    menuNumber,
+    parent = []
+  ) => {
+    if (!menuNumber) {
+      return [];
+    }
+
+    const parts = String(menuNumber).split("-");
+    const first = [
+      ...parent,
+      parts.shift()
+    ];
+
+    const sub = menuItems?.find(
+      (item) => item.id === first.join("-")
+    );
+
+    if (!sub) {
+      return [];
+    }
+
+    if (parts.length > 0) {
+      return [
+        sub,
+        ...findPath(
+          sub.sub,
+          parts.join("-"),
+          first
+        )
+      ];
+    }
+
+    return [sub];
+  };
+
+  const path2MenuId = (
+    menuItems,
     path
   ) => {
-    menu.forEach(element => {
+    menuItems?.forEach((element) => {
       if (element.sub) {
-        path2MenuId(
-          element.sub,
-          path
-        );
-      } else {
-        if (element.path == path) {
-          setActiveMenu(
-            element.id
-          );
-        }
+        path2MenuId(element.sub, path);
+      } else if (element.path === path) {
+        setActiveMenu(element.id);
       }
     });
   };
 
-  var [isLoading, setLoading] =
-    useState(false);
-
-  var [userInfo, setUserInfo] =
-    useState({});
-
-  var getBasicInfo = () => {
+  const getBasicInfo = () => {
     setLoading(true);
 
     AxiosPrivate
       .get(endpoints.basicInfo)
       .then((res) => {
-        console.log(
-          res.data
-        );
+        console.log(res.data);
 
-        Storages.setUserInfo(
-          res.data
-        );
-
+        Storages.setUserInfo(res.data);
         Storages.setAccessLevel(
           res.data.accessLevel
         );
-
         Storages.setTileServer(
           res.data.tileServerUrl
         );
 
-        setUserInfo(
-          res.data
-        );
+        setUserInfo(res.data);
       })
       .finally(() => {
         setLoading(false);
+      });
+  };
+
+  const getCities = () => {
+    AxiosPrivate
+      .get(endpoints.cities)
+      .then((res) => {
+        Storages.setCities(res.data);
+      })
+      .catch(() => {
+        Storages.setCities([
+          {
+            cityName: "مشهد",
+            centerLat: 35.741777991519456,
+            centerLng: 51.396147723718286,
+            rightLat: 36.321099,
+            rightLng: 59.702532,
+            leftLat: 36.33118,
+            leftLng: 59.454691
+          }
+        ]);
       });
   };
 
@@ -268,170 +296,65 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     getCities();
   }, []);
 
-  var divScrollRef =
-    useRef();
-
-  var [showBack, setShowBack] =
-    useState(false);
-
-  var location =
-    useLocation();
-
-  const isDashboard =
-    location.pathname ===
-    paths.private.dashboard;
-
-  var [pageHistory, setPageHistory] =
-    useState([]);
-
   useEffect(() => {
-    if (
-      location.pathname ==
-      paths.private.actions.dashboard
-    ) {
-      return;
-    }
-
-    if (
-      location.pathname ==
-      paths.private.dashboard
-    ) {
-      return;
-    }
-
-    if (
-      location.pathname ==
-      paths.private.definitions.dashboard
-    ) {
-      return;
-    }
-
-    if (
-      location.pathname ==
-      paths.private.settings.dashboard
-    ) {
-      return;
-    }
-
-    if (
-      location.pathname ==
+    const excludedPaths = [
+      paths.private.actions.dashboard,
+      paths.private.dashboard,
+      paths.private.definitions.dashboard,
+      paths.private.settings.dashboard,
       paths.private.reports.dashboard
+    ];
+
+    if (
+      excludedPaths.includes(location.pathname)
     ) {
       return;
     }
 
-    var find =
-      pageHistory.find(
-        page =>
-          page == location.pathname
-      );
+    const exists = pageHistory.some(
+      (page) => page === location.pathname
+    );
 
-    if (find)
+    if (exists) {
       return;
-
-    if (
-      pageHistory.length > 4
-    ) {
-      setPageHistory(
-        prevState => (
-          [
-            ...prevState.slice(1),
-            location.pathname
-          ]
-        )
-      );
-    } else {
-      setPageHistory(
-        prevState => (
-          [
-            ...prevState,
-            location.pathname
-          ]
-        )
-      );
     }
-  }, [location]);
+
+    setPageHistory((previous) => {
+      const nextHistory = [
+        ...previous,
+        location.pathname
+      ];
+
+      return nextHistory.length > 5
+        ? nextHistory.slice(1)
+        : nextHistory;
+    });
+  }, [location.pathname, pageHistory]);
 
   useEffect(() => {
-    if (
-      location.pathname ==
-      paths.private.dashboard
-    )
-      setShowBack(false);
-    else
-      setShowBack(true);
-  }, [location]);
-
-  var [onKeyDown, setOnKeyDown] =
-    useState();
-
-  var getCities = () => {
-    AxiosPrivate
-      .get(endpoints.cities)
-      .then(res => {
-        Storages.setCities(
-          res.data
-        );
-      })
-      .catch(e => {
-        Storages.setCities([
-          {
-            "cityName": "مشهد",
-            "centerLat":
-              35.741777991519456,
-            "centerLng":
-              51.396147723718286,
-            "rightLat":
-              36.321099,
-            "rightLng":
-              59.702532,
-            "leftLat":
-              36.33118,
-            "leftLng":
-              59.454691
-          }
-        ]);
-      });
-  };
-
-  var socket =
-    useSocket();
+    setShowBack(
+      location.pathname !== paths.private.dashboard
+    );
+  }, [location.pathname]);
 
   useEffect(() => {
-    console.log(
-      "sssssssssgvsdgv"
-    );
+    const handleMessage = (data) => {
+      console.log("sssssssssss", data);
+    };
 
-    socket?.on(
-      "message",
-      data => {
-        console.log(
-          "sssssssssss",
-          data
-        );
-      }
-    );
-
-    socket?.on(
-      "ringing",
-      data => {
-        console.log(
-          "sssssssssss",
-          data
-        );
-      }
-    );
+    socket?.on("message", handleMessage);
+    socket?.on("ringing", handleMessage);
 
     return () => {
-      socket?.off(
-        "message"
-      );
-
-      socket?.off(
-        "ringing"
-      );
+      socket?.off("message", handleMessage);
+      socket?.off("ringing", handleMessage);
     };
   }, [socket]);
+
+  const closeMobileMenu = () => {
+    setOpen(false);
+    setIsSidebarOpen(false);
+  };
 
   return (
     <>
@@ -443,777 +366,461 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(false);
           onKeyDown
         }}
       >
-        {
-          isLoading
-            ?
-            <div
-              className="
-                vh-100
-                d-flex
-                flex-column
-                justify-content-center
-                align-items-center
-              "
-            >
-              <h4 className="">
-                در حال تنظیم صفحه برای شما
-              </h4>
+        {isLoading ? (
+          <div className="vh-100 d-flex flex-column justify-content-center align-items-center">
+            <h4>
+              در حال تنظیم صفحه برای شما
+            </h4>
 
-              <div
-                className="spinner-border"
-                role="status"
-              >
-                <span className="sr-only"></span>
+            <div
+              className="spinner-border"
+              role="status"
+            >
+              <span className="sr-only"></span>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="main-layout"
+            style={{ zIndex: 0 }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            dir="rtl"
+          >
+            {isOpen && (
+              <>
+                <div
+                  onClick={closeMobileMenu}
+                  className="main-mobile-menu-overlay"
+                />
+
+                <div className="main-mobile-sidebar">
+                  <Sidebarr
+                    menu={menu}
+                    onClose={closeMobileMenu}
+                  />
+                </div>
+              </>
+            )}
+
+            <div className="main-header-wrapper d-none d-md-flex">
+              <div className="main-sidebar-header">
+                <Sidebarr />
+              </div>
+
+              <div className="main-header-content">
+                <Header />
               </div>
             </div>
-            :
-            <div
-              className="main-layout"
-              style={{
-                zIndex: 0
+
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(true);
+                setIsSidebarOpen(true);
               }}
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-              dir="rtl"
+              className="main-mobile-menu-button d-md-none"
+              aria-label="باز کردن منو"
             >
-              {/* =========================
-                  منوی موبایل
-              ========================= */}
+              <span className="main-mobile-menu-icon">
+                <HiOutlineMenuAlt3 />
+              </span>
 
-              {
-                isOpen && (
-                  <>
-                    <div
-                      onClick={() =>
-                        setOpen(false)
-                      }
-                      style={{
-                        position: "fixed",
-                        inset: 0,
-                        background:
-                          "rgba(0,0,0,.45)",
-                        zIndex: 1998
-                      }}
-                    />
+              <span className="main-mobile-menu-text">
+                منو
+              </span>
+            </button>
 
-                    <div
-                      className="d-md-none"
-                      style={{
-                        position: "fixed",
-                        top: 0,
-                        right: 0,
-                        width: "280px",
-                        maxWidth: "85%",
-                        height: "100vh",
-                        background: "#fff",
-                        overflowY: "auto",
-                        boxShadow:
-                          "-5px 0 20px rgba(0,0,0,.25)",
-                        zIndex: 1999,
-                        transition: ".3s"
-                      }}
-                    >
-                      <Sidebarr
-                        menu={menu}
-                        onClose={() =>
-                          setOpen(false)
-                        }
-                      />
-                    </div>
-                  </>
+            <button
+              type="button"
+              className="main-mobile-wallet-button d-md-none"
+              onClick={() =>
+                navigate(
+                  paths.private.definitions.Wallet
                 )
               }
-
-              <div
-                className="
-                  main-header-wrapper
-                  d-none
-                  d-md-flex
-                "
-              >
-                {/* Sidebar */}
-
-                <div
-                  className="
-                    main-sidebar-header
-                  "
-                >
-                  <Sidebarr />
-                </div>
-
-                {/* Header */}
-
-                <div
-                  className="
-                    main-header-content
-                  "
-                >
-                  <Header />
-                </div>
-              </div>
-
-              {/* <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="main-mobile-menu-button"
-              >
-                <HiOutlineMenuAlt3 />
-              </button>
- */}
-
-              <div
-                className={`
-                  main-page-content
-                  ${isDashboard
-                    ? "main-dashboard-page"
-                    : ""
-                  }
-                `}
-                ref={divScrollRef}
-                tabIndex={0}
-                onKeyDown={setOnKeyDown}
-                onTouchStart={() => {
-                  setOpen(false);
-                }}
-                onMouseUp={() => {
-                  setOpen(false);
-                }}
-              >
-                <div
-                  className="
-                    main-page-inner
-                  "
-                >
-                  <div
-                    className="
-                      container-fluid
-                      p-0
-                      m-0
-                      main-routes-container
-                    "
-                  >
-                    <Routes>
-                      <Route
-                        path="/control-panel"
-                        element={
-                          <Navigate
-                            to={
-                              paths.private.dashboard
-                            }
-                            replace
-                          />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.dashboard
-                        }
-                        element={
-                          <Dashboard />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.backup
-                        }
-                        element={
-                          <Backup />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.dashboard
-                        }
-                        element={
-                          <Settings />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.driver
-                        }
-                        element={
-                          <DriverSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.passenger
-                        }
-                        element={
-                          <PassengerSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.operator
-                        }
-                        element={
-                          <OperatorSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.sms
-                        }
-                        element={
-                          <SmsSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.tariff
-                        }
-                        element={
-                          <TariffSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.tripManage
-                        }
-                        element={
-                          <TripManageSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.settings.controlPanel
-                        }
-                        element={
-                          <ControlPanelSetting />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.changeIP
-                        }
-                        element={
-                          <ChangeIP />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.carBrand
-                        }
-                        element={
-                          <CarBrands />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.dashboard
-                        }
-                        element={
-                          <Reports />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.taximeter
-                        }
-                        element={
-                          <ReportTaximeter />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.tripHistory
-                        }
-                        element={
-                          <TripHistory />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.verify
-                        }
-                        element={
-                          <Verify />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.driverTripCount
-                        }
-                        element={
-                          <DriverTripCount />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.queIO
-                        }
-                        element={
-                          <QueIO />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.tripChartHourly
-                        }
-                        element={
-                          <TripChartHourly />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.tripChartDaily
-                        }
-                        element={
-                          <TripChartDaily />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.tripChartMonthly
-                        }
-                        element={
-                          <TripChartMonthly />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.totalTripMonth
-                        }
-                        element={
-                          <TotalTripSendPerMonth />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.countInQue
-                        }
-                        element={
-                          <CountInQue />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.driverTimeLine
-                        }
-                        element={
-                          <DriverTimeLine />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.tripCountReport
-                        }
-                        element={
-                          <TripCountReport />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.rfid
-                        }
-                        element={
-                          <RFIDLogs />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.rfidChart
-                        }
-                        element={
-                          <RFIDChart />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.census
-                        }
-                        element={
-                          <Census />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.reports.shifts
-                        }
-                        element={
-                          <ShiftReport />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.dashboard
-                        }
-                        element={
-                          <Definitions />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.users
-                        }
-                        element={
-                          <Users />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.lines
-                        }
-                        element={
-                          <Lines />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.userGroup
-                        }
-                        element={
-                          <UserGroup />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.persons
-                        }
-                        element={
-                          <Persons />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.carTypes
-                        }
-                        element={
-                          <CarTypes />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.cars
-                        }
-                        element={
-                          <Cars />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.carClass
-                        }
-                        element={
-                          <CarClass />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.complaints
-                        }
-                        element={
-                          <ComplaintType />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.companies
-                        }
-                        element={
-                          <Companies />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.frequentDests
-                        }
-                        element={
-                          <FrequentDests />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.duplicateAddress
-                        }
-                        element={
-                          <DuplicateAddress />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.subscribers
-                        }
-                        element={
-                          <Subscribers />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.stations
-                        }
-                        element={
-                          <Stations />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.stationsV2
-                        }
-                        element={
-                          <StationsTemp />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.physicalActions
-                        }
-                        element={
-                          <PhysicalActions />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.surveyOptions
-                        }
-                        element={
-                          <SurveyOptions />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.defMsg
-                        }
-                        element={
-                          <DefaultMessages />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.shifts
-                        }
-                        element={
-                          <Shifts />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.shiftGroups
-                        }
-                        element={
-                          <ShiftGroups />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.shiftPattern
-                        }
-                        element={
-                          <ShiftPattern />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.Wallet
-                        }
-                        element={
-                          <Wallet />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.userAccount
-                        }
-                        element={
-                          <UserAccount />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.support
-                        }
-                        element={
-                          <Support />
-                        }
-                      />
-
-
-
-                      <Route
-                        path={
-                          paths.private.definitions.ticket
-                        }
-                        element={
-                          <Ticket />
-                        }
-                      />
-
-
-                      <Route
-                        path={
-                          paths.private.definitions.commentSuggestion
-                        }
-                        element={
-                          <CommentSuggestion />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.definitions.request
-                        }
-                        element={
-                          <Request />
-                        }
-                      />
-
-
-
-
-
-
-
-
-                      <Route
-                        path={
-                          paths.private.actions.dashboard
-                        }
-                        element={
-                          <Actions />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.reserve
-                        }
-                        element={
-                          <Reserve />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.tripsMonit
-                        }
-                        element={
-                          <TripsMonit />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.news
-                        }
-                        element={
-                          <News />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.driverPayment
-                        }
-                        element={
-                          <DriverPayment />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.payment2Driver
-                        }
-                        element={
-                          <Payment2Driver />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.messanger
-                        }
-                        element={
-                          <Messanger />
-                        }
-                      />
-
-                      <Route
-                        path={
-                          paths.private.actions.weather
-                        }
-                        element={
-                          <Weather />
-                        }
-                      />
-
-
-                      <Route
-                        path={
-                          paths.private.e423
-                        }
-                        element={
-                          <E423 />
-                        }
-                      />
-
-                      <Route
-                        path="/*"
-                        element={
-                          <E404 />
-                        }
-                      />
-                    </Routes>
-                  </div>
+              aria-label="کیف پول"
+            >
+              <span className="main-mobile-wallet-icon">
+                <FaWallet />
+              </span>
+
+              <span className="main-mobile-wallet-info">
+                <span className="main-mobile-wallet-label">
+                  کیف پول
+                </span>
+
+                <span className="main-mobile-wallet-amount">
+                  ۲۵,۰۰۰ تومان
+                </span>
+              </span>
+
+              <span className="main-mobile-wallet-arrow">
+                ›
+              </span>
+            </button>
+
+            <div
+              className={`main-page-content ${
+                isDashboard
+                  ? "main-dashboard-page"
+                  : ""
+              }`}
+              ref={divScrollRef}
+              tabIndex={0}
+              onKeyDown={setOnKeyDown}
+            >
+              <div className="main-page-inner">
+                <div className="container-fluid p-0 m-0 main-routes-container">
+                  <Routes>
+
+                    <Route
+                      path="/control-panel"
+                      element={
+                        <Navigate
+                          to={paths.private.dashboard}
+                          replace
+                        />
+                      }
+                    />
+
+                    <Route
+                      path={paths.private.dashboard}
+                      element={<Dashboard />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.backup}
+                      element={<Backup />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.dashboard}
+                      element={<Settings />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.driver}
+                      element={<DriverSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.passenger}
+                      element={<PassengerSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.operator}
+                      element={<OperatorSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.sms}
+                      element={<SmsSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.tariff}
+                      element={<TariffSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.tripManage}
+                      element={<TripManageSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.settings.controlPanel}
+                      element={<ControlPanelSetting />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.changeIP}
+                      element={<ChangeIP />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.carBrand}
+                      element={<CarBrands />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.dashboard}
+                      element={<Reports />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.taximeter}
+                      element={<ReportTaximeter />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.tripHistory}
+                      element={<TripHistory />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.verify}
+                      element={<Verify />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.driverTripCount}
+                      element={<DriverTripCount />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.queIO}
+                      element={<QueIO />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.tripChartHourly}
+                      element={<TripChartHourly />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.tripChartDaily}
+                      element={<TripChartDaily />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.tripChartMonthly}
+                      element={<TripChartMonthly />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.totalTripMonth}
+                      element={<TotalTripSendPerMonth />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.countInQue}
+                      element={<CountInQue />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.driverTimeLine}
+                      element={<DriverTimeLine />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.tripCountReport}
+                      element={<TripCountReport />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.rfid}
+                      element={<RFIDLogs />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.rfidChart}
+                      element={<RFIDChart />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.census}
+                      element={<Census />}
+                    />
+
+                    <Route
+                      path={paths.private.reports.shifts}
+                      element={<ShiftReport />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.dashboard}
+                      element={<Definitions />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.users}
+                      element={<Users />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.lines}
+                      element={<Lines />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.userGroup}
+                      element={<UserGroup />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.persons}
+                      element={<Persons />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.carTypes}
+                      element={<CarTypes />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.cars}
+                      element={<Cars />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.carClass}
+                      element={<CarClass />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.complaints}
+                      element={<ComplaintType />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.companies}
+                      element={<Companies />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.frequentDests}
+                      element={<FrequentDests />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.duplicateAddress}
+                      element={<DuplicateAddress />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.subscribers}
+                      element={<Subscribers />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.stations}
+                      element={<Stations />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.stationsV2}
+                      element={<StationsTemp />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.physicalActions}
+                      element={<PhysicalActions />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.surveyOptions}
+                      element={<SurveyOptions />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.defMsg}
+                      element={<DefaultMessages />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.shifts}
+                      element={<Shifts />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.shiftGroups}
+                      element={<ShiftGroups />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.shiftPattern}
+                      element={<ShiftPattern />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.Wallet}
+                      element={<Wallet />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.userAccount}
+                      element={<UserAccount />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.support}
+                      element={<Support />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.ticket}
+                      element={<Ticket />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.commentSuggestion}
+                      element={<CommentSuggestion />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.request}
+                      element={<Request />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.dashboard}
+                      element={<Actions />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.reserve}
+                      element={<Reserve />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.tripsMonit}
+                      element={<TripsMonit />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.news}
+                      element={<News />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.driverPayment}
+                      element={<DriverPayment />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.payment2Driver}
+                      element={<Payment2Driver />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.messanger}
+                      element={<Messanger />}
+                    />
+
+                    <Route
+                      path={paths.private.actions.weather}
+                      element={<Weather />}
+                    />
+
+                    <Route
+                      path={paths.private.e423}
+                      element={<E423 />}
+                    />
+
+                    <Route
+                      path="/*"
+                      element={<E404 />}
+                    />
+
+                  </Routes>
                 </div>
               </div>
             </div>
-        }
+          </div>
+        )}
       </DashboardContext.Provider>
     </>
   );

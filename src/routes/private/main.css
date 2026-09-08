@@ -1,177 +1,584 @@
 :root {
-    --main-header-height: 100px;
-    --main-sidebar-width: 350px;
-    --main-mobile-header-height: 60px;
+  --main-header-height: 100px;
+  --main-sidebar-width: 350px;
+  --main-mobile-header-height: 60px;
 }
-
-
 
 .main-header-wrapper {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 40px;
-    height: var(--main-header-height);
-    z-index: 1000;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    width: calc(100% - 20px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 40px;
+  height: var(--main-header-height);
+  z-index: 1000;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 20px);
 }
 
-
 .main-sidebar-header {
-    width: var(--main-sidebar-width);
-    min-width: var(--main-sidebar-width);
-    max-width: var(--main-sidebar-width);
-    height: var(--main-header-height);
-    flex-shrink: 0;
+  width: var(--main-sidebar-width);
+  min-width: var(--main-sidebar-width);
+  max-width: var(--main-sidebar-width);
+  height: var(--main-header-height);
+  flex-shrink: 0;
 }
 
 .main-header-content {
-    flex: 1;
-    width: calc(100% - var(--main-sidebar-width));
-    height: var(--main-header-height);
-    min-width: 0;
+  flex: 1;
+  width: calc(100% - var(--main-sidebar-width));
+  height: var(--main-header-height);
+  min-width: 0;
 }
 
 .main-layout {
-    width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
-    position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .main-page-content {
-    position: fixed;
-    top: var(--main-header-height);
-    right: var(--main-sidebar-width);
-    left: 45px;
-    bottom: 0;
-    width: calc(100% - var(--main-sidebar-width) - 20px);
-    height: calc(100vh - var(--main-header-height));
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    z-index: 1;
+  position: fixed;
+  top: var(--main-header-height);
+  right: var(--main-sidebar-width);
+  left: 45px;
+  bottom: 0;
+  width: calc(100% - var(--main-sidebar-width) - 20px);
+  height: calc(100vh - var(--main-header-height));
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 1;
 }
 
 .main-page-inner {
-    width: 100%;
-    min-height: 100%;
-    box-sizing: border-box;
-    padding-bottom: 25px;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 25px;
 }
-
 
 .main-routes-container {
-    width: 100%;
-    min-height: 100%;
+  width: 100%;
+  min-height: 100%;
 }
 
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 767px) {
 
-    .main-header-wrapper {
-        display: none !important;
-    }
+  .main-header-wrapper {
+    display: none !important;
+  }
 
 
-    .main-layout {
-        width: 100%;
-        min-height: 100vh;
-        height: 100vh;
-        overflow: hidden;
-    }
+  /* =======================================================
+     MAIN LAYOUT
+     ======================================================= */
+
+  .main-layout {
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+  }
 
 
-    .main-mobile-menu-button {
-        position: fixed;
-        top: 12px;
-        right: 12px;
+  /* =======================================================
+     MOBILE OVERLAY
+     ======================================================= */
 
-        border: none;
-        background: #fff;
+  .main-mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
 
-        width: 44px;
-        height: 44px;
+    background: rgba(28, 36, 48, 0.18);
 
-        padding: 0;
-        margin: 0;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    z-index: 1998;
 
-        font-size: 28px;
-        color: #222;
-
-        border-radius: 12px;
-
-        box-shadow: 0 3px 12px rgba(0, 0, 0, .12);
-
-        cursor: pointer;
-
-        z-index: 3000;
-
-        transition: .2s ease;
-    }
+    animation: mobileOverlayIn 0.25s ease;
+  }
 
 
-    .main-mobile-menu-button:active {
-        transform: scale(.94);
-    }
+  /* =======================================================
+     MOBILE SIDEBAR
+     ======================================================= */
+
+  .main-mobile-sidebar {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 292px;
+    max-width: 86%;
+
+    height: 100vh;
+
+    background: #ffffff;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-left: 1px solid #edf0f3;
+
+    box-shadow:
+      -12px 0 35px rgba(38, 50, 56, 0.12),
+      -2px 0 8px rgba(38, 50, 56, 0.05);
+
+    z-index: 1999;
+
+    animation: mobileSidebarIn 0.32s cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+  }
 
 
-    .main-page-content {
-        position: fixed;
+  /* =======================================================
+     HAMBURGER BUTTON
+     ======================================================= */
 
-        top: 15px;
-        right: 0;
-        left: 0;
-        bottom: 0;
+  .main-mobile-menu-button {
+    position: fixed;
 
-        width: 100%;
-        height: calc(100vh - 15px);
+    top: 12px;
+    right: 12px;
 
-        margin: 0;
-        padding: 0;
+    height: 52px;
+    min-width: 104px;
 
-        overflow-x: hidden;
-        overflow-y: auto;
+    padding: 0 14px 0 16px;
 
-        z-index: 1;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    border: 1px solid #e8edf1;
+
+    border-radius: 17px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    color: #4b5563;
+
+    box-shadow:
+      0 5px 18px rgba(38, 50, 56, 0.08),
+      0 1px 4px rgba(38, 50, 56, 0.04);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    cursor: pointer;
+
+    z-index: 1000;
+
+    direction: rtl;
+
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
 
 
-    .main-page-content.main-dashboard-page {
-        top: 0;
-        height: 100vh;
-    }
+  .main-mobile-menu-button::after {
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+    left: 18px;
+    right: 18px;
+
+    height: 1px;
+
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(148, 163, 184, 0.18),
+      transparent
+    );
+
+    pointer-events: none;
+  }
 
 
-    .main-page-inner {
-        width: 100%;
-        min-height: 100%;
-        padding-bottom: 20px;
-    }
+  .main-mobile-menu-button:hover {
+    background: #ffffff;
+
+    border-color: #dce3e8;
+
+    box-shadow:
+      0 8px 23px rgba(38, 50, 56, 0.11),
+      0 2px 5px rgba(38, 50, 56, 0.05);
+
+    transform: translateY(-1px);
+  }
+
+
+  .main-mobile-menu-button:active {
+    transform: scale(0.96);
+
+    box-shadow:
+      0 3px 10px rgba(38, 50, 56, 0.08);
+  }
+
+
+  /* =======================================================
+     HAMBURGER ICON
+     ======================================================= */
+
+  .main-mobile-menu-icon {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f1f5f3;
+
+    color: #5b7167;
+
+    flex-shrink: 0;
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+
+  .main-mobile-menu-button:hover .main-mobile-menu-icon {
+    background: #e8f1ed;
+
+    color: #4e665c;
+
+    transform: scale(1.04);
+  }
+
+
+  .main-mobile-menu-icon svg {
+    width: 20px;
+    height: 20px;
+
+    stroke-width: 1.5;
+  }
+
+
+  /* =======================================================
+     MENU TEXT
+     ======================================================= */
+
+  .main-mobile-menu-text {
+    font-size: 16px;
+
+    line-height: 1;
+
+    color: #52605a;
+
+    white-space: nowrap;
+
+    letter-spacing: -0.3px;
+  }
+
+
+  /* =======================================================
+     WALLET BUTTON
+     ======================================================= */
+
+  .main-mobile-wallet-button {
+    position: fixed;
+
+    top: 12px;
+    left: 12px;
+
+    height: 52px;
+    min-width: 182px;
+
+    padding: 5px 7px 5px 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    border: 1px solid #e6eee9;
+
+    border-radius: 17px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    color: #374151;
+
+    box-shadow:
+      0 5px 18px rgba(38, 50, 56, 0.08),
+      0 1px 4px rgba(25, 135, 84, 0.04);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    cursor: pointer;
+
+    z-index: 1000;
+
+    direction: rtl;
+
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+
+  .main-mobile-wallet-button:hover {
+    background: #ffffff;
+
+    border-color: #d6e5dc;
+
+    box-shadow:
+      0 8px 23px rgba(38, 50, 56, 0.10),
+      0 2px 6px rgba(25, 135, 84, 0.05);
+
+    transform: translateY(-1px);
+  }
+
+
+  .main-mobile-wallet-button:active {
+    transform: scale(0.96);
+
+    box-shadow:
+      0 3px 10px rgba(38, 50, 56, 0.07);
+  }
+
+
+  /* =======================================================
+     WALLET ICON
+     ======================================================= */
+
+  .main-mobile-wallet-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+      linear-gradient(
+        145deg,
+        #e8f7ef 0%,
+        #dff2e8 100%
+      );
+
+    color: #238b5a;
+
+    border: 1px solid #d5ecdf;
+
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
+  }
+
+
+  .main-mobile-wallet-button:hover .main-mobile-wallet-icon {
+    background:
+      linear-gradient(
+        145deg,
+        #e0f4e9 0%,
+        #d5eee0 100%
+      );
+
+    transform: scale(1.04);
+  }
+
+
+  .main-mobile-wallet-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+
+  /* =======================================================
+     WALLET INFO
+     ======================================================= */
+
+  .main-mobile-wallet-info {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 4px;
+
+    text-align: right;
+  }
+
+
+  .main-mobile-wallet-label {
+    font-size: 12px;
+
+    line-height: 1;
+
+    color: #8a9490;
+
+    white-space: nowrap;
+  }
+
+
+  .main-mobile-wallet-amount {
+    font-size: 15px;
+
+    line-height: 1.1;
+
+    color: #3d4b45;
+
+    white-space: nowrap;
+
+    letter-spacing: -0.2px;
+  }
+
+
+  /* =======================================================
+     WALLET ARROW
+     ======================================================= */
+
+  .main-mobile-wallet-arrow {
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #f4f8f5;
+
+    color: #7a8b83;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
+  }
+
+
+  .main-mobile-wallet-button:hover .main-mobile-wallet-arrow {
+    background: #edf5f0;
+
+    transform: translateX(-2px);
+  }
+
+
+  /* =======================================================
+     MOBILE PAGE
+     ======================================================= */
+
+  .main-page-content {
+    position: fixed;
+
+    top: 15px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: calc(100vh - 15px);
+
+    margin: 0;
+    padding: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    z-index: 1;
+  }
+
+
+  .main-page-content.main-dashboard-page {
+    top: 0;
+
+    height: 100vh;
+  }
+
+
+  .main-page-inner {
+    width: 100%;
+
+    min-height: 100%;
+
+    padding-bottom: 20px;
+  }
 
 }
 
 .main-page-content::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
-
 
 .main-page-content::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
+}
+
+.main-page-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
 }
 
 
-.main-page-content::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
+
+@keyframes mobileOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes mobileSidebarIn {
+  from {
+    opacity: 0;
+    transform: translateX(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
