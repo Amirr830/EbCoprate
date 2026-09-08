@@ -62,40 +62,9 @@ function UserAccount() {
 
             <div className="user-account-mobile-header d-md-none">
                 <div className="user-account-mobile-header-inner">
+                    <div className="user-account-mobile-page-title">
 
-                    <button
-                        type="button"
-                        className="user-account-mobile-menu-btn"
-                        aria-label="باز کردن منو"
-                        onClick={handleShowMenu}
-                    >
-                        <span className="user-account-mobile-menu-icon">
-                            <FaBars size={19} />
-                        </span>
-
-                        <span className="user-account-mobile-menu-text">
-                            منو
-                        </span>
-                    </button>
-
-<div className="user-account-mobile-page-title">
-    <button
-        type="button"
-        className="user-account-mobile-wallet-btn"
-        onClick={handleWalletClick}
-        aria-label="رفتن به کیف پول"
-    >
-        <span className="user-account-mobile-wallet-icon">
-            <FaWallet size={16} />
-        </span>
-
-        <span className="user-account-mobile-wallet-content">
-            <span className="user-account-mobile-wallet-amount">
-                ۲۵۰,۰۰۰ تومان
-            </span>
-        </span>
-    </button>
-</div>
+                    </div>
 
                 </div>
             </div>
