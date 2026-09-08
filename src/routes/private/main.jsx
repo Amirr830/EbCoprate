@@ -1,4 +1,11 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+  useState
+} from "react";
+
 import {
   Navigate,
   Route,
@@ -6,55 +13,71 @@ import {
   useLocation,
   useNavigate
 } from "react-router-dom";
+
 import Backup from "./actions/backup";
 import paths from "../../app/paths.json";
 import dictionary from "../../app/dictionary.json";
 import menu from "../../app/menu.js";
 import Storages from "../../app/storages";
+
 import {
   TiThLarge,
   TiHome,
   TiPower
 } from "react-icons/ti";
+
 import Sidebar from "../../components/sidebar";
 import ChangeIP from "./settings/changeIP";
 import Settings from "./settings";
+
 import DashboardContext from "../../contexts/dashboardContext";
 import NavbarReducer from "../../reducers/navbarReducer";
+
 import { CgClose } from "react-icons/cg";
+
 import "./main.css";
+
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { FaWallet } from "react-icons/fa";
+
 import Cars from "./definitions/cars";
 import CarBrands from "./definitions/carBrands";
 import Persons from "./definitions/persons";
+
 import {
   FaDotCircle,
   FaArrowLeft
 } from "react-icons/fa";
+
 import Dashboard from "./Dashboard/dashboard";
 import Reports from "./reports";
 import Reserve from "./actions/reserve";
 import Definitions from "./definitions";
 import Users from "./definitions/users";
 import UserGroup from "./definitions/userGroup";
+
 import E423 from "../error/e423";
 import E404 from "../error/e404";
+
 import answerModal from "../../modals/answerModal";
 import ReportTaximeter from "./reports/reportTaximeter";
+
 import endpoints from "../../app/endpoints";
 import { AxiosPrivate } from "../../app/axiosPrivate";
 import { RefreshToken } from "../../app/refreshToken";
 import { CheckAccess } from "../../app/checkAccess";
+
 import DriverSetting from "./settings/driverSetting";
 import TripManageSetting from "./settings/tripManageSetting";
 import TariffSetting from "./settings/tariffSetting";
 import SmsSetting from "./settings/smsSetting";
 import OperatorSetting from "./settings/operatorSetting";
 import PassengerSetting from "./settings/passengerSetting";
+
 import Actions from "./actions";
 import PhysicalActions from "./definitions/physicalActions";
 import TripsMonit from "./actions/TripsMonit";
+
 import TripHistory from "./reports/tripHistory";
 import Lines from "./definitions/lines";
 import CarClass from "./definitions/carClass";
@@ -65,45 +88,59 @@ import ComplaintType from "./definitions/complaintsType";
 import News from "./actions/news";
 import Payment2Driver from "./actions/payment2Driver";
 import DriverPayment from "./actions/driverPayment";
+
 import Verify from "./reports/verify";
 import Companies from "./definitions/companies";
 import FrequentDests from "./definitions/frequentDests";
 import DuplicateAddress from "./definitions/duplicateAddress";
 import Weather from "./actions/weather";
 import DriverTripCount from "./reports/driverTripCount";
+
 import { findIndex } from "lodash";
+
 import QueIO from "./reports/queIO";
 import TripChartHourly from "./reports/tripChartHourly";
 import CountInQue from "./reports/countInQue";
 import TotalTripSendPerMonth from "./reports/totalTripSendPerMonth";
 import Messanger from "./actions/messanger";
+
 import SurveyOptions from "./definitions/surveyOptions";
 import DefaultMessages from "./definitions/DefualtMessages";
+
 import DriverTimeLine from "./reports/driverTimeLine";
 import Kiosk from "./actions/kiosk";
+
 import ControlPanelSetting from "./settings/controlPanelSetting";
 import TripCountReport from "./reports/tripCountReport";
 import TripChartDaily from "./reports/tripChartDaily";
 import TripChartMonthly from "./reports/tripChartMonthly";
+
 import Shifts from "./definitions/shifts";
 import ShiftGroups from "./definitions/shiftGroups";
 import ShiftPattern from "./definitions/shiftPattern";
+
 import RFIDLogs from "./reports/RFIDLogs";
 import Census from "./reports/census";
 import StationsTemp from "./definitions/stationsTemp";
+
 import { useSocket } from "contexts/socketContext";
+
 import RFIDChart from "./reports/RFIDChart";
 import ShiftReport from "./reports/shiftReport";
+
 import Wallet from "./Wallet/Wallet";
 import Header from "./Dashboard/Header";
 import Sidebarr from "./Dashboard/SideBar";
+
 import UserAccount from "../private/UserAccount/UserAccount";
 import Support from "../private/Support/Support";
 import Ticket from "../private/Ticket/Ticket";
 import CommentSuggestion from "./CommentSuggestion/CommentSuggestion";
 import Request from "./Requests/Request";
 
+
 function Main(props) {
+
   const navigate = useNavigate();
   const location = useLocation();
   const socket = useSocket();
@@ -120,6 +157,7 @@ function Main(props) {
   const [touchEnd, setTouchEnd] = useState(null);
 
   const divScrollRef = useRef();
+
   const navbarSize = "10px";
   const minSwipeDistance = 50;
 
@@ -133,7 +171,9 @@ function Main(props) {
   const isDashboard =
     location.pathname === paths.private.dashboard;
 
+
   useEffect(() => {
+
     const handleOpenMobileMenu = () => {
       setIsSidebarOpen(true);
       setOpen(true);
@@ -150,71 +190,93 @@ function Main(props) {
         handleOpenMobileMenu
       );
     };
+
   }, []);
 
-  /*
-   * وقتی مسیر عوض می‌شود یعنی کاربر از داخل سایدبار
-   * یک صفحه جدید انتخاب کرده است.
-   *
-   * در این حالت سایدبار موبایل به صورت خودکار بسته می‌شود.
-   */
+
   useEffect(() => {
+
     setOpen(false);
     setIsSidebarOpen(false);
+
   }, [location.pathname]);
 
+
   const onTouchStart = (event) => {
+
     setTouchEnd(null);
+
     setTouchStart(
       event.targetTouches[0].clientX
     );
+
   };
 
+
   const onTouchMove = (event) => {
+
     setTouchEnd(
       event.targetTouches[0].clientX
     );
+
   };
 
+
   const onTouchEnd = () => {
-    if (touchStart === null || touchEnd === null) {
+
+    if (
+      touchStart === null ||
+      touchEnd === null
+    ) {
       return;
     }
 
-    const distance = touchStart - touchEnd;
+    const distance =
+      touchStart - touchEnd;
+
     const isRightSwipe =
       distance < -minSwipeDistance;
 
     if (isRightSwipe) {
+
       setOpen(false);
       setIsSidebarOpen(false);
+
     }
+
   };
+
 
   const findPath = (
     menuItems,
     menuNumber,
     parent = []
   ) => {
+
     if (!menuNumber) {
       return [];
     }
 
-    const parts = String(menuNumber).split("-");
+    const parts =
+      String(menuNumber).split("-");
+
     const first = [
       ...parent,
       parts.shift()
     ];
 
-    const sub = menuItems?.find(
-      (item) => item.id === first.join("-")
-    );
+    const sub =
+      menuItems?.find(
+        (item) =>
+          item.id === first.join("-")
+      );
 
     if (!sub) {
       return [];
     }
 
     if (parts.length > 0) {
+
       return [
         sub,
         ...findPath(
@@ -223,54 +285,84 @@ function Main(props) {
           first
         )
       ];
+
     }
 
     return [sub];
+
   };
+
 
   const path2MenuId = (
     menuItems,
     path
   ) => {
+
     menuItems?.forEach((element) => {
+
       if (element.sub) {
-        path2MenuId(element.sub, path);
-      } else if (element.path === path) {
+
+        path2MenuId(
+          element.sub,
+          path
+        );
+
+      } else if (
+        element.path === path
+      ) {
+
         setActiveMenu(element.id);
+
       }
+
     });
+
   };
 
+
   const getBasicInfo = () => {
+
     setLoading(true);
 
     AxiosPrivate
       .get(endpoints.basicInfo)
       .then((res) => {
+
         console.log(res.data);
 
         Storages.setUserInfo(res.data);
+
         Storages.setAccessLevel(
           res.data.accessLevel
         );
+
         Storages.setTileServer(
           res.data.tileServerUrl
         );
 
         setUserInfo(res.data);
+
       })
       .finally(() => {
+
         setLoading(false);
+
       });
+
   };
 
+
   const getCities = () => {
+
     AxiosPrivate
       .get(endpoints.cities)
       .then((res) => {
+
         Storages.setCities(res.data);
+
       })
       .catch(() => {
+
         Storages.setCities([
           {
             cityName: "مشهد",
@@ -282,10 +374,14 @@ function Main(props) {
             leftLng: 59.454691
           }
         ]);
+
       });
+
   };
 
+
   useEffect(() => {
+
     getBasicInfo();
 
     path2MenuId(
@@ -294,9 +390,12 @@ function Main(props) {
     );
 
     getCities();
+
   }, []);
 
+
   useEffect(() => {
+
     const excludedPaths = [
       paths.private.actions.dashboard,
       paths.private.dashboard,
@@ -306,20 +405,25 @@ function Main(props) {
     ];
 
     if (
-      excludedPaths.includes(location.pathname)
+      excludedPaths.includes(
+        location.pathname
+      )
     ) {
       return;
     }
 
-    const exists = pageHistory.some(
-      (page) => page === location.pathname
-    );
+    const exists =
+      pageHistory.some(
+        (page) =>
+          page === location.pathname
+      );
 
     if (exists) {
       return;
     }
 
     setPageHistory((previous) => {
+
       const nextHistory = [
         ...previous,
         location.pathname
@@ -328,36 +432,74 @@ function Main(props) {
       return nextHistory.length > 5
         ? nextHistory.slice(1)
         : nextHistory;
+
     });
-  }, [location.pathname, pageHistory]);
+
+  }, [
+    location.pathname,
+    pageHistory
+  ]);
+
 
   useEffect(() => {
+
     setShowBack(
-      location.pathname !== paths.private.dashboard
+      location.pathname !==
+      paths.private.dashboard
     );
+
   }, [location.pathname]);
 
+
   useEffect(() => {
+
     const handleMessage = (data) => {
-      console.log("sssssssssss", data);
+
+      console.log(
+        "sssssssssss",
+        data
+      );
+
     };
 
-    socket?.on("message", handleMessage);
-    socket?.on("ringing", handleMessage);
+    socket?.on(
+      "message",
+      handleMessage
+    );
+
+    socket?.on(
+      "ringing",
+      handleMessage
+    );
 
     return () => {
-      socket?.off("message", handleMessage);
-      socket?.off("ringing", handleMessage);
+
+      socket?.off(
+        "message",
+        handleMessage
+      );
+
+      socket?.off(
+        "ringing",
+        handleMessage
+      );
+
     };
+
   }, [socket]);
 
+
   const closeMobileMenu = () => {
+
     setOpen(false);
     setIsSidebarOpen(false);
+
   };
+
 
   return (
     <>
+
       <DashboardContext.Provider
         value={{
           activeMenu,
@@ -366,8 +508,11 @@ function Main(props) {
           onKeyDown
         }}
       >
+
         {isLoading ? (
+
           <div className="vh-100 d-flex flex-column justify-content-center align-items-center">
+
             <h4>
               در حال تنظیم صفحه برای شما
             </h4>
@@ -378,8 +523,11 @@ function Main(props) {
             >
               <span className="sr-only"></span>
             </div>
+
           </div>
+
         ) : (
+
           <div
             className="main-layout"
             style={{ zIndex: 0 }}
@@ -388,23 +536,30 @@ function Main(props) {
             onTouchEnd={onTouchEnd}
             dir="rtl"
           >
+
             {isOpen && (
               <>
+
                 <div
                   onClick={closeMobileMenu}
                   className="main-mobile-menu-overlay"
                 />
 
                 <div className="main-mobile-sidebar">
+
                   <Sidebarr
                     menu={menu}
                     onClose={closeMobileMenu}
                   />
+
                 </div>
+
               </>
             )}
 
+
             <div className="main-header-wrapper d-none d-md-flex">
+
               <div className="main-sidebar-header">
                 <Sidebarr />
               </div>
@@ -412,67 +567,87 @@ function Main(props) {
               <div className="main-header-content">
                 <Header />
               </div>
+
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(true);
-                setIsSidebarOpen(true);
-              }}
-              className="main-mobile-menu-button d-md-none"
-              aria-label="باز کردن منو"
-            >
-              <span className="main-mobile-menu-icon">
-                <HiOutlineMenuAlt3 />
-              </span>
 
-              <span className="main-mobile-menu-text">
-                منو
-              </span>
-            </button>
+            <div className="main-mobile-header d-md-none">
+              <div className="main-mobile-header-glow" />
 
-            <button
-              type="button"
-              className="main-mobile-wallet-button d-md-none"
-              onClick={() =>
-                navigate(
-                  paths.private.definitions.Wallet
-                )
-              }
-              aria-label="کیف پول"
-            >
-              <span className="main-mobile-wallet-icon">
-                <FaWallet />
-              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(true);
+                  setIsSidebarOpen(true);
+                }}
+                className="main-mobile-menu-button"
+                aria-label="باز کردن منو"
+              >
 
-              <span className="main-mobile-wallet-info">
-                <span className="main-mobile-wallet-label">
-                  کیف پول
+                <span className="main-mobile-menu-icon">
+                  <HiOutlineMenuAlt3 />
+                </span>
+                <span className="main-mobile-menu-content">
+                  <span className="main-mobile-menu-text">
+                    منو
+                  </span>
+                </span>
+              </button>
+
+
+              <div className="main-mobile-header-divider" />
+
+
+              <button
+                type="button"
+                className="main-mobile-wallet-button"
+                onClick={() =>
+                  navigate(
+                    paths.private.definitions.Wallet
+                  )
+                }
+                aria-label="کیف پول"
+              >
+
+                <span className="main-mobile-wallet-content">
+
+                  <span className="main-mobile-wallet-label">
+                    موجودی کیف پول
+                  </span>
+
+                  <span className="main-mobile-wallet-amount">
+                    ۲۵,۰۰۰
+                    <small> تومان</small>
+                  </span>
+
                 </span>
 
-                <span className="main-mobile-wallet-amount">
-                  ۲۵,۰۰۰ تومان
+                <span className="main-mobile-wallet-icon">
+                  <FaWallet />
                 </span>
-              </span>
 
-              <span className="main-mobile-wallet-arrow">
-                ›
-              </span>
-            </button>
+                <span className="main-mobile-wallet-arrow">
+                  <FaArrowLeft />
+                </span>
+
+              </button>
+
+            </div>
 
             <div
-              className={`main-page-content ${
-                isDashboard
+              className={`main-page-content ${isDashboard
                   ? "main-dashboard-page"
                   : ""
-              }`}
+                }`}
               ref={divScrollRef}
               tabIndex={0}
               onKeyDown={setOnKeyDown}
             >
+
               <div className="main-page-inner">
+
                 <div className="container-fluid p-0 m-0 main-routes-container">
+
                   <Routes>
 
                     <Route
@@ -816,12 +991,19 @@ function Main(props) {
                     />
 
                   </Routes>
+
                 </div>
+
               </div>
+
             </div>
+
           </div>
+
         )}
+
       </DashboardContext.Provider>
+
     </>
   );
 }

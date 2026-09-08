@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Offcanvas } from "react-bootstrap";
 import {
@@ -378,15 +379,6 @@ function Requests() {
             className={`requests-page ${getStaticTabClass()}`}
             dir="rtl"
         >
-            <div className="requests-mobile-header d-md-none">
-                <div className="requests-mobile-header-inner">
-                    <div className="requests-mobile-page-title">
-                     
-                    </div>
-
-                </div>
-            </div>
-
             <Offcanvas
                 show={showMenu}
                 onHide={handleCloseMenu}
@@ -420,10 +412,11 @@ function Requests() {
                                 <button
                                     key={tab.id}
                                     type="button"
-                                    className={`requests-tab ${activeTab === tab.id
-                                        ? "requests-tab-active"
-                                        : ""
-                                        }`}
+                                    className={`requests-tab ${
+                                        activeTab === tab.id
+                                            ? "requests-tab-active"
+                                            : ""
+                                    }`}
                                     onClick={() =>
                                         setActiveTab(tab.id)
                                     }

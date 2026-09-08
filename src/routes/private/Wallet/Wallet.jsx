@@ -222,8 +222,8 @@ function Wallet() {
                     <FaHistory />
                   </div>
                   <div>
-                    <h5>{strings.wallet.financialHistory}</h5>
-                    <p style={{fontSize:"15px"}}>سوابق و تراکنش‌های کیف پول</p>
+                    <h4>{strings.wallet.financialHistory}</h4>
+                    <p style={{fontSize:"17px"}}>سوابق و تراکنش‌های کیف پول</p>
                   </div>
                 </div>
                 <div className="wallet-history-count">۰ تراکنش</div>
@@ -236,7 +236,7 @@ function Wallet() {
                   <FaHistory />
                 </div>
                 <h3>{strings.wallet.noTransactions}</h3>
-                <h6>{strings.wallet.noTransactionsDescription}</h6>
+                <h5>{strings.wallet.noTransactionsDescription}</h5>
               </div>
             </div>
           </Col>
