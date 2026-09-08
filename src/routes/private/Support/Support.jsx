@@ -98,38 +98,7 @@ function Support() {
         <div className="support-layout" dir="rtl">
             <div className="support-mobile-header d-md-none">
                 <div className="support-mobile-header-inner">
-                    <button
-                        type="button"
-                        className="support-mobile-menu-btn"
-                        aria-label="باز کردن منو"
-                        onClick={handleShowMenu}
-                    >
-                        <span className="support-mobile-menu-icon">
-                            <FaBars size={19} />
-                        </span>
-
-                        <span className="support-mobile-menu-text">
-                            منو
-                        </span>
-                    </button>
-
                     <div className="support-mobile-page-title">
-                        <button
-                            type="button"
-                            className="support-mobile-wallet-btn"
-                            onClick={handleWalletClick}
-                            aria-label="رفتن به کیف پول"
-                        >
-                            <span className="support-mobile-wallet-icon">
-                                <FaWallet size={16} />
-                            </span>
-
-                            <span className="support-mobile-wallet-content">
-                                <span className="support-mobile-wallet-amount">
-                                    ۲۵۰,۰۰۰ تومان
-                                </span>
-                            </span>
-                        </button>
                     </div>
                 </div>
             </div>

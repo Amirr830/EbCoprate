@@ -469,3 +469,97 @@
   background: #fff0f1;
   border: 1px solid #f5c6cb;
 }
+
+
+
+@media (max-width: 767.98px) {
+
+
+  .current-request-container {
+    font-size: 18px;
+  }
+
+  .small-text {
+    font-size: 17px !important;
+  }
+
+  .current-date-label {
+    font-size: 17px !important;
+  }
+
+  .current-date-value {
+    font-size: 19px !important;
+  }
+
+
+  .current-time-value {
+    font-size: 23px !important;
+  }
+
+  .current-time-period {
+    font-size: 18px !important;
+  }
+
+  .courier-info-box {
+    font-size: 18px;
+  }
+
+  .courier-info-box .small-text {
+    font-size: 17px !important;
+  }
+
+  .route-address-label {
+    font-size: 17px !important;
+  }
+
+  .route-address-value {
+    font-size: 17px !important;
+    line-height: 1.9 !important;
+  }
+
+  .vehicle-badge {
+    font-size: 18px;
+  }
+
+  .vehicle-badge div {
+    font-size: 18px !important;
+  }
+
+  .vehicle-badge .opacity-75 {
+    font-size: 17px !important;
+  }
+
+  .status-title {
+    font-size: 17px !important;
+  }
+
+  .status-title + div {
+    font-size: 17px;
+  }
+
+  .request-service-badge {
+    font-size: 17px !important;
+    padding: 6px 11px;
+  }
+
+  .request-payment-label {
+    font-size: 17px !important;
+  }
+
+  .request-payment-value {
+    font-size: 16px !important;
+  }
+
+  .price-tag {
+    font-size: 22px !important;
+  }
+
+  .price-tag .fs-6 {
+    font-size: 17px !important;
+  }
+
+  .request-card button {
+    font-size: 18px !important;
+  }
+
+}

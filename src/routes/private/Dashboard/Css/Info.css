@@ -678,3 +678,332 @@
     font-size: 10px;
   }
 }
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+  .info-container {
+    font-size: 18px;
+  }
+
+  .info-card {
+    border-radius: 15px;
+  }
+
+  .card-title {
+    font-size: 21px !important;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+
+  .history-table-wrapper {
+    border-radius: 11px;
+  }
+
+  .history-table {
+    min-width: 900px;
+  }
+
+  .history-table th {
+    padding: 12px 13px !important;
+    font-size: 17px !important;
+    font-weight: 700;
+  }
+
+  .history-table td {
+    padding: 12px 13px !important;
+    height: 52px;
+    font-size: 17px !important;
+  }
+
+  .history-table tbody tr {
+    height: 52px;
+  }
+
+  .history-date span {
+    font-size: 17px !important;
+  }
+
+  .driver-code {
+    font-size: 17px !important;
+    min-width: 60px;
+    padding: 5px 8px;
+  }
+
+  .history-amount {
+    font-size: 17px !important;
+    font-weight: 600;
+  }
+
+  .location-text {
+    font-size: 17px !important;
+    line-height: 1.7;
+  }
+
+  .location-dot {
+    width: 9px;
+    height: 9px;
+    min-width: 9px;
+  }
+
+  .history-table .btn-warning {
+    min-width: 92px;
+    height: 40px;
+    padding: 0 11px;
+    font-size: 16px !important;
+    border-radius: 8px;
+  }
+
+  .history-table .btn-warning svg {
+    font-size: 18px;
+  }
+
+  .driver-performance-table th {
+    padding: 13px 14px !important;
+    font-size: 17px !important;
+  }
+
+  .driver-performance-table td {
+    padding: 13px 14px !important;
+    font-size: 17px !important;
+  }
+
+  .performance-table-type {
+    min-width: 165px;
+    gap: 10px;
+    font-size: 17px !important;
+  }
+
+  .performance-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    font-size: 18px;
+    border-radius: 9px;
+  }
+
+  .performance-table-date {
+    font-size: 17px !important;
+  }
+
+  .performance-income-text,
+  .performance-expense-text {
+    font-size: 17px !important;
+    font-weight: 600;
+  }
+
+  .performance-status {
+    padding: 7px 11px;
+    font-size: 17px !important;
+    border-radius: 8px;
+  }
+
+  .quick-request-header {
+    min-height: 50px;
+    padding-bottom: 6px;
+  }
+
+  .quick-request-title-wrapper {
+    gap: 10px;
+  }
+
+  .quick-request-title-wrapper .card-title {
+    font-size: 21px !important;
+  }
+
+  .quick-request-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-height: 390px;
+    padding: 4px;
+  }
+
+  .quick-request-item {
+    height: 72px;
+    min-height: 72px;
+    padding: 10px 11px;
+    gap: 9px;
+    border-radius: 11px;
+  }
+
+  .quick-request-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 9px;
+    font-size: 15px !important;
+    font-weight: 600;
+  }
+
+  .quick-request-content {
+    gap: 4px;
+  }
+
+  .quick-request-name {
+    font-size: 18px !important;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  .quick-request-label {
+    font-size: 12px !important;
+  }
+
+  .quick-request-arrow {
+    width: 29px;
+    height: 29px;
+    min-width: 29px;
+    border-radius: 8px;
+  }
+
+  .quick-request-arrow svg {
+    font-size: 16px;
+  }
+
+  .quick-request-empty {
+    min-height: 135px;
+    padding: 22px;
+    border-radius: 12px;
+  }
+
+  .quick-request-empty-text {
+    font-size: 17px !important;
+    line-height: 1.9;
+  }
+
+  .quick-request-count {
+    min-width: 33px;
+    height: 33px;
+    padding: 0 9px;
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .info-container {
+    font-size: 18px;
+  }
+
+  .card-title {
+    font-size: 21px !important;
+  }
+
+  .history-table {
+    min-width: 920px;
+  }
+
+  .history-table th {
+    font-size: 17px !important;
+    padding: 13px 11px !important;
+  }
+
+  .history-table td {
+    font-size: 17px !important;
+    padding: 13px 11px !important;
+  }
+
+  .history-table tbody tr {
+    height: 54px;
+  }
+
+  .history-date span {
+    font-size: 17px !important;
+  }
+
+  .driver-code {
+    font-size: 17px !important;
+    min-width: 62px;
+  }
+
+  .history-amount {
+    font-size: 17px !important;
+  }
+
+  .location-text {
+    font-size: 17px !important;
+  }
+
+  .history-table .btn-warning {
+    height: 42px;
+    min-width: 96px;
+    font-size: 16px !important;
+  }
+
+  .history-table .btn-warning svg {
+    font-size: 18px;
+  }
+
+  .driver-performance-table th,
+  .driver-performance-table td {
+    font-size: 17px !important;
+    padding: 13px 11px !important;
+  }
+
+  .performance-table-type {
+    font-size: 17px !important;
+    min-width: 165px;
+  }
+
+  .performance-table-date {
+    font-size: 17px !important;
+  }
+
+  .performance-income-text,
+  .performance-expense-text {
+    font-size: 17px !important;
+  }
+
+  .performance-status {
+    font-size: 17px !important;
+    padding: 7px 11px;
+  }
+
+  .quick-request-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .quick-request-item {
+    height: 70px;
+    min-height: 70px;
+    padding: 9px 10px;
+  }
+
+  .quick-request-number {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 14px !important;
+  }
+
+  .quick-request-name {
+    font-size: 17px !important;
+    font-weight: 600;
+  }
+
+  .quick-request-arrow {
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+  }
+
+  .quick-request-arrow svg {
+    font-size: 15px;
+  }
+
+  .quick-request-empty-text {
+    font-size: 17px !important;
+  }
+
+  .quick-request-count {
+    min-width: 32px;
+    height: 32px;
+    font-size: 15px !important;
+  }
+}

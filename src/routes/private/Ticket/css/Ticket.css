@@ -311,7 +311,6 @@
     justify-content: center;
     flex-shrink: 0;
     font-size: 14px;
-    font-weight: 600;
 }
 
 .section-title h3 {
@@ -668,7 +667,6 @@
     gap: 8px;
     cursor: pointer;
     font-size: clamp(14px, 1vw, 15px);
-    font-weight: 500;
     line-height: 1.6;
     transition: 0.2s ease;
 }

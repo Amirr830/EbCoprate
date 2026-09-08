@@ -31,7 +31,6 @@
 
 .invite-modal-title {
   font-size: clamp(12px, 2.8vw, 14px);
-  font-weight: 600;
   color: #64748b;
 }
 
@@ -73,7 +72,6 @@
 
 .invite-heading {
   font-size: clamp(14px, 3.2vw, 17px);
-  font-weight: 800;
   color: #0f172a;
   margin-bottom: 10px;
   line-height: 1.5;
@@ -92,7 +90,6 @@
 }
 
 .highlight-text {
-  font-weight: 700;
   color: #059669;
   background: #ecfdf5;
   padding: 1px 6px;
@@ -100,7 +97,6 @@
 }
 
 .highlight-bold {
-  font-weight: 800;
   color: #0f172a;
 }
 
@@ -111,7 +107,6 @@
   padding: clamp(10px, 2.5vw, 12px) clamp(16px, 4vw, 24px);
   border-radius: 14px;
   font-size: clamp(13px, 3vw, 15px);
-  font-weight: 700;
   cursor: pointer;
   box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);

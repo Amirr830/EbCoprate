@@ -321,7 +321,7 @@ background: #edf8f4;
 color: #0d8f72;
 font-family: inherit;
 font-size: 16px;
-font-weight: 700;
+
 cursor: pointer;
 transition: 0.2s ease;
 }
@@ -354,7 +354,7 @@ background: #ffc107;
 color: #111111;
 font-family: inherit;
 font-size: 15px;
-font-weight: 700;
+
 cursor: pointer;
 box-shadow: 0 5px 12px rgba(255, 193, 7, 0.2);
 transition: 0.2s ease;

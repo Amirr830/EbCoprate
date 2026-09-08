@@ -754,21 +754,18 @@
 
 .mobile-bottom-navigation {
   position: fixed;
-  bottom: 0;
+  bottom: 50px;
   right: 12px;
   left: 12px;
   width: auto;
   height: 70px;
   background: #fff;
   border: 1px solid #e5e7eb;
-  border-radius: 16px 16px 0 0;
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.12);
-  z-index: 99999;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+  z-index: 1050;
   direction: rtl;
   padding: 6px 8px;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
 }
 
 .mobile-bottom-navigation > .col-4 {
@@ -826,7 +823,8 @@
     position: relative;
     z-index: 2001 !important;
   }
-    .mobile-content-area {
+
+  .mobile-content-area {
     width: 100%;
     min-height: 100vh;
     overflow-x: hidden;
@@ -866,23 +864,23 @@
     z-index: 1;
   }
 
-.mobile-bottom-navigation {
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 8px !important;
-  right: 8px !important;
-  height: 68px;
-  width: auto;
-  z-index: 99999 !important;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
-  border-radius: 16px 16px 0 0;
-}
+  .mobile-bottom-navigation {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 8px !important;
+    right: 8px !important;
+    height: 68px;
+    width: auto;
+    z-index: 99999 !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    border-radius: 16px 16px 0 0;
+  }
+
   .mobile-nav-btn {
     font-size: 14px;
     -webkit-tap-highlight-color: transparent;
-    /* user-select: none; */
   }
 
   .mobile-nav-btn:focus {
@@ -891,16 +889,14 @@
   }
 
   .mobile-nav-btn:active {
-    transform: scale(0.97);
+    transform: scale(.97);
   }
-
 
   .mobile-content-area,
   .mobile-page-wrapper {
     isolation: isolate;
   }
 
-  
   .modern-request-container,
   .mobile-content-area,
   .mobile-page-wrapper,
@@ -908,9 +904,215 @@
     overflow-x: hidden !important;
   }
 
- 
   .mobile-page-wrapper:last-child {
     padding-bottom: 115px;
+  }
+
+  /* =========================================================
+     MOBILE FONT SIZE - فقط موبایل
+     ========================================================= */
+
+  .modern-form-card {
+    font-size: 16px;
+  }
+
+  .location-title {
+    font-size: 16px !important;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+
+  .location-address {
+    font-size: 15px !important;
+    line-height: 1.8;
+  }
+
+  .add-dest-btn {
+    font-size: 15px !important;
+    line-height: 1.7;
+  }
+
+  .select-vehicle-btn {
+    font-size: 16px !important;
+  }
+
+  .vehicle-label {
+    font-size: 16px !important;
+  }
+
+  .vehicle-name {
+    font-size: 16px !important;
+  }
+
+  .vehicle-option .label {
+    font-size: 14px !important;
+  }
+
+  .vehicle-option .title {
+    font-size: 16px !important;
+  }
+
+  .vehicle-option .subtitle {
+    font-size: 13px !important;
+  }
+
+  .custom-floating-input input,
+  .custom-floating-input select {
+    font-size: 16px !important;
+    height: 48px;
+  }
+
+  .custom-floating-input label {
+    font-size: 15px !important;
+  }
+
+  .custom-textarea-group textarea {
+    font-size: 16px !important;
+    line-height: 1.8;
+    min-height: 75px;
+  }
+
+  .modern-accordion {
+    font-size: 15px !important;
+    line-height: 1.8;
+  }
+
+  .modern-chip {
+    font-size: 14px !important;
+    line-height: 1.7;
+  }
+
+  .segment-label {
+    font-size: 16px !important;
+    line-height: 1.7;
+  }
+
+  .segment-btn {
+    font-size: 16px !important;
+    line-height: 1.8;
+    padding: 8px 6px;
+  }
+
+  .price-title {
+    font-size: 17px !important;
+  }
+
+  .route-label {
+    font-size: 16px !important;
+    line-height: 1.7;
+  }
+
+  .route-address {
+    font-size: 15px !important;
+    line-height: 1.8;
+  }
+
+  .route-placeholder {
+    font-size: 15px !important;
+    line-height: 1.8;
+  }
+
+  .route-separator {
+    font-size: 20px;
+  }
+
+  .form-header h6 {
+    font-size: 19px !important;
+    line-height: 1.5;
+  }
+
+  .form-header .small-text {
+    font-size: 14px !important;
+    line-height: 1.7;
+  }
+
+  .service-label {
+    font-size: 15px !important;
+  }
+
+  .service-tag {
+    font-size: 14px !important;
+    line-height: 1.7;
+    padding: 5px 9px;
+  }
+
+  .service-tag button {
+    font-size: 14px;
+  }
+
+  .service-item {
+    font-size: 15px !important;
+    line-height: 1.8;
+    padding: 11px 13px;
+  }
+
+  .dropdown-icon {
+    font-size: 16px !important;
+  }
+
+  .check {
+    font-size: 12px;
+  }
+
+  .additional-destination-title {
+    font-size: 16px !important;
+    line-height: 1.7;
+  }
+
+  .additional-destination-input {
+    font-size: 15px !important;
+    line-height: 1.8;
+  }
+
+  .payment-price-label {
+    font-size: 15px !important;
+  }
+
+  .payment-price-value {
+    font-size: 18px !important;
+  }
+
+  .payment-price-value p {
+    font-size: 31px !important;
+  }
+
+  .discount-question {
+    font-size: 18px !important;
+    line-height: 1.8;
+  }
+
+  .apply-code-btn {
+    font-size: 15px !important;
+  }
+
+  .discount-input {
+    font-size: 16px !important;
+  }
+
+  .discount-description-form input,
+  .discount-description-form .discount-input {
+    font-size: 16px !important;
+  }
+
+  .selected-discount-info {
+    font-size: 15px !important;
+  }
+
+  .discount-global-alert-text {
+    font-size: 15px !important;
+    line-height: 1.8;
+  }
+
+  .discount-global-alert-icon {
+    font-size: 17px;
+  }
+
+  .mobile-nav-btn {
+    font-size: 15px !important;
+  }
+
+  .mobile-nav-icon {
+    font-size: 23px !important;
   }
 }
 
@@ -1478,8 +1680,9 @@
 }
 
 .mobile-header-menu .hamburger-btn:active {
-  transform: scale(0.94);
+  transform: scale(.94);
 }
+
 .mobile-wallet-box {
   display: flex;
   align-items: center;
@@ -1496,12 +1699,11 @@
 }
 
 .mobile-wallet-box:active {
-  transform: scale(0.96);
+  transform: scale(.96);
 }
 
 .mobile-wallet-box span {
   font-size: 15px;
-  font-weight: 500;
 }
 
 .mobile-wallet-plus {
@@ -1521,13 +1723,8 @@
   min-width: 0;
 }
 
-.mobile-current-page {
-  width: 100%;
-}
-
-.mobile-info-page {
-  width: 100%;
-}
+.mobile-current-page,
+.mobile-info-page,
 .mobile-request-page {
   width: 100%;
 }
@@ -1535,8 +1732,189 @@
 .mobile-content-area {
   width: 100%;
   max-width: 100%;
-
   overflow-x: hidden;
-
   box-sizing: border-box;
 }
+
+
+@media (max-width: 767.98px) {
+
+  .mobile-common-header {
+    font-size: 22px !important;
+  }
+
+  .mobile-wallet-box span {
+    font-size: 22px !important;
+  }
+
+  .mobile-wallet-plus {
+    font-size: 20px !important;
+  }
+
+  .additional-destination-title {
+    font-size: 22px !important;
+    line-height: 2;
+  }
+
+  .additional-destination-input {
+    font-size: 21px !important;
+    line-height: 2;
+  }
+
+  .payment-price-label {
+    font-size: 21px !important;
+  }
+
+  .payment-price-value {
+    font-size: 24px !important;
+  }
+
+  .payment-discount-card {
+    font-size: 22px !important;
+  }
+
+  .discount-question {
+    font-size: 24px !important;
+    line-height: 2;
+  }
+
+  .discount-input {
+    font-size: 22px !important;
+  }
+
+  .discount-global-alert-text {
+    font-size: 21px !important;
+    line-height: 2;
+  }
+
+  .discount-remove-button {
+    font-size: 21px !important;
+  }
+
+  .remove-discount-btn svg {
+    font-size: 24px !important;
+  }
+
+  .modern-form-card .btn,
+  .modern-form-card button {
+    font-family: inherit;
+  }
+
+  .modern-form-card .btn-success,
+  .modern-form-card .btn-warning {
+    font-size: 22px !important;
+  }
+
+  .location-title {
+    font-size: 21px !important;
+    line-height: 2;
+  }
+
+  .location-address {
+    font-size: 20px !important;
+    line-height: 2;
+  }
+
+  .add-dest-btn {
+    font-size: 20px !important;
+  }
+
+  .select-vehicle-btn {
+    font-size: 21px !important;
+  }
+
+  .custom-floating-input input,
+  .custom-floating-input select {
+    font-size:19px !important;
+  }
+
+  .custom-floating-input label {
+    font-size: 17px !important;
+  }
+
+  .custom-textarea-group textarea {
+    font-size: 21px !important;
+    line-height: 2;
+  }
+
+  .segment-label {
+    font-size: 21px !important;
+  }
+
+  .segment-btn {
+    font-size: 21px !important;
+  }
+
+  .route-label {
+    font-size: 21px !important;
+  }
+
+  .route-address {
+    font-size: 20px !important;
+    line-height: 2;
+  }
+
+  .route-placeholder {
+    font-size: 20px !important;
+  }
+
+  .form-header h6 {
+    font-size: 23px !important;
+  }
+
+  .form-header .small-text {
+    font-size: 18px !important;
+    line-height: 2;
+  }
+
+  .service-label {
+    font-size: 19px !important;
+  }
+
+  .service-tag {
+    font-size: 19px !important;
+  }
+
+  .service-item {
+    font-size: 20px !important;
+    line-height: 2;
+  }
+
+  .vehicle-label {
+    font-size: 19px !important;
+  }
+
+  .vehicle-name {
+    font-size: 20px !important;
+  }
+
+  .vehicle-option .label {
+    font-size: 18px !important;
+  }
+
+  .vehicle-option .title {
+    font-size: 21px !important;
+  }
+
+  .vehicle-option .subtitle {
+    font-size: 17px !important;
+  }
+
+  .price-title {
+    font-size: 21px !important;
+  }
+
+  .payment-price-value p {
+    font-size: 36px !important;
+  }
+
+  .mobile-nav-btn {
+    font-size: 19px !important;
+  }
+
+  .mobile-nav-icon {
+    font-size: 27px !important;
+  }
+
+}
+
