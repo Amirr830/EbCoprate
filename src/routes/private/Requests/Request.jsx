@@ -380,40 +380,9 @@ function Requests() {
         >
             <div className="requests-mobile-header d-md-none">
                 <div className="requests-mobile-header-inner">
-
-                    <button
-                        type="button"
-                        className="requests-mobile-menu-btn"
-                        aria-label="باز کردن منو"
-                        onClick={handleShowMenu}
-                    >
-                        <span className="requests-mobile-menu-icon">
-                            <FaBars size={17} />
-                        </span>
-
-                        <span className="requests-mobile-menu-text">
-                            منو
-                        </span>
-                    </button>
-
-<div className="requests-mobile-page-title">
-    <button
-        type="button"
-        className="requests-mobile-wallet-btn"
-        onClick={handleWalletClick}
-        aria-label="رفتن به کیف پول"
-    >
-        <span className="requests-mobile-wallet-icon">
-            <FaWallet size={16} />
-        </span>
-
-        <span className="requests-mobile-wallet-content">
-            <span className="requests-mobile-wallet-amount">
-                ۲۵۰,۰۰۰ تومان
-            </span>
-        </span>
-    </button>
-</div>
+                    <div className="requests-mobile-page-title">
+                     
+                    </div>
 
                 </div>
             </div>

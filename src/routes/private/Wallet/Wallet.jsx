@@ -67,33 +67,7 @@ function Wallet() {
         style={{ marginTop: "5px" }}
       >
         <div className="wallet-mobile-header-inner">
-          <button
-            type="button"
-            className="wallet-mobile-menu-btn"
-            aria-label="باز کردن منو"
-            onClick={handleShowMenu}
-          >
-            <span className="wallet-mobile-menu-icon">
-              <FaBars size={17} />
-            </span>
-            <span className="wallet-mobile-menu-text">منو</span>
-          </button>
           <div className="wallet-mobile-page-title">
-            <button
-              type="button"
-              className="wallet-mobile-wallet-btn"
-              onClick={handleWalletClick}
-              aria-label="رفتن به کیف پول"
-            >
-              <span className="wallet-mobile-wallet-icon">
-                <FaWallet size={16} />
-              </span>
-              <span className="wallet-mobile-wallet-content">
-                <span className="wallet-mobile-wallet-amount">
-                  ۲۵۰,۰۰۰ تومان
-                </span>
-              </span>
-            </button>
           </div>
         </div>
       </div>
