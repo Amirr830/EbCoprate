@@ -117,11 +117,11 @@ export default function AddDefMsgModal(props) {
                                 </span>
                             </button>
 
-                            <button className="support-action-btn">
+                            {/* <button className="support-action-btn">
                                 <span>
                                     آموزش استفاده از پنل
                                 </span>
-                            </button>
+                            </button> */}
 
                         </div>
 

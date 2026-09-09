@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Css/SideBar.css";
@@ -10,19 +10,22 @@ import {
   BsPeopleFill,
   BsPersonFill,
   BsHeadset,
-  BsInfoCircleFill,
   BsBoxArrowRight,
   BsPersonCircle,
-  BsChevronLeft
+  BsChevronLeft,
+  BsChevronDown
 } from "react-icons/bs";
 
 import paths from "../../../../src/app/paths.json";
 import Storages from "../../../app/storages";
 import answerModal from "../../../modals/answerModal";
+import InviteFriendsModal from "../modals/InviteFriendsModal";
 
-function SideBar() {
+function SideBar({ onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [supportDropdownOpen, setSupportDropdownOpen] = useState(false);
 
   const menus = [
     {
@@ -124,6 +127,24 @@ function SideBar() {
     }
   };
 
+  const handleSupportDropdownToggle = () => {
+    setSupportDropdownOpen((prev) => !prev);
+  };
+
+  const handleGoToTicket = () => {
+    setSupportDropdownOpen(false);
+    navigate("/control-panel/69/definitions/ticket");
+  };
+
+  const handleGoToCommentSuggestion = () => {
+    setSupportDropdownOpen(false);
+    navigate("/control-panel/70/definitions/commentSuggestion");
+  };
+
+  const handlePanelTraining = () => {
+    setSupportDropdownOpen(false);
+  };
+
   const handleLogout = () => {
     answerModal.show(
       "آیا مایل به خروج از حساب کاربری هستید؟",
@@ -131,7 +152,7 @@ function SideBar() {
         Storages.removeUserToken();
         navigate(paths.public.login);
       },
-      () => {}
+      () => { }
     );
   };
 
@@ -167,9 +188,8 @@ function SideBar() {
             <button
               key={item.id}
               onClick={() => handleMenuClick(item)}
-              className={`sidebar-btn ${
-                active === item.id ? "active-btn" : ""
-              }`}
+              className={`sidebar-btn ${active === item.id ? "active-btn" : ""
+                }`}
             >
               <div className="btn-icon">
                 {item.icon}
@@ -184,6 +204,104 @@ function SideBar() {
               </div>
             </button>
           ))}
+
+          <div className="mobile-sidebar-actions d-md-none">
+
+<InviteFriendsModal> 
+  <button 
+    type="button" 
+    className="sidebar-btn sidebar-action-btn"
+    onClick={onClose}
+  > 
+    <div className="btn-icon"> 
+      <BsPeopleFill /> 
+    </div> 
+
+    <span className="btn-text"> 
+      دعوت از دوستان 
+    </span> 
+
+    <div className="btn-arrow"> 
+      <BsChevronLeft /> 
+    </div> 
+  </button> 
+</InviteFriendsModal>
+
+            <div className="support-training-wrapper">
+
+              <button
+                type="button"
+                className={`sidebar-btn sidebar-action-btn ${supportDropdownOpen
+                    ? "support-dropdown-active"
+                    : ""
+                  }`}
+                onClick={handleSupportDropdownToggle}
+                aria-expanded={supportDropdownOpen}
+              >
+                <div className="btn-icon">
+                  <BsHeadset />
+                </div>
+
+                <span className="btn-text">
+                  پشتیبانی و آموزش
+                </span>
+
+                <div className="btn-arrow support-dropdown-arrow">
+                  <BsChevronDown
+                    className={
+                      supportDropdownOpen
+                        ? "support-arrow-open"
+                        : ""
+                    }
+                  />
+                </div>
+              </button>
+
+              {supportDropdownOpen && (
+                <div className="support-dropdown-menu">
+
+                  <button
+                    type="button"
+                    className="support-dropdown-item"
+                    onClick={handleGoToTicket}
+                  >
+                    <span>
+                      ارسال تیکت جدید
+                    </span>
+
+                    <BsChevronLeft />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="support-dropdown-item"
+                    onClick={handleGoToCommentSuggestion}
+                  >
+                    <span>
+                      نظرات و پیشنهادات
+                    </span>
+
+                    <BsChevronLeft />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="support-dropdown-item"
+                    onClick={handlePanelTraining}
+                  >
+                    <span>
+                      آموزش استفاده از پنل
+                    </span>
+
+                    <BsChevronLeft />
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+
+          </div>
 
         </Col>
 
@@ -200,6 +318,7 @@ function SideBar() {
             <span>
               خروج از حساب کاربری
             </span>
+
           </button>
 
         </Col>
