@@ -1,3 +1,4 @@
+
 import React, { useRef, useState } from "react";
 import { Row, Col, Form, Offcanvas } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +11,6 @@ import {
     FaWallet,
     FaBars,
 } from "react-icons/fa";
-import { MdSupportAgent } from "react-icons/md";
 import SideBar from "../Dashboard/SideBar";
 
 function Ticket() {
@@ -117,55 +117,13 @@ function Ticket() {
 
     return (
         <div className="ticket-page" dir="rtl">
-            {/* =========================
-                MOBILE HEADER
-            ========================= */}
-            <div
-                className="ticket-mobile-header d-md-none"
-                style={{ marginTop: "5px" }}
-            >
+            <div className="ticket-mobile-header d-md-none">
                 <div className="ticket-mobile-header-inner">
-                    <button
-                        type="button"
-                        className="ticket-mobile-menu-btn"
-                        aria-label="باز کردن منو"
-                        onClick={handleShowMenu}
-                    >
-                        <span className="ticket-mobile-menu-icon">
-                            <FaBars size={17} />
-                        </span>
-
-                        <span className="ticket-mobile-menu-text">
-                            منو
-                        </span>
-                    </button>
-
                     <div className="ticket-mobile-page-title">
-                        <button
-                            type="button"
-                            className="ticket-mobile-wallet-btn"
-                            onClick={handleWalletClick}
-                            aria-label="رفتن به کیف پول"
-                        >
-                            <span className="ticket-mobile-wallet-icon">
-                                <FaWallet size={16} />
-                            </span>
-
-                            <span className="ticket-mobile-wallet-content">
-                                <span className="ticket-mobile-wallet-amount">
-                                    ۲۵۰,۰۰۰ تومان
-                                </span>
-                            </span>
-                        </button>
                     </div>
                 </div>
             </div>
 
-            <div style={{ marginTop: "5px" }}></div>
-
-            {/* =========================
-                MOBILE OFFCANVAS MENU
-            ========================= */}
             <Offcanvas
                 show={showMenu}
                 onHide={handleCloseMenu}
@@ -507,13 +465,7 @@ function Ticket() {
                                         >
                                             <FaPaperPlane />
 
-                                            <span
-                                                style={{
-                                                    fontSize: "15px",
-                                                }}
-                                            >
-                                                ارسال
-                                            </span>
+                                            <span>ارسال</span>
                                         </button>
                                     </Col>
 
@@ -525,13 +477,7 @@ function Ticket() {
                                         >
                                             <FaTimes />
 
-                                            <span
-                                                style={{
-                                                    fontSize: "15px",
-                                                }}
-                                            >
-                                                انصراف
-                                            </span>
+                                            <span>انصراف</span>
                                         </button>
                                     </Col>
                                 </Row>

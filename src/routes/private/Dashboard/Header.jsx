@@ -36,16 +36,24 @@ function Header() {
                     <div className="col-auto">
                         <div className="d-flex align-items-center gap-3">
 
+                           
                             {!isWalletPage && (
                                 <button
-                                    className="btn btn-warning"
-                                    style={{ fontSize: "25px", height: "40px", borderRadius: "8px", width: "150px" }}
+                                    className="wallet-button"
                                     onClick={() => navigate(paths.private.definitions.Wallet)}
                                 >
-                                    <FaWallet className="wallet-icon" style={{ marginLeft: "10px" }} />
-                                    <span className="wallet-price">25,000 تومان</span>
+                                    <FaWallet className="wallet-icon" />
+
+                                    <span className="wallet-price">
+                                        25,000
+                                    </span>
+
+                                    <span className="wallet-currency">
+                                        تومان
+                                    </span>
                                 </button>
                             )}
+                            
 
                         </div>
                     </div>

@@ -697,7 +697,6 @@
 
   .card-title {
     font-size: 21px !important;
-    font-weight: 700;
     line-height: 1.7;
   }
 
@@ -712,7 +711,6 @@
   .history-table th {
     padding: 12px 13px !important;
     font-size: 17px !important;
-    font-weight: 700;
   }
 
   .history-table td {
@@ -737,7 +735,6 @@
 
   .history-amount {
     font-size: 17px !important;
-    font-weight: 600;
   }
 
   .location-text {
@@ -794,7 +791,6 @@
   .performance-income-text,
   .performance-expense-text {
     font-size: 17px !important;
-    font-weight: 600;
   }
 
   .performance-status {
@@ -837,7 +833,6 @@
     min-width: 34px;
     border-radius: 9px;
     font-size: 15px !important;
-    font-weight: 600;
   }
 
   .quick-request-content {
@@ -846,7 +841,6 @@
 
   .quick-request-name {
     font-size: 18px !important;
-    font-weight: 600;
     line-height: 1.6;
   }
 
@@ -984,7 +978,6 @@
 
   .quick-request-name {
     font-size: 17px !important;
-    font-weight: 600;
   }
 
   .quick-request-arrow {

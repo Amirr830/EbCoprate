@@ -1,9 +1,19 @@
+@font-face {
+    font-family: 'Vazir';
+    src: url("../../Farsi-Digits/Vazir-FD.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    font-family: 'Vazir', sans-serif;
+}
 :root {
   --main-header-height: 100px;
   --main-sidebar-width: 350px;
   --main-mobile-header-height: 60px;
 }
-
 .main-header-wrapper {
   position: fixed;
   top: 0;
@@ -395,7 +405,6 @@
 
   .main-mobile-menu-text {
     font-size: 21px;
-    font-weight: 700;
     line-height: 1.2;
     color: #3d4d46;
     white-space: nowrap;
@@ -515,7 +524,6 @@
 
   .main-mobile-wallet-label {
     font-size: 15px;
-    font-weight: 600;
     line-height: 1.2;
     color: #7d8d85;
     white-space: nowrap;
@@ -523,7 +531,6 @@
 
   .main-mobile-wallet-amount {
     font-size: 21px;
-    font-weight: 800;
     line-height: 1.2;
     color: #354b40;
     white-space: nowrap;
@@ -532,7 +539,6 @@
 
   .main-mobile-wallet-amount small {
     font-size: 15px;
-    font-weight: 600;
     color: #71837a;
     margin-right: 3px;
   }

@@ -4,7 +4,6 @@
   direction: rtl;
   padding-bottom: 80px !important;
 }
-
 .modern-form-card {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   max-height: calc(100vh - 140px);
@@ -13,75 +12,60 @@
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
-
 .form-scroll-content {
   width: 100%;
 }
-
 .modern-form-card::-webkit-scrollbar {
   width: 5px;
 }
-
 .modern-form-card::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .modern-form-card::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 10px;
 }
-
 .modern-form-card::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-
 .hamburger-btn:focus {
   box-shadow: none;
 }
-
 .custom-mobile-menu {
   width: 290px !important;
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
 }
-
 .custom-mobile-menu .offcanvas-body {
   padding: 0;
 }
-
 .location-box {
   background-color: #f8f9fa;
   border-radius: 12px;
   padding: 12px;
   border: 1px solid #e9ecef;
 }
-
 .modern-location-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 .dot-indicator {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   display: inline-block;
 }
-
 .origin-dot {
   background-color: #198754;
 }
-
 .dest-dot {
   background-color: #dc3545;
 }
-
 .location-title {
   font-size: 14px;
   color: #495057;
 }
-
 .location-address {
   font-size: 13px;
   color: #6c757d;
@@ -91,7 +75,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .icon-btn {
   background: none;
   border: none;
@@ -99,12 +82,10 @@
   padding: 4px;
   cursor: pointer;
 }
-
 .location-divider {
   border-bottom: 1px dashed #dee2e6;
   margin: 4px 0;
 }
-
 .add-dest-btn {
   background-color: #f8f9fa;
   border: 1px dashed #ced4da;
@@ -114,17 +95,14 @@
   font-size: 14px;
   transition: all 0.2s ease;
 }
-
 .add-dest-btn:hover {
   background-color: #e9ecef;
 }
-
 .vehicle-selector {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
 .vehicle-option {
   width: 100%;
   border: none;
@@ -137,77 +115,62 @@
   transition: 0.25s;
   opacity: 0.85;
 }
-
 .vehicle-option:hover {
   transform: translateY(-2px);
 }
-
 .vehicle-option.active {
   opacity: 1;
   transform: scale(1.02);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
 }
-
 .vehicle-option.box-bike {
   background: linear-gradient(135deg, #42a5f5, #1e88e5);
   color: #fff;
 }
-
 .vehicle-option.bike {
   background: linear-gradient(135deg, #ffd54f, #fbc02d);
   color: #333;
 }
-
 .vehicle-option.car {
   background: linear-gradient(135deg, #66bb6a, #2e7d32);
   color: #fff;
 }
-
 .vehicle-option .label {
   display: block;
   font-size: 12px;
   opacity: 0.9;
 }
-
 .vehicle-option .title {
   margin: 0;
   font-size: 14px;
 }
-
 .vehicle-option .subtitle {
   font-size: 10px;
   margin-top: 2px;
   opacity: 0.9;
 }
-
 .vehicle-option svg {
   font-size: 22px;
 }
-
 .custom-floating-input {
   position: relative;
 }
-
 .modern-field {
   position: relative;
 }
-
 .modern-field input,
 .modern-field select {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
-
 .modern-field:hover input,
 .modern-field:hover select {
   border-color: #21c45d;
 }
-
 .modern-field input:focus,
 .modern-field select:focus {
   border-color: #16a34a;
   box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
 }
-
 .custom-floating-input input,
 .custom-floating-input select {
   width: 100%;
@@ -223,11 +186,9 @@
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-
 .vehicle-dropdown {
   position: relative;
 }
-
 .vehicle-label {
   position: absolute;
   top: -8px;
@@ -238,20 +199,16 @@
   color: #777;
   z-index: 5;
 }
-
 .vehicle-dropdown details {
   position: relative;
 }
-
 .vehicle-dropdown summary {
   list-style: none;
   cursor: pointer;
 }
-
 .vehicle-dropdown summary::-webkit-details-marker {
   display: none;
 }
-
 .selected-vehicle {
   border: 1px solid #dce3ea;
   border-radius: 12px;
@@ -262,36 +219,28 @@
   background: #fff;
   transition: 0.25s;
 }
-
 .selected-vehicle:hover {
   border-color: #198754;
 }
-
 .selected-vehicle svg {
   font-size: 24px;
   color: #198754;
 }
-
 .vehicle-name {
   font-size: 14px;
 }
-
 .selected-vehicle small {
   color: #888;
 }
-
 .vehicle-dropdown details[open] summary {
   margin-bottom: 10px;
 }
-
 .vehicle-option {
   margin-bottom: 10px;
 }
-
 .vehicle-option:last-child {
   margin-bottom: 0;
 }
-
 .custom-floating-input label {
   position: absolute;
   top: -8px;
@@ -303,7 +252,6 @@
   border-radius: 20px;
   z-index: 2;
 }
-
 .custom-textarea-group textarea {
   width: 100%;
   min-height: 58px;
@@ -314,7 +262,6 @@
   outline: none;
   resize: none;
 }
-
 .modern-accordion {
   display: flex;
   justify-content: space-between;
@@ -326,7 +273,6 @@
   color: #495057;
   cursor: pointer;
 }
-
 .modern-chip {
   text-align: center;
   padding: 8px 4px;
@@ -337,20 +283,17 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .modern-chip.active {
   background-color: #e8f5e9;
   border-color: #198754;
   color: #198754;
 }
-
 .segment-toggle-box {
   display: flex;
   background-color: #f1f3f5;
   border-radius: 8px;
   padding: 2px;
 }
-
 .segment-btn {
   flex: 1;
   text-align: center;
@@ -361,13 +304,11 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .segment-btn.active {
   background-color: #fff;
   color: #212529;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
-
 .price-card {
   background-color: #f8f9fa;
   padding: 12px;
@@ -377,12 +318,10 @@
   justify-content: center;
   align-items: center;
 }
-
 .price-title {
   font-size: 16px;
   color: #6c757d;
 }
-
 .modern-discount-bar {
   height: 100%;
   min-height: 60px;
@@ -393,18 +332,15 @@
   border-radius: 12px;
   padding: 7px 9px;
 }
-
 .discount-input {
   min-width: 0;
   font-size: 15px;
   outline: none;
 }
-
 .apply-code-btn {
   white-space: nowrap;
   flex-shrink: 0;
 }
-
 .route-card {
   display: flex;
   flex-direction: column;
@@ -415,7 +351,6 @@
   padding: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
-
 .route-item {
   width: 100%;
   display: flex;
@@ -428,7 +363,6 @@
   flex: 1 1 0;
   min-width: 0;
 }
-
 .route-side {
   flex-shrink: 0;
   display: flex;
@@ -436,18 +370,15 @@
   gap: 6px;
   min-width: 65px;
 }
-
 .route-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
-
 .route-label {
   font-size: 14px;
   color: #374151;
 }
-
 .route-address {
   flex: 1;
   min-width: 0;
@@ -460,21 +391,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .route-address-clickable {
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .route-address-clickable:hover {
   color: #198754;
 }
-
 .route-placeholder {
   color: #9ca3af;
   font-size: 13px;
 }
-
 .route-edit {
   flex-shrink: 0;
   width: 32px;
@@ -489,13 +416,11 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .route-edit:hover {
   background: #e5e7eb;
   color: #2563eb;
   transform: translateY(-1px);
 }
-
 .route-separator {
   display: flex;
   justify-content: center;
@@ -503,24 +428,20 @@
   color: #198754;
   font-size: 18px;
 }
-
 .form-header {
   padding-top: 2px;
   padding-bottom: 2px;
 }
-
 .form-header h6 {
   font-size: 17px;
   line-height: 1.2;
 }
-
 .form-header .small-text {
   display: block;
   margin-top: 2px;
   font-size: 12px;
   line-height: 1.3;
 }
-
 .modern-field::after {
   position: absolute;
   left: 14px;
@@ -531,15 +452,12 @@
   pointer-events: none;
   transition: 0.25s;
 }
-
 .modern-field:hover::after {
   color: #0f8a3d;
 }
-
 .service-dropdown {
   position: relative;
 }
-
 .service-label {
   position: absolute;
   right: 12px;
@@ -550,7 +468,6 @@
   color: #6b7280;
   z-index: 5;
 }
-
 .service-box {
   min-height: 46px;
   border: 1px solid #d9e3ee;
@@ -563,12 +480,10 @@
   cursor: pointer;
   transition: 0.2s;
 }
-
 .service-box.active {
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
 }
-
 .selected-tags {
   flex: 1;
   display: flex;
@@ -577,7 +492,6 @@
   gap: 5px;
   min-height: 22px;
 }
-
 .service-tag {
   display: flex;
   align-items: center;
@@ -589,7 +503,6 @@
   font-size: 13px;
   animation: fadeIn 0.25s;
 }
-
 .service-tag button {
   width: 17px;
   height: 17px;
@@ -605,21 +518,17 @@
   transition: 0.2s;
   padding: 0;
 }
-
 .service-tag button:hover {
   transform: scale(1.1);
 }
-
 .dropdown-icon {
   transition: 0.3s;
   color: #6c757d;
   font-size: 14px;
 }
-
 .dropdown-icon.rotate {
   transform: rotate(180deg);
 }
-
 .service-menu {
   margin-top: 5px;
   border: 1px solid #e4ebf2;
@@ -629,7 +538,6 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
   animation: fadeDown 0.25s;
 }
-
 .service-item {
   display: flex;
   justify-content: space-between;
@@ -639,16 +547,13 @@
   transition: 0.2s;
   font-size: 14px;
 }
-
 .service-item:hover {
   background: #f5f9ff;
 }
-
 .service-item.selected {
   background: #eff6ff;
   color: #2563eb;
 }
-
 .check {
   width: 20px;
   height: 20px;
@@ -660,31 +565,26 @@
   justify-content: center;
   font-size: 11px;
 }
-
 @keyframes fadeDown {
   from {
     opacity: 0;
     transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: scale(0.8);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
   }
 }
-
 .select-vehicle-btn {
   width: 100%;
   height: 44px;
@@ -705,25 +605,21 @@
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
-
 .select-vehicle-btn:hover {
   border-color: #f8df00;
   background: #abad00;
   color: black;
 }
-
 .select-vehicle-btn:focus {
   border-color: #86b7fe;
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.1);
 }
-
 .vehicle-selected-btn {
   color: #198754 !important;
   background: #f3fff8 !important;
   border-color: #198754 !important;
   box-shadow: 0 3px 10px rgba(25, 135, 84, 0.07);
 }
-
 .segment-label {
   display: flex;
   align-items: center;
@@ -733,7 +629,6 @@
   font-size: 14px;
   color: black;
 }
-
 .segment-label::before {
   content: "";
   width: 3px;
@@ -742,16 +637,13 @@
   background: #198754;
   display: inline-block;
 }
-
 .mobile-content-area {
   padding-bottom: 85px;
 }
-
 .mobile-page-wrapper {
   width: 100%;
   padding-bottom: 85px;
 }
-
 .mobile-bottom-navigation {
   position: fixed;
   bottom: 50px;
@@ -767,12 +659,10 @@
   direction: rtl;
   padding: 6px 8px;
 }
-
 .mobile-bottom-navigation > .col-4 {
   height: 100%;
   padding: 0 3px;
 }
-
 .mobile-nav-btn {
   width: 100%;
   height: 100%;
@@ -790,338 +680,20 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
 .mobile-nav-btn:hover {
   background: #f8f9fa;
 }
-
 .mobile-nav-btn.active {
   background: #e8f5e9;
   color: #198754;
 }
-
 .mobile-nav-btn:active {
   transform: scale(0.96);
 }
-
 .mobile-nav-icon {
   font-size: 21px;
   line-height: 1;
 }
-
-@media (max-width: 767.98px) {
-  .modern-request-container {
-    max-width: 100%;
-    width: 100%;
-    padding: 0 8px 120px 8px !important;
-    align-items: flex-start !important;
-    position: relative;
-    z-index: 1;
-  }
-
-  .dashboard-header {
-    position: relative;
-    z-index: 2001 !important;
-  }
-
-  .mobile-content-area {
-    width: 100%;
-    min-height: 100vh;
-    overflow-x: hidden;
-    box-sizing: border-box;
-  }
-
-  .mobile-common-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .modern-form-card {
-    max-height: none !important;
-    height: auto !important;
-    overflow-y: visible !important;
-    overflow-x: hidden;
-    margin-top: 0 !important;
-    margin-bottom: 95px !important;
-    border-radius: 14px !important;
-    position: relative;
-    z-index: 1;
-  }
-
-  .mobile-content-area {
-    padding-bottom: 110px;
-    overflow: visible !important;
-    position: relative;
-    z-index: 1;
-  }
-
-  .mobile-page-wrapper {
-    padding-bottom: 110px;
-    overflow: visible !important;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-  }
-
-  .mobile-bottom-navigation {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 8px !important;
-    right: 8px !important;
-    height: 68px;
-    width: auto;
-    z-index: 99999 !important;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    will-change: transform;
-    border-radius: 16px 16px 0 0;
-  }
-
-  .mobile-nav-btn {
-    font-size: 14px;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .mobile-nav-btn:focus {
-    outline: none;
-    box-shadow: none;
-  }
-
-  .mobile-nav-btn:active {
-    transform: scale(.97);
-  }
-
-  .mobile-content-area,
-  .mobile-page-wrapper {
-    isolation: isolate;
-  }
-
-  .modern-request-container,
-  .mobile-content-area,
-  .mobile-page-wrapper,
-  .modern-form-card {
-    overflow-x: hidden !important;
-  }
-
-  .mobile-page-wrapper:last-child {
-    padding-bottom: 115px;
-  }
-
-  /* =========================================================
-     MOBILE FONT SIZE - فقط موبایل
-     ========================================================= */
-
-  .modern-form-card {
-    font-size: 16px;
-  }
-
-  .location-title {
-    font-size: 16px !important;
-    line-height: 1.7;
-    font-weight: 500;
-  }
-
-  .location-address {
-    font-size: 15px !important;
-    line-height: 1.8;
-  }
-
-  .add-dest-btn {
-    font-size: 15px !important;
-    line-height: 1.7;
-  }
-
-  .select-vehicle-btn {
-    font-size: 16px !important;
-  }
-
-  .vehicle-label {
-    font-size: 16px !important;
-  }
-
-  .vehicle-name {
-    font-size: 16px !important;
-  }
-
-  .vehicle-option .label {
-    font-size: 14px !important;
-  }
-
-  .vehicle-option .title {
-    font-size: 16px !important;
-  }
-
-  .vehicle-option .subtitle {
-    font-size: 13px !important;
-  }
-
-  .custom-floating-input input,
-  .custom-floating-input select {
-    font-size: 16px !important;
-    height: 48px;
-  }
-
-  .custom-floating-input label {
-    font-size: 15px !important;
-  }
-
-  .custom-textarea-group textarea {
-    font-size: 16px !important;
-    line-height: 1.8;
-    min-height: 75px;
-  }
-
-  .modern-accordion {
-    font-size: 15px !important;
-    line-height: 1.8;
-  }
-
-  .modern-chip {
-    font-size: 14px !important;
-    line-height: 1.7;
-  }
-
-  .segment-label {
-    font-size: 16px !important;
-    line-height: 1.7;
-  }
-
-  .segment-btn {
-    font-size: 16px !important;
-    line-height: 1.8;
-    padding: 8px 6px;
-  }
-
-  .price-title {
-    font-size: 17px !important;
-  }
-
-  .route-label {
-    font-size: 16px !important;
-    line-height: 1.7;
-  }
-
-  .route-address {
-    font-size: 15px !important;
-    line-height: 1.8;
-  }
-
-  .route-placeholder {
-    font-size: 15px !important;
-    line-height: 1.8;
-  }
-
-  .route-separator {
-    font-size: 20px;
-  }
-
-  .form-header h6 {
-    font-size: 19px !important;
-    line-height: 1.5;
-  }
-
-  .form-header .small-text {
-    font-size: 14px !important;
-    line-height: 1.7;
-  }
-
-  .service-label {
-    font-size: 15px !important;
-  }
-
-  .service-tag {
-    font-size: 14px !important;
-    line-height: 1.7;
-    padding: 5px 9px;
-  }
-
-  .service-tag button {
-    font-size: 14px;
-  }
-
-  .service-item {
-    font-size: 15px !important;
-    line-height: 1.8;
-    padding: 11px 13px;
-  }
-
-  .dropdown-icon {
-    font-size: 16px !important;
-  }
-
-  .check {
-    font-size: 12px;
-  }
-
-  .additional-destination-title {
-    font-size: 16px !important;
-    line-height: 1.7;
-  }
-
-  .additional-destination-input {
-    font-size: 15px !important;
-    line-height: 1.8;
-  }
-
-  .payment-price-label {
-    font-size: 15px !important;
-  }
-
-  .payment-price-value {
-    font-size: 18px !important;
-  }
-
-  .payment-price-value p {
-    font-size: 31px !important;
-  }
-
-  .discount-question {
-    font-size: 18px !important;
-    line-height: 1.8;
-  }
-
-  .apply-code-btn {
-    font-size: 15px !important;
-  }
-
-  .discount-input {
-    font-size: 16px !important;
-  }
-
-  .discount-description-form input,
-  .discount-description-form .discount-input {
-    font-size: 16px !important;
-  }
-
-  .selected-discount-info {
-    font-size: 15px !important;
-  }
-
-  .discount-global-alert-text {
-    font-size: 15px !important;
-    line-height: 1.8;
-  }
-
-  .discount-global-alert-icon {
-    font-size: 17px;
-  }
-
-  .mobile-nav-btn {
-    font-size: 15px !important;
-  }
-
-  .mobile-nav-icon {
-    font-size: 23px !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .mobile-bottom-navigation {
-    display: none !important;
-  }
-}
-
 .additional-destination-card {
   width: 100%;
   padding: 7px 9px;
@@ -1130,22 +702,20 @@
   border-radius: 10px;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.03);
 }
-
 .additional-destination-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 5px;
 }
-
 .additional-destination-title {
   display: flex;
   align-items: center;
   gap: 7px;
   font-size: 14px;
   color: #374151;
+  min-width: 0;
 }
-
 .additional-destination-dot {
   width: 8px;
   height: 8px;
@@ -1154,13 +724,12 @@
   background-color: #dc3545;
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.08);
 }
-
 .additional-destination-actions {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-shrink: 0;
 }
-
 .additional-destination-edit,
 .additional-destination-remove {
   width: 28px;
@@ -1173,26 +742,21 @@
   cursor: pointer;
   transition: 0.2s;
 }
-
 .additional-destination-edit {
   background: #f3f4f6;
   color: #6c757d;
 }
-
 .additional-destination-edit:hover {
   background: #e5e7eb;
   color: #2563eb;
 }
-
 .additional-destination-remove {
   background: #dc3545;
   color: #fff;
 }
-
 .additional-destination-remove:hover {
   background: #bb2d3b;
 }
-
 .additional-destination-input {
   min-height: 38px;
   padding: 6px 10px;
@@ -1204,13 +768,13 @@
   font-size: 13px;
   line-height: 1.5;
   color: #333;
+  min-width: 0;
+  overflow: hidden;
 }
-
 .payment-price-label {
   font-size: 14px;
   color: #6c757d;
 }
-
 .payment-price-value {
   display: flex;
   align-items: center;
@@ -1218,15 +782,12 @@
   font-size: 20px;
   white-space: nowrap;
 }
-
 .payment-price-value strong {
   font-size: 20px;
 }
-
 .payment-price-value span {
   font-size: 20px;
 }
-
 .payment-discount-section {
   width: 100%;
   min-height: 55px;
@@ -1239,8 +800,8 @@
   border: 1px solid #d9e3ee;
   border-right: none;
   border-radius: 14px 0 0 14px;
+  box-sizing: border-box;
 }
-
 .payment-discount-input-wrapper {
   flex: 1;
   min-width: 0;
@@ -1248,12 +809,10 @@
   align-items: center;
   gap: 7px;
 }
-
 .discount-icon {
   flex-shrink: 0;
   font-size: 16px;
 }
-
 .discount-input {
   width: 100%;
   min-width: 0;
@@ -1264,11 +823,6 @@
   color: #212529;
   font-family: inherit;
 }
-
-.discount-input::placeholder {
-  color: #9ca3af;
-}
-
 .apply-code-btn {
   flex-shrink: 0;
   white-space: nowrap;
@@ -1276,8 +830,8 @@
   padding: 6px 12px;
   font-family: inherit;
   font-size: 13px;
+  box-sizing: border-box;
 }
-
 .payment-discount-card {
   width: 100%;
   padding: 14px;
@@ -1286,8 +840,9 @@
   background: #ffffff;
   box-shadow: 0 5px 18px rgba(31, 41, 55, 0.05);
   transition: 0.2s ease;
+  box-sizing: border-box;
+  min-width: 0;
 }
-
 .discount-question-row {
   width: 100%;
   min-height: 40px;
@@ -1299,14 +854,16 @@
   background: #f8fafc;
   border: 1px solid #e9eef4;
   border-radius: 8px;
+  box-sizing: border-box;
+  min-width: 0;
 }
-
 .discount-question {
   font-size: 19px;
   color: #374151;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
-
 .apply-code-btn {
   flex-shrink: 0;
   white-space: nowrap;
@@ -1315,7 +872,6 @@
   font-family: inherit;
   font-size: 12px;
 }
-
 .payment-price-section {
   width: 100%;
   min-height: 34px;
@@ -1328,8 +884,8 @@
   background: #f8fafc;
   border: 1px solid #edf0f4;
   text-align: center;
+  box-sizing: border-box;
 }
-
 .payment-price-value {
   display: flex;
   align-items: center;
@@ -1340,16 +896,13 @@
   white-space: nowrap;
   text-align: center;
 }
-
 .payment-price-value p {
   font-size: 31px;
   line-height: 1;
 }
-
 .payment-price-value span {
   font-size: 13px;
 }
-
 .discount-description-form {
   width: 100%;
   height: 36px;
@@ -1361,13 +914,13 @@
   border: 1px solid #d9e3ee;
   border-radius: 8px;
   margin-top: 3px;
+  box-sizing: border-box;
+  min-width: 0;
 }
-
 .discount-icon {
   flex-shrink: 0;
   font-size: 15px;
 }
-
 .discount-input {
   width: 100%;
   min-width: 0;
@@ -1378,16 +931,13 @@
   color: #212529;
   font-family: inherit;
 }
-
 .discount-input::placeholder {
   color: #9ca3af;
 }
-
 .payment-discount-card:hover {
   border-color: #d8dee8;
   box-shadow: 0 8px 24px rgba(31, 41, 55, 0.07);
 }
-
 .discount-question-row {
   display: flex;
   align-items: center;
@@ -1395,13 +945,11 @@
   gap: 12px;
   margin-bottom: 12px;
 }
-
 .discount-question {
   color: #273142;
   font-size: 19px;
   line-height: 1.7;
 }
-
 .apply-code-btn {
   min-width: 105px;
   height: 36px;
@@ -1416,18 +964,16 @@
   font-size: 15px;
   box-shadow: 0 5px 13px rgba(34, 197, 94, 0.16);
   transition: 0.2s ease;
+  box-sizing: border-box;
 }
-
 .apply-code-btn:hover {
   background: linear-gradient(135deg, #16a34a, #15803d) !important;
   transform: translateY(-1px);
   box-shadow: 0 7px 17px rgba(34, 197, 94, 0.23);
 }
-
 .apply-code-btn:active {
   transform: translateY(0);
 }
-
 .payment-price-value {
   display: flex;
   align-items: center;
@@ -1435,16 +981,13 @@
   margin: 0;
   font-size: 16px;
 }
-
 .payment-price-value p {
   margin: 0;
   padding: 0;
 }
-
 .payment-price-value.text-success {
   color: #16834b !important;
 }
-
 .discount-description-form {
   width: 100%;
   min-height: 44px;
@@ -1456,25 +999,23 @@
   border-radius: 11px;
   background: #ffffff;
   transition: 0.2s ease;
+  box-sizing: border-box;
+  min-width: 0;
 }
-
 .discount-description-form:focus-within {
   border-color: #86efac;
   box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.07);
 }
-
 .discount-description-form-selected {
   border-color: #86efac;
   background: #f7fff9;
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.05);
 }
-
 .discount-icon {
   width: 18px;
   min-width: 18px;
   font-size: 14px;
 }
-
 .discount-input {
   flex: 1;
   min-width: 0;
@@ -1486,16 +1027,13 @@
   font-size: 13px;
   direction: rtl;
 }
-
 .discount-input::placeholder {
   color: #a1a9b6;
 }
-
 .discount-input:read-only {
   cursor: default;
   color: #334155;
 }
-
 .selected-discount-info {
   flex-shrink: 0;
   display: inline-flex;
@@ -1510,7 +1048,6 @@
   font-size: 14px;
   white-space: nowrap;
 }
-
 .discount-remove-button {
   width: 31px;
   height: 31px;
@@ -1526,17 +1063,14 @@
   cursor: pointer;
   transition: 0.2s ease;
 }
-
 .discount-remove-button:hover {
   background: #fee2e2;
   color: #b91c1c;
   transform: scale(1.05);
 }
-
 .discount-remove-button:active {
   transform: scale(0.96);
 }
-
 .discount-global-alert {
   position: fixed;
   top: 18px;
@@ -1557,7 +1091,6 @@
   direction: rtl;
   animation: discountAlertShow 0.25s ease;
 }
-
 .discount-global-alert-icon {
   width: 31px;
   height: 31px;
@@ -1570,7 +1103,6 @@
   color: #ffffff;
   font-size: 16px;
 }
-
 .discount-global-alert-text {
   flex: 1;
   text-align: right;
@@ -1578,7 +1110,6 @@
   font-size: 13px;
   line-height: 1.7;
 }
-
 .discount-global-alert-close {
   width: 27px;
   height: 27px;
@@ -1594,34 +1125,29 @@
   cursor: pointer;
   transition: 0.2s ease;
 }
-
 .discount-global-alert-close:hover {
   background: #fecaca;
   color: #b91c1c;
 }
-
 @keyframes discountAlertShow {
   from {
     opacity: 0;
     transform: translate(-50%, -15px);
   }
-
   to {
     opacity: 1;
     transform: translate(-50%, 0);
   }
 }
-
 .discount-question-selected {
   color: #198754;
 }
-
 .discount-action-buttons {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
-
 .remove-discount-btn {
   width: 35px;
   height: 35px;
@@ -1635,17 +1161,15 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
-
 .remove-discount-btn:hover {
   background: #bb2d3b;
   transform: scale(1.05);
 }
-
 .remove-discount-btn svg {
   font-size: 15px;
 }
-
 .mobile-common-header {
   width: 100%;
   height: 58px;
@@ -1661,13 +1185,11 @@
   position: relative;
   z-index: 100;
 }
-
 .mobile-header-menu {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .mobile-header-menu .hamburger-btn {
   width: 42px;
   height: 42px;
@@ -1678,11 +1200,9 @@
   background: #f8f8f8;
   transition: all 0.2s ease;
 }
-
 .mobile-header-menu .hamburger-btn:active {
   transform: scale(.94);
 }
-
 .mobile-wallet-box {
   display: flex;
   align-items: center;
@@ -1697,15 +1217,12 @@
   white-space: nowrap;
   transition: all 0.2s ease;
 }
-
 .mobile-wallet-box:active {
   transform: scale(.96);
 }
-
 .mobile-wallet-box span {
   font-size: 15px;
 }
-
 .mobile-wallet-plus {
   width: 19px;
   height: 19px;
@@ -1717,204 +1234,483 @@
   border: 1px solid #222;
   border-radius: 50%;
 }
-
 .mobile-page-wrapper {
   width: 100%;
   min-width: 0;
 }
-
 .mobile-current-page,
 .mobile-info-page,
 .mobile-request-page {
   width: 100%;
 }
-
 .mobile-content-area {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
   box-sizing: border-box;
 }
-
-
+.modern-form-card .btn-success,
+.modern-form-card .btn-warning {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1.2 !important;
+}
 @media (max-width: 767.98px) {
-
+  .modern-request-container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 8px 120px 8px !important;
+    align-items: flex-start !important;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+  }
+  .dashboard-header {
+    position: relative;
+    z-index: 2001 !important;
+  }
+  .mobile-content-area {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding-bottom: 100px;
+    overflow: visible !important;
+    position: relative;
+    z-index: 1;
+  }
   .mobile-common-header {
-    font-size: 22px !important;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    font-size: 16px !important;
   }
-
-  .mobile-wallet-box span {
-    font-size: 22px !important;
+  .modern-form-card {
+    max-height: none !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    margin-top: 0 !important;
+    margin-bottom: 90px !important;
+    border-radius: 14px !important;
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    box-sizing: border-box;
   }
-
-  .mobile-wallet-plus {
-    font-size: 20px !important;
+  .mobile-page-wrapper {
+    padding-bottom: 100px;
+    overflow: visible !important;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    min-width: 0;
   }
-
-  .additional-destination-title {
-    font-size: 22px !important;
-    line-height: 2;
+  .mobile-page-wrapper:last-child {
+    padding-bottom: 105px;
   }
-
-  .additional-destination-input {
+  .modern-request-container,
+  .mobile-content-area,
+  .mobile-page-wrapper,
+  .modern-form-card {
+    overflow-x: hidden !important;
+  }
+  .mobile-content-area,
+  .mobile-page-wrapper {
+    isolation: isolate;
+  }
+  .mobile-bottom-navigation {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 8px !important;
+    right: 8px !important;
+    height: 68px;
+    width: auto;
+    z-index: 99999 !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    border-radius: 16px 16px 0 0;
+  }
+  .mobile-nav-btn {
+    font-size: 13px !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-nav-btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .mobile-nav-btn:active {
+    transform: scale(.97);
+  }
+  .mobile-nav-icon {
     font-size: 21px !important;
-    line-height: 2;
   }
-
-  .payment-price-label {
-    font-size: 21px !important;
-  }
-
-  .payment-price-value {
-    font-size: 24px !important;
-  }
-
-  .payment-discount-card {
-    font-size: 22px !important;
-  }
-
-  .discount-question {
-    font-size: 24px !important;
-    line-height: 2;
-  }
-
-  .discount-input {
-    font-size: 22px !important;
-  }
-
-  .discount-global-alert-text {
-    font-size: 21px !important;
-    line-height: 2;
-  }
-
-  .discount-remove-button {
-    font-size: 21px !important;
-  }
-
-  .remove-discount-btn svg {
-    font-size: 24px !important;
-  }
-
   .modern-form-card .btn,
   .modern-form-card button {
     font-family: inherit;
+    box-sizing: border-box;
   }
-
   .modern-form-card .btn-success,
   .modern-form-card .btn-warning {
-    font-size: 22px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
   }
-
   .location-title {
-    font-size: 21px !important;
-    line-height: 2;
+    font-size: 14px !important;
+    line-height: 1.5;
   }
-
   .location-address {
-    font-size: 20px !important;
-    line-height: 2;
+    font-size: 13px !important;
+    line-height: 1.5;
   }
-
   .add-dest-btn {
-    font-size: 20px !important;
+    font-size: 13px !important;
+    line-height: 1.5;
+    padding: 8px;
   }
-
   .select-vehicle-btn {
-    font-size: 21px !important;
+    font-size: 14px !important;
+    height: 44px;
+    min-height: 44px;
   }
-
+  .vehicle-label {
+    font-size: 13px !important;
+  }
+  .vehicle-name {
+    font-size: 14px !important;
+  }
+  .vehicle-option .label {
+    font-size: 12px !important;
+  }
+  .vehicle-option .title {
+    font-size: 14px !important;
+  }
+  .vehicle-option .subtitle {
+    font-size: 11px !important;
+  }
   .custom-floating-input input,
   .custom-floating-input select {
-    font-size:19px !important;
+    font-size: 14px !important;
+    height: 44px;
   }
-
   .custom-floating-input label {
-    font-size: 17px !important;
+    font-size: 12px !important;
   }
-
   .custom-textarea-group textarea {
-    font-size: 21px !important;
-    line-height: 2;
+    font-size: 14px !important;
+    line-height: 1.6;
+    min-height: 65px;
   }
-
+  .modern-accordion {
+    font-size: 13px !important;
+    line-height: 1.6;
+  }
+  .modern-chip {
+    font-size: 12px !important;
+    line-height: 1.5;
+  }
   .segment-label {
-    font-size: 21px !important;
+    font-size: 14px !important;
+    line-height: 1.5;
   }
-
   .segment-btn {
-    font-size: 21px !important;
+    font-size: 14px !important;
+    line-height: 1.5;
+    padding: 7px 5px;
   }
-
-  .route-label {
-    font-size: 21px !important;
-  }
-
-  .route-address {
-    font-size: 20px !important;
-    line-height: 2;
-  }
-
-  .route-placeholder {
-    font-size: 20px !important;
-  }
-
-  .form-header h6 {
-    font-size: 23px !important;
-  }
-
-  .form-header .small-text {
-    font-size: 18px !important;
-    line-height: 2;
-  }
-
-  .service-label {
-    font-size: 19px !important;
-  }
-
-  .service-tag {
-    font-size: 19px !important;
-  }
-
-  .service-item {
-    font-size: 20px !important;
-    line-height: 2;
-  }
-
-  .vehicle-label {
-    font-size: 19px !important;
-  }
-
-  .vehicle-name {
-    font-size: 20px !important;
-  }
-
-  .vehicle-option .label {
-    font-size: 18px !important;
-  }
-
-  .vehicle-option .title {
-    font-size: 21px !important;
-  }
-
-  .vehicle-option .subtitle {
-    font-size: 17px !important;
-  }
-
   .price-title {
-    font-size: 21px !important;
+    font-size: 14px !important;
   }
-
+  .route-card {
+    gap: 6px;
+    padding: 7px;
+  }
+  .route-item {
+    gap: 6px;
+    padding: 6px 7px;
+  }
+  .route-side {
+    min-width: 60px;
+    gap: 5px;
+  }
+  .route-label {
+    font-size: 14px !important;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+  .route-address {
+    font-size: 13px !important;
+    line-height: 1.5;
+    padding: 0 5px;
+  }
+  .route-placeholder {
+    font-size: 13px !important;
+    line-height: 1.5;
+  }
+  .route-separator {
+    font-size: 17px;
+  }
+  .form-header h6 {
+    font-size: 17px !important;
+    line-height: 1.4;
+  }
+  .form-header .small-text {
+    font-size: 12px !important;
+    line-height: 1.5;
+  }
+  .service-label {
+    font-size: 13px !important;
+  }
+  .service-box {
+    min-height: 44px;
+    padding: 6px 9px;
+  }
+  .service-tag {
+    font-size: 12px !important;
+    line-height: 1.5;
+    padding: 4px 7px;
+  }
+  .service-tag button {
+    font-size: 12px;
+  }
+  .service-item {
+    font-size: 13px !important;
+    line-height: 1.6;
+    padding: 9px 11px;
+  }
+  .dropdown-icon {
+    font-size: 14px !important;
+  }
+  .check {
+    font-size: 10px;
+  }
+  .additional-destination-title {
+    font-size: 14px !important;
+    line-height: 1.5;
+  }
+  .additional-destination-input {
+    font-size: 13px !important;
+    line-height: 1.5;
+  }
+  .additional-destination-edit,
+  .additional-destination-remove {
+    width: 27px;
+    height: 27px;
+  }
+  .payment-price-label {
+    font-size: 13px !important;
+  }
+  .payment-price-value {
+    font-size: 16px !important;
+  }
+  .payment-price-value strong {
+    font-size: 16px !important;
+  }
+  .payment-price-value span {
+    font-size: 12px !important;
+  }
   .payment-price-value p {
-    font-size: 36px !important;
+    font-size: 24px !important;
+    line-height: 1;
+    margin: 0;
   }
-
-  .mobile-nav-btn {
-    font-size: 19px !important;
+  .payment-discount-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
   }
-
-  .mobile-nav-icon {
-    font-size: 27px !important;
+  .discount-question-row {
+    width: 100% !important;
+    min-height: 38px;
+    margin-bottom: 9px;
+    padding: 4px 6px;
+    gap: 6px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
-
+  .discount-question {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 14px !important;
+    line-height: 1.5;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .discount-action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .apply-code-btn {
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: 100%;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 9px !important;
+    font-size: 12px !important;
+    line-height: 1;
+    white-space: nowrap !important;
+    flex-shrink: 1;
+    box-sizing: border-box !important;
+  }
+  .remove-discount-btn,
+  .discount-remove-button {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    flex-shrink: 0;
+  }
+  .remove-discount-btn svg {
+    font-size: 14px !important;
+  }
+  .discount-input {
+    font-size: 13px !important;
+    line-height: 1.5;
+  }
+  .discount-description-form input,
+  .discount-description-form .discount-input {
+    font-size: 13px !important;
+  }
+  .discount-description-form {
+    width: 100% !important;
+    min-height: 40px;
+    height: 40px;
+    padding: 3px 7px;
+    gap: 6px;
+    box-sizing: border-box;
+  }
+  .discount-icon {
+    width: 17px;
+    min-width: 17px;
+    font-size: 13px;
+  }
+  .selected-discount-info {
+    font-size: 12px !important;
+    min-height: 27px;
+    padding: 4px 7px;
+  }
+  .discount-global-alert {
+    min-width: 0;
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    padding: 9px 11px;
+    gap: 8px;
+  }
+  .discount-global-alert-text {
+    font-size: 13px !important;
+    line-height: 1.6;
+  }
+  .discount-global-alert-icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 14px;
+  }
+  .discount-global-alert-close {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    font-size: 16px;
+  }
+  .mobile-wallet-box span {
+    font-size: 14px !important;
+  }
+  .mobile-wallet-plus {
+    width: 18px;
+    height: 18px;
+    font-size: 13px !important;
+  }
+  .mobile-common-header {
+    height: 54px;
+    min-height: 54px;
+    padding: 7px 10px;
+  }
+  .mobile-header-menu .hamburger-btn {
+    width: 39px;
+    height: 39px;
+  }
+  .mobile-wallet-box {
+    padding: 5px 8px;
+    gap: 5px;
+    border-radius: 8px;
+  }
+  .modern-form-card .btn-success,
+  .modern-form-card .btn-warning {
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  .modern-form-card .btn-warning {
+    min-width: 0;
+  }
+  .payment-price-section {
+    min-height: 32px;
+    padding: 6px 9px;
+    margin-bottom: 8px;
+  }
+  .payment-discount-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 6px 8px;
+    gap: 6px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .payment-discount-input-wrapper {
+    min-width: 0;
+    gap: 5px;
+  }
+  .modern-discount-bar {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 5px 7px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .mobile-page-wrapper .row,
+  .mobile-page-wrapper .col,
+  .mobile-page-wrapper [class*="col-"] {
+    min-width: 0;
+  }
+  .modern-form-card .row {
+    --bs-gutter-x: 0.65rem;
+  }
+  .modern-form-card .row > [class*="col-"] {
+    min-width: 0;
+  }
+  .mobile-bottom-navigation > .col-4 {
+    min-width: 0;
+  }
 }
-
+@media (min-width: 768px) {
+  .mobile-bottom-navigation {
+    display: none !important;
+  }
+}

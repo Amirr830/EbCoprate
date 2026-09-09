@@ -264,6 +264,55 @@
     transition: .8s;
 }
 
+
+.wallet-button {
+    width: 150px;
+    height: 40px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    gap: 6px;
+
+    background: #facc15;
+    color: #1f2937;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    font-family: inherit;
+    line-height: 1;
+}
+
+.wallet-button .wallet-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    margin: 0 !important;
+}
+
+.wallet-button .wallet-price {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 18px;
+    line-height: 1;
+    margin: 0;
+}
+
+.wallet-button .wallet-currency {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 1;
+    margin: 0;
+}
+
+
+
 .header-btn:hover::before {
     transform: translateX(150%);
 }

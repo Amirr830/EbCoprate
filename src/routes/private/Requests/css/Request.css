@@ -1,4 +1,3 @@
-
 .requests-page {
     width: 100%;
     height: 100vh;
@@ -899,6 +898,7 @@
 
 
 /* فضای لازم برای هدر اصلی Main در موبایل */
+
 @media (max-width: 767px) {
 
     .requests-page {
@@ -915,7 +915,7 @@
         width: 100%;
         min-height: calc(100vh - 104px);
         padding:
-            0 10px 60px;
+            0 8px 60px;
         box-sizing: border-box;
     }
 
@@ -925,25 +925,25 @@
         z-index: 20;
         width: 100%;
         margin: 0;
-        padding: 6px 0;
+        padding: 5px 0;
         background: transparent;
     }
 
     .requests-tabs {
         width: 100%;
-        padding: 4px;
-        border-radius: 15px;
+        padding: 3px;
+        border-radius: 14px;
     }
 
     .requests-tab {
-        min-height: 50px;
-        padding: 4px 3px;
-        gap: 4px;
-        font-size: 11px;
+        min-height: 46px;
+        padding: 3px 2px;
+        gap: 3px;
+        font-size: 12px;
     }
 
     .requests-tab-icon {
-        font-size: 16px;
+        font-size: 17px;
         flex-shrink: 0;
     }
 
@@ -954,20 +954,21 @@
     .requests-section-header {
         margin: 0;
         padding:
-            14px 4px 7px;
+            11px 3px 6px;
     }
 
     .requests-section-title {
-        font-size: 18px;
+        font-size: 19px;
     }
 
     .request-column {
-        padding: 4px 0;
+        padding: 3px 0;
     }
 
     .request-card {
-        min-height: 285px;
-        padding: 15px;
+        min-height: 270px;
+        padding: 13px;
+        border-radius: 15px;
     }
 
     .request-card-header {
@@ -975,12 +976,173 @@
         align-items: flex-start;
     }
 
+    .request-date-section {
+        gap: 6px;
+    }
+
+    .request-date-icon {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        font-size: 15px;
+    }
+
+    .request-date {
+        font-size: 14px !important;
+    }
+
+    .request-time {
+        font-size: 14px !important;
+    }
+
     .request-status-badge {
-        margin-top: 6px;
+        margin-top: 5px;
+        min-height: 25px;
+        padding: 3px 8px;
+        font-size: 13px !important;
+    }
+
+    .request-status-badge svg {
+        font-size: 15px;
+    }
+
+    .request-main-divider {
+        margin: 8px 0;
+    }
+
+    .request-route-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: start;
+        gap: 7px;
+    }
+
+    .request-location-item {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .request-location-title {
+        font-size: 16px;
+        gap: 5px;
+        margin-bottom: 4px;
+    }
+
+    .request-point {
+        width: 16px;
+        height: 16px;
+        min-width: 16px;
+        font-size: 7px;
+        border-radius: 5px;
     }
 
     .request-location-address {
-        white-space: nowrap;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        line-height: 1.65;
+        font-size: 15px;
+        color: #626d67;
+    }
+
+    .request-route-arrow {
+        margin: 22px 0 0;
+        font-size: 18px;
+    }
+
+    .request-card-footer {
+        gap: 8px;
+    }
+
+    .request-vehicle-section {
+        gap: 6px;
+    }
+
+    .request-vehicle-icon {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        font-size: 13px;
+    }
+
+    .request-footer-label {
+        font-size: 14px;
+    }
+
+    .request-vehicle-name {
+        max-width: 110px;
+        font-size: 15px;
+    }
+
+    .request-price-section {
+        gap: 4px;
+    }
+
+    .request-price span {
+        font-size: 18px;
+    }
+
+    .request-price small {
+        font-size: 14px;
+    }
+
+    .request-detail-button {
+        min-height: 54px;
+        margin-top: 10px;
+        padding: 6px 8px;
+        gap: 8px;
+        border-radius: 13px;
+    }
+
+    .request-detail-button-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 10px;
+        font-size: 17px;
+    }
+
+    .request-detail-button-title {
+        font-size: 15px;
+    }
+
+    .request-detail-button-subtitle {
+        font-size: 11px;
+    }
+
+    .request-detail-button-arrow {
+        width: 31px;
+        height: 31px;
+        min-width: 31px;
+        font-size: 19px;
+    }
+
+    .requests-loading {
+        font-size: 14px;
+    }
+
+    .requests-empty {
+        min-height: 210px;
+        padding: 22px 13px;
+    }
+
+    .requests-empty-icon {
+        width: 58px;
+        height: 58px;
+        font-size: 25px;
+    }
+
+    .requests-empty-title {
+        font-size: 18px;
+    }
+
+    .requests-empty-description {
+        font-size: 14px;
     }
 }
 
@@ -1003,7 +1165,6 @@
 }
 
 
-
 @media (min-width: 768px) {
 
     .requests-page {
@@ -1017,87 +1178,5 @@
 
     .requests-container {
         padding-top: 0;
-    }
-}
-
-
-
-
-@media (max-width: 767px) {
-    .requests-tab {
-        font-size: 14px;
-    }
-
-    .requests-tab-icon {
-        font-size: 19px;
-    }
-
-    .requests-section-title {
-        font-size: 21px;
-    }
-
-    .request-date {
-        font-size: 17px !important;
-    }
-
-    .request-time {
-        font-size: 17px !important;
-    }
-
-    .request-status-badge {
-        font-size: 14px !important;
-    }
-
-    .request-status-badge svg {
-        font-size: 16px;
-    }
-
-    .request-location-title {
-        font-size: 18px;
-    }
-
-    .request-location-address {
-        font-size: 18px;
-        line-height: 1.8;
-    }
-
-    .request-footer-label {
-        font-size: 16px;
-    }
-
-    .request-vehicle-name {
-        font-size: 17px;
-    }
-
-    .request-price span {
-        font-size: 20px;
-    }
-
-    .request-price small {
-        font-size: 17px;
-    }
-
-    .request-detail-button-title {
-        font-size: 17px;
-    }
-
-    .request-detail-button-subtitle {
-        font-size: 12px;
-    }
-
-    .request-detail-button-arrow {
-        font-size: 21px;
-    }
-
-    .requests-loading {
-        font-size: 15px;
-    }
-
-    .requests-empty-title {
-        font-size: 19px;
-    }
-
-    .requests-empty-description {
-        font-size: 15px;
     }
 }

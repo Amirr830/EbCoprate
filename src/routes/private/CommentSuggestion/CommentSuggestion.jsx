@@ -156,37 +156,6 @@ export default function CommentSuggestion({
                 className="feedback-mobile-header d-md-none"
             >
                 <div className="feedback-mobile-header-inner">
-                    <button
-                        type="button"
-                        className="feedback-mobile-menu-btn"
-                        aria-label="باز کردن منو"
-                        onClick={handleShowMenu}
-                    >
-                        <span className="feedback-mobile-menu-icon">
-                            <FaBars size={17} style={{color:"black"}}/>
-                        </span>
-
-                        <span className="feedback-mobile-menu-text">
-                            منو
-                        </span>
-                    </button>
-
-                    <button
-                        type="button"
-                        className="feedback-mobile-wallet-btn"
-                        onClick={handleWalletClick}
-                        aria-label="رفتن به کیف پول"
-                    >
-                        <span className="feedback-mobile-wallet-icon">
-                            <FaWallet size={16} />
-                        </span>
-
-                        <span className="feedback-mobile-wallet-content">
-                            <span className="feedback-mobile-wallet-amount">
-                                ۲۵۰,۰۰۰ تومان
-                            </span>
-                        </span>
-                    </button>
                 </div>
             </div>
 
