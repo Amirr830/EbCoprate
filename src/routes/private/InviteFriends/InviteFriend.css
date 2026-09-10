@@ -1,204 +1,415 @@
-
-.invite-modal-container {
+.invite-page {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 28px 24px 30px;
-  background: #ffffff;
-  border-radius: 18px;
+  min-height: 100%;
   box-sizing: border-box;
   direction: rtl;
+  background: transparent;
 }
 
-.invite-modal-header {
+.invite-page-shell {
   width: 100%;
-  min-height: 45px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #eeeeee;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(18px, 3vw, 38px) clamp(12px, 3vw, 32px);
+  box-sizing: border-box;
 }
 
-.invite-modal-title {
-  display: block;
-  font-size: 20px;
-  font-weight: 700;
-  color: #1f2937;
-  line-height: 1.6;
-}
-
-.invite-card-inner {
+.invite-header-row {
   width: 100%;
-  margin-top: 22px;
+  margin-bottom: clamp(18px, 2.5vw, 30px);
 }
 
-.invite-icon-wrapper {
-  width: 95px;
-  height: 95px;
+.invite-header {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 4px 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e8eeeb;
+  box-sizing: border-box;
+}
+
+.invite-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.invite-header-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4px;
-  margin-bottom: 18px !important;
-}
-
-.invite-heading {
-  margin: 0 0 14px;
-  padding: 0 10px;
-  font-size: 22px;
-  font-weight: 800;
-  color: #064e3b;
-  line-height: 1.7;
-}
-
-.invite-description {
-  margin: 0 auto 12px;
-  padding: 0 10px;
-  max-width: 530px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #4b5563;
-  line-height: 2.1;
-}
-
-.highlight-text {
   color: #059669;
-  font-size: 16px;
-  font-weight: 800;
+  background: #ecfdf5;
+  border: 1px solid #d1fae5;
+  box-sizing: border-box;
+}
+
+.invite-header-title {
+  color: #1f2937;
+  font-size: clamp(17px, 1.7vw, 21px);
+  line-height: 1.5;
+}
+
+.invite-content-row {
+  width: 100%;
+}
+
+.invite-main-card {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(30px, 5vw, 58px) clamp(18px, 5vw, 58px) clamp(24px, 4vw, 38px);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(16, 185, 129, 0.09),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfffd 100%
+    );
+  border: 1px solid #e5eee9;
+  border-radius: clamp(18px, 2vw, 28px);
+  box-shadow:
+    0 18px 55px rgba(6, 78, 59, 0.08),
+    0 4px 16px rgba(6, 78, 59, 0.04);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.invite-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.invite-decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+.invite-decoration-one {
+  width: clamp(90px, 12vw, 150px);
+  height: clamp(90px, 12vw, 150px);
+  top: -70px;
+  right: -45px;
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.invite-decoration-two {
+  width: clamp(65px, 9vw, 110px);
+  height: clamp(65px, 9vw, 110px);
+  top: -45px;
+  left: 12%;
+  background: rgba(52, 211, 153, 0.06);
+}
+
+.invite-decoration-three {
+  width: clamp(40px, 6vw, 70px);
+  height: clamp(40px, 6vw, 70px);
+  top: 50px;
+  left: -25px;
+  background: rgba(5, 150, 105, 0.05);
+}
+
+.invite-main-icon {
+  width: clamp(90px, 13vw, 118px);
+  height: clamp(90px, 13vw, 118px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto clamp(20px, 3vw, 28px);
+  z-index: 1;
+}
+
+.invite-main-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.invite-icon-glow {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  top: 14%;
+  left: 14%;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.16);
+  filter: blur(20px);
+}
+
+.invite-main-title {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto clamp(12px, 1.8vw, 17px);
+  padding: 0 4px;
+  color: #064e3b;
+  font-size: clamp(21px, 3vw, 31px);
+  line-height: 1.75;
+  letter-spacing: -0.2px;
+}
+
+.invite-main-title span {
+  color: #059669;
+}
+
+.invite-main-description {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto clamp(8px, 1.3vw, 12px);
+  padding: 0 4px;
+  color: #4b5563;
+  font-size: clamp(14px, 1.55vw, 17px);
+  line-height: 2.15;
+  box-sizing: border-box;
+}
+
+.invite-price {
+  display: inline-block;
+  margin: 0 4px;
+  color: #059669;
   white-space: nowrap;
 }
 
-.invite-subdescription {
-  margin: 0 auto 24px;
-  padding: 0 10px;
-  max-width: 530px;
-  font-size: 14px;
-  font-weight: 500;
+.invite-secondary-description {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 4px;
   color: #6b7280;
+  font-size: clamp(13px, 1.4vw, 15px);
   line-height: 2;
+  box-sizing: border-box;
 }
 
-.highlight-bold {
+.invite-secondary-description span {
+  margin-right: 4px;
   color: #047857;
-  font-weight: 800;
 }
 
-.invite-submit-btn {
-  min-height: 52px;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  background: linear-gradient(
-    135deg,
-    #10b981 0%,
-    #059669 100%
-  );
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
+.invite-benefits-row {
+  width: 100%;
+  max-width: 700px;
+  margin: clamp(24px, 4vw, 34px) auto !important;
+}
+
+.invite-benefit-card {
+  width: 100%;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  background: rgba(240, 253, 250, 0.72);
+  border: 1px solid #dff3eb;
+  border-radius: 15px;
+  text-align: right;
+  box-sizing: border-box;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.invite-benefit-card:hover {
+  transform: translateY(-2px);
+  border-color: #b9ead8;
+  box-shadow: 0 8px 22px rgba(6, 78, 59, 0.07);
+}
+
+.invite-benefit-icon {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #059669;
+  background: #ffffff;
+  border: 1px solid #d1fae5;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.invite-benefit-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.5;
+}
+
+.invite-benefit-text span {
+  color: #064e3b;
+  font-size: clamp(13px, 1.3vw, 15px);
+}
+
+.invite-benefit-text small {
+  color: #6b7280;
+  font-size: clamp(11px, 1.15vw, 13px);
+  line-height: 1.7;
+}
+
+.invite-share-button {
+  width: 100%;
+  min-height: clamp(50px, 5vw, 58px);
+  border: none;
+  border-radius: 14px;
+  padding: 12px clamp(15px, 3vw, 25px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background:
+    linear-gradient(
+      135deg,
+      #10b981 0%,
+      #059669 55%,
+      #047857 100%
+    );
+  color: #ffffff;
+  font-family: inherit;
+  font-size: clamp(14px, 1.55vw, 17px);
   cursor: pointer;
+  box-shadow:
+    0 9px 25px rgba(5, 150, 105, 0.22);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
     opacity 0.2s ease;
-  box-shadow:
-    0 6px 18px rgba(16, 185, 129, 0.25);
+  box-sizing: border-box;
 }
 
-.invite-submit-btn:hover {
+.invite-share-button:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 9px 22px rgba(16, 185, 129, 0.32);
+    0 13px 30px rgba(5, 150, 105, 0.28);
 }
 
-.invite-submit-btn:active {
+.invite-share-button:active {
   transform: translateY(0);
 }
 
-.invite-submit-btn:focus {
+.invite-share-button:focus {
   outline: none;
 }
 
-.invite-submit-btn.copied {
-  background: linear-gradient(
-    135deg,
-    #059669 0%,
-    #047857 100%
-  );
+.invite-share-button.copied {
+  background:
+    linear-gradient(
+      135deg,
+      #059669 0%,
+      #047857 100%
+    );
   box-shadow:
-    0 6px 18px rgba(5, 150, 105, 0.3);
+    0 9px 25px rgba(4, 120, 87, 0.25);
 }
 
-@media (max-width: 576px) {
-  .invite-modal-container {
-    max-width: 100%;
-    padding: 22px 16px 24px;
-    border-radius: 14px;
+.invite-button-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.invite-bottom-note {
+  margin-top: clamp(14px, 2vw, 19px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #9ca3af;
+  font-size: clamp(11px, 1.15vw, 13px);
+  line-height: 1.8;
+}
+
+.invite-note-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+@media (max-width: 575.98px) {
+  .invite-page-shell {
+    padding-top: 28px;
   }
 
-  .invite-modal-title {
-    font-size: 18px;
+  .invite-main-card {
+    margin-top: 80px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
-  .invite-card-inner {
-    margin-top: 18px;
+  .invite-header {
+    padding-bottom: 13px;
   }
 
-  .invite-icon-wrapper {
-    width: 85px;
-    height: 85px;
-    margin-bottom: 14px !important;
+  .invite-header-content {
+    gap: 9px;
   }
 
-  .invite-heading {
-    font-size: 19px;
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
-
-  .invite-description {
-    font-size: 14px;
-    line-height: 2;
-    padding: 0 4px;
-  }
-
-  .invite-subdescription {
-    font-size: 13px;
-    line-height: 2;
-    padding: 0 4px;
-    margin-bottom: 20px;
-  }
-
-  .highlight-text {
-    font-size: 15px;
-  }
-
-  .invite-submit-btn {
-    min-height: 50px;
-    font-size: 15px;
+  .invite-header-icon {
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
   }
-}
 
-@media (max-width: 360px) {
-  .invite-modal-container {
-    padding: 20px 12px 22px;
+  .invite-header-title {
+    font-size: clamp(18px, 5vw, 20px);
   }
 
-  .invite-heading {
-    font-size: 18px;
+  .invite-main-title {
+    font-size: clamp(24px, 7vw, 29px);
+    line-height: 1.8;
   }
 
-  .invite-description {
-    font-size: 13px;
+  .invite-main-description {
+    font-size: clamp(15px, 4.5vw, 17px);
+    line-height: 2.2;
   }
 
-  .invite-subdescription {
-    font-size: 12px;
+  .invite-secondary-description {
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 2.15;
   }
 
-  .invite-submit-btn {
-    font-size: 14px;
+  .invite-benefit-text span {
+    font-size: clamp(14px, 4vw, 16px);
+  }
+
+  .invite-benefit-text small {
+    font-size: clamp(12px, 3.5vw, 14px);
+    line-height: 1.8;
+  }
+
+  .invite-share-button {
+    font-size: clamp(15px, 4.5vw, 17px);
+  }
+
+  .invite-bottom-note {
+    font-size: clamp(12px, 3.5vw, 14px);
+  }
+
+  .invite-benefit-card {
+    min-height: 70px;
   }
 }

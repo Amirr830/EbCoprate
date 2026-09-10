@@ -1,5 +1,5 @@
-
 import React, { useState } from "react";
+
 import "./InviteFriend.css";
 
 function InviteFriends(props) {
@@ -19,188 +19,336 @@ function InviteFriends(props) {
   };
 
   return (
-    <div className="container-fluid p-0" dir="rtl">
+    <div className="container-fluid p-0 invite-page" dir="rtl">
       <div className="row justify-content-center m-0">
         <div className="col-12 p-0">
-          <div className="invite-modal-container">
+          <div className="invite-page-shell">
+            <div className="row justify-content-center m-0 invite-content-row">
+              <div className="col-12 col-sm-11 col-md-10 col-lg-9 col-xl-8 col-xxl-7 p-0">
+                <div className="invite-main-card">
+                  <div className="invite-decoration">
+                    <div className="invite-decoration-circle invite-decoration-one"></div>
+                    <div className="invite-decoration-circle invite-decoration-two"></div>
+                    <div className="invite-decoration-circle invite-decoration-three"></div>
+                  </div>
 
-            <div className="row align-items-center justify-content-between mb-3 mx-0 invite-modal-header">
-              <div className="col-auto p-0">
-                <span className="invite-modal-title">
-                  دعوت از دوستان
-                </span>
-              </div>
-            </div>
+                  <div className="row justify-content-center m-0">
+                    <div className="col-auto p-0">
+                      <div className="invite-main-icon">
+                        <div className="invite-icon-glow"></div>
 
-            <div className="row m-0 invite-card-inner">
-              <div className="col-12 d-flex flex-column align-items-center p-0">
+                        <svg
+                          width="100"
+                          height="100"
+                          viewBox="0 0 100 100"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <defs>
+                            <linearGradient
+                              id="inviteGreenGradient"
+                              x1="15"
+                              y1="10"
+                              x2="85"
+                              y2="90"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop offset="0" stopColor="#34D399" />
+                              <stop offset="0.5" stopColor="#10B981" />
+                              <stop offset="1" stopColor="#047857" />
+                            </linearGradient>
 
-                <div className="invite-icon-wrapper mb-3">
-                  <svg
-                    width="85"
-                    height="85"
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="greenGrad"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                      >
-                        <stop offset="0%" stopColor="#10B981" />
-                        <stop offset="100%" stopColor="#059669" />
-                      </linearGradient>
+                            <filter
+                              id="inviteShadow"
+                              x="-30%"
+                              y="-30%"
+                              width="160%"
+                              height="160%"
+                            >
+                              <feDropShadow
+                                dx="0"
+                                dy="8"
+                                stdDeviation="8"
+                                floodColor="#047857"
+                                floodOpacity="0.28"
+                              />
+                            </filter>
+                          </defs>
 
-                      <filter
-                        id="glow"
-                        x="-20%"
-                        y="-20%"
-                        width="140%"
-                        height="140%"
-                      >
-                        <feDropShadow
-                          dx="0"
-                          dy="8"
-                          stdDeviation="12"
-                          floodColor="#10B981"
-                          floodOpacity="0.35"
-                        />
-                      </filter>
-                    </defs>
+                          <ellipse
+                            cx="50"
+                            cy="88"
+                            rx="30"
+                            ry="6"
+                            fill="#064E3B"
+                            fillOpacity="0.12"
+                          />
 
-                    <ellipse
-                      cx="50"
-                      cy="85"
-                      rx="35"
-                      ry="8"
-                      fill="#000000"
-                      fillOpacity="0.15"
-                    />
+                          <g filter="url(#inviteShadow)">
+                            <circle
+                              cx="53"
+                              cy="48"
+                              r="34"
+                              fill="#047857"
+                            />
 
-                    <g filter="url(#glow)">
-                      <circle
-                        cx="52"
-                        cy="48"
-                        r="36"
-                        fill="#047857"
-                      />
+                            <circle
+                              cx="48"
+                              cy="43"
+                              r="34"
+                              fill="url(#inviteGreenGradient)"
+                              stroke="#6EE7B7"
+                              strokeWidth="2"
+                            />
 
-                      <circle
-                        cx="48"
-                        cy="44"
-                        r="36"
-                        fill="url(#greenGrad)"
-                        stroke="#34D399"
-                        strokeWidth="2"
-                      />
+                            <circle
+                              cx="48"
+                              cy="36"
+                              r="9"
+                              fill="#064E3B"
+                            />
 
-                      <circle
-                        cx="48"
-                        cy="36"
-                        r="10"
-                        fill="#064E3B"
-                      />
+                            <path
+                              d="M33 55C33 47 63 47 63 55"
+                              stroke="#064E3B"
+                              strokeWidth="5.5"
+                              strokeLinecap="round"
+                            />
+                          </g>
 
-                      <path
-                        d="M 32 56 C 32 46, 64 46, 64 56"
-                        stroke="#064E3B"
-                        strokeWidth="6"
-                        strokeLinecap="round"
-                      />
-                    </g>
+                          <g>
+                            <circle
+                              cx="27"
+                              cy="69"
+                              r="13"
+                              fill="#064E3B"
+                            />
 
-                    <g>
-                      <circle
-                        cx="28"
-                        cy="68"
-                        r="14"
-                        fill="#064E3B"
-                      />
+                            <circle
+                              cx="25"
+                              cy="67"
+                              r="13"
+                              fill="#10B981"
+                              stroke="#6EE7B7"
+                              strokeWidth="1.5"
+                            />
 
-                      <circle
-                        cx="26"
-                        cy="66"
-                        r="14"
-                        fill="#10B981"
-                        stroke="#34D399"
-                        strokeWidth="1.5"
-                      />
+                            <path
+                              d="M25 60V74"
+                              stroke="#064E3B"
+                              strokeWidth="3.5"
+                              strokeLinecap="round"
+                            />
 
-                      <path
-                        d="M 26 59 V 73 M 19 66 H 33"
-                        stroke="#064E3B"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                      />
-                    </g>
-                  </svg>
-                </div>
+                            <path
+                              d="M18 67H32"
+                              stroke="#064E3B"
+                              strokeWidth="3.5"
+                              strokeLinecap="round"
+                            />
+                          </g>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
 
-                <h3 className="invite-heading text-center w-100">
-                  سرویس ارزان‌تر، با دعوت از دوستان
-                </h3>
+                  <div className="row justify-content-center m-0">
+                    <div className="col-12 p-0">
+                      <h1 className="invite-main-title">
+                        دوستانت را دعوت کن،
+                        <span> با هم بیشتر صرفه‌جویی کنید!</span>
+                      </h1>
 
-                <p className="invite-description text-center w-100">
-                  لینک دعوت را برای دوستان‌تان بفرستید تا در اولین سرویس‌شان،
-                  مبلغ{" "}
-                  <span className="highlight-text">
-                    ۲۰,۰۰۰
-                  </span>{" "}
-                  الی{" "}
-                  <span className="highlight-text">
-                    ۳۰,۰۰۰
-                  </span>{" "}
-                  تومان مهمان ایران‌پیک باشند.
-                </p>
+                      <p className="invite-main-description">
+                        لینک دعوت خودت را برای دوستانت بفرست.
+                        آن‌ها در اولین سرویس خود از
+                        <span className="invite-price">
+                          ۲۰,۰۰۰ تا ۳۰,۰۰۰ تومان
+                        </span>
+                        مهمان ایران‌پیک هستند.
+                      </p>
 
-                <p className="invite-subdescription text-center w-100">
-                  شما هم بعد از پایان اولین سرویس موفق دوستان‌تان، به{" "}
-                  <span className="highlight-bold">
-                    همان مقدار
-                  </span>{" "}
-                  در سرویس بعدی‌تان تخفیف می‌گیرید.
-                </p>
+                      <p className="invite-secondary-description">
+                        بعد از اولین سرویس موفق دوستت،
+                        تو هم به همان مقدار برای سرویس بعدی
+                        <span>تخفیف می‌گیری.</span>
+                      </p>
+                    </div>
+                  </div>
 
-                <div className="row w-100 justify-content-center m-0">
-                  <div className="col-12 col-sm-9 p-0">
-                    <button
-                      className={`invite-submit-btn w-100 ${
-                        copied ? "copied" : ""
-                      }`}
-                      onClick={handleCopyLink}
-                    >
-                      {copied ? (
-                        <>
+                  <div className="row g-3 justify-content-center invite-benefits-row">
+                    <div className="col-12 col-sm-6">
+                      <div className="invite-benefit-card">
+                        <div className="invite-benefit-icon">
                           <svg
-                            width="20"
-                            height="20"
+                            width="22"
+                            height="22"
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            style={{ marginLeft: "8px" }}
                           >
-                            <polyline points="20 6 9 17 4 12" />
+                            <path
+                              d="M20 12V22H4V12"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M2 7H22V12H2V7Z"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M12 22V7"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                            />
+                            <path
+                              d="M12 7H7.5C6.11929 7 5 5.88071 5 4.5C5 3.11929 6.11929 2 7.5 2C10 2 12 7 12 7Z"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M12 7H16.5C17.8807 7 19 5.88071 19 4.5C19 3.11929 17.8807 2 16.5 2C14 2 12 7 12 7Z"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinejoin="round"
+                            />
                           </svg>
+                        </div>
 
-                          لینک کپی شد!
-                        </>
-                      ) : (
-                        "اشتراک‌گذاری لینک"
-                      )}
-                    </button>
+                        <div className="invite-benefit-text">
+                          <span>دوستت</span>
+                          <small>تا ۳۰,۰۰۰ تومان تخفیف می‌گیرد</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-sm-6">
+                      <div className="invite-benefit-card">
+                        <div className="invite-benefit-icon">
+                          <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M20 12V7H4V12"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M4 7L12 2L20 7"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M4 12V21H20V12"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M8 21V15H16V21"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+
+                        <div className="invite-benefit-text">
+                          <span>خودت</span>
+                          <small>در سرویس بعدی تخفیف می‌گیری</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row justify-content-center m-0">
+                    <div className="col-12 col-sm-10 col-md-9 col-lg-8 p-0">
+                      <button
+                        type="button"
+                        className={`invite-share-button ${
+                          copied ? "copied" : ""
+                        }`}
+                        onClick={handleCopyLink}
+                      >
+                        {copied ? (
+                          <>
+                            <span className="invite-button-icon">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <path
+                                  d="M20 6L9 17L4 12"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </span>
+
+                            لینک دعوت کپی شد!
+                          </>
+                        ) : (
+                          <>
+                            <span className="invite-button-icon">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <path
+                                  d="M12 16V4"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                />
+                                <path
+                                  d="M7 9L12 4L17 9"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M5 20H19"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                />
+                              </svg>
+                            </span>
+
+                            اشتراک‌گذاری لینک دعوت
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="invite-bottom-note">
+                    <span className="invite-note-dot"></span>
+                    دعوت کن، تخفیف بگیر، دوباره سفر کن!
                   </div>
                 </div>
-
               </div>
             </div>
-
           </div>
         </div>
       </div>

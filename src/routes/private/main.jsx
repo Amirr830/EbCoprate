@@ -599,9 +599,9 @@ function Main(props) {
                   <FaWallet />
                 </span>
 
-                <span className="main-mobile-wallet-arrow">
+                {/* <span className="main-mobile-wallet-arrow">
                   <FaArrowLeft />
-                </span>
+                </span> */}
 
               </button>
 
