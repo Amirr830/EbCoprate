@@ -49,8 +49,8 @@
     transition: all 0.2s ease;
 }
 .vehicle-modal-close:hover {
-    background: #ffe5e5;
-    color: #dc3545;
+    background: #bd0000;
+    color: white;
 }
 .vehicle-modal-divider {
     width: 100%;

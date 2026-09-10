@@ -19,7 +19,7 @@ import {
 import paths from "../../../../src/app/paths.json";
 import Storages from "../../../app/storages";
 import answerModal from "../../../modals/answerModal";
-import InviteFriendsModal from "../modals/InviteFriendsModal";
+
 
 function SideBar({ onClose }) {
   const navigate = useNavigate();
@@ -207,33 +207,34 @@ function SideBar({ onClose }) {
 
           <div className="mobile-sidebar-actions d-md-none">
 
-<InviteFriendsModal> 
-  <button 
-    type="button" 
-    className="sidebar-btn sidebar-action-btn"
-    onClick={onClose}
-  > 
-    <div className="btn-icon"> 
-      <BsPeopleFill /> 
-    </div> 
+<button 
+  type="button" 
+  className="sidebar-btn sidebar-action-btn" 
+  onClick={() => {
+    onClose?.();
+    navigate("/control-panel/72/definitions/inviteFriend");
+  }}
+>
+  <div className="btn-icon">
+    <BsPeopleFill />
+  </div>
 
-    <span className="btn-text"> 
-      دعوت از دوستان 
-    </span> 
+  <span className="btn-text">
+    دعوت از دوستان
+  </span>
 
-    <div className="btn-arrow"> 
-      <BsChevronLeft /> 
-    </div> 
-  </button> 
-</InviteFriendsModal>
+  <div className="btn-arrow">
+    <BsChevronLeft />
+  </div>
+</button>
 
             <div className="support-training-wrapper">
 
               <button
                 type="button"
                 className={`sidebar-btn sidebar-action-btn ${supportDropdownOpen
-                    ? "support-dropdown-active"
-                    : ""
+                  ? "support-dropdown-active"
+                  : ""
                   }`}
                 onClick={handleSupportDropdownToggle}
                 aria-expanded={supportDropdownOpen}

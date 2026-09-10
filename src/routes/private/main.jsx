@@ -13,37 +13,28 @@ import {
   useLocation,
   useNavigate
 } from "react-router-dom";
-
 import Backup from "./actions/backup";
 import paths from "../../app/paths.json";
 import dictionary from "../../app/dictionary.json";
 import menu from "../../app/menu.js";
 import Storages from "../../app/storages";
-
 import {
   TiThLarge,
   TiHome,
   TiPower
 } from "react-icons/ti";
-
 import Sidebar from "../../components/sidebar";
 import ChangeIP from "./settings/changeIP";
 import Settings from "./settings";
-
 import DashboardContext from "../../contexts/dashboardContext";
 import NavbarReducer from "../../reducers/navbarReducer";
-
 import { CgClose } from "react-icons/cg";
-
 import "./main.css";
-
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { FaWallet } from "react-icons/fa";
-
 import Cars from "./definitions/cars";
 import CarBrands from "./definitions/carBrands";
 import Persons from "./definitions/persons";
-
 import {
   FaDotCircle,
   FaArrowLeft
@@ -55,29 +46,23 @@ import Reserve from "./actions/reserve";
 import Definitions from "./definitions";
 import Users from "./definitions/users";
 import UserGroup from "./definitions/userGroup";
-
 import E423 from "../error/e423";
 import E404 from "../error/e404";
-
 import answerModal from "../../modals/answerModal";
 import ReportTaximeter from "./reports/reportTaximeter";
-
 import endpoints from "../../app/endpoints";
 import { AxiosPrivate } from "../../app/axiosPrivate";
 import { RefreshToken } from "../../app/refreshToken";
 import { CheckAccess } from "../../app/checkAccess";
-
 import DriverSetting from "./settings/driverSetting";
 import TripManageSetting from "./settings/tripManageSetting";
 import TariffSetting from "./settings/tariffSetting";
 import SmsSetting from "./settings/smsSetting";
 import OperatorSetting from "./settings/operatorSetting";
 import PassengerSetting from "./settings/passengerSetting";
-
 import Actions from "./actions";
 import PhysicalActions from "./definitions/physicalActions";
 import TripsMonit from "./actions/TripsMonit";
-
 import TripHistory from "./reports/tripHistory";
 import Lines from "./definitions/lines";
 import CarClass from "./definitions/carClass";
@@ -88,56 +73,44 @@ import ComplaintType from "./definitions/complaintsType";
 import News from "./actions/news";
 import Payment2Driver from "./actions/payment2Driver";
 import DriverPayment from "./actions/driverPayment";
-
 import Verify from "./reports/verify";
 import Companies from "./definitions/companies";
 import FrequentDests from "./definitions/frequentDests";
 import DuplicateAddress from "./definitions/duplicateAddress";
 import Weather from "./actions/weather";
 import DriverTripCount from "./reports/driverTripCount";
-
 import { findIndex } from "lodash";
-
 import QueIO from "./reports/queIO";
 import TripChartHourly from "./reports/tripChartHourly";
 import CountInQue from "./reports/countInQue";
 import TotalTripSendPerMonth from "./reports/totalTripSendPerMonth";
 import Messanger from "./actions/messanger";
-
 import SurveyOptions from "./definitions/surveyOptions";
 import DefaultMessages from "./definitions/DefualtMessages";
-
 import DriverTimeLine from "./reports/driverTimeLine";
 import Kiosk from "./actions/kiosk";
-
 import ControlPanelSetting from "./settings/controlPanelSetting";
 import TripCountReport from "./reports/tripCountReport";
 import TripChartDaily from "./reports/tripChartDaily";
 import TripChartMonthly from "./reports/tripChartMonthly";
-
 import Shifts from "./definitions/shifts";
 import ShiftGroups from "./definitions/shiftGroups";
 import ShiftPattern from "./definitions/shiftPattern";
-
 import RFIDLogs from "./reports/RFIDLogs";
 import Census from "./reports/census";
 import StationsTemp from "./definitions/stationsTemp";
-
 import { useSocket } from "contexts/socketContext";
-
 import RFIDChart from "./reports/RFIDChart";
 import ShiftReport from "./reports/shiftReport";
-
 import Wallet from "./Wallet/Wallet";
 import Header from "./Dashboard/Header";
 import Sidebarr from "./Dashboard/SideBar";
-
 import UserAccount from "../private/UserAccount/UserAccount";
 import Support from "../private/Support/Support";
 import Ticket from "../private/Ticket/Ticket";
 import CommentSuggestion from "./CommentSuggestion/CommentSuggestion";
 import Request from "./Requests/Request";
-
+import InviteFriend from "./InviteFriends/InviteFriend"
 
 function Main(props) {
 
@@ -636,8 +609,8 @@ function Main(props) {
 
             <div
               className={`main-page-content ${isDashboard
-                  ? "main-dashboard-page"
-                  : ""
+                ? "main-dashboard-page"
+                : ""
                 }`}
               ref={divScrollRef}
               tabIndex={0}
@@ -938,6 +911,11 @@ function Main(props) {
                     <Route
                       path={paths.private.definitions.request}
                       element={<Request />}
+                    />
+
+                    <Route
+                      path={paths.private.definitions.inviteFriend}
+                      element={<InviteFriend />}
                     />
 
                     <Route

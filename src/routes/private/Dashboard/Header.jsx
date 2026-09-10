@@ -36,7 +36,7 @@ function Header() {
                     <div className="col-auto">
                         <div className="d-flex align-items-center gap-3">
 
-                           
+
                             {!isWalletPage && (
                                 <button
                                     className="wallet-button"
@@ -53,7 +53,7 @@ function Header() {
                                     </span>
                                 </button>
                             )}
-                            
+
 
                         </div>
                     </div>
@@ -74,12 +74,20 @@ function Header() {
                     <div className="col-auto ms-auto">
                         <div className="d-flex align-items-center gap-2">
 
-                            <InviteFriendsModal>
-                                <button className="header-btn invite-btn">
-                                    <FaUserFriends />
-                                    <span>دعوت از دوستان</span>
-                                </button>
-                            </InviteFriendsModal>
+                            <button
+                                type="button"
+                                className="header-btn invite-btn"
+                                onClick={() =>
+                                    navigate(
+                                        "/control-panel/72/definitions/inviteFriend"
+                                    )
+                                }
+                            >
+                                <FaUserFriends />
+                                <span>
+                                    دعوت از دوستان
+                                </span>
+                            </button>
 
                             <SupportTrainingModal>
                                 <button className="header-btn support-btn">

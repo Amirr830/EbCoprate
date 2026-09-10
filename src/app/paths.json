@@ -39,17 +39,13 @@
             "shiftGroups": "/control-panel/59/definitions/shift-groups",
             "shiftPattern": "/control-panel/63/definitions/shift-patterns",
             "duplicateAddress": "/control-panel/66/definitions/duplicate-address",
-        
             "Wallet": "/control-panel/67/definitions/wallet",
             "userAccount": "/control-panel/67/definitions/userAccount",
             "support": "/control-panel/68/definitions/support",
             "ticket": "/control-panel/69/definitions/ticket",
             "commentSuggestion": "/control-panel/70/definitions/commentSuggestion",
-            "request": "/control-panel/71/definitions/request"
-
-
-
-        
+            "request": "/control-panel/71/definitions/request",
+            "inviteFriend": "/control-panel/72/definitions/inviteFriend"
         },
         "reports": {
             "dashboard": "/control-panel/10/reports",
