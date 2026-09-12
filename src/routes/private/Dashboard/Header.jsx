@@ -42,7 +42,7 @@ function Header() {
                                     className="wallet-button"
                                     onClick={() => navigate(paths.private.definitions.Wallet)}
                                 >
-                                    {/* <FaWallet className="wallet-icon" /> */}
+                                     <FaWallet className="wallet-icon" /> 
                                     <span className="wallet-price">
                                         25,000
                                     </span>

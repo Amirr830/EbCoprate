@@ -285,7 +285,7 @@ function SideBar({ onClose }) {
                     <BsChevronLeft />
                   </button>
 
-                  <button
+                  {/* <button
                     type="button"
                     className="support-dropdown-item"
                     onClick={handlePanelTraining}
@@ -295,7 +295,7 @@ function SideBar({ onClose }) {
                     </span>
 
                     <BsChevronLeft />
-                  </button>
+                  </button> */}
 
                 </div>
               )}

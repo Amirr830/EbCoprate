@@ -238,10 +238,6 @@
 }
 
 
-/* ============================= */
-/* Mobile Sidebar Actions */
-/* ============================= */
-
 .mobile-sidebar-actions {
     width: 100%;
     margin-top: 2px;
@@ -257,10 +253,6 @@
     justify-content: center;
 }
 
-
-/* ============================= */
-/* Support Training Dropdown */
-/* ============================= */
 
 .support-training-wrapper {
     width: 100%;
@@ -358,9 +350,6 @@
 }
 
 
-/* ============================= */
-/* Small Height */
-/* ============================= */
 
 @media (max-height: 850px) {
     .sidebar-header-section {

@@ -298,34 +298,40 @@ function Ticket() {
                                                 </div>
                                             </div>
 
-                                            <Form.Group controlId="ticketCategory">
-                                                <Form.Select
-                                                    name="category"
-                                                    value={formData.category}
-                                                    onChange={handleChange}
-                                                    className="category-select"
-                                                >
-                                                    <option value="">
-                                                        انتخاب دسته‌بندی
-                                                    </option>
+<Form.Group controlId="ticketCategory"> 
+    <div className="category-select-wrapper"> 
+        <Form.Select 
+            name="category" 
+            value={formData.category} 
+            onChange={handleChange} 
+            className="category-select" 
+        > 
+            <option value=""> 
+                انتخاب دسته‌بندی 
+            </option> 
 
-                                                    <option value="account">
-                                                        حساب کاربری
-                                                    </option>
+            <option value="account"> 
+                حساب کاربری 
+            </option> 
 
-                                                    <option value="technical">
-                                                        مشکل فنی
-                                                    </option>
+            <option value="technical"> 
+                مشکل فنی 
+            </option> 
 
-                                                    <option value="payment">
-                                                        پرداخت و مالی
-                                                    </option>
+            <option value="payment"> 
+                پرداخت و مالی 
+            </option> 
 
-                                                    <option value="suggestion">
-                                                        پیشنهاد و انتقاد
-                                                    </option>
-                                                </Form.Select>
-                                            </Form.Group>
+            <option value="suggestion"> 
+                پیشنهاد و انتقاد 
+            </option> 
+        </Form.Select> 
+
+        <span className="category-select-arrow"> 
+            <span></span> 
+        </span> 
+    </div> 
+</Form.Group>
                                         </section>
                                     </Col>
 

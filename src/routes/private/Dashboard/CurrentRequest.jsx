@@ -147,9 +147,9 @@ function CurrentRequest() {
                 <div className="col-12 col-sm-5">
                   <div className="current-time-section">
 
-                    <div className="current-time-icon">
+                    {/* <div className="current-time-icon">
                       <IoTimeOutline size={21} />
-                    </div>
+                    </div> */}
 
                     <div className="current-time-content">
 
