@@ -421,11 +421,7 @@ function Requests() {
                                         setActiveTab(tab.id)
                                     }
                                 >
-                                    <div className="requests-tab-icon">
-                                        {tab.icon}
-                                    </div>
-
-                                    <span>
+                                      <span>
                                         {tab.title}
                                     </span>
                                 </button>

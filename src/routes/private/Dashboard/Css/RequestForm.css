@@ -1714,3 +1714,62 @@
     display: none !important;
   }
 }
+
+
+.route-card-compact {
+  padding: 6px 10px;
+}
+
+.route-card-compact .route-item {
+  min-height: 50px;
+  height: 50px;
+  padding: 5px 0;
+}
+
+.route-card-compact .route-address {
+  min-height: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+
+.route-card {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+.route-card .route-item {
+  min-height: 42px !important;
+  height: 42px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.route-card .route-address {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+  display: flex;
+  align-items: center;
+}
+
+.route-card .route-edit-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 3px 7px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.route-card .route-edit-btn svg {
+  font-size: 13px !important;
+}
+
+.route-card .route-side {
+  min-height: 34px !important;
+  height: 34px !important;
+}
