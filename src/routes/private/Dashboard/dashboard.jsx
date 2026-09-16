@@ -27,7 +27,6 @@ function Dashboard() {
 
   return (
     <div className="container-fluid p-0 dashboard-page">
-
       {isSidebarOpen && (
         <div
           className="sidebar-backdrop d-md-none"
@@ -39,9 +38,8 @@ function Dashboard() {
         <main className="dashboard-main hideScroll">
           <div className="dashboard-content">
             <div className="dashboard-inner container-fluid">
-              <div className="row g-3">
-
-                <div className="col-12 col-lg-5 col-xxl-4">
+              <div className="row g-3 dashboard-panels">
+                <div className="col-12 col-lg-5 col-xxl-4 dashboard-col">
                   <div className="dashboard-card dashboard-card-request">
                     <RequestForm
                       toggleSidebar={toggleSidebar}
@@ -50,15 +48,9 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xxl-4 d-none d-md-block">
+                <div className="col-lg-4 col-xxl-4 d-none d-md-block dashboard-col">
                   <div className="dashboard-card dashboard-card-current">
                     <CurrentForm />
-                  </div>
-                </div>
-
-                <div className="col-lg-4 col-xxl-4 d-none d-md-block">
-                  <div className="dashboard-card dashboard-card-info">
-                    <Info />
                   </div>
                 </div>
               </div>

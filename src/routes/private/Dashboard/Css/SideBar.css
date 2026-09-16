@@ -14,7 +14,7 @@
 }
 
 .sidebar-expanded {
-    width: min(280px, 82vw);
+    width: min(220px, 82vw);
 }
 
 .sidebar-collapsed {

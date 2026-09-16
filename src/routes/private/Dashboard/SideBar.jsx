@@ -184,10 +184,6 @@ const SideBar = ({ isOpen = true, onClose }) => {
                         </div>
 
                         <div className="sidebar-menu-section">
-                            <div className="sidebar-menu-title">
-                                <span>منوی اصلی</span>
-                            </div>
-
                             <div className="sidebar-menu-list">
                                 {menus.map((menu) => {
                                     const isActive = activeMenu === menu.id;
