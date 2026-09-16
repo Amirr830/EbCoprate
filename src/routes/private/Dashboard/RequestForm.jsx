@@ -808,8 +808,8 @@ function RequestForm() {
                 <button
                   type="button"
                   className={`select-vehicle-btn ${vehicleType
-                    ? "vehicle-selected-btn"
-                    : ""
+                      ? "vehicle-selected-btn"
+                      : ""
                     }`}
                   style={{
                     fontSize: "18px",
@@ -827,7 +827,9 @@ function RequestForm() {
           </Col>
         </Row>
 
-        <Row className="g-2 mb-2">
+
+
+        <Row className="g-2 mb-2 request-detail-fields">
           <Col xs={12} md={4}>
             <div className="custom-floating-input modern-field h-100">
               <select

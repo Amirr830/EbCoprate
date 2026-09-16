@@ -94,7 +94,7 @@
 
 .main-page-content {
     position: fixed;
-    top: calc(var(--main-header-height) + var(--main-content-gap));
+    top: calc(var(--main-header-height) + 10px);
     right: calc(var(--main-sidebar-current-width) + var(--main-content-gap));
     left: var(--main-content-gap);
     bottom: var(--main-content-gap);
@@ -210,7 +210,7 @@
     }
 
     .main-page-content {
-        top: calc(var(--main-header-height) + 28px);
+top: calc(var(--main-header-height) + 0px);
         right: calc(var(--main-sidebar-current-width) + 28px);
         left: 28px;
         bottom: 28px;
