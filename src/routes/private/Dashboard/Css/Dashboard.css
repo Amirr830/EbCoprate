@@ -1,7 +1,17 @@
+.dashboard-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 !important;
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 .dashboard-layout {
   display: flex;
   width: 100%;
   min-height: 100%;
+  box-sizing: border-box;
 }
 
 .dashboard-sidebar {
@@ -26,7 +36,7 @@
 
 .dashboard-content {
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -35,7 +45,7 @@
 .dashboard-inner {
   width: 100%;
   max-width: 100%;
-  padding: 0;
+  padding: 8px;
   margin: 0;
   box-sizing: border-box;
 }
@@ -45,38 +55,47 @@
   margin-right: 0;
   margin-left: 0;
   box-sizing: border-box;
+  align-items: stretch;
 }
 
 .dashboard-col {
   display: flex;
   min-width: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  box-sizing: border-box;
 }
 
 .dashboard-card {
   width: 100%;
   min-width: 0;
   overflow: hidden;
+  box-sizing: border-box;
   transition: transform .25s ease;
 }
 
 .dashboard-card-request::-webkit-scrollbar,
-.dashboard-card-current::-webkit-scrollbar {
+.dashboard-card-current::-webkit-scrollbar,
+.dashboard-card-map::-webkit-scrollbar {
   width: 6px;
 }
 
 .dashboard-card-request::-webkit-scrollbar-track,
-.dashboard-card-current::-webkit-scrollbar-track {
+.dashboard-card-current::-webkit-scrollbar-track,
+.dashboard-card-map::-webkit-scrollbar-track {
   background: transparent;
 }
 
 .dashboard-card-request::-webkit-scrollbar-thumb,
-.dashboard-card-current::-webkit-scrollbar-thumb {
+.dashboard-card-current::-webkit-scrollbar-thumb,
+.dashboard-card-map::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 10px;
 }
 
 .dashboard-card-request::-webkit-scrollbar-thumb:hover,
-.dashboard-card-current::-webkit-scrollbar-thumb:hover {
+.dashboard-card-current::-webkit-scrollbar-thumb:hover,
+.dashboard-card-map::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 
@@ -90,6 +109,10 @@
 
 .dashboard-card-current {
   min-height: 560px;
+}
+
+.dashboard-card-map {
+  min-height: 620px;
 }
 
 .dashboard-card-info {
@@ -114,7 +137,7 @@
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .dashboard-layout {
     width: calc(100% - var(--dashboard-sidebar-space));
     margin-right: var(--dashboard-sidebar-space);
@@ -129,6 +152,76 @@
 
   .main-layout:not(:has(.main-header-wrapper .sidebar-expanded)) .dashboard-layout {
     --dashboard-sidebar-space: 105px;
+  }
+
+  .dashboard-inner {
+    padding: 8px;
+  }
+
+  .dashboard-panels {
+    --bs-gutter-x: .5rem;
+    --bs-gutter-y: .5rem;
+  }
+
+  .dashboard-col {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .dashboard-card-request {
+    min-height: 620px;
+  }
+
+  .dashboard-card-current {
+    min-height: 560px;
+  }
+
+  .dashboard-card-map {
+    min-height: 620px;
+  }
+}
+
+@media (min-width: 1400px) and (max-width: 1599.98px) {
+  .dashboard-layout {
+    width: calc(100% - var(--dashboard-sidebar-space));
+    margin-right: var(--dashboard-sidebar-space);
+    transition:
+      width .28s ease,
+      margin-right .28s ease;
+  }
+
+  .main-layout:has(.main-header-wrapper .sidebar-expanded) .dashboard-layout {
+    --dashboard-sidebar-space: 245px;
+  }
+
+  .main-layout:not(:has(.main-header-wrapper .sidebar-expanded)) .dashboard-layout {
+    --dashboard-sidebar-space: 105px;
+  }
+
+  .dashboard-inner {
+    padding: 8px;
+  }
+
+  .dashboard-panels {
+    --bs-gutter-x: .5rem;
+    --bs-gutter-y: .5rem;
+  }
+
+  .dashboard-col {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .dashboard-card-request {
+    min-height: 610px;
+  }
+
+  .dashboard-card-current {
+    min-height: 550px;
+  }
+
+  .dashboard-card-map {
+    min-height: 610px;
   }
 }
 
@@ -155,15 +248,33 @@
   }
 
   .dashboard-main {
-    padding: 16px;
+    padding: 0;
+  }
+
+  .dashboard-inner {
+    padding: 7px;
+  }
+
+  .dashboard-panels {
+    --bs-gutter-x: .5rem;
+    --bs-gutter-y: .5rem;
+  }
+
+  .dashboard-col {
+    padding-left: 4px;
+    padding-right: 4px;
   }
 
   .dashboard-card-request {
-    min-height: 580px;
+    min-height: 590px;
   }
 
   .dashboard-card-current {
-    min-height: 520px;
+    min-height: 530px;
+  }
+
+  .dashboard-card-map {
+    min-height: 590px;
   }
 
   .dashboard-card-info {
@@ -194,13 +305,37 @@
   }
 
   .dashboard-main {
-    padding: 12px;
+    padding: 0;
   }
 
-  .dashboard-card-request,
-  .dashboard-card-current,
+  .dashboard-inner {
+    padding: 6px;
+  }
+
+  .dashboard-panels {
+    --bs-gutter-x: .5rem;
+    --bs-gutter-y: .5rem;
+  }
+
+  .dashboard-col {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .dashboard-card-request {
+    min-height: 560px;
+  }
+
+  .dashboard-card-current {
+    min-height: 500px;
+  }
+
+  .dashboard-card-map {
+    min-height: 560px;
+  }
+
   .dashboard-card-info {
-    min-height: auto;
+    min-height: 390px;
   }
 }
 
@@ -227,13 +362,32 @@
   }
 
   .dashboard-main {
-    padding: 12px;
+    padding: 0;
+  }
+
+  .dashboard-inner {
+    padding: 6px;
+  }
+
+  .dashboard-panels {
+    --bs-gutter-x: .5rem;
+    --bs-gutter-y: .5rem;
+  }
+
+  .dashboard-col {
+    padding-left: 4px;
+    padding-right: 4px;
   }
 
   .dashboard-card-request,
   .dashboard-card-current,
+  .dashboard-card-map,
   .dashboard-card-info {
     min-height: auto;
+  }
+
+  .dashboard-card-map {
+    min-height: 500px;
   }
 }
 
@@ -243,6 +397,7 @@
     width: 100%;
     min-height: 100vh;
     margin-right: 0;
+    padding: 0;
   }
 
   .dashboard-page {
@@ -257,7 +412,7 @@
     width: 100%;
     min-height: 0;
     margin-right: 0;
-    padding: 8px;
+    padding: 4px;
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: visible;
@@ -267,6 +422,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0;
+    padding: 0;
   }
 
   .dashboard-inner {
@@ -287,9 +443,14 @@
   .dashboard-col {
     width: 100%;
     display: block;
-    margin: 0 0 10px;
+    margin: 0 0 6px;
     padding-left: 0;
     padding-right: 0;
+    box-sizing: border-box;
+  }
+
+  .dashboard-col:last-child {
+    margin-bottom: 0;
   }
 
   .dashboard-card {
@@ -298,6 +459,7 @@
     border-radius: 14px;
     overflow: hidden;
     transform: none !important;
+    box-sizing: border-box;
   }
 
   .dashboard-card-request {
@@ -307,6 +469,7 @@
   }
 
   .dashboard-card-current,
+  .dashboard-card-map,
   .dashboard-card-info {
     display: none !important;
     min-height: 0;

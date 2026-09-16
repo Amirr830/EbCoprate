@@ -16,6 +16,7 @@ import CurrentForm from "./CurrentRequest";
 import Info from "./Info";
 import SideBar from "./SideBar";
 import "./Css/Dashboard.css";
+import Map from "./Map";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -38,8 +39,8 @@ function Dashboard() {
         <main className="dashboard-main hideScroll">
           <div className="dashboard-content">
             <div className="dashboard-inner container-fluid">
-              <div className="row g-3 dashboard-panels">
-                <div className="col-12 col-lg-5 col-xxl-4 dashboard-col">
+              <div className="row g-2 dashboard-panels">
+                <div className="col-12 col-md-5 col-lg-4 dashboard-col">
                   <div className="dashboard-card dashboard-card-request">
                     <RequestForm
                       toggleSidebar={toggleSidebar}
@@ -48,9 +49,15 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xxl-4 d-none d-md-block dashboard-col">
+                <div className="col-12 col-md-3 col-lg-3 dashboard-col">
                   <div className="dashboard-card dashboard-card-current">
                     <CurrentForm />
+                  </div>
+                </div>
+
+                <div className="col-12 col-md-4 col-lg-5 dashboard-col">
+                  <div className="dashboard-card dashboard-card-map">
+                    <Map />
                   </div>
                 </div>
               </div>
