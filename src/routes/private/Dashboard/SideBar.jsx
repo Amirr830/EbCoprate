@@ -1,332 +1,312 @@
+
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./Css/SideBar.css";
-
 import {
-  BsGrid1X2Fill,
-  BsClipboardCheckFill,
-  BsWallet2,
-  BsPeopleFill,
-  BsPersonFill,
-  BsHeadset,
-  BsBoxArrowRight,
-  BsPersonCircle,
-  BsChevronLeft,
-  BsChevronDown
+    BsGrid1X2Fill,
+    BsClipboardCheckFill,
+    BsWallet2,
+    BsPeopleFill,
+    BsPersonFill,
+    BsHeadset,
+    BsBoxArrowRight,
+    BsChevronDown,
+    BsChevronLeft
 } from "react-icons/bs";
-
+import "./Css/SideBar.css";
 import paths from "../../../../src/app/paths.json";
 import Storages from "../../../app/storages";
 import answerModal from "../../../modals/answerModal";
 
+const SideBar = ({ isOpen = true, onClose }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [supportDropdownOpen, setSupportDropdownOpen] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
-function SideBar({ onClose }) {
-  const navigate = useNavigate();
-  const location = useLocation();
+    const menus = [
+        {
+            id: "dashboard",
+            title: "پیشخوان",
+            icon: <BsGrid1X2Fill />,
+            path: paths.private.dashboard
+        },
+        {
+            id: "requests",
+            title: "درخواست‌ها",
+            icon: <BsClipboardCheckFill />,
+            path: "/control-panel/71/definitions/request"
+        },
+        {
+            id: "wallet",
+            title: "کیف پول",
+            icon: <BsWallet2 />,
+            path: paths.private.definitions.Wallet
+        },
+        {
+            id: "account",
+            title: "حساب کاربری",
+            icon: <BsPersonFill />,
+            path: paths.private.definitions.userAccount
+        },
+        {
+            id: "support",
+            title: "پشتیبانی",
+            icon: <BsHeadset />,
+            path: "/control-panel/68/definitions/support"
+        }
+    ];
 
-  const [supportDropdownOpen, setSupportDropdownOpen] = useState(false);
+    const getActiveMenu = () => {
+        const currentPath = location.pathname;
 
-  const menus = [
-    {
-      id: "dashboard",
-      title: "پیشخوان",
-      icon: <BsGrid1X2Fill />
-    },
-    {
-      id: "requests",
-      title: "درخواست‌ها",
-      icon: <BsClipboardCheckFill />
-    },
-    {
-      id: "wallet",
-      title: "کیف پول",
-      icon: <BsWallet2 />
-    },
-    {
-      id: "account",
-      title: "حساب کاربری",
-      icon: <BsPersonFill />
-    },
-    // {
-    //   id: "friends",
-    //   title: "دعوت دوستان",
-    //   icon: <BsPeopleFill />
-    // },
-    {
-      id: "support",
-      title: "پشتیبانی",
-      icon: <BsHeadset />
-    },
-    // {
-    //   id: "about",
-    //   title: "درباره ما",
-    //   icon: <BsInfoCircleFill />
-    // }
-  ];
+        if (currentPath === paths.private.dashboard) {
+            return "dashboard";
+        }
 
-  const getActiveMenu = () => {
-    const currentPath = location.pathname;
+        if (
+            currentPath === "/control-panel/71/definitions/request" ||
+            currentPath.startsWith("/control-panel/71/definitions/request/")
+        ) {
+            return "requests";
+        }
 
-    if (currentPath === paths.private.dashboard) {
-      return "dashboard";
-    }
+        if (
+            currentPath === paths.private.definitions.Wallet ||
+            currentPath.startsWith(`${paths.private.definitions.Wallet}/`)
+        ) {
+            return "wallet";
+        }
 
-    if (
-      currentPath === "/control-panel/71/definitions/request" ||
-      currentPath.startsWith("/control-panel/71/definitions/request/")
-    ) {
-      return "requests";
-    }
+        if (
+            currentPath === paths.private.definitions.userAccount ||
+            currentPath.startsWith(`${paths.private.definitions.userAccount}/`)
+        ) {
+            return "account";
+        }
 
-    if (
-      currentPath === paths.private.definitions.Wallet ||
-      currentPath.startsWith(`${paths.private.definitions.Wallet}/`)
-    ) {
-      return "wallet";
-    }
+        if (
+            currentPath === "/control-panel/68/definitions/support" ||
+            currentPath.startsWith("/control-panel/68/definitions/support/")
+        ) {
+            return "support";
+        }
 
-    if (
-      currentPath === paths.private.definitions.userAccount ||
-      currentPath.startsWith(`${paths.private.definitions.userAccount}/`)
-    ) {
-      return "account";
-    }
+        return "";
+    };
 
-    if (
-      currentPath === "/control-panel/68/definitions/support" ||
-      currentPath.startsWith("/control-panel/68/definitions/support/")
-    ) {
-      return "support";
-    }
+    const activeMenu = getActiveMenu();
 
-    return "";
-  };
+    const handleMenuClick = (menu) => {
+        if (menu.id === "support") {
+            if (collapsed) {
+                setCollapsed(false);
+            }
 
-  const active = getActiveMenu();
+            setSupportDropdownOpen((prev) => !prev);
+            return;
+        }
 
-  const handleMenuClick = (item) => {
-    if (item.id === "dashboard") {
-      navigate(paths.private.dashboard);
-    }
+        navigate(menu.path);
 
-    if (item.id === "requests") {
-      navigate("/control-panel/71/definitions/request");
-    }
+        if (onClose) {
+            onClose();
+        }
+    };
 
-    if (item.id === "wallet") {
-      navigate(paths.private.definitions.Wallet);
-    }
+    const handleInviteClick = () => {
+        navigate("/control-panel/72/definitions/inviteFriend");
 
-    if (item.id === "account") {
-      navigate(paths.private.definitions.userAccount);
-    }
+        if (onClose) {
+            onClose();
+        }
+    };
 
-    if (item.id === "support") {
-      navigate("/control-panel/68/definitions/support");
-    }
-  };
+    const handleTicketClick = () => {
+        navigate("/control-panel/69/definitions/ticket");
 
-  const handleSupportDropdownToggle = () => {
-    setSupportDropdownOpen((prev) => !prev);
-  };
+        if (onClose) {
+            onClose();
+        }
+    };
 
-  const handleGoToTicket = () => {
-    setSupportDropdownOpen(false);
-    navigate("/control-panel/69/definitions/ticket");
-  };
+    const handleCommentSuggestionClick = () => {
+        navigate("/control-panel/70/definitions/commentSuggestion");
 
-  const handleGoToCommentSuggestion = () => {
-    setSupportDropdownOpen(false);
-    navigate("/control-panel/70/definitions/commentSuggestion");
-  };
+        if (onClose) {
+            onClose();
+        }
+    };
 
-  const handlePanelTraining = () => {
-    setSupportDropdownOpen(false);
-  };
+    const handleLogout = () => {
+        answerModal.show(
+            "آیا از خروج از حساب کاربری مطمئن هستید؟",
+            () => {
+                Storages.removeUserToken();
+                navigate(paths.public.login);
+            }
+        );
+    };
 
-  const handleLogout = () => {
-    answerModal.show(
-      "آیا مایل به خروج از حساب کاربری هستید؟",
-      () => {
-        Storages.removeUserToken();
-        navigate(paths.public.login);
-      },
-      () => { }
+    const handleCollapse = () => {
+        setCollapsed((prev) => !prev);
+        setSupportDropdownOpen(false);
+    };
+
+    return (
+        <div
+            className={`sidebar-wrapper ${
+                collapsed ? "sidebar-collapsed" : "sidebar-expanded"
+            } ${
+                isOpen ? "sidebar-visible" : "sidebar-hidden"
+            }`}
+        >
+            <Row className="sidebar-layout g-0 h-100">
+                <Col xs={12} className="sidebar-column">
+                    <div className="sidebar-container">
+                        <div className="sidebar-top">
+                            <div className="sidebar-brand-area">
+                                <button
+                                    type="button"
+                                    className="sidebar-menu-toggle"
+                                    onClick={handleCollapse}
+                                    aria-label={collapsed ? "باز کردن منو" : "بستن منو"}
+                                >
+                                    <span className="menu-line menu-line-one"></span>
+                                    <span className="menu-line menu-line-two"></span>
+                                    <span className="menu-line menu-line-three"></span>
+                                </button>
+
+                                <div className="sidebar-brand-name">
+                                    شرکت ابتکار
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="sidebar-menu-section">
+                            <div className="sidebar-menu-title">
+                                <span>منوی اصلی</span>
+                            </div>
+
+                            <div className="sidebar-menu-list">
+                                {menus.map((menu) => {
+                                    const isActive = activeMenu === menu.id;
+
+                                    return (
+                                        <div
+                                            key={menu.id}
+                                            className="sidebar-menu-item-wrapper"
+                                        >
+                                            <button
+                                                type="button"
+                                                className={`sidebar-menu-item ${
+                                                    isActive
+                                                        ? "sidebar-menu-item-active"
+                                                        : ""
+                                                } ${
+                                                    menu.id === "support" &&
+                                                    supportDropdownOpen
+                                                        ? "sidebar-menu-item-open"
+                                                        : ""
+                                                }`}
+                                                onClick={() => handleMenuClick(menu)}
+                                            >
+                                                <span className="sidebar-menu-icon">
+                                                    {menu.icon}
+                                                </span>
+
+                                                <span className="sidebar-menu-text">
+                                                    {menu.title}
+                                                </span>
+
+                                                {collapsed && (
+                                                    <span className="sidebar-tooltip">
+                                                        {menu.title}
+                                                    </span>
+                                                )}
+
+                                                {menu.id === "support" && !collapsed && (
+                                                    <span className="sidebar-menu-arrow">
+                                                        {supportDropdownOpen ? (
+                                                            <BsChevronDown />
+                                                        ) : (
+                                                            <BsChevronLeft />
+                                                        )}
+                                                    </span>
+                                                )}
+                                            </button>
+
+                                            {menu.id === "support" &&
+                                                supportDropdownOpen &&
+                                                !collapsed && (
+                                                    <div className="sidebar-support-dropdown">
+                                                        <button
+                                                            type="button"
+                                                            className="sidebar-support-item"
+                                                            onClick={handleTicketClick}
+                                                        >
+                                                            <BsClipboardCheckFill />
+                                                            <span>ثبت تیکت</span>
+                                                        </button>
+
+                                                        <button
+                                                            type="button"
+                                                            className="sidebar-support-item"
+                                                            onClick={handleCommentSuggestionClick}
+                                                        >
+                                                            <BsPeopleFill />
+                                                            <span>نظرات و پیشنهادات</span>
+                                                        </button>
+                                                    </div>
+                                                )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <div className="sidebar-bottom">
+                            <div className="sidebar-mobile-actions d-md-none">
+                                <button
+                                    type="button"
+                                    className="sidebar-action-button"
+                                    onClick={handleInviteClick}
+                                >
+                                    <BsPeopleFill />
+                                    <span>دعوت از دوستان</span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="sidebar-action-button"
+                                    onClick={handleTicketClick}
+                                >
+                                    <BsHeadset />
+                                    <span>ثبت تیکت</span>
+                                </button>
+                            </div>
+
+                            <button
+                                type="button"
+                                className="sidebar-logout-button"
+                                onClick={handleLogout}
+                            >
+                                <BsBoxArrowRight />
+
+                                <span>خروج از حساب</span>
+
+                                {collapsed && (
+                                    <span className="sidebar-tooltip">
+                                        خروج
+                                    </span>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+        </div>
     );
-  };
-
-  return (
-    <aside className="sidebar-wrapper">
-      <Row className="sidebar-layout g-0 h-100">
-
-        <Col xs="auto" className="sidebar-header-section">
-          <div className="d-flex align-items-center gap-3 sidebar-top">
-
-            <div className="profile-image">
-              <BsPersonCircle size={32} />
-            </div>
-
-            <div>
-              <h5 className="company-title text-truncate">
-                شرکت ابتکار
-              </h5>
-
-              <span className="company-subtitle">
-                پنل مدیریت سیستم
-              </span>
-            </div>
-
-          </div>
-
-          <div className="sidebar-divider"></div>
-        </Col>
-
-        <Col className="sidebar-menu-container custom-scrollbar">
-
-          {menus.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleMenuClick(item)}
-              className={`sidebar-btn ${active === item.id ? "active-btn" : ""
-                }`}
-            >
-              <div className="btn-icon">
-                {item.icon}
-              </div>
-
-              <span className="btn-text">
-                {item.title}
-              </span>
-
-              <div className="btn-arrow">
-                <BsChevronLeft />
-              </div>
-            </button>
-          ))}
-
-          <div className="mobile-sidebar-actions d-md-none">
-
-<button 
-  type="button" 
-  className="sidebar-btn sidebar-action-btn" 
-  onClick={() => {
-    onClose?.();
-    navigate("/control-panel/72/definitions/inviteFriend");
-  }}
->
-  <div className="btn-icon">
-    <BsPeopleFill />
-  </div>
-
-  <span className="btn-text">
-    دعوت از دوستان
-  </span>
-
-  <div className="btn-arrow">
-    <BsChevronLeft />
-  </div>
-</button>
-
-            <div className="support-training-wrapper">
-
-              <button
-                type="button"
-                className={`sidebar-btn sidebar-action-btn ${supportDropdownOpen
-                  ? "support-dropdown-active"
-                  : ""
-                  }`}
-                onClick={handleSupportDropdownToggle}
-                aria-expanded={supportDropdownOpen}
-              >
-                <div className="btn-icon">
-                  <BsHeadset />
-                </div>
-
-                <span className="btn-text">
-                  پشتیبانی و آموزش
-                </span>
-
-                <div className="btn-arrow support-dropdown-arrow">
-                  <BsChevronDown
-                    className={
-                      supportDropdownOpen
-                        ? "support-arrow-open"
-                        : ""
-                    }
-                  />
-                </div>
-              </button>
-
-              {supportDropdownOpen && (
-                <div className="support-dropdown-menu">
-
-                  <button
-                    type="button"
-                    className="support-dropdown-item"
-                    onClick={handleGoToTicket}
-                  >
-                    <span>
-                      ارسال تیکت جدید
-                    </span>
-
-                    <BsChevronLeft />
-                  </button>
-
-                  <button
-                    type="button"
-                    className="support-dropdown-item"
-                    onClick={handleGoToCommentSuggestion}
-                  >
-                    <span>
-                      نظرات و پیشنهادات
-                    </span>
-
-                    <BsChevronLeft />
-                  </button>
-
-                  {/* <button
-                    type="button"
-                    className="support-dropdown-item"
-                    onClick={handlePanelTraining}
-                  >
-                    <span>
-                      آموزش استفاده از پنل
-                    </span>
-
-                    <BsChevronLeft />
-                  </button> */}
-
-                </div>
-              )}
-
-            </div>
-
-          </div>
-
-        </Col>
-
-        <Col xs="auto" className="sidebar-footer-section">
-
-          <div className="sidebar-divider"></div>
-
-          <button
-            className="logout-button"
-            onClick={handleLogout}
-          >
-            <BsBoxArrowRight size={18} />
-
-            <span>
-              خروج از حساب کاربری
-            </span>
-
-          </button>
-
-        </Col>
-
-      </Row>
-    </aside>
-  );
-}
+};
 
 export default SideBar;
