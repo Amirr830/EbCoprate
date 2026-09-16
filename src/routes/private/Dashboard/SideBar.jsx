@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -170,7 +169,11 @@ const SideBar = ({ isOpen = true, onClose }) => {
                                     type="button"
                                     className="sidebar-menu-toggle"
                                     onClick={handleCollapse}
-                                    aria-label={collapsed ? "باز کردن منو" : "بستن منو"}
+                                    aria-label={
+                                        collapsed
+                                            ? "باز کردن منو"
+                                            : "بستن منو"
+                                    }
                                 >
                                     <span className="menu-line menu-line-one"></span>
                                     <span className="menu-line menu-line-two"></span>
@@ -186,7 +189,8 @@ const SideBar = ({ isOpen = true, onClose }) => {
                         <div className="sidebar-menu-section">
                             <div className="sidebar-menu-list">
                                 {menus.map((menu) => {
-                                    const isActive = activeMenu === menu.id;
+                                    const isActive =
+                                        activeMenu === menu.id;
 
                                     return (
                                         <div
@@ -205,7 +209,9 @@ const SideBar = ({ isOpen = true, onClose }) => {
                                                         ? "sidebar-menu-item-open"
                                                         : ""
                                                 }`}
-                                                onClick={() => handleMenuClick(menu)}
+                                                onClick={() =>
+                                                    handleMenuClick(menu)
+                                                }
                                             >
                                                 <span className="sidebar-menu-icon">
                                                     {menu.icon}
@@ -221,15 +227,16 @@ const SideBar = ({ isOpen = true, onClose }) => {
                                                     </span>
                                                 )}
 
-                                                {menu.id === "support" && !collapsed && (
-                                                    <span className="sidebar-menu-arrow">
-                                                        {supportDropdownOpen ? (
-                                                            <BsChevronDown />
-                                                        ) : (
-                                                            <BsChevronLeft />
-                                                        )}
-                                                    </span>
-                                                )}
+                                                {menu.id === "support" &&
+                                                    !collapsed && (
+                                                        <span className="sidebar-menu-arrow">
+                                                            {supportDropdownOpen ? (
+                                                                <BsChevronDown />
+                                                            ) : (
+                                                                <BsChevronLeft />
+                                                            )}
+                                                        </span>
+                                                    )}
                                             </button>
 
                                             {menu.id === "support" &&
@@ -239,19 +246,27 @@ const SideBar = ({ isOpen = true, onClose }) => {
                                                         <button
                                                             type="button"
                                                             className="sidebar-support-item"
-                                                            onClick={handleTicketClick}
+                                                            onClick={
+                                                                handleTicketClick
+                                                            }
                                                         >
                                                             <BsClipboardCheckFill />
-                                                            <span>ثبت تیکت</span>
+                                                            <span>
+                                                                ثبت تیکت
+                                                            </span>
                                                         </button>
 
                                                         <button
                                                             type="button"
                                                             className="sidebar-support-item"
-                                                            onClick={handleCommentSuggestionClick}
+                                                            onClick={
+                                                                handleCommentSuggestionClick
+                                                            }
                                                         >
                                                             <BsPeopleFill />
-                                                            <span>نظرات و پیشنهادات</span>
+                                                            <span>
+                                                                نظرات و پیشنهادات
+                                                            </span>
                                                         </button>
                                                     </div>
                                                 )}
@@ -262,26 +277,6 @@ const SideBar = ({ isOpen = true, onClose }) => {
                         </div>
 
                         <div className="sidebar-bottom">
-                            <div className="sidebar-mobile-actions d-md-none">
-                                <button
-                                    type="button"
-                                    className="sidebar-action-button"
-                                    onClick={handleInviteClick}
-                                >
-                                    <BsPeopleFill />
-                                    <span>دعوت از دوستان</span>
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="sidebar-action-button"
-                                    onClick={handleTicketClick}
-                                >
-                                    <BsHeadset />
-                                    <span>ثبت تیکت</span>
-                                </button>
-                            </div>
-
                             <button
                                 type="button"
                                 className="sidebar-logout-button"
