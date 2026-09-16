@@ -797,9 +797,8 @@ function RequestForm() {
             showAdditionalDestinationModal
           }
         />
-
-        <Row className="g-2 mb-3 mt-1">
-          <Col xs={12} md={6}>
+        <Row className="mb-2 mt-1">
+          <Col xs={12}>
             <div className="vehicle-dropdown">
               <VehicleTypeModal
                 onVehicleSelect={(vehicle) => {
@@ -826,8 +825,10 @@ function RequestForm() {
               </VehicleTypeModal>
             </div>
           </Col>
+        </Row>
 
-          <Col xs={12} md={6}>
+        <Row className="g-2 mb-2">
+          <Col xs={12} md={4}>
             <div className="custom-floating-input modern-field h-100">
               <select
                 id="stopTime"
@@ -850,10 +851,8 @@ function RequestForm() {
               </label>
             </div>
           </Col>
-        </Row>
 
-        <Row className="g-2 mb-3">
-          <Col xs={12} md={6}>
+          <Col xs={12} md={4}>
             <div className="custom-floating-input modern-field h-100">
               <input
                 id="courierCode"
@@ -879,59 +878,7 @@ function RequestForm() {
             </div>
           </Col>
 
-          <Col xs={12} md={6}>
-            <div className="custom-floating-input modern-field h-100">
-              <select
-                id="itemValue"
-                value={itemValue}
-                onChange={(e) =>
-                  setItemValue(
-                    e.target.value
-                  )
-                }
-              >
-                {requestData.itemValues.map((item) => (
-                  <option key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-
-              <label htmlFor="itemValue">
-                {strings.requestForm.itemValue}
-              </label>
-            </div>
-          </Col>
-        </Row>
-
-        <Row className="g-2 mb-2">
-          <Col xs={12} md={6}>
-            <div className="custom-floating-input modern-field h-100">
-              <input
-                id="courierCode"
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                placeholder={strings.requestForm.courierCodePlaceholder}
-                autoComplete="off"
-                value={courierCode}
-                onChange={(e) =>
-                  setCourierCode(
-                    e.target.value.replace(
-                      /\D/g,
-                      ""
-                    )
-                  )
-                }
-              />
-
-              <label htmlFor="courierCode">
-                {strings.requestForm.courierCode}
-              </label>
-            </div>
-          </Col>
-
-          <Col xs={12} md={6}>
+          <Col xs={12} md={4}>
             <div className="custom-floating-input modern-field h-100">
               <select
                 id="itemValue"

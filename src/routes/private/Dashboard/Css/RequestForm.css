@@ -1773,3 +1773,23 @@
   min-height: 34px !important;
   height: 34px !important;
 }
+@media (min-width: 768px) {
+  .modern-form-card .row.g-2.mb-2 > [class*="col-md-4"] {
+    width: 30%;
+  }
+
+  .modern-form-card .row.g-2.mb-2 {
+    justify-content: center;
+  }
+
+  .modern-form-card .row.g-2.mb-2 .custom-floating-input input,
+  .modern-form-card .row.g-2.mb-2 .custom-floating-input select {
+    height: 40px;
+    font-size: 14px;
+    padding: 0 11px;
+  }
+
+  .modern-form-card .row.g-2.mb-2 .custom-floating-input label {
+    font-size: 12px;
+  }
+}

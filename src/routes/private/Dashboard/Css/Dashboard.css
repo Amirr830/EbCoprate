@@ -147,7 +147,7 @@
   }
 
   .main-layout:has(.main-header-wrapper .sidebar-expanded) .dashboard-layout {
-    --dashboard-sidebar-space: 245px;
+    --dashboard-sidebar-space: 255px;
   }
 
   .main-layout:not(:has(.main-header-wrapper .sidebar-expanded)) .dashboard-layout {
@@ -173,7 +173,7 @@
   }
 
   .dashboard-card-current {
-    min-height: 560px;
+    min-height: 700px;
   }
 
   .dashboard-card-map {

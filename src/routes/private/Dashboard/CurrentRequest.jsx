@@ -99,11 +99,6 @@ function CurrentRequest() {
 
                 <div className="col-12 col-sm-7">
                   <div className="current-date-section">
-
-                    <div className="current-date-icon">
-                      <span>📅</span>
-                    </div>
-
                     <div className="current-date-info">
 
                       <div className="current-date-label">

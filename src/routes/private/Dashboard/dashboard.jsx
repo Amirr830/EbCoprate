@@ -49,11 +49,11 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="col-12 col-md-3 col-lg-3 dashboard-col">
-                  <div className="dashboard-card dashboard-card-current">
-                    <CurrentForm />
-                  </div>
-                </div>
+<div className="col-12 col-md-3 col-lg-3 dashboard-col">
+  <div className="dashboard-card dashboard-card-current">
+    <CurrentForm />
+  </div>
+</div>
 
                 <div className="col-12 col-md-4 col-lg-5 dashboard-col">
                   <div className="dashboard-card dashboard-card-map">
