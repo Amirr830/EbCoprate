@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckAccess } from "../../../app/checkAccess";
@@ -40,7 +41,7 @@ function Dashboard() {
           <div className="dashboard-content">
             <div className="dashboard-inner container-fluid">
               <div className="row g-2 dashboard-panels">
-                <div className="col-12 col-md-5 col-lg-4 dashboard-col">
+                <div className="col-12 col-md-5 col-lg-4 dashboard-col dashboard-request-col">
                   <div className="dashboard-card dashboard-card-request">
                     <RequestForm
                       toggleSidebar={toggleSidebar}
@@ -49,13 +50,13 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <div className="col-12 col-md-3 col-lg-3 dashboard-col">
+                <div className="col-12 col-md-3 col-lg-3 dashboard-col dashboard-current-col">
                   <div className="dashboard-card dashboard-card-current">
                     <CurrentForm />
                   </div>
                 </div>
 
-                <div className="col-12 col-md-4 col-lg-5 dashboard-col">
+                <div className="col-12 col-md-4 col-lg-5 dashboard-col dashboard-map-col">
                   <div className="dashboard-card dashboard-card-map">
                     <Map />
                   </div>

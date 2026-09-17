@@ -1,7 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Css/RequestForm.css';
 import { Container, Row, Col } from 'react-bootstrap';
-import { FaPencilAlt, FaChevronDown, FaTag, FaTimes } from 'react-icons/fa';
+import {
+  FaPencilAlt,
+  FaChevronDown,
+  FaTag,
+  FaTimes,
+  FaPlus,
+  FaClipboardList,
+  FaMapMarkedAlt,
+} from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
 import paths from "../../../../src/app/paths.json";
 import strings from "../../../app/String.json";
@@ -10,7 +18,7 @@ import EdirAddressModal from "./Modals/EditAddressModal";
 import VehicleTypeModal from "./Modals/VehicleTypeModal";
 import SubmitRequestModal from "./Modals/SubmitRequestModal";
 import CurrentRequest from "./CurrentRequest";
-import Info from "./Info";
+import Map from "./Map";
 import ShippingMethodModal from "./Modals/ShippingMethodModal";
 import RegisterDiscountCode from "./Modals/RegisterDiscountCode";
 
@@ -1156,14 +1164,14 @@ function RequestForm() {
                 </div>
               </div>
 
-              <div className="payment-price-section">
+              {/* <div className="payment-price-section">
                 <span className="payment-price-value text-success">
                   <p>{strings.price}</p>
                   <p>{strings.currency}</p>
                 </span>
-              </div>
+              </div> */}
 
-              <div className="discount-description-form">
+              {/* <div className="discount-description-form">
                 <FaTag className="discount-icon text-muted" />
 
                 <input
@@ -1175,7 +1183,7 @@ function RequestForm() {
                     setDiscountDescription(e.target.value);
                   }}
                 />
-              </div>
+              </div> */}
             </div>
           </Col>
         </Row>
@@ -1230,7 +1238,7 @@ function RequestForm() {
 
   return (
     <Container fluid className="modern-request-container d-flex justify-content-center align-items-start p-0 p-md-2" >
-      <div className="d-md-none w-100 mobile-content-area">
+      <div className="d-xl-none w-100 mobile-content-area">
 
         {renderMobileHeader()}
 
@@ -1240,26 +1248,25 @@ function RequestForm() {
           </div>
         )}
 
-        {mobilePage === "current" && (
+        {mobilePage === "info" && (
           <div className="mobile-page-wrapper mobile-current-page">
             <CurrentRequest />
           </div>
         )}
 
-        {mobilePage === "info" && (
-          <div className="mobile-page-wrapper mobile-info-page">
-            <Info />
+        {mobilePage === "map" && (
+          <div className="mobile-page-wrapper mobile-map-page">
+            <Map />
           </div>
         )}
 
       </div>
 
-      <div className="d-none d-md-block w-100">
+      <div className="d-none d-xl-block w-100">
         {renderMobilePage()}
       </div>
 
-      <Row className="d-md-none mobile-bottom-navigation">
-
+      <Row className="d-xl-none mobile-bottom-navigation">
         <Col xs={4}>
           <button
             type="button"
@@ -1268,33 +1275,12 @@ function RequestForm() {
             onClick={() => {
               setMobilePage("request");
             }}
+            aria-label="درخواست سفر"
           >
             <span className="mobile-nav-icon">
-              ＋
+              <FaPlus />
             </span>
-
-            <span>
-              {strings.mobileNavigation.travelRequest}
-            </span>
-          </button>
-        </Col>
-
-        <Col xs={4}>
-          <button
-            type="button"
-            className={`mobile-nav-btn ${mobilePage === "current" ? "active" : ""
-              }`}
-            onClick={() => {
-              setMobilePage("current");
-            }}
-          >
-            <span className="mobile-nav-icon">
-              ●
-            </span>
-
-            <span>
-              {strings.mobileNavigation.currentTrip}
-            </span>
+            <span>درخواست سفر</span>
           </button>
         </Col>
 
@@ -1306,17 +1292,31 @@ function RequestForm() {
             onClick={() => {
               setMobilePage("info");
             }}
+            aria-label="اطلاعات سفر"
           >
             <span className="mobile-nav-icon">
-              ☰
+              <FaClipboardList />
             </span>
-
-            <span>
-              {strings.mobileNavigation.tripInformation}
-            </span>
+            <span>اطلاعات سفر</span>
           </button>
         </Col>
 
+        <Col xs={4}>
+          <button
+            type="button"
+            className={`mobile-nav-btn ${mobilePage === "map" ? "active" : ""
+              }`}
+            onClick={() => {
+              setMobilePage("map");
+            }}
+            aria-label="نقشه"
+          >
+            <span className="mobile-nav-icon">
+              <FaMapMarkedAlt />
+            </span>
+            <span>نقشه</span>
+          </button>
+        </Col>
       </Row>
     </Container>
 
