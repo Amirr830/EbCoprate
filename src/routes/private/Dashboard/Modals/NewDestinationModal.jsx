@@ -456,9 +456,9 @@ export default function NewDestinationModal(
     const position =
       hasPosition
         ? [
-          Number(sourceLat),
-          Number(sourceLng),
-        ]
+            Number(sourceLat),
+            Number(sourceLng),
+          ]
         : null;
 
     const sourceAddress =
@@ -476,7 +476,7 @@ export default function NewDestinationModal(
         (item) =>
           item.city === source?.city &&
           item.province ===
-          source?.province
+            source?.province
       ) || DEFAULT_CITY;
 
     setStep(1);
@@ -632,11 +632,6 @@ export default function NewDestinationModal(
     const address =
       data.address || {};
 
-
-
-
-
-
     const street =
       address.road ||
       address.pedestrian ||
@@ -665,13 +660,6 @@ export default function NewDestinationModal(
       })
     );
   };
-
-
-
-
-
-
-
 
   const handleMarkerDragEnd =
     async (event) => {
@@ -839,11 +827,6 @@ export default function NewDestinationModal(
       const address =
         result.address || {};
 
-
-
-
-
-
       const street =
         address.road ||
         address.pedestrian ||
@@ -870,10 +853,6 @@ export default function NewDestinationModal(
           address: street,
         })
       );
-
-
-
-
 
       setShowResults(
         false
@@ -1038,6 +1017,121 @@ export default function NewDestinationModal(
       });
     }
 
+    try {
+      const savedMapLocations =
+        JSON.parse(
+          localStorage.getItem(
+            "selectedMapLocations"
+          ) || "[]"
+        );
+
+      const validLocations =
+        Array.isArray(
+          savedMapLocations
+        )
+          ? savedMapLocations
+          : [];
+
+      const newLocation = {
+        addressType,
+        address:
+          finalAddress.address,
+        fullAddress:
+          finalAddress.fullAddress,
+        latitude:
+          finalAddress.latitude,
+        longitude:
+          finalAddress.longitude,
+        lat:
+          finalAddress.lat,
+        lng:
+          finalAddress.lng,
+        city:
+          finalAddress.city,
+        province:
+          finalAddress.province,
+      };
+
+      const normalizedType =
+        String(
+          addressType || ""
+        )
+          .trim()
+          .toLowerCase();
+
+      let updatedLocations;
+
+      if (
+        normalizedType ===
+        "origin"
+      ) {
+        updatedLocations =
+          validLocations.filter(
+            (item) =>
+              String(
+                item?.addressType || ""
+              )
+                .trim()
+                .toLowerCase() !==
+              "origin"
+          );
+
+        updatedLocations.unshift(
+          newLocation
+        );
+      } else {
+        const existingIndex =
+          validLocations.findIndex(
+            (item) =>
+              String(
+                item?.addressType || ""
+              )
+                .trim()
+                .toLowerCase() ===
+              normalizedType
+          );
+
+        if (
+          existingIndex >= 0
+        ) {
+          updatedLocations = [
+            ...validLocations,
+          ];
+
+          updatedLocations[
+            existingIndex
+          ] = newLocation;
+        } else {
+          updatedLocations = [
+            ...validLocations,
+            newLocation,
+          ];
+        }
+      }
+
+      localStorage.setItem(
+        "selectedMapLocations",
+        JSON.stringify(
+          updatedLocations
+        )
+      );
+
+      window.dispatchEvent(
+        new CustomEvent(
+          "selectedMapLocationsUpdated",
+          {
+            detail:
+              updatedLocations,
+          }
+        )
+      );
+    } catch (error) {
+      console.error(
+        "Map Location Save Error:",
+        error
+      );
+    }
+
     handleClose();
   };
 
@@ -1193,10 +1287,11 @@ export default function NewDestinationModal(
                     >
                       <button
                         type="button"
-                        className={`city-selector-btn ${showCityDropdown
+                        className={`city-selector-btn ${
+                          showCityDropdown
                             ? "active"
                             : ""
-                          }`}
+                        }`}
                         onClick={() =>
                           setShowCityDropdown(
                             (prev) =>
@@ -1219,10 +1314,11 @@ export default function NewDestinationModal(
                         </div>
 
                         <FaChevronDown
-                          className={`city-selector-arrow ${showCityDropdown
+                          className={`city-selector-arrow ${
+                            showCityDropdown
                               ? "rotate"
                               : ""
-                            }`}
+                          }`}
                         />
                       </button>
 
@@ -1260,16 +1356,16 @@ export default function NewDestinationModal(
 
                           <div className="city-dropdown-list">
                             {filteredCities.length >
-                              0 ? (
+                            0 ? (
                               filteredCities.map(
                                 (
                                   item
                                 ) => {
                                   const isSelected =
                                     item.city ===
-                                    selectedCity.city &&
+                                      selectedCity.city &&
                                     item.province ===
-                                    selectedCity.province;
+                                      selectedCity.province;
 
                                   return (
                                     <button
@@ -1277,10 +1373,11 @@ export default function NewDestinationModal(
                                         item.province
                                       }
                                       type="button"
-                                      className={`city-option ${isSelected
+                                      className={`city-option ${
+                                        isSelected
                                           ? "selected"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() =>
                                         handleCityChange(
                                           item
@@ -1584,10 +1681,11 @@ export default function NewDestinationModal(
 
               <button
                 type="button"
-                className={`address-next-btn ${selectedPosition
+                className={`address-next-btn ${
+                  selectedPosition
                     ? "enabled"
                     : "disabled"
-                  }`}
+                }`}
                 disabled={
                   !selectedPosition
                 }
