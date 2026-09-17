@@ -1,4 +1,3 @@
-
 import React, {
     useEffect,
     useMemo,
@@ -238,7 +237,11 @@ function Map() {
         };
 
     useEffect(() => {
-        loadMapLocations();
+        localStorage.removeItem(
+            "selectedMapLocations"
+        );
+
+        setMapLocations([]);
 
         const handleLocationsUpdated =
             () => {
@@ -787,27 +790,6 @@ function Map() {
                                 )}
 
                             </MapContainer>
-
-                            {mapLocations.length ===
-                                0 && (
-                                <div className="map-guide">
-
-                                    <div className="map-guide-marker source">
-                                        <span></span>
-                                    </div>
-
-                                    <div>
-                                        <div className="map-guide-title">
-                                            نقطه‌ای انتخاب نشده است
-                                        </div>
-
-                                        <div className="map-guide-text">
-                                            ابتدا مبدأ و مقصدهای خود را انتخاب کنید تا نقاط انتخاب‌شده روی نقشه نمایش داده شوند
-                                        </div>
-                                    </div>
-
-                                </div>
-                            )}
 
                         </div>
 

@@ -289,7 +289,7 @@
 
 .map-quick-request-label {
     color: #344054;
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.5;
 }
 
@@ -298,7 +298,7 @@
     overflow: hidden;
     width: 100%;
     color: #98a2b3;
-    font-size: 8px;
+    font-size: 9px;
     line-height: 1.5;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -375,14 +375,14 @@
 
 .map-quick-request-dropdown-title {
     color: #344054;
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1.6;
 }
 
 .map-quick-request-dropdown-subtitle {
     margin-top: 1px;
     color: #98a2b3;
-    font-size: 8px;
+    font-size: 10px;
     line-height: 1.5;
 }
 
@@ -419,7 +419,7 @@
     width: 23px;
     min-width: 23px;
     color: #b3bbc7;
-    font-size: 8px;
+    font-size: 9px;
     text-align: center;
 }
 
@@ -458,7 +458,7 @@
     width: 100%;
     overflow: hidden;
     color: #344054;
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1.6;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -467,7 +467,7 @@
 .map-quick-request-item-description {
     margin-top: 1px;
     color: #9aa3b1;
-    font-size: 7px;
+    font-size: 10px;
     line-height: 1.5;
 }
 
@@ -511,14 +511,14 @@
 
 .map-quick-request-empty-title {
     color: #526078;
-    font-size: 9px;
+    font-size: 12px;
     line-height: 1.6;
 }
 
 .map-quick-request-empty-text {
     margin-top: 2px;
     color: #a0a8b5;
-    font-size: 7px;
+    font-size: 9px;
     line-height: 1.6;
 }
 
@@ -820,7 +820,6 @@
     border: 1px solid rgba(226, 232, 240, 0.9);
     border-radius: 11px;
     box-shadow: 0 7px 24px rgba(15, 23, 42, 0.12);
-    /* backdrop-filter: blur(8px); */
 }
 
 .map-guide-marker {
@@ -882,7 +881,6 @@
     border: 1px solid #e1e6ed;
     border-radius: 10px;
     box-shadow: 0 6px 22px rgba(15, 23, 42, 0.12);
-    /* backdrop-filter: blur(8px); */
 }
 
 .map-route-badge-line {
@@ -919,7 +917,6 @@
     font-size: 9px;
     cursor: pointer;
     box-shadow: 0 6px 20px rgba(15, 23, 42, 0.1);
-    /* backdrop-filter: blur(8px); */
 }
 
 @media (max-width: 991px) {
@@ -1061,11 +1058,11 @@
     }
 
     .map-quick-request-label {
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .map-quick-request-description {
-        font-size: 7px;
+        font-size: 8px;
     }
 
     .map-quick-request-dropdown {
@@ -1079,11 +1076,11 @@
     }
 
     .map-quick-request-dropdown-title {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .map-quick-request-dropdown-subtitle {
-        font-size: 7px;
+        font-size: 9px;
     }
 
     .map-quick-request-item {
@@ -1094,7 +1091,7 @@
     .map-quick-request-item-number {
         width: 20px;
         min-width: 20px;
-        font-size: 7px;
+        font-size: 8px;
     }
 
     .map-quick-request-item-icon {
@@ -1104,11 +1101,11 @@
     }
 
     .map-quick-request-item-name {
-        font-size: 9px;
+        font-size: 12px;
     }
 
     .map-quick-request-item-description {
-        font-size: 6px;
+        font-size: 8px;
     }
 
     .map-quick-request-empty {
@@ -1116,11 +1113,11 @@
     }
 
     .map-quick-request-empty-title {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .map-quick-request-empty-text {
-        font-size: 6px;
+        font-size: 8px;
     }
 
     .map-progress-box {
