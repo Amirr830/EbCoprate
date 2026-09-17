@@ -14,7 +14,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import paths from "../../../../src/app/paths.json";
 import strings from "../../../app/String.json";
 import NewDestinationModal from "./Modals/NewDestinationModal";
-import EdirAddressModal from "./Modals/EditAddressModal";
 import VehicleTypeModal from "./Modals/VehicleTypeModal";
 import SubmitRequestModal from "./Modals/SubmitRequestModal";
 import CurrentRequest from "./CurrentRequest";
@@ -54,32 +53,27 @@ const getRequestData = (strings) => {
         title: strings.services.needCall,
       },
     ],
-
     vehicleClassMap: {
       [strings.vehicleTypes.pickup]: 1,
       [strings.vehicleTypes.motorWithBox]: 2,
       [strings.vehicleTypes.motorWithoutBox]: 3,
       [strings.vehicleTypes.car]: 4,
     },
-
     stopTimes: [
       strings.requestForm.noStop,
       strings.requestForm.fifteenMinutes,
       strings.requestForm.thirtyMinutes,
     ],
-
     itemValues: [
       strings.requestForm.underTwentyFiveMillion,
       strings.requestForm.twentyFiveToFiftyMillion,
       strings.requestForm.fiftyToOneHundredMillion,
       strings.requestForm.overOneHundredMillion,
     ],
-
   };
 };
 
 function RequestForm() {
-
   const [sender, setSender] = useState(true);
   const [cash, setCash] = useState(true);
   const [vehicleType, setVehicleType] = useState("");
@@ -108,6 +102,10 @@ function RequestForm() {
   const [discountAlert, setDiscountAlert] = useState("");
   const [openAdditionalDestinationId, setOpenAdditionalDestinationId] = useState(null);
   const [showAdditionalDestinationModal, setShowAdditionalDestinationModal] = useState(false);
+  const [addressModalType, setAddressModalType] = useState("destination");
+  const [addressModalInitialData, setAddressModalInitialData] = useState(null);
+  const [editingAdditionalDestinationId, setEditingAdditionalDestinationId] = useState(null);
+
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -121,7 +119,6 @@ function RequestForm() {
     setDiscountCode(discount.code);
     setDiscountData(discount);
     setDiscountAlert("");
-
   };
 
   const handleRemoveDiscount = () => {
@@ -138,7 +135,6 @@ function RequestForm() {
     setTimeout(() => {
       setDiscountAlert("");
     }, 4000);
-
   };
 
   const getVehicleClass = () => {
@@ -155,7 +151,6 @@ function RequestForm() {
     }
 
     return 0;
-
   };
 
   const getPaymentType = () => {
@@ -170,7 +165,6 @@ function RequestForm() {
       payType: 2,
       payTypeName: "اعتباری از کیف پول",
     };
-
   };
 
   const resetForm = () => {
@@ -199,6 +193,10 @@ function RequestForm() {
     setDiscountAlert("");
     setDiscountDescription("");
     setServiceSpeed("");
+    setShowAdditionalDestinationModal(false);
+    setAddressModalType("destination");
+    setAddressModalInitialData(null);
+    setEditingAdditionalDestinationId(null);
   };
 
   const resetOtherFields = () => {
@@ -291,7 +289,6 @@ function RequestForm() {
     );
 
     window.history.replaceState({}, document.title);
-
   }, [location.state]);
 
   const toggleService = (item) => {
@@ -307,6 +304,106 @@ function RequestForm() {
     }
   };
 
+  const createDestinationId = () => {
+    return `${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 11)}`;
+  };
+
+  const closeAddressModal = () => {
+    setShowAdditionalDestinationModal(false);
+    setAddressModalInitialData(null);
+    setEditingAdditionalDestinationId(null);
+    setOpenAdditionalDestinationId(null);
+  };
+
+  const openOriginModal = () => {
+    resetOtherFields();
+
+    setAddressModalType("origin");
+    setAddressModalInitialData({
+      address: originAddress || "",
+      fullAddress: originAddress || "",
+      lat: originLocation.lat,
+      lng: originLocation.lng,
+      latitude: originLocation.lat,
+      longitude: originLocation.lng,
+      phone: "",
+      floor: "",
+      description: "",
+    });
+    setEditingAdditionalDestinationId(null);
+    setShowAdditionalDestinationModal(true);
+  };
+
+  const openDestinationModal = () => {
+    resetOtherFields();
+
+    setAddressModalType("destination");
+    setAddressModalInitialData({
+      address: destinationAddress || "",
+      fullAddress: destinationAddress || "",
+      lat: destinationLocation.lat,
+      lng: destinationLocation.lng,
+      latitude: destinationLocation.lat,
+      longitude: destinationLocation.lng,
+      phone: "",
+      floor: "",
+      description: "",
+    });
+    setEditingAdditionalDestinationId(null);
+    setShowAdditionalDestinationModal(true);
+  };
+
+  const addAdditionalDestination = () => {
+    const newId = createDestinationId();
+
+    const newDestination = {
+      id: newId,
+      address: "",
+      fullAddress: "",
+      lat: null,
+      lng: null,
+      latitude: null,
+      longitude: null,
+      phone: "",
+      floor: "",
+      description: "",
+    };
+
+    setAdditionalDestinations((prev) => [
+      ...prev,
+      newDestination,
+    ]);
+
+    setAddressModalType("additional");
+    setAddressModalInitialData(newDestination);
+    setEditingAdditionalDestinationId(newId);
+    setOpenAdditionalDestinationId(newId);
+    setShowAdditionalDestinationModal(true);
+  };
+
+  const openAdditionalDestinationModal = (item) => {
+    resetOtherFields();
+
+    setAddressModalType("additional");
+    setAddressModalInitialData({
+      ...item,
+      address: item.address || item.fullAddress || "",
+      fullAddress: item.fullAddress || item.address || "",
+      lat: item.lat ?? item.latitude ?? null,
+      lng: item.lng ?? item.longitude ?? null,
+      latitude: item.latitude ?? item.lat ?? null,
+      longitude: item.longitude ?? item.lng ?? null,
+      phone: item.phone || "",
+      floor: item.floor || "",
+      description: item.description || "",
+    });
+    setEditingAdditionalDestinationId(item.id);
+    setOpenAdditionalDestinationId(item.id);
+    setShowAdditionalDestinationModal(true);
+  };
+
   const handleAddressSubmit = (data) => {
     if (!data?.address) {
       return;
@@ -316,73 +413,8 @@ function RequestForm() {
 
     const address =
       addressData.address ||
-      "";
-
-    const lat =
-      data.lat ??
-      addressData.lat ??
-      data.latitude ??
-      addressData.latitude ??
-      null;
-
-    const lng =
-      data.lng ??
-      addressData.lng ??
-      data.lon ??
-      addressData.lon ??
-      data.longitude ??
-      addressData.longitude ??
-      null;
-
-    if (data.addressType === "origin") {
-      setOriginAddress(address);
-
-      setOriginLocation({
-        lat,
-        lng,
-      });
-    }
-
-    if (data.addressType === "destination") {
-      setDestinationAddress(address);
-
-      setDestinationLocation({
-        lat,
-        lng,
-      });
-    }
-
-  };
-
-  const handleAddressClick = () => {
-    resetOtherFields();
-  };
-
-  const handleAdditionalDestinationSubmit = (data) => {
-    if (!data?.address) {
-      return;
-    }
-
-    const addressData = data.address;
-
-    const address =
-      addressData.address ||
       addressData.fullAddress ||
-      [
-        addressData.street,
-        addressData.road,
-        addressData.alley
-          ? `کوچه ${addressData.alley}`
-          : "",
-        addressData.plaque
-          ? `پلاک ${addressData.plaque}`
-          : "",
-        addressData.unit
-          ? `واحد ${addressData.unit}`
-          : "",
-      ]
-        .filter(Boolean)
-        .join("، ");
+      "";
 
     const lat =
       data.lat ??
@@ -409,32 +441,87 @@ function RequestForm() {
     const description =
       addressData.description || "";
 
-    const newDestination = {
-      id: `${Date.now()}-${Math.random()
-        .toString(36)
-        .slice(2, 11)}`,
-      address,
-      fullAddress:
-        addressData.fullAddress ||
-        address,
-      lat,
-      lng,
-      phone,
-      floor,
-      description,
-    };
+    const fullAddress =
+      addressData.fullAddress ||
+      address ||
+      "";
 
-    setAdditionalDestinations((prev) => [
-      ...prev,
-      newDestination,
-    ]);
+    if (data.addressType === "origin") {
+      setOriginAddress(address);
 
-    setShowAdditionalDestinationModal(false);
+      setOriginLocation({
+        lat,
+        lng,
+      });
 
+      closeAddressModal();
+      return;
+    }
+
+    if (data.addressType === "destination") {
+      setDestinationAddress(address);
+
+      setDestinationLocation({
+        lat,
+        lng,
+      });
+
+      closeAddressModal();
+      return;
+    }
+
+    if (data.addressType === "additional") {
+      if (!editingAdditionalDestinationId) {
+        closeAddressModal();
+        return;
+      }
+
+      setAdditionalDestinations((prev) =>
+        prev.map((item) => {
+          if (
+            item.id !==
+            editingAdditionalDestinationId
+          ) {
+            return item;
+          }
+
+          return {
+            ...item,
+            address,
+            fullAddress,
+            lat,
+            lng,
+            latitude: lat,
+            longitude: lng,
+            phone,
+            floor,
+            description,
+          };
+        })
+      );
+
+      closeAddressModal();
+    }
   };
 
-  const addAdditionalDestination = () => {
-    setShowAdditionalDestinationModal(true);
+  const handleAddressClick = () => {
+    resetOtherFields();
+  };
+
+  const removeOrigin = () => {
+    setOriginAddress("");
+    setOriginLocation({
+      lat: null,
+      lng: null,
+    });
+  };
+
+  const removeDestination = () => {
+    setDestinationAddress("");
+    setDestinationLocation({
+      lat: null,
+      lng: null,
+    });
   };
 
   const removeAdditionalDestination = (id) => {
@@ -443,6 +530,14 @@ function RequestForm() {
         (item) => item.id !== id
       )
     );
+
+    setOpenAdditionalDestinationId(null);
+
+    if (
+      editingAdditionalDestinationId === id
+    ) {
+      closeAddressModal();
+    }
   };
 
   const handleConfirmSubmit = (confirmData) => {
@@ -504,13 +599,15 @@ function RequestForm() {
             item.fullAddress ||
             item.address ||
             "",
-          lat: item.lat ?? null,
-          lng: item.lng ?? null,
+          lat: item.lat ?? item.latitude ?? null,
+          lng: item.lng ?? item.longitude ?? null,
           neighbourhood: "",
           neighbourhoodLat: null,
           neighbourhoodLng: null,
           neighbourhoodCode: null,
-          addressPhone: strings.requestForm.addressPhone,
+          addressPhone:
+            item.phone ||
+            strings.requestForm.addressPhone,
           cityCode: 1,
           cityName: strings.requestForm.cityName,
         })),
@@ -536,7 +633,6 @@ function RequestForm() {
       discountData,
       discountDescription,
       serviceSpeed,
-
       payType: paymentType.payType,
       payTypeName: paymentType.payTypeName,
     };
@@ -637,7 +733,6 @@ function RequestForm() {
         },
       }
     );
-
   };
 
   const renderMobileHeader = () => {
@@ -654,122 +749,242 @@ function RequestForm() {
           <div className="route-item">
             <div className="route-side">
               <span className="route-dot origin-dot"></span>
+
               <span className="route-label">
                 {strings.origin}
               </span>
             </div>
 
-            {originAddress ? (
-              <NewDestinationModal
-                addressType="origin"
-                onAddressSubmit={handleAddressSubmit}
-              >
-                <div
-                  className="route-address"
-                  style={{
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  onClick={handleAddressClick}
-                >
-                  {originAddress}
-                </div>
-              </NewDestinationModal>
-            ) : (
-              <NewDestinationModal
-                addressType="origin"
-                onAddressSubmit={handleAddressSubmit}
-              >
-                <div
-                  className="route-address"
-                  style={{
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  onClick={handleAddressClick}
-                >
-                  <span className="route-placeholder">
-                    {strings.requestForm.notSelectedOrigin}
-                  </span>
-                </div>
-              </NewDestinationModal>
-            )}
+            <div
+              className="route-address"
+              style={{
+                cursor: "pointer",
+                width: "100%",
+              }}
+              onClick={openOriginModal}
+            >
+              {originAddress ? (
+                originAddress
+              ) : (
+                <span className="route-placeholder">
+                  {strings.requestForm.notSelectedOrigin}
+                </span>
+              )}
+            </div>
 
-            <EdirAddressModal
-              address={originAddress}
-              addressType="origin"
-              onAddressChange={(newAddress) => {
-                setOriginAddress(newAddress);
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                alignItems: "center",
               }}
             >
               <button
                 type="button"
                 className="btn btn-sm btn-warning route-edit-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openOriginModal();
+                }}
               >
                 <FaPencilAlt />
               </button>
-            </EdirAddressModal>
+
+              <button
+                type="button"
+                className="btn btn-sm btn-danger route-delete-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeOrigin();
+                }}
+              >
+                <FaTimes />
+              </button>
+            </div>
           </div>
 
           <div className="route-item">
             <div className="route-side">
               <span className="route-dot dest-dot"></span>
+
               <span className="route-label">
                 {strings.destination}
               </span>
             </div>
 
-            {destinationAddress ? (
-              <NewDestinationModal
-                addressType="destination"
-                onAddressSubmit={handleAddressSubmit}
-              >
-                <div
-                  className="route-address"
-                  style={{
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  onClick={handleAddressClick}
-                >
-                  {destinationAddress}
-                </div>
-              </NewDestinationModal>
-            ) : (
-              <NewDestinationModal
-                addressType="destination"
-                onAddressSubmit={handleAddressSubmit}
-              >
-                <div
-                  className="route-address"
-                  style={{
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                  onClick={handleAddressClick}
-                >
-                  <span className="route-placeholder">
-                    {strings.requestForm.notSelectedDestination}
-                  </span>
-                </div>
-              </NewDestinationModal>
-            )}
+            <div
+              className="route-address"
+              style={{
+                cursor: "pointer",
+                width: "100%",
+              }}
+              onClick={openDestinationModal}
+            >
+              {destinationAddress ? (
+                destinationAddress
+              ) : (
+                <span className="route-placeholder">
+                  {strings.requestForm.notSelectedDestination}
+                </span>
+              )}
+            </div>
 
-            <EdirAddressModal
-              address={destinationAddress}
-              addressType="destination"
-              onAddressChange={(newAddress) => {
-                setDestinationAddress(newAddress);
+            <div
+              style={{
+                display: "flex",
+                gap: "5px",
+                alignItems: "center",
               }}
             >
               <button
                 type="button"
                 className="btn btn-sm btn-warning route-edit-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openDestinationModal();
+                }}
               >
                 <FaPencilAlt />
               </button>
-            </EdirAddressModal>
+
+              <button
+                type="button"
+                className="btn btn-sm btn-danger route-delete-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeDestination();
+                }}
+              >
+                <FaTimes />
+              </button>
+            </div>
           </div>
+
+          {additionalDestinations.map(
+            (item, index) => {
+              const destinationNumber =
+                index + 2;
+
+              const destinationText =
+                item.fullAddress ||
+                item.address ||
+                "";
+
+              return (
+                <div
+                  className="route-item"
+                  key={item.id}
+                  style={{
+                    position: "relative",
+                    minHeight: "58px",
+                    paddingTop: "8px",
+                    paddingBottom: "8px",
+                  }}
+                  onClick={() =>
+                    openAdditionalDestinationModal(
+                      item
+                    )
+                  }
+                >
+                  <div className="route-side">
+                    <span
+                      className="route-dot dest-dot"
+                      style={{
+                        backgroundColor: "#ffc107",
+                        borderColor: "#ffc107",
+                      }}
+                    ></span>
+
+                    <span className="route-label">
+                      مقصد {destinationNumber}
+                    </span>
+                  </div>
+
+                  <div
+                    className="route-address"
+                    style={{
+                      width: "100%",
+                      paddingLeft: "8px",
+                      paddingRight: "8px",
+                      lineHeight: "1.8",
+                      cursor: "pointer",
+                      minHeight: "40px",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {destinationText ? (
+                      destinationText
+                    ) : (
+                      <span className="route-placeholder">
+                        برای انتخاب مقصد {destinationNumber} کلیک کنید
+                      </span>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "8px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      display: "flex",
+                      gap: "5px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-warning"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openAdditionalDestinationModal(
+                          item
+                        );
+                      }}
+                      title={`ویرایش مقصد ${destinationNumber}`}
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                        padding: "0",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <FaPencilAlt />
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-danger"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        removeAdditionalDestination(
+                          item.id
+                        );
+                      }}
+                      title={`حذف مقصد ${destinationNumber}`}
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                        padding: "0",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+          )}
         </div>
 
         <Row className="mb-2">
@@ -778,6 +993,11 @@ function RequestForm() {
               type="button"
               className="btn btn-primary w-100"
               onClick={addAdditionalDestination}
+              style={{
+                minHeight: "48px",
+                borderRadius: "10px",
+                fontSize: "16px",
+              }}
             >
               <span
                 className="plus-icon"
@@ -788,23 +1008,20 @@ function RequestForm() {
               >
                 +
               </span>
+
               {strings.requestForm.addNewDestination}
             </button>
           </Col>
         </Row>
 
         <NewDestinationModal
-          addressType="destination"
-          onAddressSubmit={
-            handleAdditionalDestinationSubmit
-          }
-          onClose={() =>
-            setShowAdditionalDestinationModal(false)
-          }
-          isOpen={
-            showAdditionalDestinationModal
-          }
+          addressType={addressModalType}
+          onAddressSubmit={handleAddressSubmit}
+          onClose={closeAddressModal}
+          isOpen={showAdditionalDestinationModal}
+          initialData={addressModalInitialData}
         />
+
         <Row className="mb-2 mt-1">
           <Col xs={12}>
             <div className="vehicle-dropdown">
@@ -834,8 +1051,6 @@ function RequestForm() {
             </div>
           </Col>
         </Row>
-
-
 
         <Row className="g-2 mb-2 request-detail-fields">
           <Col xs={12} md={4}>
@@ -869,7 +1084,9 @@ function RequestForm() {
                 type="text"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                placeholder={strings.requestForm.courierCodePlaceholder}
+                placeholder={
+                  strings.requestForm.courierCodePlaceholder
+                }
                 autoComplete="off"
                 value={courierCode}
                 onChange={(e) =>
@@ -918,7 +1135,9 @@ function RequestForm() {
             <div className="custom-textarea-group">
               <textarea
                 id="notes"
-                placeholder={strings.requestForm.notes}
+                placeholder={
+                  strings.requestForm.notes
+                }
                 rows="2"
                 value={notes}
                 onChange={(e) =>
@@ -940,8 +1159,8 @@ function RequestForm() {
 
               <div
                 className={`service-box ${serviceOpen
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
                   }`}
                 onClick={() =>
                   setServiceOpen(
@@ -987,8 +1206,8 @@ function RequestForm() {
 
                 <FaChevronDown
                   className={`dropdown-icon ${serviceOpen
-                    ? "rotate"
-                    : ""
+                      ? "rotate"
+                      : ""
                     }`}
                 />
               </div>
@@ -1002,8 +1221,8 @@ function RequestForm() {
                         className={`service-item ${selectedServices.includes(
                           item.title
                         )
-                          ? "selected"
-                          : ""
+                            ? "selected"
+                            : ""
                           }`}
                         onClick={() =>
                           toggleService(
@@ -1040,8 +1259,8 @@ function RequestForm() {
             <div className="segment-toggle-box">
               <div
                 className={`segment-btn ${sender
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
                   }`}
                 onClick={() =>
                   setSender(true)
@@ -1052,8 +1271,8 @@ function RequestForm() {
 
               <div
                 className={`segment-btn ${!sender
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
                   }`}
                 onClick={() =>
                   setSender(false)
@@ -1074,8 +1293,8 @@ function RequestForm() {
             <div className="segment-toggle-box">
               <div
                 className={`segment-btn ${cash
-                  ? "active"
-                  : ""
+                    ? "active"
+                    : ""
                   }`}
                 onClick={() =>
                   setCash(true)
@@ -1087,8 +1306,8 @@ function RequestForm() {
               {sender && (
                 <div
                   className={`segment-btn ${!cash
-                    ? "active"
-                    : ""
+                      ? "active"
+                      : ""
                     }`}
                   onClick={() =>
                     setCash(false)
@@ -1114,7 +1333,9 @@ function RequestForm() {
             <button
               type="button"
               className="discount-global-alert-close"
-              onClick={() => setDiscountAlert("")}
+              onClick={() =>
+                setDiscountAlert("")
+              }
             >
               ×
             </button>
@@ -1128,7 +1349,7 @@ function RequestForm() {
                 <span className="discount-question">
                   {discountData?.code ? (
                     <>
-                      کد تخفیف : {" "}
+                      کد تخفیف :{" "}
                       <span className="discount-question-selected">
                         {discountData.code}
                       </span>
@@ -1143,7 +1364,9 @@ function RequestForm() {
                     <button
                       type="button"
                       className="remove-discount-btn"
-                      onClick={handleRemoveDiscount}
+                      onClick={
+                        handleRemoveDiscount
+                      }
                       title="حذف کد تخفیف"
                     >
                       <FaTimes />
@@ -1151,39 +1374,24 @@ function RequestForm() {
                   )}
 
                   <RegisterDiscountCode
-                    onDiscountSelect={handleDiscountSelect}
-                    onInvalidDiscount={handleInvalidDiscount}
+                    onDiscountSelect={
+                      handleDiscountSelect
+                    }
+                    onInvalidDiscount={
+                      handleInvalidDiscount
+                    }
                   >
                     <button
                       type="button"
                       className="apply-code-btn btn btn-success"
                     >
-                      {strings.requestForm.registerCode}
+                      {
+                        strings.requestForm.registerCode
+                      }
                     </button>
                   </RegisterDiscountCode>
                 </div>
               </div>
-
-              {/* <div className="payment-price-section">
-                <span className="payment-price-value text-success">
-                  <p>{strings.price}</p>
-                  <p>{strings.currency}</p>
-                </span>
-              </div> */}
-
-              {/* <div className="discount-description-form">
-                <FaTag className="discount-icon text-muted" />
-
-                <input
-                  type="text"
-                  placeholder={strings.requestForm.DescriptionDiscount}
-                  className="discount-input"
-                  value={discountDescription}
-                  onChange={(e) => {
-                    setDiscountDescription(e.target.value);
-                  }}
-                />
-              </div> */}
             </div>
           </Col>
         </Row>
@@ -1226,20 +1434,23 @@ function RequestForm() {
                   height: "50px",
                 }}
               >
-                {strings.requestForm.shippingMethod}
+                {
+                  strings.requestForm.shippingMethod
+                }
               </button>
             </ShippingMethodModal>
           </Col>
         </Row>
       </div>
     );
-
   };
 
   return (
-    <Container fluid className="modern-request-container d-flex justify-content-center align-items-start p-0 p-md-2" >
+    <Container
+      fluid
+      className="modern-request-container d-flex justify-content-center align-items-start p-0 p-md-2"
+    >
       <div className="d-xl-none w-100 mobile-content-area">
-
         {renderMobileHeader()}
 
         {mobilePage === "request" && (
@@ -1259,7 +1470,6 @@ function RequestForm() {
             <Map />
           </div>
         )}
-
       </div>
 
       <div className="d-none d-xl-block w-100">
@@ -1270,7 +1480,9 @@ function RequestForm() {
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${mobilePage === "request" ? "active" : ""
+            className={`mobile-nav-btn ${mobilePage === "request"
+                ? "active"
+                : ""
               }`}
             onClick={() => {
               setMobilePage("request");
@@ -1280,14 +1492,19 @@ function RequestForm() {
             <span className="mobile-nav-icon">
               <FaPlus />
             </span>
-            <span>درخواست سفر</span>
+
+            <span>
+              درخواست سفر
+            </span>
           </button>
         </Col>
 
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${mobilePage === "info" ? "active" : ""
+            className={`mobile-nav-btn ${mobilePage === "info"
+                ? "active"
+                : ""
               }`}
             onClick={() => {
               setMobilePage("info");
@@ -1297,14 +1514,19 @@ function RequestForm() {
             <span className="mobile-nav-icon">
               <FaClipboardList />
             </span>
-            <span>اطلاعات سفر</span>
+
+            <span>
+              اطلاعات سفر
+            </span>
           </button>
         </Col>
 
         <Col xs={4}>
           <button
             type="button"
-            className={`mobile-nav-btn ${mobilePage === "map" ? "active" : ""
+            className={`mobile-nav-btn ${mobilePage === "map"
+                ? "active"
+                : ""
               }`}
             onClick={() => {
               setMobilePage("map");
@@ -1314,13 +1536,15 @@ function RequestForm() {
             <span className="mobile-nav-icon">
               <FaMapMarkedAlt />
             </span>
-            <span>نقشه</span>
+
+            <span>
+              نقشه
+            </span>
           </button>
         </Col>
       </Row>
     </Container>
-
   );
 }
 
-export default RequestForm
+export default RequestForm;

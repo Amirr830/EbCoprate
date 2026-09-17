@@ -15,8 +15,14 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../Css/NewDestinationModal.css";
-import { FaTimes,FaChevronDown,FaSearch,FaExclamationTriangle} from "react-icons/fa";
-import strings from "../../../../app/String.json"
+import {
+  FaTimes,
+  FaChevronDown,
+  FaSearch,
+  FaExclamationTriangle,
+} from "react-icons/fa";
+import strings from "../../../../app/String.json";
+
 const markerIcon = new L.Icon({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
@@ -38,181 +44,151 @@ const CITY_OPTIONS = [
     province: "خراسان رضوی",
     center: [36.2972, 59.6067],
   },
-
   {
     city: "تهران",
     province: "تهران",
     center: [35.6892, 51.389],
   },
-
   {
     city: "تبریز",
     province: "آذربایجان شرقی",
     center: [38.0962, 46.2738],
   },
-
   {
     city: "ارومیه",
     province: "آذربایجان غربی",
     center: [37.5527, 45.0761],
   },
-
   {
     city: "اردبیل",
     province: "اردبیل",
     center: [38.2498, 48.2933],
   },
-
   {
     city: "اصفهان",
     province: "اصفهان",
     center: [32.6546, 51.668],
   },
-
   {
     city: "کرج",
     province: "البرز",
     center: [35.84, 50.9391],
   },
-
   {
     city: "ایلام",
     province: "ایلام",
     center: [33.6374, 46.4227],
   },
-
   {
     city: "بوشهر",
     province: "بوشهر",
     center: [28.9234, 50.8203],
   },
-
   {
     city: "شهرکرد",
     province: "چهارمحال و بختیاری",
     center: [32.3256, 50.8644],
   },
-
   {
     city: "بیرجند",
     province: "خراسان جنوبی",
     center: [32.8663, 59.2211],
   },
-
   {
     city: "بجنورد",
     province: "خراسان شمالی",
     center: [37.475, 57.333],
   },
-
   {
     city: "اهواز",
     province: "خوزستان",
     center: [31.3183, 48.6706],
   },
-
   {
     city: "زنجان",
     province: "زنجان",
     center: [36.6736, 48.4787],
   },
-
   {
     city: "سمنان",
     province: "سمنان",
     center: [35.5729, 53.3971],
   },
-
   {
     city: "زاهدان",
     province: "سیستان و بلوچستان",
     center: [29.4963, 60.8629],
   },
-
   {
     city: "شیراز",
     province: "فارس",
     center: [29.5918, 52.5837],
   },
-
   {
     city: "قزوین",
     province: "قزوین",
     center: [36.2688, 50.0041],
   },
-
   {
     city: "قم",
     province: "قم",
     center: [34.6416, 50.8746],
   },
-
   {
     city: "سنندج",
     province: "کردستان",
     center: [35.3149, 46.9988],
   },
-
   {
     city: "کرمان",
     province: "کرمان",
     center: [30.2839, 57.0834],
   },
-
   {
     city: "کرمانشاه",
     province: "کرمانشاه",
     center: [34.3142, 47.065],
   },
-
   {
     city: "یاسوج",
     province: "کهگیلویه و بویراحمد",
     center: [30.6682, 51.588],
   },
-
   {
     city: "گرگان",
     province: "گلستان",
     center: [36.8456, 54.4393],
   },
-
   {
     city: "رشت",
     province: "گیلان",
     center: [37.2808, 49.5832],
   },
-
   {
     city: "خرم‌آباد",
     province: "لرستان",
     center: [33.4878, 48.3558],
   },
-
   {
     city: "ساری",
     province: "مازندران",
     center: [36.5659, 53.0586],
   },
-
   {
     city: "اراک",
     province: "مرکزی",
     center: [34.0917, 49.6892],
   },
-
   {
     city: "بندرعباس",
     province: "هرمزگان",
     center: [27.1832, 56.2666],
   },
-
   {
     city: "همدان",
     province: "همدان",
     center: [34.798, 48.5148],
   },
-
   {
     city: "یزد",
     province: "یزد",
@@ -310,6 +286,7 @@ export default function NewDestinationModal(
     children,
     isOpen = false,
     onClose,
+    initialData = null,
   } = props;
 
   const isControlled =
@@ -452,24 +429,84 @@ export default function NewDestinationModal(
     };
   }, []);
 
-  const resetModal = () => {
+  const resetModal = (
+    data = null
+  ) => {
+    const source =
+      data && typeof data === "object"
+        ? data
+        : null;
+
+    const sourceLat =
+      source?.lat ??
+      source?.latitude ??
+      null;
+
+    const sourceLng =
+      source?.lng ??
+      source?.longitude ??
+      null;
+
+    const hasPosition =
+      sourceLat !== null &&
+      sourceLng !== null &&
+      sourceLat !== "" &&
+      sourceLng !== "";
+
+    const position =
+      hasPosition
+        ? [
+          Number(sourceLat),
+          Number(sourceLng),
+        ]
+        : null;
+
+    const sourceAddress =
+      source?.address ||
+      source?.fullAddress ||
+      "";
+
+    const sourceFullAddress =
+      source?.fullAddress ||
+      source?.address ||
+      "";
+
+    const city =
+      CITY_OPTIONS.find(
+        (item) =>
+          item.city === source?.city &&
+          item.province ===
+          source?.province
+      ) || DEFAULT_CITY;
+
     setStep(1);
-    setSearch("");
+    setSearch(
+      sourceAddress
+    );
     setSearchResults([]);
     setShowResults(false);
     setSearchLoading(false);
-    setSelectedPosition(null);
-    setSelectedAddress("");
+    setSelectedPosition(
+      position
+    );
+    setSelectedAddress(
+      sourceFullAddress
+    );
     setShowAlert(false);
     setAlertMessage("");
     setShowCityDropdown(false);
     setCitySearch("");
-    setSelectedCity(
-      DEFAULT_CITY
-    );
+    setSelectedCity(city);
 
     setFormData({
-      ...emptyAddress,
+      address:
+        sourceAddress,
+      phone:
+        source?.phone || "",
+      floor:
+        source?.floor || "",
+      description:
+        source?.description || "",
     });
   };
 
@@ -481,7 +518,9 @@ export default function NewDestinationModal(
       event.stopPropagation();
     }
 
-    resetModal();
+    resetModal(
+      initialData
+    );
 
     if (!isControlled) {
       setInternalShow(true);
@@ -493,11 +532,13 @@ export default function NewDestinationModal(
       setInternalShow(false);
     }
 
-    resetModal();
-
     if (onClose) {
       onClose();
     }
+
+    setTimeout(() => {
+      resetModal();
+    }, 0);
   };
 
   const handleInputChange = (
@@ -591,6 +632,11 @@ export default function NewDestinationModal(
     const address =
       data.address || {};
 
+
+
+
+
+
     const street =
       address.road ||
       address.pedestrian ||
@@ -598,15 +644,12 @@ export default function NewDestinationModal(
       address.neighbourhood ||
       "";
 
-    const addressText =
-      data.display_name || "";
-
     setSelectedPosition(
       position
     );
 
     setSelectedAddress(
-      addressText
+      street
     );
 
     setSearch(
@@ -618,11 +661,17 @@ export default function NewDestinationModal(
         ...prev,
         address:
           street ||
-          addressText ||
           "",
       })
     );
   };
+
+
+
+
+
+
+
 
   const handleMarkerDragEnd =
     async (event) => {
@@ -790,39 +839,41 @@ export default function NewDestinationModal(
       const address =
         result.address || {};
 
+
+
+
+
+
       const street =
         address.road ||
         address.pedestrian ||
         address.residential ||
         address.neighbourhood ||
+        result.name ||
         "";
-
-      const addressText =
-        result.display_name || "";
 
       setSelectedPosition(
         position
       );
 
       setSelectedAddress(
-        addressText
+        street
       );
 
       setSearch(
-        result.name ||
-        street ||
-        ""
+        street
       );
 
       setFormData(
         (prev) => ({
           ...prev,
-          address:
-            street ||
-            addressText ||
-            "",
+          address: street,
         })
       );
+
+
+
+
 
       setShowResults(
         false
@@ -907,86 +958,88 @@ export default function NewDestinationModal(
       setStep(1);
     };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (
+    e
+  ) => {
+    e.preventDefault();
 
-  if (!selectedPosition) {
-    showFormAlert(
-      strings.newDestinationModal.selectLocation.replace(
-        "{location}",
-        locationTitle
-      )
-    );
+    if (!selectedPosition) {
+      showFormAlert(
+        strings.newDestinationModal.selectLocation.replace(
+          "{location}",
+          locationTitle
+        )
+      );
 
-    return;
-  }
+      return;
+    }
 
-  const isAddressEmpty =
-    !formData.address.trim();
+    const isAddressEmpty =
+      !formData.address.trim();
 
-  const isPhoneEmpty =
-    !formData.phone.trim();
+    const isPhoneEmpty =
+      !formData.phone.trim();
 
-  if (
-    isAddressEmpty &&
-    isPhoneEmpty
-  ) {
-    showFormAlert(
-      strings.newDestinationModal.addressAndPhoneRequired
-    );
+    if (
+      isAddressEmpty &&
+      isPhoneEmpty
+    ) {
+      showFormAlert(
+        strings.newDestinationModal.addressAndPhoneRequired
+      );
 
-    return;
-  }
+      return;
+    }
 
-  if (isAddressEmpty) {
-    showFormAlert(
-      strings.newDestinationModal.addressRequired
-    );
+    if (isAddressEmpty) {
+      showFormAlert(
+        strings.newDestinationModal.addressRequired
+      );
 
-    return;
-  }
+      return;
+    }
 
-  if (isPhoneEmpty) {
-    showFormAlert(
-      strings.newDestinationModal.phoneNumberRequired
-    );
+    if (isPhoneEmpty) {
+      showFormAlert(
+        strings.newDestinationModal.phoneNumberRequired
+      );
 
-    return;
-  }
+      return;
+    }
 
-  const finalAddress = {
-    ...formData,
-    latitude:
-      selectedPosition?.[0] || null,
-    longitude:
-      selectedPosition?.[1] || null,
-    lat:
-      selectedPosition?.[0] || null,
-    lng:
-      selectedPosition?.[1] || null,
-    fullAddress:
-      selectedAddress ||
-      formData.address ||
-      "",
-    city: selectedCity.city,
-    province: selectedCity.province,
-  };
-
-  if (onAddressSubmit) {
-    onAddressSubmit({
-      addressType,
-      address: finalAddress,
-      lat: finalAddress.lat,
-      lng: finalAddress.lng,
+    const finalAddress = {
+      ...formData,
       latitude:
-        finalAddress.latitude,
+        selectedPosition?.[0] || null,
       longitude:
-        finalAddress.longitude,
-    });
-  }
+        selectedPosition?.[1] || null,
+      lat:
+        selectedPosition?.[0] || null,
+      lng:
+        selectedPosition?.[1] || null,
+      fullAddress:
+        selectedAddress ||
+        formData.address ||
+        "",
+      city: selectedCity.city,
+      province: selectedCity.province,
+    };
 
-  handleClose();
-};
+    if (onAddressSubmit) {
+      onAddressSubmit({
+        addressType,
+        address: finalAddress,
+        lat: finalAddress.lat,
+        lng: finalAddress.lng,
+        latitude:
+          finalAddress.latitude,
+        longitude:
+          finalAddress.longitude,
+      });
+    }
+
+    handleClose();
+  };
 
   let newFirstChild =
     null;
@@ -1021,15 +1074,26 @@ const handleSubmit = (e) => {
       );
   }
 
+  const previousIsOpen =
+    useRef(false);
+
   useEffect(() => {
-    if (!isControlled) {
-      return;
+    if (
+      isControlled &&
+      isOpen &&
+      !previousIsOpen.current
+    ) {
+      resetModal(
+        initialData
+      );
     }
 
-    if (isOpen) {
-      resetModal();
-    }
-  }, [isOpen, isControlled]);
+    previousIsOpen.current =
+      isOpen;
+  }, [
+    isOpen,
+    isControlled,
+  ]);
 
   return (
     <>
@@ -1129,11 +1193,10 @@ const handleSubmit = (e) => {
                     >
                       <button
                         type="button"
-                        className={`city-selector-btn ${
-                          showCityDropdown
+                        className={`city-selector-btn ${showCityDropdown
                             ? "active"
                             : ""
-                        }`}
+                          }`}
                         onClick={() =>
                           setShowCityDropdown(
                             (prev) =>
@@ -1156,11 +1219,10 @@ const handleSubmit = (e) => {
                         </div>
 
                         <FaChevronDown
-                          className={`city-selector-arrow ${
-                            showCityDropdown
+                          className={`city-selector-arrow ${showCityDropdown
                               ? "rotate"
                               : ""
-                          }`}
+                            }`}
                         />
                       </button>
 
@@ -1215,11 +1277,10 @@ const handleSubmit = (e) => {
                                         item.province
                                       }
                                       type="button"
-                                      className={`city-option ${
-                                        isSelected
+                                      className={`city-option ${isSelected
                                           ? "selected"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() =>
                                         handleCityChange(
                                           item
@@ -1406,9 +1467,14 @@ const handleSubmit = (e) => {
               <div className="address-map-wrapper">
                 <MapContainer
                   center={
+                    selectedPosition ||
                     selectedCity.center
                   }
-                  zoom={13}
+                  zoom={
+                    selectedPosition
+                      ? 17
+                      : 13
+                  }
                   scrollWheelZoom={
                     true
                   }
@@ -1518,11 +1584,10 @@ const handleSubmit = (e) => {
 
               <button
                 type="button"
-                className={`address-next-btn ${
-                  selectedPosition
+                className={`address-next-btn ${selectedPosition
                     ? "enabled"
                     : "disabled"
-                }`}
+                  }`}
                 disabled={
                   !selectedPosition
                 }
