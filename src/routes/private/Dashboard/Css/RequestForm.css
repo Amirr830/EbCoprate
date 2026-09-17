@@ -1559,4 +1559,17 @@
   .mobile-bottom-navigation {
     display: none !important;
   }
+
+  .request-detail-fields {
+    margin-top: 11px !important;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+    width: calc(100% - 8px) !important;
+  }
+
+  .request-detail-fields > .col-md-4 {
+    flex: 0 0 calc(33.333333% - 3px) !important;
+    width: calc(33.333333% - 3px) !important;
+    max-width: calc(33.333333% - 3px) !important;
+  }
 }
