@@ -885,19 +885,10 @@
     }
 }
 
-
-/* =========================================================
-   MOBILE
-   هدر اصلی از Main می‌آید.
-   بنابراین هدر خالی قبلی Requests حذف شده است.
-   ========================================================= */
-
 .requests-mobile-header {
     display: none !important;
 }
 
-
-/* فضای لازم برای هدر اصلی Main در موبایل */
 
 @media (max-width: 767px) {
 
@@ -905,7 +896,7 @@
         width: 100%;
         min-height: 100vh;
         height: 100vh;
-        padding-top: 104px;
+        padding-top: 20px;
         box-sizing: border-box;
         overflow-x: hidden;
         overflow-y: auto;
