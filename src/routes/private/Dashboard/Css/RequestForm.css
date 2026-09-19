@@ -1573,3 +1573,5 @@
     max-width: calc(33.333333% - 3px) !important;
   }
 }
+
+@media (max-width: 1199.98px) { .vehicle-type-row { margin-bottom: 2px !important; } .vehicle-type-row + .request-detail-fields { margin-top: 0 !important; } }

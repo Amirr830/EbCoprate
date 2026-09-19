@@ -77,6 +77,8 @@ function RequestForm() {
   const [sender, setSender] = useState(true);
   const [cash, setCash] = useState(true);
   const [vehicleType, setVehicleType] = useState("");
+  const [showVehicleSelectionModal, setShowVehicleSelectionModal] = useState(false);
+  const [showSubmitRequestModal, setShowSubmitRequestModal] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [originAddress, setOriginAddress] = useState("");
@@ -105,7 +107,7 @@ function RequestForm() {
   const [addressModalType, setAddressModalType] = useState("destination");
   const [addressModalInitialData, setAddressModalInitialData] = useState(null);
   const [editingAdditionalDestinationId, setEditingAdditionalDestinationId] = useState(null);
-
+  const [selectedPrice, setSelectedPrice] = useState(0);
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -169,6 +171,7 @@ function RequestForm() {
 
   const resetForm = () => {
     setOriginAddress("");
+    setSelectedPrice(0);
     setDestinationAddress("");
     setOriginLocation({
       lat: null,
@@ -200,6 +203,7 @@ function RequestForm() {
   };
 
   const resetOtherFields = () => {
+    setSelectedPrice(0);
     setVehicleType("");
     setSelectedServices([]);
     setSender(true);
@@ -538,6 +542,26 @@ function RequestForm() {
     ) {
       closeAddressModal();
     }
+  };
+
+  const handleRequestClick = () => {
+    if (!vehicleType) {
+      setShowVehicleSelectionModal(true);
+      return;
+    }
+
+    setShowSubmitRequestModal(true);
+  };
+
+  const handleVehicleSelectionForSubmit = (
+    vehicle,
+    vehicleClass,
+    price
+  ) => {
+    setVehicleType(vehicle);
+    setSelectedPrice(price);
+    setShowVehicleSelectionModal(false);
+    setShowSubmitRequestModal(true);
   };
 
   const handleConfirmSubmit = (confirmData) => {
@@ -1022,19 +1046,21 @@ function RequestForm() {
           initialData={addressModalInitialData}
         />
 
-        <Row className="mb-2 mt-1">
+
+        <Row className="mb-1 mt-0 vehicle-type-row">
           <Col xs={12}>
             <div className="vehicle-dropdown">
               <VehicleTypeModal
-                onVehicleSelect={(vehicle) => {
+                onVehicleSelect={(vehicle, vehicleClass, price) => {
                   setVehicleType(vehicle);
+                  setSelectedPrice(price);
                 }}
               >
                 <button
                   type="button"
                   className={`select-vehicle-btn ${vehicleType
-                      ? "vehicle-selected-btn"
-                      : ""
+                    ? "vehicle-selected-btn"
+                    : ""
                     }`}
                   style={{
                     fontSize: "18px",
@@ -1130,6 +1156,7 @@ function RequestForm() {
           </Col>
         </Row>
 
+
         <Row className="mb-2">
           <Col xs={12}>
             <div className="custom-textarea-group">
@@ -1141,6 +1168,7 @@ function RequestForm() {
                 rows="2"
                 value={notes}
                 onChange={(e) =>
+
                   setNotes(
                     e.target.value
                   )
@@ -1159,8 +1187,8 @@ function RequestForm() {
 
               <div
                 className={`service-box ${serviceOpen
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
                   }`}
                 onClick={() =>
                   setServiceOpen(
@@ -1206,8 +1234,8 @@ function RequestForm() {
 
                 <FaChevronDown
                   className={`dropdown-icon ${serviceOpen
-                      ? "rotate"
-                      : ""
+                    ? "rotate"
+                    : ""
                     }`}
                 />
               </div>
@@ -1221,8 +1249,8 @@ function RequestForm() {
                         className={`service-item ${selectedServices.includes(
                           item.title
                         )
-                            ? "selected"
-                            : ""
+                          ? "selected"
+                          : ""
                           }`}
                         onClick={() =>
                           toggleService(
@@ -1259,8 +1287,8 @@ function RequestForm() {
             <div className="segment-toggle-box">
               <div
                 className={`segment-btn ${sender
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
                   }`}
                 onClick={() =>
                   setSender(true)
@@ -1271,8 +1299,8 @@ function RequestForm() {
 
               <div
                 className={`segment-btn ${!sender
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
                   }`}
                 onClick={() =>
                   setSender(false)
@@ -1293,8 +1321,8 @@ function RequestForm() {
             <div className="segment-toggle-box">
               <div
                 className={`segment-btn ${cash
-                    ? "active"
-                    : ""
+                  ? "active"
+                  : ""
                   }`}
                 onClick={() =>
                   setCash(true)
@@ -1306,8 +1334,8 @@ function RequestForm() {
               {sender && (
                 <div
                   className={`segment-btn ${!cash
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     }`}
                   onClick={() =>
                     setCash(false)
@@ -1398,25 +1426,16 @@ function RequestForm() {
 
         <Row className="g-2">
           <Col xs={8}>
-            <SubmitRequestModal
-              onConfirm={(
-                quickRequestName
-              ) => {
-                handleConfirmSubmit(
-                  quickRequestName
-                );
+            <button
+              type="button"
+              className="btn btn-success w-100 py-2"
+              style={{
+                fontSize: "20px",
               }}
+              onClick={handleRequestClick}
             >
-              <button
-                type="button"
-                className="btn btn-success w-100 py-2"
-                style={{
-                  fontSize: "20px",
-                }}
-              >
-                {strings.requestForm.request}
-              </button>
-            </SubmitRequestModal>
+              {strings.requestForm.request}
+            </button>
           </Col>
 
           <Col xs={4}>
@@ -1441,6 +1460,23 @@ function RequestForm() {
             </ShippingMethodModal>
           </Col>
         </Row>
+        <VehicleTypeModal
+          open={showVehicleSelectionModal}
+          onClose={() => setShowVehicleSelectionModal(false)}
+          onVehicleSelect={handleVehicleSelectionForSubmit}
+        />
+
+        <SubmitRequestModal
+          open={showSubmitRequestModal}
+          onClose={() => setShowSubmitRequestModal(false)}
+          vehicleType={vehicleType}
+          serviceCost={selectedPrice}
+          onConfirm={(quickRequestName) => {
+            handleConfirmSubmit(quickRequestName);
+            setShowSubmitRequestModal(false);
+          }}
+        />
+
       </div>
     );
   };
@@ -1481,8 +1517,8 @@ function RequestForm() {
           <button
             type="button"
             className={`mobile-nav-btn ${mobilePage === "request"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
               }`}
             onClick={() => {
               setMobilePage("request");
@@ -1503,8 +1539,8 @@ function RequestForm() {
           <button
             type="button"
             className={`mobile-nav-btn ${mobilePage === "info"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
               }`}
             onClick={() => {
               setMobilePage("info");
@@ -1525,8 +1561,8 @@ function RequestForm() {
           <button
             type="button"
             className={`mobile-nav-btn ${mobilePage === "map"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
               }`}
             onClick={() => {
               setMobilePage("map");
