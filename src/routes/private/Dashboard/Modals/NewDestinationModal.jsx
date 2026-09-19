@@ -364,7 +364,6 @@ export default function NewDestinationModal(
   const emptyAddress = {
     address: "",
     phone: "",
-    floor: "",
     description: "",
   };
 
@@ -372,7 +371,6 @@ export default function NewDestinationModal(
     useState({
       address: "",
       phone: "",
-      floor: "",
       description: "",
     });
 
@@ -456,9 +454,9 @@ export default function NewDestinationModal(
     const position =
       hasPosition
         ? [
-            Number(sourceLat),
-            Number(sourceLng),
-          ]
+          Number(sourceLat),
+          Number(sourceLng),
+        ]
         : null;
 
     const sourceAddress =
@@ -476,7 +474,7 @@ export default function NewDestinationModal(
         (item) =>
           item.city === source?.city &&
           item.province ===
-            source?.province
+          source?.province
       ) || DEFAULT_CITY;
 
     setStep(1);
@@ -503,8 +501,6 @@ export default function NewDestinationModal(
         sourceAddress,
       phone:
         source?.phone || "",
-      floor:
-        source?.floor || "",
       description:
         source?.description || "",
     });
@@ -956,31 +952,9 @@ export default function NewDestinationModal(
     const isAddressEmpty =
       !formData.address.trim();
 
-    const isPhoneEmpty =
-      !formData.phone.trim();
-
-    if (
-      isAddressEmpty &&
-      isPhoneEmpty
-    ) {
-      showFormAlert(
-        strings.newDestinationModal.addressAndPhoneRequired
-      );
-
-      return;
-    }
-
     if (isAddressEmpty) {
       showFormAlert(
         strings.newDestinationModal.addressRequired
-      );
-
-      return;
-    }
-
-    if (isPhoneEmpty) {
-      showFormAlert(
-        strings.newDestinationModal.phoneNumberRequired
       );
 
       return;
@@ -1287,11 +1261,10 @@ export default function NewDestinationModal(
                     >
                       <button
                         type="button"
-                        className={`city-selector-btn ${
-                          showCityDropdown
-                            ? "active"
-                            : ""
-                        }`}
+                        className={`city-selector-btn ${showCityDropdown
+                          ? "active"
+                          : ""
+                          }`}
                         onClick={() =>
                           setShowCityDropdown(
                             (prev) =>
@@ -1314,11 +1287,10 @@ export default function NewDestinationModal(
                         </div>
 
                         <FaChevronDown
-                          className={`city-selector-arrow ${
-                            showCityDropdown
-                              ? "rotate"
-                              : ""
-                          }`}
+                          className={`city-selector-arrow ${showCityDropdown
+                            ? "rotate"
+                            : ""
+                            }`}
                         />
                       </button>
 
@@ -1356,16 +1328,16 @@ export default function NewDestinationModal(
 
                           <div className="city-dropdown-list">
                             {filteredCities.length >
-                            0 ? (
+                              0 ? (
                               filteredCities.map(
                                 (
                                   item
                                 ) => {
                                   const isSelected =
                                     item.city ===
-                                      selectedCity.city &&
+                                    selectedCity.city &&
                                     item.province ===
-                                      selectedCity.province;
+                                    selectedCity.province;
 
                                   return (
                                     <button
@@ -1373,11 +1345,10 @@ export default function NewDestinationModal(
                                         item.province
                                       }
                                       type="button"
-                                      className={`city-option ${
-                                        isSelected
-                                          ? "selected"
-                                          : ""
-                                      }`}
+                                      className={`city-option ${isSelected
+                                        ? "selected"
+                                        : ""
+                                        }`}
                                       onClick={() =>
                                         handleCityChange(
                                           item
@@ -1681,11 +1652,10 @@ export default function NewDestinationModal(
 
               <button
                 type="button"
-                className={`address-next-btn ${
-                  selectedPosition
-                    ? "enabled"
-                    : "disabled"
-                }`}
+                className={`address-next-btn ${selectedPosition
+                  ? "enabled"
+                  : "disabled"
+                  }`}
                 disabled={
                   !selectedPosition
                 }
@@ -1885,36 +1855,7 @@ export default function NewDestinationModal(
                           </div>
                         </div>
 
-                        <div className="address-field-small">
-                          <label>
-                            {
-                              strings.newDestinationModal.floor
-                            }
-                          </label>
 
-                          <div className="address-input-wrapper">
-                            <span className="address-field-icon">
-                              ▦
-                            </span>
-
-                            <input
-                              type="text"
-                              name="floor"
-                              value={
-                                formData.floor
-                              }
-                              onChange={
-                                handleNumericInputChange
-                              }
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              placeholder={
-                                strings.newDestinationModal.floorPlaceholder
-                              }
-                              className="form-control address-input"
-                            />
-                          </div>
-                        </div>
 
                         <div className="address-field address-description-field">
                           <label>
