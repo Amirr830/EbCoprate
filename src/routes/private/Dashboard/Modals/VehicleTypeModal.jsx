@@ -6,7 +6,8 @@ import {
     FaMotorcycle,
     FaCarSide,
     FaCheck,
-    FaMoneyBillWave
+    FaMoneyBillWave,
+    FaBoxOpen
 } from "react-icons/fa";
 import "../Css/VehicleTypeModal.css";
 
@@ -69,13 +70,6 @@ export default function VehicleTypeModal(props) {
                 title: "وانت",
                 description: "مناسب بارهای حجیم و سنگین",
                 icon: <FaTruckPickup />
-            },
-            {
-                id: "motor-box",
-                vehicleClass: 2,
-                title: "موتور همراه جعبه",
-                description: "مناسب بسته‌ها و مرسولات",
-                icon: <FaMotorcycle />
             },
             {
                 id: "motor",
@@ -163,11 +157,7 @@ export default function VehicleTypeModal(props) {
                 >
                     <div className="vehicle-modal-header">
                         <div className="vehicle-modal-header-content">
-                            <div className="vehicle-modal-title-icon">
-                                <FaTruckPickup />
-                            </div>
-
-                            <div>
+                            <div className="vehicle-modal-title-content">
                                 <h5 className="vehicle-modal-title">
                                     انتخاب نوع وسیله
                                 </h5>
@@ -206,8 +196,9 @@ export default function VehicleTypeModal(props) {
                                     className="vehicle-option-col"
                                 >
                                     <div
-                                        className={`vehicle-card ${isSelected ? "selected" : ""
-                                            }`}
+                                        className={`vehicle-card ${
+                                            isSelected ? "selected" : ""
+                                        }`}
                                     >
                                         <button
                                             type="button"
@@ -266,26 +257,32 @@ export default function VehicleTypeModal(props) {
                                                         <div
                                                             className="vehicle-price-slider-progress"
                                                             style={{
-                                                                width: `${selectedPriceIndex *
+                                                                width: `${
+                                                                    selectedPriceIndex *
                                                                     33.3333
-                                                                    }%`
+                                                                }%`
                                                             }}
                                                         ></div>
 
                                                         {prices.map(
-                                                            (price, index) => (
+                                                            (
+                                                                price,
+                                                                index
+                                                            ) => (
                                                                 <button
                                                                     key={index}
                                                                     type="button"
-                                                                    className={`vehicle-price-dot ${selectedPriceIndex ===
-                                                                            index
+                                                                    className={`vehicle-price-dot ${
+                                                                        selectedPriceIndex ===
+                                                                        index
                                                                             ? "active"
                                                                             : ""
-                                                                        }`}
+                                                                    }`}
                                                                     style={{
-                                                                        right: `${index *
+                                                                        right: `${
+                                                                            index *
                                                                             33.3333
-                                                                            }%`
+                                                                        }%`
                                                                     }}
                                                                     onClick={() =>
                                                                         setSelectedPriceIndex(
@@ -317,13 +314,16 @@ export default function VehicleTypeModal(props) {
 
                                                 <div className="vehicle-price-values">
                                                     {prices.map(
-                                                        (price, index) => (
+                                                        (
+                                                            price,
+                                                            index
+                                                        ) => (
                                                             <button
                                                                 key={index}
                                                                 type="button"
                                                                 className={
                                                                     selectedPriceIndex ===
-                                                                        index
+                                                                    index
                                                                         ? "active"
                                                                         : ""
                                                                 }
@@ -365,7 +365,6 @@ export default function VehicleTypeModal(props) {
                     )}
 
                     <Row className="vehicle-modal-actions-row">
-
                         <Col
                             xs={12}
                             sm={6}

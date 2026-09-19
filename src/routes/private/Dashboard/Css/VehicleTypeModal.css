@@ -19,23 +19,39 @@
 }
 
 .vehicle-modal-header {
+    position: relative;
+    width: 100%;
+    min-height: 54px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    justify-content: flex-start;
+    direction: ltr;
 }
 
 .vehicle-modal-header-content {
+    width: calc(100% - 58px);
     min-width: 0;
+    margin-left: 0;
+    margin-right: auto;
     display: flex;
     align-items: center;
-    gap: 11px;
+    justify-content: flex-start;
+    gap: 12px;
+    direction: ltr;
+}
+
+.vehicle-modal-title-content {
+    min-width: 0;
+    order: 1;
+    text-align: left;
+    direction: rtl;
 }
 
 .vehicle-modal-title-icon {
     width: 46px;
     height: 46px;
     flex: 0 0 46px;
+    order: 2;
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -46,11 +62,18 @@
     box-shadow: 0 7px 17px rgba(25, 135, 84, 0.18);
 }
 
+.vehicle-modal-title-icon-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .vehicle-modal-title {
     margin: 0;
     color: #212529;
     font-size: 20px;
     line-height: 1.5;
+    text-align: left;
 }
 
 .vehicle-modal-subtitle {
@@ -58,12 +81,16 @@
     color: #8a929b;
     font-size: 13px;
     line-height: 1.7;
+    text-align: left;
 }
 
 .vehicle-modal-close {
+    position: absolute;
+    top: 50%;
+    right: 0;
     width: 36px;
     height: 36px;
-    flex: 0 0 36px;
+    padding: 0;
     border: none;
     border-radius: 10px;
     background: #ff0000;
@@ -74,12 +101,13 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transform: translateY(-50%);
     transition: all 0.2s ease;
 }
 
 .vehicle-modal-close:hover {
     background: #bd0000;
-    transform: scale(1.04);
+    transform: translateY(-50%) scale(1.04);
 }
 
 .vehicle-modal-divider {
@@ -461,10 +489,11 @@
     }
 
     .vehicle-modal-header {
-        gap: 7px;
+        min-height: 48px;
     }
 
     .vehicle-modal-header-content {
+        width: calc(100% - 50px);
         gap: 8px;
     }
 
@@ -487,7 +516,6 @@
     .vehicle-modal-close {
         width: 34px;
         height: 34px;
-        flex-basis: 34px;
         font-size: 23px;
     }
 
