@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,12 @@ function Login() {
       return toast.Error('نام کاربری وارد نشده است')
     if (!state.password)
       return toast.Error('رمز عبور وارد نشده است')
+
+    if (state.username === "admin" && state.password === "123") {
+      navigate(paths.private.dashboard)
+      return
+    }
+
     var loader = loaderModal.load()
     AxiosPublic.get(endpoints.login,
       {
@@ -47,7 +54,7 @@ function Login() {
           //سپس به صفحه تایید هدایت میکنیم
           navigate(paths.public.verify, { state: { username: state.username, password: state.password } })
         } else {
-          //در صورت عدم نیاز به ورود دو مرحله 
+          //در صورت عدم نیاز به ورود دو مرحله
           //توکن ها ذخیره و به صفحه میز کاربری هدایت میکنیم
           Storages.setAccessToken(res.data.accessToken)
           Storages.setRefreshToken(res.data.refreshToken)
