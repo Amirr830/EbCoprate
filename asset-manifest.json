@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/EbCoprate/static/css/main.05261b1b.css",
-    "main.js": "/EbCoprate/static/js/main.986435d0.js",
+    "main.js": "/EbCoprate/static/js/main.0dce51f4.js",
     "static/js/404.89a2804e.chunk.js": "/EbCoprate/static/js/404.89a2804e.chunk.js",
     "static/js/513.7c7428b2.chunk.js": "/EbCoprate/static/js/513.7c7428b2.chunk.js",
     "static/js/787.150f16fd.chunk.js": "/EbCoprate/static/js/787.150f16fd.chunk.js",
@@ -83,13 +83,13 @@
     "static/media/loading.lottie": "/EbCoprate/static/media/loading.c84e131b1a5d44f7db93.lottie",
     "index.html": "/EbCoprate/index.html",
     "main.05261b1b.css.map": "/EbCoprate/static/css/main.05261b1b.css.map",
-    "main.986435d0.js.map": "/EbCoprate/static/js/main.986435d0.js.map",
+    "main.0dce51f4.js.map": "/EbCoprate/static/js/main.0dce51f4.js.map",
     "404.89a2804e.chunk.js.map": "/EbCoprate/static/js/404.89a2804e.chunk.js.map",
     "513.7c7428b2.chunk.js.map": "/EbCoprate/static/js/513.7c7428b2.chunk.js.map",
     "787.150f16fd.chunk.js.map": "/EbCoprate/static/js/787.150f16fd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.05261b1b.css",
-    "static/js/main.986435d0.js"
+    "static/js/main.0dce51f4.js"
   ]
 }
